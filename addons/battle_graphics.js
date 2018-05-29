@@ -49,7 +49,7 @@ function BattleGraphics(battle_table, engine)
             column_moved[i] = false;
         }
 
-        id=8;
+        id=7;
 
         for(let i=0; i<engine.battle_table.height; i++)
         {

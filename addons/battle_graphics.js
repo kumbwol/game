@@ -13,7 +13,34 @@ function BattleGraphics(battle_table, engine)
     this.reFillTable = reFillTable;
     this.reNameIds = reNameIds;
 
-    function reNameIds(engine, column_id)
+    function reNameIds(engine)
+    {
+        for(let j=0; j<engine.battle_table.width; j++)
+        {
+            let number_of_holes = 0;
+            for(let i=engine.battle_table.height-1; i>=0; i--)
+            {
+                if(engine.table[i][j].type == NUL)
+                {
+                    number_of_holes++;
+                }
+                else if(number_of_holes>0)
+                {
+                    $("#y_" + i + "_x_" + j).attr("id", "y_" + (i+number_of_holes) + "_x_" + j);
+                }
+            }
+
+            let y=0;
+            for(let i=number_of_holes-1; i>=0; i--)
+            {
+                $("#battle_table").append(createField(("y_" + i + "_x_" + j), engine.temp_table[i][j].type, j, y-1, true));
+                y--;
+            }
+        }
+
+    }
+
+    /*function reNameIds(engine, column_id)
     {
         let number_of_holes = 0;
         for(let i=engine.battle_table.height-1; i>=0; i--)
@@ -33,50 +60,61 @@ function BattleGraphics(battle_table, engine)
         for(let i=number_of_holes-1; i>=0; i--)
         {
             //alert('szia');
-            $("#battle_table").append(createField(("y_" + i + "_x_" + column_id), MAN, column_id-1, y, true));
+            $("#battle_table").append(createField(("y_" + i + "_x_" + column_id), engine.temp_table[i][column_id].type, column_id, y-1, true));
             y--;
         }
-    }
+    }*/
 
     function reFillTable(engine)
     {
-        let height = 0;
-
-        let column_moved = [];
+        let esesek = [];
 
         for(let i=0; i<engine.battle_table.width; i++)
         {
-            column_moved[i] = false;
-        }
-
-        id=7;
-
-        for(let i=0; i<engine.battle_table.height; i++)
-        {
-            for(let j=0; j<engine.battle_table.width; j++)
+            for(let j=0; j<engine.battle_table.height; j++)
             {
-                if(engine.table[i][j].type == NUL && !column_moved[j])
-                {
-                    for(let k=battle_table.height-1; k>=0; k--)
-                    {
-                        //alert(height);
-                        if(engine.table[k][j].type == NUL)
-                        {
-                            height++;
-                        }
-                        else if(height>0)
-                        {
-                            bounceDown($("#y_" + id + "_x_" + j), height, 400);
-                            id--;
-                        }
+                esesek[j] = 0;
+            }
 
-                        //alert(engine.table[k][j].type);
+            let height = 0;
+            let id=9;
+
+            for(let j=engine.battle_table.height-1; j>=0; j--)
+            {
+                if(engine.table[j][i].type == NUL)
+                {
+                    height++;
+                }
+                else
+                {
+                    for(let k=0; k<id; k++)
+                    {
+                        esesek[k]+=height;
                     }
-                    column_moved[j] = true;
+                    id--;
+
                     height = 0;
                 }
             }
+
+            for(let k=0; k<id; k++)
+            {
+                esesek[k]+=height;
+            }
+
+            for(let j=0; j<engine.battle_table.height; j++)
+            {
+                if(esesek[j]>0)
+                {
+                    bounceDown($("#y_" + j + "_x_" + i), esesek[j], 400);
+                }
+            }
         }
+
+        /*for(let i=0; i<engine.battle_table.height; i++)
+        {
+            alert(esesek[i]);
+        }*/
     }
 
     function bounceDown(object, height, time)
@@ -127,13 +165,17 @@ function BattleGraphics(battle_table, engine)
         $("#game_background").append('<div class="selected_skill"></div>');
         for(let i=0; i<player.getSkills()[skill_id].getSkillPatternHeight(); i++)
         {
+            skill.table[i] = [];
             for(let j=0; j<player.getSkills()[skill_id].getSkillPatternWidth(); j++)
             {
+                skill.table[i][j] = player.getSkills()[skill_id].getSkillPatternValue(j, i);
                 let row_id = "y_" + i;
                 let column_id = row_id + "_x_" + j;
                 $(".selected_skill").append(createField(column_id, player.getSkills()[skill_id].getSkillPatternValue(j, i), j, i, false));
             }
         }
+        skill.table_width  = player.getSkills()[skill_id].getSkillPatternWidth();
+        skill.table_height = player.getSkills()[skill_id].getSkillPatternHeight();
         skill.height = player.getSkills()[skill_id].getSkillPatternHeight()*47 + 1;
         skill.width  = player.getSkills()[skill_id].getSkillPatternWidth()*47  + 1;
     }
@@ -300,7 +342,7 @@ function BattleGraphics(battle_table, engine)
 
         allignToMiddle($("#battle_table"));
 
-        for(let i=0; i<this.battle_table.height; i++)
+        /*for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
@@ -308,7 +350,7 @@ function BattleGraphics(battle_table, engine)
                 let column_id = row_id + "_x_" + j;
                 $("#battle_table").append(createField(column_id, getType(i, j, engine), j, i, true));
             }
-        }
+        }*/
     }
 
     function drawSelector(id)

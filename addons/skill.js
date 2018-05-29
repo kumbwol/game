@@ -60,7 +60,7 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [ATT,ATT,NUL],
+                    [DEF,ATT,NUL],
                     [ATT,ATT,NUL],
                     [NUL,NUL,NUL],
                 ];

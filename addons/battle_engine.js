@@ -4,6 +4,7 @@ function BattleEngine(battle_table)
 {
     this.battle_table = battle_table;
     this.table = [];
+    this.temp_table = [];
     this.selected_fields = {
         y0: -1,
         x0: -1,
@@ -16,9 +17,11 @@ function BattleEngine(battle_table)
     for(let i=0; i<this.battle_table.height; i++)
     {
         this.table[i] = [];
+        this.temp_table[i] = [];
         for(let j=0; j<this.battle_table.width; j++)
         {
             this.table[i][j] = new Field(NUL);
+            this.temp_table[i][j] = new Field(NUL);
         }
     }
 
@@ -27,25 +30,74 @@ function BattleEngine(battle_table)
     this.selectField = selectField;
     this.deleteField = deleteField;
     this.refreshTable = refreshTable;
+    this.calculateNewTable = calculateNewTable;
+    this.canActivateSkill = canActivateSkill;
+    this.swapFields = swapFields;
+
+    function canActivateSkill(skill, x, y)
+    {
+        if((x+skill.table_width)<=this.battle_table.width && (y+skill.table_height)<=this.battle_table.height)
+        {
+            for(let i=0; i<skill.table_height; i++)
+            {
+                for(let j=0; j<skill.table_width; j++)
+                {
+                    if(skill.table[i][j] != NUL)
+                    {
+                        if(skill.table[i][j] != this.table[y+i][x+j].type) return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        return false;
+        /*for(let i=0; i<skill.table_height; i++)
+        {
+            for(let j=0; j<skill.table_width; j++)
+            {
+                if
+            }
+        }*/
+    }
 
     function refreshTable()
     {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                this.table[i][j].type = this.temp_table[i][j].type;
+            }
+        }
+    }
+
+    function calculateNewTable()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                this.temp_table[i][j].type = this.table[i][j].type;
+            }
+        }
+
         for(let i=0; i<this.battle_table.width; i++)
         {
             for(let j=0; j<this.battle_table.height; j++)
             {
-                if(this.table[j][i].type==NUL)
+                if(this.temp_table[j][i].type==NUL)
                 {
                     for(let k=j; k>=1; k--)
                     {
-                        this.table[k][i].type = this.table[k-1][i].type;
-                        this.table[k-1][i].type = NUL;
+                        this.temp_table[k][i].type = this.temp_table[k-1][i].type;
+                        this.temp_table[k-1][i].type = NUL;
                     }
                 }
             }
         }
 
-        //this.fillUpTable();
+        this.fillUpTable(this.temp_table);
     }
 
     function deleteField(x, y)
@@ -81,22 +133,30 @@ function BattleEngine(battle_table)
                 this.table[this.selected_fields.y0][this.selected_fields.x0].selected = false;
                 this.table[this.selected_fields.y1][this.selected_fields.x1].selected = false;
                 swap_field = true;
+                this.swapFields(this.selected_fields.x0, this.selected_fields.y0, this.selected_fields.x1, this.selected_fields.y1);
                 return swap_field;
             }
         }
         return swap_field;
     }
 
-    function fillUpTable()
+    function swapFields(x0, y0, x1, y1)
+    {
+        let temp = this.table[y0][x0].type;
+        this.table[y0][x0].type = this.table[y1][x1].type;
+        this.table[y1][x1].type = temp;
+    }
+
+    function fillUpTable(table)
     {
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.table[i][j].type == NUL)
+                if(table[i][j].type == NUL)
                 {
-                    this.table[i][j].type = generateRandomNumber(4)+1;
-                    this.table[i][j].selected = false;
+                    table[i][j].type = generateRandomNumber(4)+1;
+                    table[i][j].selected = false;
                 }
             }
         }

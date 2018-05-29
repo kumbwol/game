@@ -13,6 +13,9 @@ $(function()
         {
             height: 0,
             width: 0,
+            table: [],
+            table_width: 0,
+            table_height: 0,
             moving: false
         };
 
@@ -22,12 +25,14 @@ $(function()
 
         $("#create_table").on("click", function()
         {
-            engine.fillUpTable();
-            //engine.logTable();
-            //var graphics = new BattleGraphics(battle_table.height, battle_table.width);
             graphics.drawSkillBar(player);
             graphics.drawTable(battle_table);
-            //graphics.drawTopBar();
+
+            engine.calculateNewTable();
+            graphics.reNameIds(engine);
+            graphics.reFillTable(engine);
+            engine.refreshTable();
+
         });
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move", function()
@@ -53,21 +58,33 @@ $(function()
             }
             if(skill.moving)
             {
-                //alert('szia');
-                $(this).remove();
-                $("#y_" + (parseInt($(this).attr("id")[2])-1).toString() + "_x_" + parseInt($(this).attr("id")[6])).remove();
-                //alert($(this).attr("id"));
-                engine.deleteField(parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2]));
-                engine.deleteField(parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])-1);
-                engine.logTable();
+                /*for(let i=0; i<skill.table_height; i++)
+                {
+                    for(let j=0; j<skill.table_width; j++)
+                    {
+                        alert(skill.table[i][j]);
+                    }
+                }*/
 
+                if(engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
+                {
+                    for(let i=0; i<skill.table_height; i++)
+                    {
+                        for(let j=0; j<skill.table_width; j++)
+                        {
+                            if(skill.table[i][j] != NUL)
+                            {
+                                $("#y_" + (parseInt($(this).attr("id")[2])+i).toString() + "_x_" + (parseInt($(this).attr("id")[6])+j)).remove();
+                                engine.deleteField(parseInt($(this).attr("id")[6])+j, parseInt($(this).attr("id")[2])+i);
+                            }
+                        }
+                    }
 
-                graphics.reNameIds(engine, parseInt($(this).attr("id")[6]));
-                graphics.reFillTable(engine);
-                engine.refreshTable();
-                //engine.refreshTable();
-                engine.logTable();
-                //graphics.drawTable();
+                    engine.calculateNewTable();
+                    graphics.reNameIds(engine);
+                    graphics.reFillTable(engine);
+                    engine.refreshTable();
+                }
             }
         });
 

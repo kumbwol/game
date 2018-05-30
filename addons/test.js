@@ -21,17 +21,20 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
+        let enemy  = new Enemy("Skeleton");
         let graphics = new BattleGraphics(battle_table, engine, player);
 
         $("#create_table").on("click", function()
         {
-            graphics.drawSkillBar(player);
+            graphics.drawSkillBars(player, enemy);
             graphics.drawTable(battle_table);
 
             engine.calculateNewTable();
             graphics.reNameIds(engine);
             graphics.reFillTable(engine);
             engine.refreshTable();
+
+            engine.generateRan
 
         });
 
@@ -94,9 +97,9 @@ $(function()
             let skill_id = $(this).attr("id");
             graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill);
 
-            if(ev.pageX<960-skill.width +24 && ev.pageX>23) $(".selected_skill").css("left", ev.pageX-23);
+            if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
             else $(".selected_skill").css("left", 0);
-            if(ev.pageY<540-skill.height+24 && ev.pageY>23) $(".selected_skill").css("top",  ev.pageY-23);
+            if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
             else $(".selected_skill").css("top", 540-skill.height);
 
             skill.moving = true;
@@ -147,11 +150,13 @@ $(function()
             $.getScript("addons/battle_engine.js"),
             $.getScript("addons/battle_graphics.js"),
             $.getScript("addons/player.js"),
+            $.getScript("addons/enemy.js"),
             $.getScript("addons/field.js"),
             $.getScript("addons/field_types.js"),
             $.getScript("addons/config.js"),
             $.getScript("addons/skillpattern.js"),
             $.getScript("addons/skill.js"),
+            $.getScript("addons/preloader.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );
             })

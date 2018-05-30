@@ -7,11 +7,14 @@ function BattleGraphics(battle_table, engine)
     this.drawSelector = drawSelector;
     this.deleteSelector = deleteSelector;
     this.swapFields = swapFields;
-    this.drawSkillBar = drawSkillBar;
+    this.drawSkillBars = drawSkillBars;
     this.drawSelectedSkill = drawSelectedSkill;
     this.drawTopBar = drawTopBar;
     this.reFillTable = reFillTable;
     this.reNameIds = reNameIds;
+
+    let field_size = 52;
+    this.field_size = field_size;
 
     function reNameIds(engine)
     {
@@ -40,31 +43,6 @@ function BattleGraphics(battle_table, engine)
 
     }
 
-    /*function reNameIds(engine, column_id)
-    {
-        let number_of_holes = 0;
-        for(let i=engine.battle_table.height-1; i>=0; i--)
-        {
-            if(engine.table[i][column_id].type == NUL)
-            {
-                number_of_holes++;
-            }
-            else if(number_of_holes>0)
-            {
-                $("#y_" + i + "_x_" + column_id).attr("id", "y_" + (i+number_of_holes) + "_x_" + column_id);
-            }
-        }
-
-        //alert(number_of_holes);
-        let y=0;
-        for(let i=number_of_holes-1; i>=0; i--)
-        {
-            //alert('szia');
-            $("#battle_table").append(createField(("y_" + i + "_x_" + column_id), engine.temp_table[i][column_id].type, column_id, y-1, true));
-            y--;
-        }
-    }*/
-
     function reFillTable(engine)
     {
         let esesek = [];
@@ -77,7 +55,7 @@ function BattleGraphics(battle_table, engine)
             }
 
             let height = 0;
-            let id=9;
+            let id=battle_table.height;
 
             for(let j=engine.battle_table.height-1; j>=0; j--)
             {
@@ -120,7 +98,9 @@ function BattleGraphics(battle_table, engine)
     function bounceDown(object, height, time)
     {
         //alert(height);
-        let eses = (height*47)+8;
+        //alert($("#battle_table div").css("height"));
+
+        let eses = (height*(field_size+1))+8;
 
         let magassag = "+=" + eses;
 
@@ -176,28 +156,51 @@ function BattleGraphics(battle_table, engine)
         }
         skill.table_width  = player.getSkills()[skill_id].getSkillPatternWidth();
         skill.table_height = player.getSkills()[skill_id].getSkillPatternHeight();
-        skill.height = player.getSkills()[skill_id].getSkillPatternHeight()*47 + 1;
-        skill.width  = player.getSkills()[skill_id].getSkillPatternWidth()*47  + 1;
+        skill.height = player.getSkills()[skill_id].getSkillPatternHeight()*(field_size+1) + 1;
+        skill.width  = player.getSkills()[skill_id].getSkillPatternWidth()*(field_size+1)  + 1;
     }
 
-    function drawSkillBar(player)
+    function drawSkillBars(player, enemy)
     {
-        $("#game_background").append('<div id="player_profile"></div>');
-        $("#player_profile").append('<div id="hp"></div>');
-        $("#player_profile").append('<div id="mp"></div>');
-        $("#player_profile").append('<div id="name"></div>');
-        $("#name").append('<div id="name_string"></div>');
-        $("#name_string").html(player.name);
-        allignToMiddle("#name_string");
-        $("#player_profile").append('<div id="self"></div>');
+        drawSkillBarPlayer(player);
+        drawSkillBarEnemy(enemy);
+    }
+
+    function drawSkillBarPlayer(player)
+    {
+        $("#game_background").append('<div class="profile" id="player_profile"></div>');
+        $("#player_profile").append('<div class="hp" id="player_hp"></div>');
+        $("#player_profile").append('<div class="mp" id="player_mp"></div>');
+        $("#player_profile").append('<div class="name" id="player_name"></div>');
+        $("#player_name").append('<div class="name_string" id="player_name_string"></div>');
+        $("#player_name_string").html(player.name);
+        allignToMiddle("#player_name_string");
+        $("#player_profile").append('<div class="profile_picture" id="self"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_1"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_2"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_3"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_4"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_5"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_6"></div>');
-
         createSkills(player);
+    }
+
+    function drawSkillBarEnemy(enemy)
+    {
+        $("#game_background").append('<div class="profile" id="enemy_profile"></div>');
+        $("#enemy_profile").append('<div class="hp" id="enemy_hp"></div>');
+        $("#enemy_profile").append('<div class="mp" id="enemy_mp"></div>');
+        $("#enemy_profile").append('<div class="name" id="enemy_name"></div>');
+        $("#enemy_name").append('<div class="name_string" id="enemy_name_string"></div>');
+        $("#enemy_name_string").html(enemy.name);
+        allignToMiddle("#enemy_name_string");
+        $("#enemy_profile").append('<div class="profile_picture" id="enemy_skeleton"></div>');
+        $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_1"></div>');
+        $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_2"></div>');
+        $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_3"></div>');
+        $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_4"></div>');
+        $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_5"></div>');
+        $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_6"></div>');
     }
 
 
@@ -337,8 +340,8 @@ function BattleGraphics(battle_table, engine)
     function drawTable()
     {
         $("#game_background").append('<div id="battle_table"></div>');
-        $("#battle_table").css("width",  (this.battle_table.width*48)  - this.battle_table.width + 1);
-        $("#battle_table").css("height", (this.battle_table.height*48) - this.battle_table.height + 1);
+        $("#battle_table").css("width",  (this.battle_table.width*(field_size+2))  - this.battle_table.width + 1);
+        $("#battle_table").css("height", (this.battle_table.height*(field_size+2)) - this.battle_table.height + 1);
 
         allignToMiddle($("#battle_table"));
 
@@ -392,9 +395,12 @@ function BattleGraphics(battle_table, engine)
         let $object  = $('<div></div>');
         if(animated) $object.attr('id', id);
         else $object.attr('id', id+"skill");
+
+        $object.css("width",  field_size);
+        $object.css("height", field_size);
         $object.css('position', 'absolute');
-        $object.css('left', (x*48)-x+1);
-        $object.css('top',  (y*48)-y+1);
+        $object.css('left', (x*(field_size+2))-x+1);
+        $object.css('top',  (y*(field_size+2))-y+1);
         switch(type)
         {
             case NUL:

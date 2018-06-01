@@ -3,6 +3,8 @@ console.log("player.js loaded");
 function Player(name)
 {
     this.name = name;
+    this.hp = 50;
+    this.max_hp = 100;
 
     let skills = [];
     skills[0] = new Skill("Attack");

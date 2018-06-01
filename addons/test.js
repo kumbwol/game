@@ -127,12 +127,6 @@ $(function()
             return false;
         });
 
-        /*$("#game_background").on("click", function()
-        {
-            $("#game_background").append('<div class="teszt animated bounceInDown"></div>');
-            //alert('szia');
-        });*/
-
         $("#game_background").on("mouseenter", ".move", function()
         {
             if(skill.moving)

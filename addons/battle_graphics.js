@@ -169,12 +169,23 @@ function BattleGraphics(battle_table, engine)
     function drawSkillBarPlayer(player)
     {
         $("#game_background").append('<div class="profile" id="player_profile"></div>');
+
+        $("#player_profile").append('<div class="hp_background" id="player_hp_background"</div>');
         $("#player_profile").append('<div class="hp" id="player_hp"></div>');
+        updateHpBar($("#player_hp"), player);
+        $("#player_hp_background").append('<div class="hp_string" id="player_hp_string"></div>');
+        $("#player_hp_string").html(player.hp + "/" + player.max_hp);
+        allignToMiddle("#player_hp_string");
+
+        //$(object).css("left", (parent_object_width-object_width)/2);
+
         $("#player_profile").append('<div class="mp" id="player_mp"></div>');
+
         $("#player_profile").append('<div class="name" id="player_name"></div>');
         $("#player_name").append('<div class="name_string" id="player_name_string"></div>');
         $("#player_name_string").html(player.name);
         allignToMiddle("#player_name_string");
+
         $("#player_profile").append('<div class="profile_picture" id="self"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_1"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_2"></div>');
@@ -245,19 +256,25 @@ function BattleGraphics(battle_table, engine)
 
                         case ATT:
                         {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "red");
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "crimson");
                             break;
                         }
 
                         case MAN:
                         {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "blue");
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "aqua");
+                            break;
+                        }
+
+                        case DEF:
+                        {
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "bisque");
                             break;
                         }
 
                         case MOV:
                         {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "green");
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "forestgreen");
                             break;
                         }
                     }
@@ -439,5 +456,10 @@ function BattleGraphics(battle_table, engine)
     function getType(y, x, engine)
     {
         return engine.table[y][x].type;
+    }
+
+    function updateHpBar(object, player)
+    {
+        object.css("width", (player.hp/player.max_hp) * object.parent().width());
     }
 }

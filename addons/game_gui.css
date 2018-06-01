@@ -21,16 +21,6 @@ body
     left: 200px;
 }
 
-.teszt
-{
-    width: 46px;
-    height: 46px;
-    background-color: chartreuse;
-    position: absolute;
-    top: 493px;
-    left: 60px;
-}
-
 .selected_skill
 {
     position: absolute;
@@ -103,6 +93,20 @@ body
     height: 20px;
     background-color: red;
     border: 1px solid black;
+    border-width: 1px 0px 1px 1px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.hp_background
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 198px;
+    height: 20px;
+    background-color: firebrick;
+    border: 1px solid black;
     box-sizing: border-box;
 }
 
@@ -135,6 +139,16 @@ body
 {
     position: absolute;
     top: 5px;
+}
+
+.hp_string
+{
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    font-weight: bold;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .profile_picture

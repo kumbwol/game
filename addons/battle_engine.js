@@ -33,6 +33,35 @@ function BattleEngine(battle_table)
     this.calculateNewTable = calculateNewTable;
     this.canActivateSkill = canActivateSkill;
     this.swapFields = swapFields;
+    this.activateSkill = activateSkill;
+    this.addSkillValue = addSkillValues;
+
+    function activateSkill(effect, player, enemy)
+    {
+        if(effect.self == true)
+        {
+            player.hp -= effect.dmg;
+        }
+        else
+        {
+            enemy.hp -= effect.dmg;
+        }
+    }
+
+    function addSkillValues(player, skill_id, skill)
+    {
+        for(let i=0; i<player.getSkills()[skill_id].getSkillPatternHeight(); i++)
+        {
+            skill.table[i] = [];
+            skill.effect = player.getSkills()[skill_id].getSkillEffect();
+            for(let j=0; j<player.getSkills()[skill_id].getSkillPatternWidth(); j++)
+            {
+                skill.table[i][j] = player.getSkills()[skill_id].getSkillPatternValue(j, i);
+            }
+        }
+        skill.table_width  = player.getSkills()[skill_id].getSkillPatternWidth();
+        skill.table_height = player.getSkills()[skill_id].getSkillPatternHeight();
+    }
 
     function canActivateSkill(skill, x, y)
     {

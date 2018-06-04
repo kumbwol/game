@@ -5,6 +5,7 @@ function Skill(name)
     this.name = name;
     let visual_pattern = [];
     let pattern;
+    let effect;
 
     switch(this.name)
     {
@@ -17,6 +18,7 @@ function Skill(name)
                     [MAN,ATT,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("AGR");
             break;
         }
 
@@ -29,6 +31,7 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("AGR");
             break;
         }
 
@@ -41,6 +44,7 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("AGR");
             break;
         }
 
@@ -53,6 +57,7 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("DMG");
             break;
         }
 
@@ -65,6 +70,7 @@ function Skill(name)
                     [NUL,NUL,NUL],
                 ];
             pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("AGR");
             break;
         }
 
@@ -77,6 +83,7 @@ function Skill(name)
                     [MOV,NUL,NUL],
                 ];
             pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("AGR");
             break;
         }
     }
@@ -84,6 +91,7 @@ function Skill(name)
     this.getSkillPatternHeight = getSkillPatternHeight;
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
+    this.getSkillEffect = getSkillEffect;
 
     function getSkillPatternHeight()
     {
@@ -98,5 +106,10 @@ function Skill(name)
     function getSkillPatternValue(x, y)
     {
         return pattern.getSkillPatternValue(x, y);
+    }
+
+    function getSkillEffect()
+    {
+        return effect.getSkillEffect();
     }
 }

@@ -16,6 +16,7 @@ $(function()
             table: [],
             table_width: 0,
             table_height: 0,
+            effect: 0,
             moving: false
         };
 
@@ -33,9 +34,6 @@ $(function()
             graphics.reNameIds(engine);
             graphics.reFillTable(engine);
             engine.refreshTable();
-
-            engine.generateRan
-
         });
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move", function()
@@ -84,6 +82,8 @@ $(function()
                     }
 
                     engine.calculateNewTable();
+                    engine.activateSkill(skill.effect, player, enemy, graphics);
+                    graphics.drawSkillBars(player, enemy);
                     graphics.reNameIds(engine);
                     graphics.reFillTable(engine);
                     engine.refreshTable();
@@ -96,11 +96,14 @@ $(function()
             if(skill.moving) $(".selected_skill").remove();
             let skill_id = $(this).attr("id");
             graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill);
+            engine.addSkillValue(player, parseInt(skill_id[6])-1, skill);
 
             if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
             else $(".selected_skill").css("left", 0);
             if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
             else $(".selected_skill").css("top", 540-skill.height);
+
+            //alert(skill.effect);
 
             skill.moving = true;
         });
@@ -150,6 +153,7 @@ $(function()
             $.getScript("addons/config.js"),
             $.getScript("addons/skillpattern.js"),
             $.getScript("addons/skill.js"),
+            $.getScript("addons/effect.js"),
             $.getScript("addons/preloader.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );

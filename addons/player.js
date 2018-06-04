@@ -3,7 +3,7 @@ console.log("player.js loaded");
 function Player(name)
 {
     this.name = name;
-    this.hp = 50;
+    this.hp = 100;
     this.max_hp = 100;
 
     let skills = [];

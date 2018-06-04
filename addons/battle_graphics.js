@@ -145,23 +145,21 @@ function BattleGraphics(battle_table, engine)
         $("#game_background").append('<div class="selected_skill"></div>');
         for(let i=0; i<player.getSkills()[skill_id].getSkillPatternHeight(); i++)
         {
-            skill.table[i] = [];
             for(let j=0; j<player.getSkills()[skill_id].getSkillPatternWidth(); j++)
             {
-                skill.table[i][j] = player.getSkills()[skill_id].getSkillPatternValue(j, i);
                 let row_id = "y_" + i;
                 let column_id = row_id + "_x_" + j;
                 $(".selected_skill").append(createField(column_id, player.getSkills()[skill_id].getSkillPatternValue(j, i), j, i, false));
             }
         }
-        skill.table_width  = player.getSkills()[skill_id].getSkillPatternWidth();
-        skill.table_height = player.getSkills()[skill_id].getSkillPatternHeight();
         skill.height = player.getSkills()[skill_id].getSkillPatternHeight()*(field_size+1) + 1;
         skill.width  = player.getSkills()[skill_id].getSkillPatternWidth()*(field_size+1)  + 1;
     }
 
     function drawSkillBars(player, enemy)
     {
+        $("#player_profile").remove();
+        $("#enemy_profile").remove();
         drawSkillBarPlayer(player);
         drawSkillBarEnemy(enemy);
     }
@@ -177,7 +175,6 @@ function BattleGraphics(battle_table, engine)
         $("#player_hp_string").html(player.hp + "/" + player.max_hp);
         allignToMiddle("#player_hp_string");
 
-        //$(object).css("left", (parent_object_width-object_width)/2);
 
         $("#player_profile").append('<div class="mp" id="player_mp"></div>');
 
@@ -199,7 +196,16 @@ function BattleGraphics(battle_table, engine)
     function drawSkillBarEnemy(enemy)
     {
         $("#game_background").append('<div class="profile" id="enemy_profile"></div>');
+
+        $("#enemy_profile").append('<div class="hp_background" id="enemy_hp_background"></div>');
         $("#enemy_profile").append('<div class="hp" id="enemy_hp"></div>');
+        updateEnemyHpBar($("#enemy_hp"), enemy);
+        $("#enemy_hp_background").append('<div class="hp_string" id="enemy_hp_string"></div>');
+        $("#enemy_hp_string").html(enemy.hp + "/" + enemy.max_hp);
+        allignToMiddle("#enemy_hp_string");
+
+
+
         $("#enemy_profile").append('<div class="mp" id="enemy_mp"></div>');
         $("#enemy_profile").append('<div class="name" id="enemy_name"></div>');
         $("#enemy_name").append('<div class="name_string" id="enemy_name_string"></div>');
@@ -461,5 +467,10 @@ function BattleGraphics(battle_table, engine)
     function updateHpBar(object, player)
     {
         object.css("width", (player.hp/player.max_hp) * object.parent().width());
+    }
+
+    function updateEnemyHpBar(object, enemy)
+    {
+        object.css("width", (enemy.hp/enemy.max_hp) * object.parent().width());
     }
 }

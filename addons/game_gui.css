@@ -26,6 +26,7 @@ body
     position: absolute;
     border-collapse: collapse;
     border-radius:50%;
+    z-index: 3;
 }
 
 .selected_skill div

@@ -27,6 +27,7 @@ body
     border-collapse: collapse;
     border-radius:50%;
     z-index: 3;
+    opacity: 0.7;
 }
 
 .selected_skill div
@@ -306,6 +307,19 @@ body
     background-position: center;
     background-color: burlywood;
     border-radius: 50%;
+
+
+    /*-webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    -ms-animation-duration: 0.3s;
+    -o-animation-duration: 0.3s;
+    animation-duration: 0.3s;*/
+
+    /*-webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -ms-animation-duration: 1s;
+    -o-animation-duration: 1s;
+    animation-duration: 1s*/
 }
 
 .selected_skill div.attack,

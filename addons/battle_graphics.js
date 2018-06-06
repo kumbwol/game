@@ -11,10 +11,91 @@ function BattleGraphics(battle_table, engine)
     this.drawSelectedSkill = drawSelectedSkill;
     this.drawTopBar = drawTopBar;
     this.reFillTable = reFillTable;
+    this.startFillTable = startFillTable;
     this.reNameIds = reNameIds;
+    this.modifyTable = modifyTable;
 
     let field_size = 52;
     this.field_size = field_size;
+
+    function myfade(object, cb)
+    {
+        let class_name = object.attr("class");
+        object.css(
+            {
+                "-webkit-animation-duration": "0.3s",
+                "-moz-animation-duration": "0.3s",
+                "-ms-animation-duration": "0.3s",
+                "-o-animation-duration": "0.3s",
+                "animation-duration": "0.3s"
+            }
+        );
+        object.attr("class", class_name + " animated fadeOut").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+        {
+            object.removeClass();
+            object.attr("class", "attack animated fadeIn").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+            {
+                object.removeClass();
+                object.attr("class", "attack");
+                cb();
+            });
+        });
+    }
+
+    function modifyTable(engine)
+    {
+        let done = $.Deferred();
+
+        let wait_animation = false;
+
+        for(let i=0; i<engine.battle_table.height; i++)
+        {
+            for(let j=0; j<engine.battle_table.width; j++)
+            {
+                if(engine.table[i][j].type != engine.temp_table[i][j].type && engine.table[i][j].type != NUL)
+                {
+                    wait_animation = true;
+
+                    //alert(class_name);
+
+                    myfade($("#y_" + i + "_x_" + j), function()
+                    {
+                        done.resolve();
+                    });
+
+
+
+
+
+
+                    /*$("#y_" + i + "_x_" + j).attr("class", "attack");
+                    done.resolve();*/
+
+                    /*$("#y_" + i + "_x_" + j).fadeOut(300, function()
+                    {
+                        //$("#y_" + i + "_x_" + j).attr("class", "attack");
+                        //$("#y_" + i + "_x_" + j).removeClass();
+                        //$("#y_" + i + "_x_" + j).addClass('attack');
+                        $("#y_" + i + "_x_" + j).fadeIn(300, function()
+                        {
+                            done.resolve();
+                        });
+                    });*/
+                    /*$("#y_" + i + "_x_" + j).fadeOut(3000).queue(function(next)
+                    {
+                        $("#y_" + i + "_x_" + j).attr("class", "attack");
+                        next();
+                    }).fadeIn(3000, function()
+                    {
+                        done.resolve();
+                    });*/
+                    //$("#y_" + i + "_x_" + j).attr("class", "attack");
+                }
+            }
+        }
+        if(!wait_animation) done.resolve();
+        return done;
+    }
 
     function reNameIds(engine)
     {
@@ -40,7 +121,28 @@ function BattleGraphics(battle_table, engine)
                 y--;
             }
         }
+    }
 
+    function startFillTable(engine)
+    {
+        for(let i=0; i<engine.battle_table.width; i++)
+        {
+            for(let j=0; j<engine.battle_table.height; j++)
+            {
+                let class_name = $("#y_" + j + "_x_" + i).attr("class");
+                $("#y_" + j + "_x_" + i).css(
+                    {
+                        "-webkit-animation-duration": "1.5s",
+                        "-moz-animation-duration": "1.5s",
+                        "-ms-animation-duration": "1.5s",
+                        "-o-animation-duration": "1.5s",
+                        "animation-duration": "1.5s"
+                    }
+                );
+                $("#y_" + j + "_x_" + i).css("top", j*(field_size+1)+1);
+                $("#y_" + j + "_x_" + i).attr("class", class_name + " animated bounceInDown");
+            }
+        }
     }
 
     function reFillTable(engine)
@@ -55,7 +157,7 @@ function BattleGraphics(battle_table, engine)
             }
 
             let height = 0;
-            let id=battle_table.height;
+            let id=engine.battle_table.height;
 
             for(let j=engine.battle_table.height-1; j>=0; j--)
             {
@@ -104,7 +206,9 @@ function BattleGraphics(battle_table, engine)
 
         let magassag = "+=" + eses;
 
-        object.animate(
+        object.animate({"top": magassag}, (time)).animate({"top": "-=20"}, (time/3)).animate({"top": "+=16"}, (time/3)).animate({"top": "-=6"}, (time/6)).animate({"top": "+=2"}, (time/6));
+
+        /*object.animate(
             {
                 top: magassag
             }, (time)
@@ -132,7 +236,7 @@ function BattleGraphics(battle_table, engine)
             {
                 top: "+=2"
             }, (time/6)
-        );
+        );*/
     }
 
     function drawTopBar()
@@ -389,14 +493,15 @@ function BattleGraphics(battle_table, engine)
     function deleteSelector(id)
     {
         let $object = $("#" + id);
-        let current_bg = $object.css("background-image");
+        /*let current_bg = $object.css("background-image");
         let new_bg = "";
         for(let i=0; i<current_bg.length; i++)
         {
             if(current_bg[i] == ",") break;
             else new_bg += current_bg[i];
         }
-        $object.css("background-image", new_bg);
+        $object.css("background-image", new_bg);*/
+        $object.css("background-image", "");
     }
 
     function createRow(class_name)

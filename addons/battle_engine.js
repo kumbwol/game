@@ -26,6 +26,7 @@ function BattleEngine(battle_table)
     }
 
     this.logTable = logTable;
+    this.logTempTable = logTempTable;
     this.fillUpTable = fillUpTable;
     this.selectField = selectField;
     this.deleteField = deleteField;
@@ -35,8 +36,23 @@ function BattleEngine(battle_table)
     this.swapFields = swapFields;
     this.activateSkill = activateSkill;
     this.addSkillValue = addSkillValues;
+    this.transformTable = transformTable;
+    this.resetTempTable = resetTempTable;
+    this.anyFieldSelected = anyFieldSelected;
+    this.deselectField = deselectField;
 
-    function activateSkill(effect, player, enemy)
+    function resetTempTable()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                this.temp_table[i][j].type = this.table[i][j].type;
+            }
+        }
+    }
+
+    function activateSkill(effect, player, enemy, table)
     {
         if(effect.self == true)
         {
@@ -45,6 +61,12 @@ function BattleEngine(battle_table)
         else
         {
             enemy.hp -= effect.dmg;
+            if(effect.transform == true)
+            {
+                this.logTable();
+                this.transformTable();
+                this.logTable();
+            }
         }
     }
 
@@ -77,6 +99,16 @@ function BattleEngine(battle_table)
                     }
                 }
             }
+            /*alert(this.selected_fields.y0);
+            alert(this.selected_fields.x0);
+
+            alert(this.selected_fields.y1);
+            alert(this.selected_fields.x1);*/
+            if(this.anyFieldSelected())
+            {
+                this.deselectField();
+            }
+
             return true;
         }
 
@@ -90,6 +122,16 @@ function BattleEngine(battle_table)
         }*/
     }
 
+    function anyFieldSelected()
+    {
+        return (this.selected_fields.y0 >= 0 && this.selected_fields.x0 >= 0);
+    }
+
+    function deselectField()
+    {
+        this.selectField(this.selected_fields.y0, this.selected_fields.x0);
+    }
+
     function refreshTable()
     {
         for(let i=0; i<this.battle_table.height; i++)
@@ -97,6 +139,7 @@ function BattleEngine(battle_table)
             for(let j=0; j<this.battle_table.width; j++)
             {
                 this.table[i][j].type = this.temp_table[i][j].type;
+                this.table[i][j].selected = false;
             }
         }
     }
@@ -191,6 +234,21 @@ function BattleEngine(battle_table)
         }
     }
 
+    function transformTable()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.temp_table[i][j].type == MOV || this.temp_table[i][j].type == DEF)
+                {
+                    if(generateRandomNumber(1) == 0) this.temp_table[i][j].type = ATT;
+                    this.table[i][j].selected = false;
+                }
+            }
+        }
+    }
+
     function logTable()
     {
         let row_string="";
@@ -200,6 +258,23 @@ function BattleEngine(battle_table)
             for(let j=0; j<this.battle_table.width; j++)
             {
                 row_string += this.table[i][j].type + " ";
+            }
+            console.log(row_string);
+            console.log("\n");
+            row_string="";
+        }
+        console.log("---------------------------------------\n");
+    }
+
+    function logTempTable()
+    {
+        let row_string="";
+
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                row_string += this.temp_table[i][j].type + " ";
             }
             console.log(row_string);
             console.log("\n");

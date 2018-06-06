@@ -4,22 +4,40 @@ function Effect(name)
 {
     this.name = name;
     let dmg = 0;
+
     let effect =
      {
          self: false,
+         transform: false,
          dmg: 0
      };
 
-    if(this.name == "DMG")
+
+    switch(this.name)
     {
-        effect.self = false;
-        effect.dmg = 25;
+        case "DMG":
+        {
+            effect.self = false;
+            effect.dmg = 25;
+            break;
+        }
+
+        case "AGR":
+        {
+            effect.self = true;
+            effect.dmg = 25;
+            break;
+        }
+
+        case "Transform":
+        {
+            effect.self = false;
+            effect.transform = true;
+            effect.dmg = 25;
+            break;
+        }
     }
-    else if(this.name == "AGR")
-    {
-        effect.self = true;
-        effect.dmg = 10;
-    }
+
 
     this.getSkillEffect = getSkillEffect;
 

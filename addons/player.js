@@ -7,12 +7,12 @@ function Player(name)
     this.max_hp = 100;
 
     let skills = [];
-    skills[0] = new Skill("Attack");
-    skills[1] = new Skill("Block");
-    skills[2] = new Skill("Regen");
-    skills[3] = new Skill("Heal");
-    skills[4] = new Skill("Dodge");
-    skills[5] = new Skill("Hook");
+    skills[0] = new Skill("Shock");
+    skills[1] = new Skill("Stab");
+    skills[2] = new Skill("Shield");
+    skills[3] = new Skill("Spiritarrow");
+    skills[4] = new Skill("Shieldslam");
+    skills[5] = new Skill("Shadowform");
 
     this.getSkills = getSkills;
 

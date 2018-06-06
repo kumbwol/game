@@ -32,7 +32,8 @@ $(function()
 
             engine.calculateNewTable();
             graphics.reNameIds(engine);
-            graphics.reFillTable(engine);
+            graphics.startFillTable(engine);
+            //graphics.reFillTable(engine);
             engine.refreshTable();
         });
 
@@ -81,12 +82,33 @@ $(function()
                         }
                     }
 
+
+                    engine.resetTempTable();
+                    graphics.deleteSelector(engine.selected_field_id);
+                    engine.activateSkill(skill.effect, player, enemy, graphics, battle_table);
+
+                    graphics.modifyTable(engine).done(function()
+                    {
+                        engine.refreshTable();
+                        engine.calculateNewTable();
+                        graphics.drawSkillBars(player, enemy);
+                        graphics.reNameIds(engine);
+                        graphics.reFillTable(engine);
+                        engine.refreshTable();
+                        engine.logTable();
+                        engine.logTempTable();
+                    });
+
+
+                    /*engine.refreshTable();
                     engine.calculateNewTable();
-                    engine.activateSkill(skill.effect, player, enemy, graphics);
                     graphics.drawSkillBars(player, enemy);
                     graphics.reNameIds(engine);
                     graphics.reFillTable(engine);
                     engine.refreshTable();
+                    engine.logTable();
+                    engine.logTempTable();*/
+
                 }
             }
         });

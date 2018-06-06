@@ -9,25 +9,12 @@ function Skill(name)
 
     switch(this.name)
     {
-        case "Attack":
+        case "Shock":
         {
             visual_pattern =
                 [
-                    [NUL,ATT,MAN],
-                    [ATT,NUL,ATT],
-                    [MAN,ATT,NUL]
-                ];
-            pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("AGR");
-            break;
-        }
-
-        case "Block":
-        {
-            visual_pattern =
-                [
-                    [MAN,MAN,MAN],
-                    [ATT,ATT,ATT],
+                    [ATT,MAN,NUL],
+                    [ATT,ATT,NUL],
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
@@ -35,11 +22,11 @@ function Skill(name)
             break;
         }
 
-        case "Regen":
+        case "Stab":
         {
             visual_pattern =
                 [
-                    [MAN,MAN,MAN],
+                    [MOV,ATT,ATT],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
                 ];
@@ -48,25 +35,38 @@ function Skill(name)
             break;
         }
 
-        case "Heal":
+        case "Shield":
         {
             visual_pattern =
                 [
-                    [MAN,NUL,NUL],
-                    [NUL,NUL,NUL],
-                    [NUL,NUL,NUL]
+                    [DEF,NUL,NUL],
+                    [DEF,NUL,NUL],
+                    [DEF,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("AGR");
+            break;
+        }
+
+        case "Spiritarrow":
+        {
+            visual_pattern =
+                [
+                    [NUL,ATT,ATT],
+                    [NUL,MAN,ATT],
+                    [MAN,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("DMG");
             break;
         }
 
-        case "Dodge":
+        case "Shieldslam":
         {
             visual_pattern =
                 [
-                    [DEF,ATT,NUL],
-                    [ATT,ATT,NUL],
+                    [ATT,DEF,NUL],
+                    [ATT,DEF,NUL],
                     [NUL,NUL,NUL],
                 ];
             pattern = new SkillPattern(visual_pattern);
@@ -74,16 +74,21 @@ function Skill(name)
             break;
         }
 
-        case "Hook":
+        case "Shadowform":
         {
             visual_pattern =
+                /*[
+                    [MAN,MOV,MAN],
+                    [MOV,MAN,MOV],
+                    [MAN,MOV,MAN],
+                ];*/
                 [
-                    [ATT,ATT,NUL],
-                    [ATT,NUL,NUL],
-                    [MOV,NUL,NUL],
+                    [MAN,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL],
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("AGR");
+            effect  = new Effect("Transform");
             break;
         }
     }

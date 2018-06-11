@@ -13,6 +13,8 @@ function BattleEngine(battle_table)
     };
     this.selected_field_id = "";
     this.allow_select = true;
+    this.enemy_skill_chances = [];
+    this.enemy_skill_plays = [];
 
     for(let i=0; i<this.battle_table.height; i++)
     {
@@ -40,6 +42,56 @@ function BattleEngine(battle_table)
     this.resetTempTable = resetTempTable;
     this.anyFieldSelected = anyFieldSelected;
     this.deselectField = deselectField;
+    this.enemyTakesTurn = enemyTakesTurn;
+    this.calculateEnemySkillChances = calculateEnemySkillChances;
+    this.decideEnemySkills = decideEnemySkills;
+
+    function decideEnemySkills()
+    {
+        for(let i=0; i<this.enemy_skill_chances.length; i++)
+        {
+            let chance = (generateRandomNumber(100) + 1);
+            if(chance <= this.enemy_skill_chances[i])
+            {
+                this.enemy_skill_plays[i] = true;
+            }
+            else this.enemy_skill_plays[i] = false;
+            console.log(chance);
+        }
+    }
+
+    function calculateEnemySkillChances(skill, enemy)
+    {
+        for(let i=0; i<enemy.getSkills().length; i++)
+        {
+            switch(enemy.getSkills()[i].getSkillChanceType())
+            {
+                case "rage":
+                {
+                    this.enemy_skill_chances[i] = "100";
+                    break;
+                }
+
+                case "magmas":
+                {
+                    this.enemy_skill_chances[i] = "30";
+                    break;
+                }
+
+                case "nagy":
+                {
+                    this.enemy_skill_chances[i] = "100";
+                    break;
+                }
+            }
+        }
+    }
+
+    function enemyTakesTurn(skill, player, enemy, battle_table, id)
+    {
+        skill.effect = enemy.getSkills()[id].getSkillEffect();
+        this.activateSkill(skill.effect, player, enemy, battle_table);
+    }
 
     function resetTempTable()
     {
@@ -63,9 +115,9 @@ function BattleEngine(battle_table)
             enemy.hp -= effect.dmg;
             if(effect.transform == true)
             {
-                this.logTable();
+                //this.logTable();
                 this.transformTable();
-                this.logTable();
+                //this.logTable();
             }
         }
     }
@@ -202,14 +254,45 @@ function BattleEngine(battle_table)
             {
                 this.selected_fields.y1 = y;
                 this.selected_fields.x1 = x;
-                this.table[this.selected_fields.y0][this.selected_fields.x0].selected = false;
-                this.table[this.selected_fields.y1][this.selected_fields.x1].selected = false;
-                swap_field = true;
-                this.swapFields(this.selected_fields.x0, this.selected_fields.y0, this.selected_fields.x1, this.selected_fields.y1);
-                return swap_field;
+                if(neighbouringField(this.selected_fields))
+                {
+                    this.table[this.selected_fields.y0][this.selected_fields.x0].selected = false;
+                    this.table[this.selected_fields.y1][this.selected_fields.x1].selected = false;
+                    swap_field = true;
+                    this.swapFields(this.selected_fields.x0, this.selected_fields.y0, this.selected_fields.x1, this.selected_fields.y1);
+                    return swap_field;
+                }
+                else
+                {
+                    this.selected_fields.y1 = -1;
+                    this.selected_fields.x1 = -1;
+                    this.table[y][x].selected = false;
+                }
             }
         }
         return swap_field;
+    }
+
+    function neighbouringField(selected_fields)
+    {
+        this.selected_fields = selected_fields;
+
+        if(parseInt(this.selected_fields.x0) === parseInt(selected_fields.x1))
+        {
+            //alert("egy oszlopban");
+            if(parseInt(this.selected_fields.y0) === parseInt(this.selected_fields.y1)-1 || parseInt(this.selected_fields.y0) === parseInt(this.selected_fields.y1)+1)
+            {
+                return true;
+            }
+        }
+        else if(parseInt(this.selected_fields.y0) === parseInt(selected_fields.y1))
+        {
+            //alert("egy sorban");
+            if(parseInt(this.selected_fields.x0) === parseInt(this.selected_fields.x1)-1 || parseInt(this.selected_fields.x0) === parseInt(this.selected_fields.x1)+1)
+            {
+                return true;
+            }
+        }
     }
 
     function swapFields(x0, y0, x1, y1)
@@ -242,7 +325,7 @@ function BattleEngine(battle_table)
             {
                 if(this.temp_table[i][j].type == MOV || this.temp_table[i][j].type == DEF)
                 {
-                    if(generateRandomNumber(1) == 0) this.temp_table[i][j].type = ATT;
+                    if(generateRandomNumber(3) > 1) this.temp_table[i][j].type = ATT;
                     this.table[i][j].selected = false;
                 }
             }

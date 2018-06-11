@@ -9,7 +9,8 @@ function Effect(name)
      {
          self: false,
          transform: false,
-         dmg: 0
+         dmg: 0,
+         chance_type: ""
      };
 
 
@@ -29,11 +30,9 @@ function Effect(name)
             break;
         }
 
-        case "Transform":
+        case "Duhos":
         {
-            effect.self = false;
             effect.transform = true;
-            effect.dmg = 25;
             break;
         }
     }
@@ -45,4 +44,5 @@ function Effect(name)
     {
         return effect;
     }
+
 }

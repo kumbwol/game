@@ -14,20 +14,173 @@ function BattleGraphics(battle_table, engine)
     this.startFillTable = startFillTable;
     this.reNameIds = reNameIds;
     this.modifyTable = modifyTable;
+    this.drawAbilityPoints = drawAbilityPoints;
+    this.refreshAbilityPoint = refreshAbilityPoints;
+    this.drawEndTurn = drawEndTurn;
+    this.shakeEndTurn = shakeEndTurn;
+    this.disableEndTurn = disableEndTurn;
+    this.deleteEndTurn = deleteEndTurn;
+    this.enemySkillSelection = enemySkillSelection;
+    this.stopper = stopper;
 
-    let field_size = 52;
+    let field_size = 50;
     this.field_size = field_size;
+
+    function stopper(skill, player, enemy, battle_table, engine, i)
+    {
+        let done = $.Deferred();
+
+        if(engine.enemy_skill_plays[i])
+        {
+            drawActiveEnemySkill(engine.enemy_skill_plays.length, i);
+            engine.resetTempTable();
+            this.deleteSelector(engine.selected_field_id);
+            engine.enemyTakesTurn(skill, player, enemy, battle_table, i);
+
+            this.modifyTable(engine).done(function()
+            {
+                engine.refreshTable();
+                engine.calculateNewTable();
+                reNameIds(engine);
+                reFillTable(engine);
+                engine.refreshTable();
+
+                done.resolve();
+                /*engine.logTable();
+                engine.logTempTable();*/
+            });
+        }
+        else done.resolve();
+
+
+        return done;
+    }
+
+    function drawActiveEnemySkill(number_of_skills, id)
+    {
+        for(let i=1; i<=number_of_skills; i++)
+        {
+            $("#enemy_skill_" + i).removeClass("activated");
+        }
+        $("#enemy_skill_" + (id+1)).addClass("activated");
+    }
+
+    function enemySkillSelection(enemy_skill_plays)
+    {
+        let done = $.Deferred();
+
+        var x = setInterval(function()
+        {
+            for(let i=0; i<enemy_skill_plays.length; i++)
+            {
+                $("#enemy_skill_chance_" + (i+1)).html(generateRandomNumber(100) + 1);
+            }
+        }, 5);
+
+        setTimeout(function()
+        {
+            clearInterval(x);
+            for(let i=0; i<enemy_skill_plays.length; i++)
+            {
+                $("#enemy_skill_chance_" + (i+1)).empty();
+                $("#enemy_skill_chance_" + (i+1)).removeClass();
+                $("#enemy_skill_chance_" + (i+1)).addClass("enemy_chane_happen");
+                if(enemy_skill_plays[i])
+                {
+                    $("#enemy_skill_chance_" + (i+1)).addClass("success");
+                }
+                else $("#enemy_skill_chance_" + (i+1)).addClass("failure");
+                done.resolve();
+            }
+        }, 600);
+
+
+
+
+
+        return done;
+    }
+
+    function generateRandomNumber(max_number)
+    {
+        return Math.floor(Math.random() * max_number);
+    }
+
+    function disableEndTurn()
+    {
+        $("#end_turn").css("background-color", "grey");
+    }
+
+    function deleteEndTurn()
+    {
+        $("#end_turn").remove();
+    }
+
+    function shakeEndTurn()
+    {
+        let object = $("#end_turn");
+        let shake_speed = "1s";
+        object.css(
+            {
+                "-webkit-animation-duration": shake_speed,
+                "-moz-animation-duration": shake_speed,
+                "-ms-animation-duration": shake_speed,
+                "-o-animation-duration": shake_speed,
+                "animation-duration": shake_speed
+            }
+        );
+        object.attr("class", "animated shake").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+        {
+            object.removeClass();
+        });
+    }
+
+    function drawEndTurn()
+    {
+        $("#ability_point_bg").remove();
+        $("#game_background").append('<div id="end_turn"></div>');
+        $("#end_turn").css("background-color", end_turn_color);
+        allignToMiddle($("#end_turn"));
+        $("#end_turn").append('<div id="end_turn_string">End Turn</div>');
+        allignToMiddle($("#end_turn_string"));
+    }
+
+    function drawAbilityPoints(player)
+    {
+        if(player.ap > 0)
+        {
+            $("#game_background").append('<div id="ability_point_bg"></div>');
+            allignToMiddle($("#ability_point_bg"));
+
+            refreshAbilityPoints(player);
+        }
+        else
+        {
+            this.drawEndTurn();
+        }
+    }
+
+    function refreshAbilityPoints(player)
+    {
+        $("#ability_point").remove();
+        $("#ability_point_bg").append('<div id="ability_point"></div>');
+        $("#ability_point").html(player.ap);
+        allignToMiddle($("#ability_point"));
+        $("#ability_point").css("left", "-=1px");
+    }
 
     function myfade(object, cb)
     {
+        let fade_speed = "0.6s";
+
         let class_name = object.attr("class");
         object.css(
             {
-                "-webkit-animation-duration": "0.3s",
-                "-moz-animation-duration": "0.3s",
-                "-ms-animation-duration": "0.3s",
-                "-o-animation-duration": "0.3s",
-                "animation-duration": "0.3s"
+                "-webkit-animation-duration": fade_speed,
+                "-moz-animation-duration": fade_speed,
+                "-ms-animation-duration": fade_speed,
+                "-o-animation-duration": fade_speed,
+                "animation-duration": fade_speed
             }
         );
         object.attr("class", class_name + " animated fadeOut").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
@@ -56,40 +209,10 @@ function BattleGraphics(battle_table, engine)
                 {
                     wait_animation = true;
 
-                    //alert(class_name);
-
                     myfade($("#y_" + i + "_x_" + j), function()
                     {
                         done.resolve();
                     });
-
-
-
-
-
-
-                    /*$("#y_" + i + "_x_" + j).attr("class", "attack");
-                    done.resolve();*/
-
-                    /*$("#y_" + i + "_x_" + j).fadeOut(300, function()
-                    {
-                        //$("#y_" + i + "_x_" + j).attr("class", "attack");
-                        //$("#y_" + i + "_x_" + j).removeClass();
-                        //$("#y_" + i + "_x_" + j).addClass('attack');
-                        $("#y_" + i + "_x_" + j).fadeIn(300, function()
-                        {
-                            done.resolve();
-                        });
-                    });*/
-                    /*$("#y_" + i + "_x_" + j).fadeOut(3000).queue(function(next)
-                    {
-                        $("#y_" + i + "_x_" + j).attr("class", "attack");
-                        next();
-                    }).fadeIn(3000, function()
-                    {
-                        done.resolve();
-                    });*/
-                    //$("#y_" + i + "_x_" + j).attr("class", "attack");
                 }
             }
         }
@@ -207,36 +330,6 @@ function BattleGraphics(battle_table, engine)
         let magassag = "+=" + eses;
 
         object.animate({"top": magassag}, (time)).animate({"top": "-=20"}, (time/3)).animate({"top": "+=16"}, (time/3)).animate({"top": "-=6"}, (time/6)).animate({"top": "+=2"}, (time/6));
-
-        /*object.animate(
-            {
-                top: magassag
-            }, (time)
-        );
-
-        object.animate(
-            {
-                top: "-=20"
-            }, (time/3)
-        );
-
-        object.animate(
-            {
-                top: "+=16"
-            }, (time/3)
-        );
-
-        object.animate(
-            {
-                top: "-=6"
-            }, (time/6)
-        );
-
-        object.animate(
-            {
-                top: "+=2"
-            }, (time/6)
-        );*/
     }
 
     function drawTopBar()
@@ -260,12 +353,12 @@ function BattleGraphics(battle_table, engine)
         skill.width  = player.getSkills()[skill_id].getSkillPatternWidth()*(field_size+1)  + 1;
     }
 
-    function drawSkillBars(player, enemy)
+    function drawSkillBars(player, enemy, enemy_skill_chances)
     {
         $("#player_profile").remove();
         $("#enemy_profile").remove();
         drawSkillBarPlayer(player);
-        drawSkillBarEnemy(enemy);
+        drawSkillBarEnemy(enemy, enemy_skill_chances);
     }
 
     function drawSkillBarPlayer(player)
@@ -294,10 +387,10 @@ function BattleGraphics(battle_table, engine)
         $("#player_profile").append('<div class="active_skill" id="skill_4"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_5"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_6"></div>');
-        createSkills(player);
+        createPlayerSkills(player);
     }
 
-    function drawSkillBarEnemy(enemy)
+    function drawSkillBarEnemy(enemy, enemy_skill_chances)
     {
         $("#game_background").append('<div class="profile" id="enemy_profile"></div>');
 
@@ -322,14 +415,42 @@ function BattleGraphics(battle_table, engine)
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_4"></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_5"></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_6"></div>');
+
+        $("#enemy_skill_1").append('<div class="skill_chance" id="enemy_skill_chance_1"></div>');
+        $("#enemy_skill_2").append('<div class="skill_chance" id="enemy_skill_chance_2"></div>');
+        $("#enemy_skill_3").append('<div class="skill_chance" id="enemy_skill_chance_3"></div>');
+
+        createEnemySkills(enemy, enemy_skill_chances);
     }
 
+    function createEnemySkills(enemy, enemy_skill_chances)
+    {
+        createEnemySkillName(enemy);
+        drawEnemySkillChances(enemy_skill_chances)
+    }
 
-    function createSkills(player)
+    function createEnemySkillName(enemy)
+    {
+        for(let i=0; i<enemy.getSkills().length; i++)
+        {
+            $("#enemy_skill_"+(i+1)).append('<div class="skill_name_string"></div>');
+            let class_selector = "#enemy_skill_" + (i+1) + " .skill_name_string";
+            $(class_selector).html(enemy.getSkills()[i].name);
+        }
+    }
+
+    function drawEnemySkillChances(enemy_skill_chances)
+    {
+        for(let i=0; i<enemy_skill_chances.length; i++)
+        {
+            $("#enemy_skill_chance_" + (parseInt(i)+1)).html(enemy_skill_chances[i] + "%");
+        }
+    }
+
+    function createPlayerSkills(player)
     {
         createSkillName(player);
         createSkillPattern(player);
-
     }
 
     function createSkillName(player)
@@ -492,16 +613,19 @@ function BattleGraphics(battle_table, engine)
 
     function deleteSelector(id)
     {
-        let $object = $("#" + id);
-        /*let current_bg = $object.css("background-image");
-        let new_bg = "";
-        for(let i=0; i<current_bg.length; i++)
+        if(id!="")
         {
-            if(current_bg[i] == ",") break;
-            else new_bg += current_bg[i];
+            let $object = $("#" + id);
+            /*let current_bg = $object.css("background-image");
+            let new_bg = "";
+            for(let i=0; i<current_bg.length; i++)
+            {
+                if(current_bg[i] == ",") break;
+                else new_bg += current_bg[i];
+            }
+            $object.css("background-image", new_bg);*/
+            $object.css("background-image", "");
         }
-        $object.css("background-image", new_bg);*/
-        $object.css("background-image", "");
     }
 
     function createRow(class_name)
@@ -571,11 +695,11 @@ function BattleGraphics(battle_table, engine)
 
     function updateHpBar(object, player)
     {
-        object.css("width", (player.hp/player.max_hp) * object.parent().width());
+        object.css("width", (player.hp/player.max_hp) * object.parent().width() - 1);
     }
 
     function updateEnemyHpBar(object, enemy)
     {
-        object.css("width", (enemy.hp/enemy.max_hp) * object.parent().width());
+        object.css("width", (enemy.hp/enemy.max_hp) * object.parent().width() - 1);
     }
 }

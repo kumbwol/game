@@ -4,11 +4,61 @@ html, body
     width:100%;
     margin:0;
     padding:0;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-body
+#end_turn_string
+{
+    position: absolute;
+    top: 4px;
+    font-weight: bold;
+    font-size: 30px;
+    color: black;
+
+    font-family: Lato;
+}
+
+#end_turn
+{
+    position: absolute;
+    top: 490px;
+    width: 130px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#ability_point
+{
+    position: absolute;
+    top: 2px;
+    z-index: 2;
+    font-weight: bold;
+    font-size: 40px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: Lato;
+}
+
+#ability_point_bg
 {
     padding: 0px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: gold;
+    top: 487px;
+    position: absolute;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
 
 .top_bar
@@ -68,7 +118,7 @@ body
 {
     position: absolute;
     width: 200px;
-    height: 540px;
+    height: 538px;
     background-color: bisque;
     border: 1px solid black;
     box-sizing: border-box;
@@ -83,7 +133,7 @@ body
 #enemy_profile
 {
     top: 0px;
-    left: 760px;
+    left: 758px;
 }
 
 .hp
@@ -94,7 +144,7 @@ body
     width: 198px;
     height: 20px;
     background-color: red;
-    border: 1px solid black;
+    border: solid black;
     border-width: 1px 0px 1px 1px;
     box-sizing: border-box;
     z-index: 1;
@@ -130,7 +180,7 @@ body
     top: 40px;
     left: 0px;
     width: 198px;
-    height: 30px;
+    height: 28px;
     background-color: gray;
     border: 1px solid black;
     box-sizing: border-box;
@@ -156,7 +206,7 @@ body
 .profile_picture
 {
     position: absolute;
-    top: 70px;
+    top: 68px;
     left: 0px;
     width: 198px;
     height: 114px;
@@ -188,78 +238,114 @@ body
 
 #skill_1
 {
-    top: 184px;
+    top: 182px;
     left: 0px;
 }
 
 #skill_2
 {
-    top: 243px;
+    top: 241px;
     left: 0px;
 }
 
 #skill_3
 {
-    top: 302px;
+    top: 300px;
     left: 0px;
 }
 
 #skill_4
 {
-    top: 361px;
+    top: 359px;
     left: 0px;
 }
 
 #skill_5
 {
-    top: 420px;
+    top: 418px;
     left: 0px;
 }
 
 #skill_6
 {
-    top: 479px;
+    top: 477px;
     left: 0px;
 }
 
 #enemy_skill_1
 {
-    top: 184px;
+    top: 182px;
     left: 0px;
 }
 
 #enemy_skill_2
 {
-    top: 243px;
+    top: 241px;
     left: 0px;
 }
 
 #enemy_skill_3
 {
-    top: 302px;
+    top: 300px;
     left: 0px;
 }
 
 #enemy_skill_4
 {
-    top: 361px;
+    top: 359px;
     left: 0px;
 }
 
 #enemy_skill_5
 {
-    top: 420px;
+    top: 418px;
     left: 0px;
 }
 
 #enemy_skill_6
 {
-    top: 479px;
+    top: 477px;
     left: 0px;
+}
+
+.skill_chance
+{
+    padding-top: 14px;
+    padding-right: 10px;
+    vertical-align: middle;
+    font-size: 26px;
+    float: right;
+}
+
+.activated
+{
+    border: 2px solid yellow;
+}
+
+.enemy_chane_happen
+{
+    position: absolute;
+    top: 8px;
+    left: 145px;
+    width: 43px;
+    height: 41px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.success
+{
+    background-image: url("images/success.png");
+}
+
+.failure
+{
+    background-image: url("images/failure.png");
 }
 
 #game_background
 {
+    position: absolute;
     width: 960px;
     height: 540px;
     background-color: lightblue;
@@ -290,7 +376,7 @@ body
 #battle_table
 {
     position: absolute;
-    top: 20px;
+    top: 5px;
     background-color: dimgrey;
     padding: 0px;
     border: 10px solid black;
@@ -307,19 +393,6 @@ body
     background-position: center;
     background-color: burlywood;
     border-radius: 50%;
-
-
-    /*-webkit-animation-duration: 0.3s;
-    -moz-animation-duration: 0.3s;
-    -ms-animation-duration: 0.3s;
-    -o-animation-duration: 0.3s;
-    animation-duration: 0.3s;*/
-
-    /*-webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
-    -ms-animation-duration: 1s;
-    -o-animation-duration: 1s;
-    animation-duration: 1s*/
 }
 
 .selected_skill div.attack,

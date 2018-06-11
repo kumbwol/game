@@ -5,6 +5,8 @@ function Player(name)
     this.name = name;
     this.hp = 100;
     this.max_hp = 100;
+    this.ap = 0;
+    this.max_ap = 1;
 
     let skills = [];
     skills[0] = new Skill("Shock");

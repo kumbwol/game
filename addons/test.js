@@ -20,6 +20,8 @@ $(function()
             moving: false
         };
 
+        let player_turn = true;
+
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
         let enemy  = new Enemy("Skeleton");
@@ -27,47 +29,50 @@ $(function()
 
         $("#create_table").on("click", function()
         {
-            graphics.drawSkillBars(player, enemy);
+            engine.calculateEnemySkillChances(skill, enemy);
+            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
             graphics.drawTable(battle_table);
+            graphics.drawAbilityPoints(player);
 
             engine.calculateNewTable();
             graphics.reNameIds(engine);
             graphics.startFillTable(engine);
             //graphics.reFillTable(engine);
             engine.refreshTable();
+
+
         });
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move", function()
         {
-            //alert($(this).attr("id"));
-            //alert(y + " " + x);
-            //alert(engine.allow_select);
-            if(engine.allow_select && !skill.moving)
+            if(player.ap > 0 && player_turn)
             {
-                let y = ($(this).attr("id"))[2];
-                let x = ($(this).attr("id"))[6];
-                if(!engine.selectField(y, x))
+                if(engine.allow_select && !skill.moving)
                 {
-                    if(engine.table[y][x].selected) graphics.drawSelector($(this).attr("id"));
-                    else graphics.deleteSelector($(this).attr("id"));
-                }
-                else
-                {
-                    graphics.deleteSelector(engine.selected_field_id);
-                    graphics.swapFields(engine);
-                    //$(this).animate({"top": "0px", "left": "0px"}, 1000);
+                    let y = ($(this).attr("id"))[2];
+                    let x = ($(this).attr("id"))[6];
+                    if(!engine.selectField(y, x))
+                    {
+                        if(engine.table[y][x].selected) graphics.drawSelector($(this).attr("id"));
+                        else graphics.deleteSelector($(this).attr("id"));
+                    }
+                    else
+                    {
+                        graphics.deleteSelector(engine.selected_field_id);
+                        graphics.swapFields(engine);
+                        player.ap--;
+                        if(player.ap > 0) graphics.refreshAbilityPoint(player);
+                        else graphics.drawEndTurn();
+                    }
                 }
             }
-            if(skill.moving)
+            else if(!skill.moving)
             {
-                /*for(let i=0; i<skill.table_height; i++)
-                {
-                    for(let j=0; j<skill.table_width; j++)
-                    {
-                        alert(skill.table[i][j]);
-                    }
-                }*/
+                graphics.shakeEndTurn();
+            }
 
+            if(skill.moving && player_turn)
+            {
                 if(engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
                 {
                     for(let i=0; i<skill.table_height; i++)
@@ -82,7 +87,6 @@ $(function()
                         }
                     }
 
-
                     engine.resetTempTable();
                     graphics.deleteSelector(engine.selected_field_id);
                     engine.activateSkill(skill.effect, player, enemy, graphics, battle_table);
@@ -91,24 +95,12 @@ $(function()
                     {
                         engine.refreshTable();
                         engine.calculateNewTable();
-                        graphics.drawSkillBars(player, enemy);
+                        engine.calculateEnemySkillChances(skill, enemy);
+                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
                         graphics.reNameIds(engine);
                         graphics.reFillTable(engine);
                         engine.refreshTable();
-                        engine.logTable();
-                        engine.logTempTable();
                     });
-
-
-                    /*engine.refreshTable();
-                    engine.calculateNewTable();
-                    graphics.drawSkillBars(player, enemy);
-                    graphics.reNameIds(engine);
-                    graphics.reFillTable(engine);
-                    engine.refreshTable();
-                    engine.logTable();
-                    engine.logTempTable();*/
-
                 }
             }
         });
@@ -122,6 +114,7 @@ $(function()
 
             if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
             else $(".selected_skill").css("left", 0);
+
             if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
             else $(".selected_skill").css("top", 540-skill.height);
 
@@ -158,6 +151,55 @@ $(function()
             {
                 //alert("szia");
             }
+        });
+
+        $("#game_background").on("click", "#end_turn", function()
+        {
+            if(player_turn)
+            {
+                player_turn = false;
+                graphics.disableEndTurn();
+
+                engine.decideEnemySkills();
+                graphics.enemySkillSelection(engine.enemy_skill_plays).done(function()
+                {
+                    //alert("kesz");
+
+                    let i=0;
+
+                    graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                    {
+                        i++;
+                        graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                        {
+                            i++;
+                            graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                            {
+                                i++;
+                                graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                                {
+                                    i++;
+                                    graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                                    {
+                                        i++;
+                                        graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                                        {
+                                            engine.calculateEnemySkillChances(skill, enemy);
+                                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+
+                                            player_turn = true;
+                                            player.ap = player.max_ap;
+                                            graphics.deleteEndTurn();
+                                            graphics.drawAbilityPoints(player);
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            }
+
         });
 
     }

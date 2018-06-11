@@ -7,7 +7,9 @@ let images = [
     "addons/images/heal.png",
     "addons/images/self.png",
     "addons/images/skeleton.png",
-    "addons/images/selector.gif"
+    "addons/images/selector.gif",
+    "addons/images/success.png",
+    "addons/images/failure.png"
 ];
 
 let $object = [];

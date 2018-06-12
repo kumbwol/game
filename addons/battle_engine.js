@@ -15,6 +15,7 @@ function BattleEngine(battle_table)
     this.allow_select = true;
     this.enemy_skill_chances = [];
     this.enemy_skill_plays = [];
+    this.table_modified = false;
 
     for(let i=0; i<this.battle_table.height; i++)
     {
@@ -68,7 +69,8 @@ function BattleEngine(battle_table)
             {
                 case "rage":
                 {
-                    this.enemy_skill_chances[i] = "100";
+                    //this.enemy_skill_chances[i] = "100";
+                    this.enemy_skill_chances[i] = enemy.hp;
                     break;
                 }
 
@@ -311,6 +313,7 @@ function BattleEngine(battle_table)
                 if(table[i][j].type == NUL)
                 {
                     table[i][j].type = generateRandomNumber(4)+1;
+                    //table[i][j].type = ATT;
                     table[i][j].selected = false;
                 }
             }
@@ -319,13 +322,18 @@ function BattleEngine(battle_table)
 
     function transformTable()
     {
+        this.table_modified = false;
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
                 if(this.temp_table[i][j].type == MOV || this.temp_table[i][j].type == DEF)
                 {
-                    if(generateRandomNumber(3) > 1) this.temp_table[i][j].type = ATT;
+                    if(generateRandomNumber(3) > 1)
+                    {
+                        this.temp_table[i][j].type = ATT;
+                        this.table_modified = true;
+                    }
                     this.table[i][j].selected = false;
                 }
             }

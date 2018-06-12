@@ -33,6 +33,14 @@ function Effect(name)
         case "Duhos":
         {
             effect.transform = true;
+            effect.dmg = 25;
+            break;
+        }
+
+        case "Transform":
+        {
+            effect.transform = true;
+            effect.dmg = 25;
             break;
         }
     }

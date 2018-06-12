@@ -163,8 +163,10 @@ $(function()
                 engine.decideEnemySkills();
                 graphics.enemySkillSelection(engine.enemy_skill_plays).done(function()
                 {
+
                     //alert("kesz");
 
+                    //graphics.deleteSelector(engine.selected_field_id);
                     let i=0;
 
                     graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
@@ -187,8 +189,10 @@ $(function()
                                             engine.calculateEnemySkillChances(skill, enemy);
                                             graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
 
+
+
                                             player_turn = true;
-                                            player.ap = player.max_ap;
+                                            //player.ap = player.max_ap;
                                             graphics.deleteEndTurn();
                                             graphics.drawAbilityPoints(player);
                                         });
@@ -199,7 +203,6 @@ $(function()
                     });
                 });
             }
-
         });
 
     }

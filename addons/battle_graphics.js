@@ -33,22 +33,29 @@ function BattleGraphics(battle_table, engine)
         if(engine.enemy_skill_plays[i])
         {
             drawActiveEnemySkill(engine.enemy_skill_plays.length, i);
-            engine.resetTempTable();
-            this.deleteSelector(engine.selected_field_id);
+
             engine.enemyTakesTurn(skill, player, enemy, battle_table, i);
 
-            this.modifyTable(engine).done(function()
+            if(engine.table_modified)
             {
-                engine.refreshTable();
-                engine.calculateNewTable();
-                reNameIds(engine);
-                reFillTable(engine);
-                engine.refreshTable();
+                this.modifyTable(engine).done(function()
+                {
+                    //engine.refreshTable();
+                    //engine.calculateNewTable();
+                    //reNameIds(engine);
+                    //reFillTable(engine);
+                    engine.refreshTable();
+                    engine.resetTempTable();
 
+                    done.resolve();
+                    /*engine.logTable();
+                    engine.logTempTable();*/
+                });
+            }
+            else
+            {
                 done.resolve();
-                /*engine.logTable();
-                engine.logTempTable();*/
-            });
+            }
         }
         else done.resolve();
 
@@ -84,18 +91,15 @@ function BattleGraphics(battle_table, engine)
             {
                 $("#enemy_skill_chance_" + (i+1)).empty();
                 $("#enemy_skill_chance_" + (i+1)).removeClass();
-                $("#enemy_skill_chance_" + (i+1)).addClass("enemy_chane_happen");
+                $("#enemy_skill_chance_" + (i+1)).addClass("enemy_chance_happen");
                 if(enemy_skill_plays[i])
                 {
                     $("#enemy_skill_chance_" + (i+1)).addClass("success");
                 }
                 else $("#enemy_skill_chance_" + (i+1)).addClass("failure");
-                done.resolve();
             }
+            done.resolve();
         }, 600);
-
-
-
 
 
         return done;
@@ -416,6 +420,7 @@ function BattleGraphics(battle_table, engine)
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_5"></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_6"></div>');
 
+
         $("#enemy_skill_1").append('<div class="skill_chance" id="enemy_skill_chance_1"></div>');
         $("#enemy_skill_2").append('<div class="skill_chance" id="enemy_skill_chance_2"></div>');
         $("#enemy_skill_3").append('<div class="skill_chance" id="enemy_skill_chance_3"></div>');
@@ -441,9 +446,10 @@ function BattleGraphics(battle_table, engine)
 
     function drawEnemySkillChances(enemy_skill_chances)
     {
+
         for(let i=0; i<enemy_skill_chances.length; i++)
         {
-            $("#enemy_skill_chance_" + (parseInt(i)+1)).html(enemy_skill_chances[i] + "%");
+            $("#enemy_skill_chance_" + (i+1)).html(enemy_skill_chances[i] + "%");
         }
     }
 

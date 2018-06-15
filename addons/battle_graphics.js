@@ -21,12 +21,96 @@ function BattleGraphics(battle_table, engine)
     this.disableEndTurn = disableEndTurn;
     this.deleteEndTurn = deleteEndTurn;
     this.enemySkillSelection = enemySkillSelection;
-    this.stopper = stopper;
+    this.enemysTurn = enemysTurn;
+    this.shadowingEnemySkills = shadowingEnemySkills;
+    this.animateDamageNumbers = animateDamageNumbers;
 
     let field_size = 50;
     this.field_size = field_size;
 
-    function stopper(skill, player, enemy, battle_table, engine, i)
+    function animateDamageNumbers(effect)
+    {
+        let done = $.Deferred();
+
+        let animation_speed = "1s";
+
+
+        $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+
+        let object = $("#dmg_counter");
+
+        object.html("-" + effect.dmg);
+        allignToMiddle(object);
+        allignToMiddleY(object);
+        object.css(
+            {
+                "-webkit-animation-duration": animation_speed,
+                "-moz-animation-duration": animation_speed,
+                "-ms-animation-duration": animation_speed,
+                "-o-animation-duration": animation_speed,
+                "animation-duration": animation_speed
+            }
+        );
+        object.addClass("animated bounce").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+        {
+            setTimeout(function()
+            {
+                object.remove();
+                done.resolve();
+            }, 200);
+        });
+
+        return done;
+    }
+
+    function shadowingEnemySkills(enemy_skill_plays)
+    {
+        let done = $.Deferred();
+
+        let shadowing_needed = false;
+
+        for(let i=0; i<enemy_skill_plays.length; i++)
+        {
+            if(!enemy_skill_plays[i])
+            {
+                $("#enemy_skill_" + (i+1)).append('<div class="shadow"></div>');
+                shadowing_needed = true;
+            }
+        }
+
+        if(shadowing_needed)
+        {
+            $(".shadow").css("height", $(".shadow").parent().outerHeight());
+            $(".shadow").css("width", $(".shadow").parent().outerWidth());
+
+
+            let x = setInterval(function()
+            {
+
+                $(".shadow").css("opacity", "+=0.01");
+
+            }, 20);
+
+            setTimeout(function()
+            {
+                clearInterval(x);
+                done.resolve();
+            }, 1000);
+        }
+        else
+        {
+            setTimeout(function()
+            {
+                done.resolve();
+            }, 200);
+        }
+
+
+
+        return done;
+    }
+
+    function enemysTurn(skill, player, enemy, battle_table, engine, i)
     {
         let done = $.Deferred();
 
@@ -40,21 +124,29 @@ function BattleGraphics(battle_table, engine)
             {
                 this.modifyTable(engine).done(function()
                 {
-                    //engine.refreshTable();
-                    //engine.calculateNewTable();
-                    //reNameIds(engine);
-                    //reFillTable(engine);
                     engine.refreshTable();
                     engine.resetTempTable();
-
                     done.resolve();
-                    /*engine.logTable();
-                    engine.logTempTable();*/
                 });
             }
             else
             {
-                done.resolve();
+                setTimeout(function()
+                {
+                    $("#self").append('<div id="cut"></div>');
+                    $("#cut").animateSprite({
+                        fps: 30,
+                        animations: {
+                            cut: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                        },
+                        loop: false,
+                        complete: function(){
+                            $("#cut").remove();
+                            updateHpBar($("#player_hp"), player);
+                            done.resolve();
+                        }
+                    });
+                }, 300);
             }
         }
         else done.resolve();
@@ -583,6 +675,14 @@ function BattleGraphics(battle_table, engine)
         $(object).css("left", (parent_object_width-object_width)/2);
     }
 
+    function allignToMiddleY(object)
+    {
+        let object_height = $(object).outerHeight();
+        let parent_object_height = $(object).parent().outerHeight();
+
+        $(object).css("top", (parent_object_height-object_height)/2);
+    }
+
     function allignToVerticalMiddle(object)
     {
         let object_height = $(object).outerHeight();
@@ -702,10 +802,14 @@ function BattleGraphics(battle_table, engine)
     function updateHpBar(object, player)
     {
         object.css("width", (player.hp/player.max_hp) * object.parent().width() - 1);
+        $("#player_hp_string").html(player.hp + "/" + player.max_hp);
+        allignToMiddle("#player_hp_string");
     }
 
     function updateEnemyHpBar(object, enemy)
     {
         object.css("width", (enemy.hp/enemy.max_hp) * object.parent().width() - 1);
+        $("#enemy_hp_string").html(enemy.hp + "/" + enemy.max_hp);
+        allignToMiddle("#enemy_hp_string");
     }
 }

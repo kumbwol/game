@@ -11,6 +11,11 @@ function BattleEngine(battle_table)
         y1: -1,
         x1: -1
     };
+    this.skill_type = {
+        dmg: false,
+        heal: false,
+        transform: false
+    };
     this.selected_field_id = "";
     this.allow_select = true;
     this.enemy_skill_chances = [];
@@ -70,7 +75,7 @@ function BattleEngine(battle_table)
                 case "rage":
                 {
                     //this.enemy_skill_chances[i] = "100";
-                    this.enemy_skill_chances[i] = enemy.hp;
+                    this.enemy_skill_chances[i] = enemy.max_hp - enemy.hp;
                     break;
                 }
 
@@ -91,8 +96,9 @@ function BattleEngine(battle_table)
 
     function enemyTakesTurn(skill, player, enemy, battle_table, id)
     {
+        let player_turn = false;
         skill.effect = enemy.getSkills()[id].getSkillEffect();
-        this.activateSkill(skill.effect, player, enemy, battle_table);
+        this.activateSkill(skill.effect, player, enemy, player_turn);
     }
 
     function resetTempTable()
@@ -106,21 +112,53 @@ function BattleEngine(battle_table)
         }
     }
 
-    function activateSkill(effect, player, enemy, table)
+    function activateSkill(effect, player, enemy, players_turn)
     {
+        this.skill_type.dmg = false;
+        this.skill_type.heal = false;
+        this.skill_type.transform = false;
+
+        let unit;
         if(effect.self == true)
         {
-            player.hp -= effect.dmg;
+
+            if(players_turn)
+            {
+                unit = player;
+            }
+            else unit = enemy;
         }
         else
         {
-            enemy.hp -= effect.dmg;
-            if(effect.transform == true)
+            if(players_turn)
             {
-                //this.logTable();
-                this.transformTable();
-                //this.logTable();
+                unit = enemy;
             }
+            else unit = player;
+        }
+
+        if(effect.dmg > 0)
+        {
+            unit.hp -= effect.dmg;
+            this.skill_type.dmg = true;
+        }
+
+        if(effect.heal > 0)
+        {
+            unit.hp += effect.heal;
+
+            if(unit.hp>unit.max_hp)
+            {
+                unit.hp = unit.max_hp;
+            }
+
+            this.skill_type.heal = false;
+        }
+
+
+        if(effect.transform == true)
+        {
+            this.transformTable();
         }
     }
 
@@ -141,6 +179,8 @@ function BattleEngine(battle_table)
 
     function canActivateSkill(skill, x, y)
     {
+        //alert("beleptem");
+        this.logTable();
         if((x+skill.table_width)<=this.battle_table.width && (y+skill.table_height)<=this.battle_table.height)
         {
             for(let i=0; i<skill.table_height; i++)
@@ -149,7 +189,14 @@ function BattleEngine(battle_table)
                 {
                     if(skill.table[i][j] != NUL)
                     {
-                        if(skill.table[i][j] != this.table[y+i][x+j].type) return false;
+                        if(skill.table[i][j] != this.table[y+i][x+j].type)
+                        {
+                            /*alert(i);
+                            alert(j);
+                            alert(skill.table[i][j]);
+                            alert(this.table[y+i][x+j].type);*/
+                            return false;
+                        }
                     }
                 }
             }
@@ -329,7 +376,7 @@ function BattleEngine(battle_table)
             {
                 if(this.temp_table[i][j].type == MOV || this.temp_table[i][j].type == DEF)
                 {
-                    if(generateRandomNumber(3) > 1)
+                    if(generateRandomNumber(6) > 1)
                     {
                         this.temp_table[i][j].type = ATT;
                         this.table_modified = true;

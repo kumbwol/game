@@ -14,12 +14,15 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [ATT,MAN,NUL],
+                    /*[ATT,ATT,NUL],
                     [ATT,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [ATT,NUL,NUL],
+                    [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("AGR");
+            effect  = new Effect("DMG");
             break;
         }
 
@@ -45,7 +48,7 @@ function Skill(name)
                     [DEF,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("AGR");
+            effect  = new Effect("Heal");
             break;
         }
 
@@ -53,12 +56,12 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [NUL,ATT,ATT],
-                    [NUL,MAN,ATT],
-                    [MAN,NUL,NUL]
+                    [ATT,ATT,NUL],
+                    [ATT,MAN,NUL],
+                    [NUL,NUL,MAN]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("DMG");
+            effect  = new Effect("DMG2");
             break;
         }
 
@@ -78,16 +81,16 @@ function Skill(name)
         case "Shadowform":
         {
             visual_pattern =
-                /*[
+                [
                     [MAN,MOV,MAN],
                     [MOV,MAN,MOV],
                     [MAN,MOV,MAN],
-                ];*/
-                [
+                ];
+                /*[
                     [MAN,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL],
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("Transform");
             break;
@@ -95,21 +98,21 @@ function Skill(name)
 
         case "Duhos":
         {
-            effect = new Effect("Duhos");
+            effect = new Effect("DMG2");
             chance_type = "rage";
             break;
         }
 
         case "Vedekezes":
         {
-            effect = new Effect("Duhos");
+            effect = new Effect("Heal");
             chance_type = "magmas";
             break;
         }
 
         case "Valami":
         {
-            effect = new Effect("Duhos");
+            effect = new Effect("AGR");
             chance_type = "nagy";
             break;
         }

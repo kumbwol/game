@@ -10,7 +10,8 @@ function Effect(name)
          self: false,
          transform: false,
          dmg: 0,
-         chance_type: ""
+         chance_type: "",
+         heal: 0
      };
 
 
@@ -18,29 +19,51 @@ function Effect(name)
     {
         case "DMG":
         {
-            effect.self = false;
-            effect.dmg = 25;
+            effect.dmg = 5;
+            break;
+        }
+
+        case "DMG2":
+        {
+            effect.dmg = 20;
             break;
         }
 
         case "AGR":
         {
-            effect.self = true;
-            effect.dmg = 25;
+            effect.dmg = 10;
             break;
         }
 
         case "Duhos":
         {
-            effect.transform = true;
-            effect.dmg = 25;
+            //effect.transform = true;
+            effect.transform = false;
+            effect.self = true;
+            effect.dmg = 20;
+            effect.heal = 0;
             break;
         }
 
         case "Transform":
         {
             effect.transform = true;
-            effect.dmg = 25;
+            break;
+        }
+
+        case "Heal":
+        {
+            effect.self = true;
+            effect.heal = 5;
+            break;
+        }
+
+        case "EnemyHeal":
+        {
+            effect.transform = false;
+            effect.self = true;
+            effect.heal = 5;
+            effect.dmg = 0;
             break;
         }
     }

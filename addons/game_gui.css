@@ -13,6 +13,20 @@ html, body
     user-select: none;
 }
 
+#dmg_counter
+{
+    position: absolute;
+    /*top: 30px;*/
+    font-weight: bold;
+    font-size: 70px;
+    color: red;
+
+
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+    font-family: Lato;
+}
+
 #end_turn_string
 {
     position: absolute;
@@ -216,6 +230,16 @@ html, body
     background-image: url("images/self.png");
 }
 
+#cut
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 198px;
+    height: 114px;
+    background-image: url("images/osszeg_new.png");
+}
+
 #self
 {
     background-image: url("images/self.png");
@@ -234,6 +258,12 @@ html, body
     background-color: gray;
     border: 1px solid black;
     box-sizing: border-box;
+}
+
+.shadow
+{
+    background-color: black;
+    opacity: 0;
 }
 
 #skill_1

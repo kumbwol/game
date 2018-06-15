@@ -40,7 +40,6 @@ $(function()
             //graphics.reFillTable(engine);
             engine.refreshTable();
 
-
         });
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move", function()
@@ -89,18 +88,24 @@ $(function()
 
                     engine.resetTempTable();
                     graphics.deleteSelector(engine.selected_field_id);
-                    engine.activateSkill(skill.effect, player, enemy, graphics, battle_table);
+                    engine.activateSkill(skill.effect, player, enemy, player_turn);
 
-                    graphics.modifyTable(engine).done(function()
+                    graphics.animateDamageNumbers(skill.effect).done(function()
                     {
-                        engine.refreshTable();
-                        engine.calculateNewTable();
-                        engine.calculateEnemySkillChances(skill, enemy);
-                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
-                        graphics.reNameIds(engine);
-                        graphics.reFillTable(engine);
-                        engine.refreshTable();
+                        graphics.modifyTable(engine).done(function()
+                        {
+                            engine.refreshTable();
+                            engine.calculateNewTable();
+                            engine.calculateEnemySkillChances(skill, enemy);
+                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                            graphics.reNameIds(engine);
+                            graphics.reFillTable(engine);
+                            engine.refreshTable();
+                            engine.table_modified = false;
+                        });
                     });
+
+
                 }
             }
         });
@@ -161,18 +166,39 @@ $(function()
                 graphics.disableEndTurn();
 
                 engine.decideEnemySkills();
+
                 graphics.enemySkillSelection(engine.enemy_skill_plays).done(function()
                 {
-
-                    //alert("kesz");
-
-                    //graphics.deleteSelector(engine.selected_field_id);
-                    let i=0;
-
-                    graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                    graphics.shadowingEnemySkills(engine.enemy_skill_plays).done(function()
                     {
-                        i++;
-                        graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                        let i=0;
+
+                        graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                        {
+                            i++;
+                            graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                            {
+                                i++;
+                                graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                                {
+                                    i++;
+                                    graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                                    {
+                                        engine.calculateEnemySkillChances(skill, enemy);
+                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+
+
+
+                                        player_turn = true;
+                                        player.ap = player.max_ap;
+                                        graphics.deleteEndTurn();
+                                        graphics.drawAbilityPoints(player);
+                                    });
+                                });
+                            });
+                        });
+
+                        /*graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
                         {
                             i++;
                             graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
@@ -186,21 +212,26 @@ $(function()
                                         i++;
                                         graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
                                         {
-                                            engine.calculateEnemySkillChances(skill, enemy);
-                                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                                            i++;
+                                            graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
+                                            {
+                                                engine.calculateEnemySkillChances(skill, enemy);
+                                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
 
 
 
-                                            player_turn = true;
-                                            //player.ap = player.max_ap;
-                                            graphics.deleteEndTurn();
-                                            graphics.drawAbilityPoints(player);
+                                                player_turn = true;
+                                                player.ap = player.max_ap;
+                                                graphics.deleteEndTurn();
+                                                graphics.drawAbilityPoints(player);
+                                            });
                                         });
                                     });
                                 });
                             });
-                        });
-                    });
+                        });*/
+                    })
+
                 });
             }
         });

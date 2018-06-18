@@ -20,12 +20,15 @@ $(function()
             moving: false
         };
 
+        let player_selected_skill_id = 0;
+
         let player_turn = true;
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
         let enemy  = new Enemy("Skeleton");
         let graphics = new BattleGraphics(battle_table, engine, player);
+        let skill_activation_finished = true;
 
         $("#create_table").on("click", function()
         {
@@ -72,8 +75,9 @@ $(function()
 
             if(skill.moving && player_turn)
             {
-                if(engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
+                if(skill_activation_finished && engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
                 {
+                    skill_activation_finished = false;
                     for(let i=0; i<skill.table_height; i++)
                     {
                         for(let j=0; j<skill.table_width; j++)
@@ -90,22 +94,43 @@ $(function()
                     graphics.deleteSelector(engine.selected_field_id);
                     engine.activateSkill(skill.effect, player, enemy, player_turn);
 
-                    graphics.animateDamageNumbers(skill.effect).done(function()
+                    /*graphics.animateDamageNumbers(skill.effect).done(function()
                     {
                         graphics.modifyTable(engine).done(function()
                         {
                             engine.refreshTable();
                             engine.calculateNewTable();
                             engine.calculateEnemySkillChances(skill, enemy);
-                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                            //graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                            graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+                            graphics.updateEnemySkillChances(engine.enemy_skill_chances);
                             graphics.reNameIds(engine);
                             graphics.reFillTable(engine);
                             engine.refreshTable();
                             engine.table_modified = false;
+                            skill_activation_finished = true;
                         });
+                    });*/
+
+                    graphics.animateDamageNumbers(skill.effect, player_turn).done(function()
+                    {
+                        skill_activation_finished = true;
                     });
 
+                    if(skill.effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+                    if(skill.effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
 
+                    graphics.modifyTable(engine).done(function()
+                    {
+                        engine.refreshTable();
+                        engine.calculateNewTable();
+                        engine.calculateEnemySkillChances(skill, enemy);
+                        graphics.updateEnemySkillChances(engine.enemy_skill_chances);
+                        graphics.reNameIds(engine);
+                        graphics.reFillTable(engine);
+                        engine.refreshTable();
+                        engine.table_modified = false;
+                    });
                 }
             }
         });
@@ -114,6 +139,8 @@ $(function()
         {
             if(skill.moving) $(".selected_skill").remove();
             let skill_id = $(this).attr("id");
+            player_selected_skill_id = skill_id[6];
+
             graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill);
             engine.addSkillValue(player, parseInt(skill_id[6])-1, skill);
 
@@ -191,6 +218,7 @@ $(function()
 
                                         player_turn = true;
                                         player.ap = player.max_ap;
+                                        engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
                                         graphics.deleteEndTurn();
                                         graphics.drawAbilityPoints(player);
                                     });

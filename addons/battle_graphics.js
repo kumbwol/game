@@ -24,41 +24,70 @@ function BattleGraphics(battle_table, engine)
     this.enemysTurn = enemysTurn;
     this.shadowingEnemySkills = shadowingEnemySkills;
     this.animateDamageNumbers = animateDamageNumbers;
+    this.updateHpBar = updateHpBar;
+    this.updateEnemyHpBar = updateEnemyHpBar;
+    this.updateEnemySkillChances = updateEnemySkillchances;
+
 
     let field_size = 50;
     this.field_size = field_size;
 
-    function animateDamageNumbers(effect)
+    function updateEnemySkillchances(enemy_skill_chances)
+    {
+        drawEnemySkillChances(enemy_skill_chances);
+    }
+
+    function animateDamageNumbers(effect, player_on_turn)
     {
         let done = $.Deferred();
 
-        let animation_speed = "1s";
-
-
-        $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
-
-        let object = $("#dmg_counter");
-
-        object.html("-" + effect.dmg);
-        allignToMiddle(object);
-        allignToMiddleY(object);
-        object.css(
-            {
-                "-webkit-animation-duration": animation_speed,
-                "-moz-animation-duration": animation_speed,
-                "-ms-animation-duration": animation_speed,
-                "-o-animation-duration": animation_speed,
-                "animation-duration": animation_speed
-            }
-        );
-        object.addClass("animated bounce").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+        if(effect.dmg > 0 || effect.heal > 0)
         {
-            setTimeout(function()
+            let object;
+
+            if(effect.dmg > 0)
             {
-                object.remove();
-                done.resolve();
-            }, 200);
-        });
+                if(player_on_turn) $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+                else $("#self").append('<div id="dmg_counter"></div>');
+
+                object = $("#dmg_counter");
+                object.css("color", "red");
+                object.html("-" + effect.dmg);
+            }
+            else if(effect.heal > 0)
+            {
+                if(player_on_turn) $("#self").append('<div id="dmg_counter"></div>');
+                else $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+
+                object = $("#dmg_counter");
+                object.css("color", "lawngreen");
+                object.html("+" + effect.heal);
+            }
+
+            allignToMiddle(object);
+            allignToMiddleY(object);
+
+            let animation_speed = "1s";
+
+            object.css(
+                {
+                    "-webkit-animation-duration": animation_speed,
+                    "-moz-animation-duration": animation_speed,
+                    "-ms-animation-duration": animation_speed,
+                    "-o-animation-duration": animation_speed,
+                    "animation-duration": animation_speed
+                }
+            );
+            object.addClass("animated bounce").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+            {
+                setTimeout(function()
+                {
+                    object.remove();
+                    done.resolve();
+                }, 200);
+            });
+        }
+        else done.resolve();
 
         return done;
     }
@@ -133,7 +162,7 @@ function BattleGraphics(battle_table, engine)
             {
                 setTimeout(function()
                 {
-                    $("#self").append('<div id="cut"></div>');
+                    /*$("#self").append('<div id="cut"></div>');
                     $("#cut").animateSprite({
                         fps: 30,
                         animations: {
@@ -141,11 +170,17 @@ function BattleGraphics(battle_table, engine)
                         },
                         loop: false,
                         complete: function(){
-                            $("#cut").remove();
-                            updateHpBar($("#player_hp"), player);
-                            done.resolve();
-                        }
-                    });
+                            $("#cut").remove();*/
+
+                            animateDamageNumbers(skill.effect, false).done(function()
+                            {
+                                done.resolve();
+                            });
+
+                            if(skill.effect.dmg > 0) updateHpBar($("#player_hp"), player);
+                            if(skill.effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy);
+                   /*     }
+                    });*/
                 }, 300);
             }
         }
@@ -538,7 +573,6 @@ function BattleGraphics(battle_table, engine)
 
     function drawEnemySkillChances(enemy_skill_chances)
     {
-
         for(let i=0; i<enemy_skill_chances.length; i++)
         {
             $("#enemy_skill_chance_" + (i+1)).html(enemy_skill_chances[i] + "%");
@@ -801,15 +835,157 @@ function BattleGraphics(battle_table, engine)
 
     function updateHpBar(object, player)
     {
-        object.css("width", (player.hp/player.max_hp) * object.parent().width() - 1);
-        $("#player_hp_string").html(player.hp + "/" + player.max_hp);
-        allignToMiddle("#player_hp_string");
+        let full_old_hp = $("#player_hp_string").text();
+        let old_hp = "";
+        for(let i=0; i<full_old_hp.length; i++)
+        {
+            if(full_old_hp[i] == "/") break;
+            else old_hp += full_old_hp[i];
+        }
+
+        if(old_hp == "") old_hp = 0;
+
+        let new_hp = player.hp;
+
+        if(old_hp == 0)
+        {
+            object.css("width", (player.hp/player.max_hp) * object.parent().width() - 1);
+            $("#player_hp_string").html(player.hp + "/" + player.max_hp);
+            allignToMiddle("#player_hp_string");
+        }
+        else
+        {
+            object.parent().append('<div class="hp_loosing_background"></div>');
+            $(".hp_loosing_background").css("width", (parseInt(old_hp)/player.max_hp) * object.parent().width() - 1);
+
+            let animation_speed = 500;
+            let difference = 0;
+            let dmg;
+            if(parseInt(old_hp) - new_hp > 0)
+            {
+                difference = parseInt(old_hp) - new_hp;
+                dmg = true;
+            }
+            else
+            {
+                difference = new_hp - parseInt(old_hp);
+                dmg = false;
+                $(".hp_loosing_background").css("background-color", "lightgreen");
+                $(".hp_loosing_background").css("width", (new_hp/player.max_hp) * object.parent().width() - 1);
+            }
+
+            let i = 0;
+            let x = setInterval(function()
+            {
+                if(dmg)
+                {
+                    object.css("width", ((parseInt(old_hp)-i)/player.max_hp) * object.parent().width() - 1);
+                    $("#player_hp_string").html((parseInt(old_hp)-i) + "/" + player.max_hp);
+                }
+                else
+                {
+                    object.css("width", ((parseInt(old_hp)+i)/player.max_hp) * object.parent().width() - 1);
+                    $("#player_hp_string").html((parseInt(old_hp)+i) + "/" + player.max_hp);
+                }
+
+                allignToMiddle("#player_hp_string");
+                i++;
+
+                if(i>difference)
+                {
+                    clearInterval(x);
+                    i = 0;
+                    let y = setInterval(function()
+                    {
+                        $(".hp_loosing_background").css("width", ((old_hp-i)/player.max_hp) * $(".hp_loosing_background").parent().width() - 1);
+                        i++;
+
+                        if(i>difference)
+                        {
+                            clearInterval(y);
+                            $(".hp_loosing_background").remove();
+                        }
+                    }, animation_speed/(difference*2));
+                }
+            }, animation_speed/difference);
+        }
     }
 
     function updateEnemyHpBar(object, enemy)
     {
-        object.css("width", (enemy.hp/enemy.max_hp) * object.parent().width() - 1);
-        $("#enemy_hp_string").html(enemy.hp + "/" + enemy.max_hp);
-        allignToMiddle("#enemy_hp_string");
+        let full_old_hp = $("#enemy_hp_string").text();
+        let old_hp = "";
+        for(let i=0; i<full_old_hp.length; i++)
+        {
+            if(full_old_hp[i] == "/") break;
+            else old_hp += full_old_hp[i];
+        }
+
+        if(old_hp == "") old_hp = 0;
+
+        let new_hp = enemy.hp;
+
+        if(old_hp == 0)
+        {
+            object.css("width", (enemy.hp/enemy.max_hp) * object.parent().width() - 1);
+            $("#enemy_hp_string").html(enemy.hp + "/" + enemy.max_hp);
+            allignToMiddle("#enemy_hp_string");
+        }
+        else
+        {
+            object.parent().append('<div class="hp_loosing_background"></div>');
+            $(".hp_loosing_background").css("width", (parseInt(old_hp)/enemy.max_hp) * object.parent().width() - 1);
+
+            let animation_speed = 500;
+            let difference = 0;
+            let dmg;
+            if(parseInt(old_hp) - new_hp > 0)
+            {
+                difference = parseInt(old_hp) - new_hp;
+                dmg = true;
+            }
+            else
+            {
+                difference = new_hp - parseInt(old_hp);
+                dmg = false;
+                $(".hp_loosing_background").css("background-color", "lightgreen");
+                $(".hp_loosing_background").css("width", (new_hp/enemy.max_hp) * object.parent().width() - 1);
+            }
+
+            let i = 0;
+            let x = setInterval(function()
+            {
+                if(dmg)
+                {
+                    object.css("width", ((parseInt(old_hp)-i)/enemy.max_hp) * object.parent().width() - 1);
+                    $("#enemy_hp_string").html((parseInt(old_hp)-i) + "/" + enemy.max_hp);
+                }
+                else
+                {
+                    object.css("width", ((parseInt(old_hp)+i)/enemy.max_hp) * object.parent().width() - 1);
+                    $("#enemy_hp_string").html((parseInt(old_hp)+i) + "/" + enemy.max_hp);
+                }
+
+                allignToMiddle("#enemy_hp_string");
+                i++;
+
+                if(i>difference)
+                {
+                    clearInterval(x);
+                    i = 0;
+                    let y = setInterval(function()
+                    {
+                        $(".hp_loosing_background").css("width", ((old_hp-i)/enemy.max_hp) * $(".hp_loosing_background").parent().width() - 1);
+                        i++;
+
+                        if(i>difference)
+                        {
+                            clearInterval(y);
+                            $(".hp_loosing_background").remove();
+                        }
+                    }, animation_speed/(difference*2));
+                }
+            }, animation_speed/difference);
+        }
     }
 }

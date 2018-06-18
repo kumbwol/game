@@ -81,7 +81,7 @@ function BattleEngine(battle_table)
 
                 case "magmas":
                 {
-                    this.enemy_skill_chances[i] = "30";
+                    this.enemy_skill_chances[i] = "100";
                     break;
                 }
 

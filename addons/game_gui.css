@@ -19,8 +19,6 @@ html, body
     /*top: 30px;*/
     font-weight: bold;
     font-size: 70px;
-    color: red;
-
 
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 
@@ -174,6 +172,20 @@ html, body
     background-color: firebrick;
     border: 1px solid black;
     box-sizing: border-box;
+}
+
+.hp_loosing_background
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 198px;
+    height: 20px;
+    background-color: pink;
+    border: solid black;
+    border-width: 1px 0px 1px 1px;
+    box-sizing: border-box;
+    z-index: 0;
 }
 
 .mp

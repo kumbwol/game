@@ -44,8 +44,8 @@ function Skill(name)
             visual_pattern =
                 [
                     [DEF,NUL,NUL],
-                    [DEF,NUL,NUL],
-                    [DEF,NUL,NUL]
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("Heal");
@@ -81,16 +81,16 @@ function Skill(name)
         case "Shadowform":
         {
             visual_pattern =
-                [
+                /*[
                     [MAN,MOV,MAN],
                     [MOV,MAN,MOV],
                     [MAN,MOV,MAN],
-                ];
-                /*[
+                ];*/
+                [
                     [MAN,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL],
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("Transform");
             break;

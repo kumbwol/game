@@ -35,16 +35,6 @@ function Effect(name)
             break;
         }
 
-        case "Duhos":
-        {
-            //effect.transform = true;
-            effect.transform = false;
-            effect.self = true;
-            effect.dmg = 20;
-            effect.heal = 0;
-            break;
-        }
-
         case "Transform":
         {
             effect.transform = true;
@@ -55,15 +45,6 @@ function Effect(name)
         {
             effect.self = true;
             effect.heal = 5;
-            break;
-        }
-
-        case "EnemyHeal":
-        {
-            effect.transform = false;
-            effect.self = true;
-            effect.heal = 5;
-            effect.dmg = 0;
             break;
         }
     }

@@ -552,20 +552,23 @@ function BattleGraphics(battle_table, engine)
         $("#enemy_skill_2").append('<div class="skill_chance" id="enemy_skill_chance_2"></div>');
         $("#enemy_skill_3").append('<div class="skill_chance" id="enemy_skill_chance_3"></div>');
 
+
+
         createEnemySkills(enemy, enemy_skill_chances);
     }
 
     function createEnemySkills(enemy, enemy_skill_chances)
     {
+        drawEnemySkillChances(enemy_skill_chances);
         createEnemySkillName(enemy);
-        drawEnemySkillChances(enemy_skill_chances)
+        //createEnemySkillEffects(player);
     }
 
     function createEnemySkillName(enemy)
     {
         for(let i=0; i<enemy.getSkills().length; i++)
         {
-            $("#enemy_skill_"+(i+1)).append('<div class="skill_name_string"></div>');
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_top").append('<div class="skill_name_string"></div>');
             let class_selector = "#enemy_skill_" + (i+1) + " .skill_name_string";
             $(class_selector).html(enemy.getSkills()[i].name);
         }
@@ -575,31 +578,109 @@ function BattleGraphics(battle_table, engine)
     {
         for(let i=0; i<enemy_skill_chances.length; i++)
         {
-            $("#enemy_skill_chance_" + (i+1)).html(enemy_skill_chances[i] + "%");
+            $("#enemy_skill_"+(i+1)).append('<div class="skill_left_part_top"></div>');
+            $("#enemy_skill_"+(i+1)).append('<div class="skill_left_part_bottom"></div>');
+
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_left"></div>');
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_image"></div>');
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_number"></div>');
+            //$("#skill_" + (i+1) + " .skill_left_part_bottom_left").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-repeat", "no-repeat");
+            //$("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+
+            $("#enemy_skill_"+(i+1)).append('<div class="skill_right_part"></div>');
+
+            $("#enemy_skill_"+(i+1)+" .skill_right_part").append('<div class="skill_right_part_top"></div>');
+            $("#enemy_skill_"+(i+1)+" .skill_right_part").append('<div class="skill_right_part_bottom"></div>');
+
+
+            $("#enemy_skill_"+(i+1)+ " .skill_right_part_top").html(enemy_skill_chances[i] + "%");
         }
     }
 
     function createPlayerSkills(player)
     {
-        createSkillName(player);
         createSkillPattern(player);
+        createSkillName(player);
+        createSkillEffects(player);
     }
 
     function createSkillName(player)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
-            $("#skill_"+(i+1)).append('<div class="skill_name_string"></div>');
+            $("#skill_" + (i+1) + " .skill_left_part_top").append('<div class="skill_name_string"></div>');
             let class_selector = "#skill_" + (i+1) + " .skill_name_string";
             $(class_selector).html(player.getSkills()[i].name);
         }
+    }
+
+    function createSkillEffects(player)
+    {
+        for(let i=0; i<player.getSkills().length; i++)
+        {
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-repeat", "no-repeat");
+            switch(player.getSkills()[i].getSkillEffect().type)
+            {
+                case DMG:
+                {
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().dmg);
+                    allignTextRight($("#skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case HEAL:
+                {
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+            }
+
+            //alert(player.getSkills()[i].getSkillEffect().dmg);
+            //$("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").html(player.getSkills()[i].getSkillEffect());
+            /*let class_selector = "#skill_" + (i+1) + " .skill_name_string";
+            $(class_selector).html(player.getSkills()[i].name);*/
+        }
+    }
+
+    function allignTextRight(object)
+    {
+        let object_width = $(object).outerWidth();
+        let parent_object_width = $(object).parent().outerWidth();
+
+        $(object).css("left", (parent_object_width-object_width) - 2);
     }
 
     function createSkillPattern(player)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
-            $("#skill_"+(i+1)).append('<table class="skill_pattern_table"></table>');
+            $("#skill_"+(i+1)).append('<div class="skill_left_part_top"></div>');
+            $("#skill_"+(i+1)).append('<div class="skill_left_part_bottom"></div>');
+
+            $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_left"></div>');
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_image"></div>');
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_number"></div>');
+            //$("#skill_" + (i+1) + " .skill_left_part_bottom_left").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+
+            $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-repeat", "no-repeat");
+            //$("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+
+            $("#skill_"+(i+1)).append('<div class="skill_right_part"></div>');
+
+            //alert(("#skill_" + (i+1) + " .skill_right_part"));
+
+            $("#skill_" + (i+1) + " .skill_right_part").append('<table class="skill_pattern_table"></table>');
             let table_selector = "#skill_" + (i+1) + " .skill_pattern_table";
             for(let j=0; j<player.getSkills()[i].getSkillPatternHeight(); j++)
             {
@@ -653,7 +734,7 @@ function BattleGraphics(battle_table, engine)
         allignToMiddle(object);
         let x = (object).css("left");
         x = parseInt(x.replace("px", ""));
-        x += 69;
+        x -= 1;
         object.css("left", x);
     }
 
@@ -847,6 +928,7 @@ function BattleGraphics(battle_table, engine)
 
         let new_hp = player.hp;
 
+
         if(old_hp == 0)
         {
             object.css("width", (player.hp/player.max_hp) * object.parent().width() - 1);
@@ -858,7 +940,7 @@ function BattleGraphics(battle_table, engine)
             object.parent().append('<div class="hp_loosing_background"></div>');
             $(".hp_loosing_background").css("width", (parseInt(old_hp)/player.max_hp) * object.parent().width() - 1);
 
-            let animation_speed = 500;
+            let animation_speed = 30;
             let difference = 0;
             let dmg;
             if(parseInt(old_hp) - new_hp > 0)
@@ -874,40 +956,58 @@ function BattleGraphics(battle_table, engine)
                 $(".hp_loosing_background").css("width", (new_hp/player.max_hp) * object.parent().width() - 1);
             }
 
-            let i = 0;
-            let x = setInterval(function()
+            if(difference > 0)
             {
-                if(dmg)
-                {
-                    object.css("width", ((parseInt(old_hp)-i)/player.max_hp) * object.parent().width() - 1);
-                    $("#player_hp_string").html((parseInt(old_hp)-i) + "/" + player.max_hp);
-                }
-                else
-                {
-                    object.css("width", ((parseInt(old_hp)+i)/player.max_hp) * object.parent().width() - 1);
-                    $("#player_hp_string").html((parseInt(old_hp)+i) + "/" + player.max_hp);
-                }
+                let smoother = difference/20;
 
-                allignToMiddle("#player_hp_string");
-                i++;
+                let i = 0;
 
-                if(i>difference)
+                let x = setInterval(function()
                 {
-                    clearInterval(x);
-                    i = 0;
-                    let y = setInterval(function()
+                    if(dmg)
                     {
-                        $(".hp_loosing_background").css("width", ((old_hp-i)/player.max_hp) * $(".hp_loosing_background").parent().width() - 1);
-                        i++;
-
-                        if(i>difference)
+                        object.css("width", ((parseInt(old_hp)-i)/player.max_hp) * object.parent().width() - 1);
+                        if(Math.floor((parseInt(old_hp)-i)) > 0)
                         {
-                            clearInterval(y);
-                            $(".hp_loosing_background").remove();
+                            $("#player_hp_string").html(Math.floor((parseInt(old_hp)-i)) + "/" + player.max_hp);
                         }
-                    }, animation_speed/(difference*2));
-                }
-            }, animation_speed/difference);
+                        else $("#player_hp_string").html(0 + "/" + player.max_hp);
+                    }
+                    else
+                    {
+                        object.css("width", ((parseInt(old_hp)+i)/player.max_hp) * object.parent().width() - 1);
+                        if(Math.ceil((parseInt(old_hp)+i)) <= player.max_hp)
+                        {
+                            $("#player_hp_string").html(Math.ceil((parseInt(old_hp)+i)) + "/" + player.max_hp);
+                        }
+                        else $("#player_hp_string").html(player.max_hp + "/" + player.max_hp);
+                    }
+
+                    allignToMiddle("#player_hp_string");
+                    i += smoother;
+                    //console.log(i);
+
+                    if(i>difference)
+                    {
+                        clearInterval(x);
+                        if(player.hp == 0) object.remove();
+                        if(player.hp == player.max_hp) object.css("width", (player.max_hp/player.max_hp) * object.parent().width() - 1);
+
+                        i = 0;
+                        let y = setInterval(function()
+                        {
+                            $(".hp_loosing_background").css("width", ((old_hp-i)/player.max_hp) * $(".hp_loosing_background").parent().width() - 1);
+                            i += smoother;
+
+                            if(i>difference)
+                            {
+                                clearInterval(y);
+                                $(".hp_loosing_background").remove();
+                            }
+                        }, animation_speed/2);
+                    }
+                }, animation_speed);
+            }
         }
     }
 
@@ -936,7 +1036,7 @@ function BattleGraphics(battle_table, engine)
             object.parent().append('<div class="hp_loosing_background"></div>');
             $(".hp_loosing_background").css("width", (parseInt(old_hp)/enemy.max_hp) * object.parent().width() - 1);
 
-            let animation_speed = 500;
+            let animation_speed = 30;
             let difference = 0;
             let dmg;
             if(parseInt(old_hp) - new_hp > 0)
@@ -952,40 +1052,62 @@ function BattleGraphics(battle_table, engine)
                 $(".hp_loosing_background").css("width", (new_hp/enemy.max_hp) * object.parent().width() - 1);
             }
 
-            let i = 0;
-            let x = setInterval(function()
+
+            //alert(((parseInt(new_hp))/enemy.max_hp) * object.parent().width() - 1);
+            if(difference > 0)
             {
-                if(dmg)
-                {
-                    object.css("width", ((parseInt(old_hp)-i)/enemy.max_hp) * object.parent().width() - 1);
-                    $("#enemy_hp_string").html((parseInt(old_hp)-i) + "/" + enemy.max_hp);
-                }
-                else
-                {
-                    object.css("width", ((parseInt(old_hp)+i)/enemy.max_hp) * object.parent().width() - 1);
-                    $("#enemy_hp_string").html((parseInt(old_hp)+i) + "/" + enemy.max_hp);
-                }
+                let smoother = difference/20;
 
-                allignToMiddle("#enemy_hp_string");
-                i++;
+                //alert(animation_speed/(difference*smoother)*2);
 
-                if(i>difference)
+                let i = 0;
+
+                let x = setInterval(function()
                 {
-                    clearInterval(x);
-                    i = 0;
-                    let y = setInterval(function()
+                    if(dmg)
                     {
-                        $(".hp_loosing_background").css("width", ((old_hp-i)/enemy.max_hp) * $(".hp_loosing_background").parent().width() - 1);
-                        i++;
-
-                        if(i>difference)
+                        object.css("width", ((parseInt(old_hp)-i)/enemy.max_hp) * object.parent().width() - 1);
+                        if(Math.floor((parseInt(old_hp)-i)) > 0)
                         {
-                            clearInterval(y);
-                            $(".hp_loosing_background").remove();
+                            $("#enemy_hp_string").html(Math.floor((parseInt(old_hp)-i)) + "/" + enemy.max_hp);
                         }
-                    }, animation_speed/(difference*2));
-                }
-            }, animation_speed/difference);
+                        else $("#enemy_hp_string").html(0 + "/" + enemy.max_hp);
+                    }
+                    else
+                    {
+                        object.css("width", ((parseInt(old_hp)+i)/enemy.max_hp) * object.parent().width() - 1);
+                        if(Math.ceil((parseInt(old_hp)+i)) <= enemy.max_hp)
+                        {
+                            $("#enemy_hp_string").html(Math.ceil((parseInt(old_hp)+i)) + "/" + enemy.max_hp);
+                        }
+                        else $("#enemy_hp_string").html(enemy.max_hp + "/" + enemy.max_hp);
+                    }
+
+                    allignToMiddle("#enemy_hp_string");
+                    i += smoother;
+                    //console.log(i);
+
+                    if(i>difference)
+                    {
+                        clearInterval(x);
+                        if(enemy.hp == 0) object.remove();
+                        if(enemy.hp == enemy.max_hp) object.css("width", (enemy.max_hp/enemy.max_hp) * object.parent().width() - 1);
+
+                        i = 0;
+                        let y = setInterval(function()
+                        {
+                            $(".hp_loosing_background").css("width", ((old_hp-i)/enemy.max_hp) * $(".hp_loosing_background").parent().width() - 1);
+                            i += smoother;
+
+                            if(i>difference)
+                            {
+                                clearInterval(y);
+                                $(".hp_loosing_background").remove();
+                            }
+                        }, animation_speed/2);
+                    }
+                }, animation_speed);
+            }
         }
     }
 }

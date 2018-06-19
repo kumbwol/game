@@ -11,7 +11,8 @@ function Effect(name)
          transform: false,
          dmg: 0,
          chance_type: "",
-         heal: 0
+         heal: 0,
+         type: ""
      };
 
 
@@ -19,30 +20,35 @@ function Effect(name)
     {
         case "DMG":
         {
+            effect.type = DMG;
             effect.dmg = 5;
             break;
         }
 
         case "DMG2":
         {
+            effect.type = DMG;
             effect.dmg = 20;
             break;
         }
 
         case "AGR":
         {
-            effect.dmg = 10;
+            effect.type = DMG;
+            effect.dmg = 5;
             break;
         }
 
         case "Transform":
         {
+            effect.type = TRANSFORM;
             effect.transform = true;
             break;
         }
 
         case "Heal":
         {
+            effect.type = HEAL;
             effect.self = true;
             effect.heal = 5;
             break;

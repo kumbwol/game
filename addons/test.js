@@ -218,7 +218,10 @@ $(function()
 
                                         player_turn = true;
                                         player.ap = player.max_ap;
-                                        engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
+                                        if(skill.moving)
+                                        {
+                                            engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
+                                        }
                                         graphics.deleteEndTurn();
                                         graphics.drawAbilityPoints(player);
                                     });
@@ -280,6 +283,7 @@ $(function()
             $.getScript("addons/skillpattern.js"),
             $.getScript("addons/skill.js"),
             $.getScript("addons/effect.js"),
+            $.getScript("addons/effect_types.js"),
             $.getScript("addons/preloader.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );

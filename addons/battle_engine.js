@@ -139,7 +139,15 @@ function BattleEngine(battle_table)
 
         if(effect.dmg > 0)
         {
+
             unit.hp -= effect.dmg;
+
+            if(unit.hp < 0)
+            {
+                unit.hp = 0;
+            }
+
+
             this.skill_type.dmg = true;
         }
 
@@ -147,12 +155,12 @@ function BattleEngine(battle_table)
         {
             unit.hp += effect.heal;
 
-            if(unit.hp>unit.max_hp)
+            if(unit.hp > unit.max_hp)
             {
                 unit.hp = unit.max_hp;
             }
 
-            this.skill_type.heal = false;
+            this.skill_type.heal = true;
         }
 
 

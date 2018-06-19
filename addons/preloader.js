@@ -9,12 +9,14 @@ let images = [
     "addons/images/skeleton.png",
     "addons/images/selector.gif",
     "addons/images/success.png",
-    "addons/images/failure.png"
+    "addons/images/failure.png",
+    "addons/images/skill_effects/dmg.png",
+    "addons/images/skill_effects/heal.png"
 ];
 
-let $object = [];
+this.$object = [];
 
 for(let i=0; i<images.length; i++)
 {
-    $object[i] = $("<img>").attr("src", images[i]);
+    this.$object[i] = $("<img>").attr("src", images[i]);
 }

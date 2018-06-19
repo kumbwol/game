@@ -13,6 +13,12 @@ html, body
     user-select: none;
 }
 
+.effect_number
+{
+    position: absolute;
+    font-size: 26px;
+}
+
 #dmg_counter
 {
     position: absolute;
@@ -106,6 +112,109 @@ html, body
     /*opacity: 0.7;*/
 }
 
+.skill_right_part
+{
+    position: absolute;
+    top: 0px;
+    left: 139px;
+    width: 57px;
+    height: 57px;
+
+    box-sizing: border-box;
+    border: solid #ffd26d;
+    border-width: 1px 1px 1px 1px;
+}
+
+.skill_right_part_top
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 55px;
+    height: 21px;
+
+
+    font-size: 24px;
+    text-align: right;
+
+    box-sizing: border-box;
+    border: solid #ffd26d;
+    border-width: 0px 0px 1px 0px;
+}
+
+.skill_left_part_top
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 139px;
+    height: 21px;
+
+    box-sizing: border-box;
+    border: solid #ffd26d;
+    border-width: 1px 1px 0px 1px;
+}
+
+.skill_left_part_bottom
+ {
+     position: absolute;
+     top: 21px;
+     left: 0px;
+     width: 139px;
+     height: 36px;
+
+     box-sizing: border-box;
+     border: solid #ffd26d;
+     border-width: 1px 1px 1px 1px;
+ }
+
+.skill_left_part_bottom_left
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 69px;
+    height: 34px;
+
+    box-sizing: border-box;
+    border: solid #ffd26d;
+    border-width: 0px 1px 0px 0px;
+}
+
+.skill_left_part_bottom_left_image
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 34px;
+    height: 34px;
+}
+
+.skill_left_part_bottom_left_number
+{
+    position: absolute;
+    top: 0px;
+    left: 35px;
+    width: 34px;
+    height: 34px;
+
+    font-size: 26px;
+    text-align: right;
+}
+
+.skill_left_part_bottom_right
+{
+    position: absolute;
+    top: 0px;
+    left: 69px;
+    width: 69px;
+    height: 34px;
+
+    box-sizing: border-box;
+    border: solid #ffd26d;
+    border-width: 0px 0px 0px 0px;
+}
+
 .skill_pattern_table
 {
     position: absolute;
@@ -122,6 +231,8 @@ html, body
 
 .skill_name_string
 {
+    position: absolute;
+    left: 2px;
     color: black;
     float: left;
 }
@@ -348,15 +459,6 @@ html, body
 {
     top: 477px;
     left: 0px;
-}
-
-.skill_chance
-{
-    padding-top: 14px;
-    padding-right: 10px;
-    vertical-align: middle;
-    font-size: 26px;
-    float: right;
 }
 
 .activated

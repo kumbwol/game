@@ -34,7 +34,12 @@ function BattleGraphics(battle_table, engine)
 
     function updateEnemySkillchances(enemy_skill_chances)
     {
-        drawEnemySkillChances(enemy_skill_chances);
+        for(let i=0; i<enemy_skill_chances.length; i++)
+        {
+            $("#enemy_skill_"+(i+1)+ " .enemy_chance_number").text(enemy_skill_chances[i] + "%");
+            allignTextRight($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+            allignToMiddleY($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+        }
     }
 
     function animateDamageNumbers(effect, player_on_turn)
@@ -141,6 +146,7 @@ function BattleGraphics(battle_table, engine)
 
     function enemysTurn(skill, player, enemy, battle_table, engine, i)
     {
+        alert(i);
         let done = $.Deferred();
 
         if(engine.enemy_skill_plays[i])
@@ -203,38 +209,21 @@ function BattleGraphics(battle_table, engine)
     {
         let done = $.Deferred();
 
-        var x = setInterval(function()
+        for(let i=0; i<enemy_skill_plays.length; i++)
         {
-            for(let i=0; i<enemy_skill_plays.length; i++)
-            {
-                $("#enemy_skill_chance_" + (i+1)).html(generateRandomNumber(100) + 1);
-            }
-        }, 5);
+            $("#enemy_skill_" + (i+1) + " .skill_right_part_top").remove();
+            $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").remove();
 
-        setTimeout(function()
-        {
-            clearInterval(x);
-            for(let i=0; i<enemy_skill_plays.length; i++)
+            if(enemy_skill_plays[i])
             {
-                $("#enemy_skill_chance_" + (i+1)).empty();
-                $("#enemy_skill_chance_" + (i+1)).removeClass();
-                $("#enemy_skill_chance_" + (i+1)).addClass("enemy_chance_happen");
-                if(enemy_skill_plays[i])
-                {
-                    $("#enemy_skill_chance_" + (i+1)).addClass("success");
-                }
-                else $("#enemy_skill_chance_" + (i+1)).addClass("failure");
+                $("#enemy_skill_" + (i+1) + " .skill_right_part").addClass("success");
             }
-            done.resolve();
-        }, 600);
+            else $("#enemy_skill_" + (i+1) + " .skill_right_part").addClass("failure");
+        }
 
+        done.resolve();
 
         return done;
-    }
-
-    function generateRandomNumber(max_number)
-    {
-        return Math.floor(Math.random() * max_number);
     }
 
     function disableEndTurn()
@@ -560,8 +549,39 @@ function BattleGraphics(battle_table, engine)
     function createEnemySkills(enemy, enemy_skill_chances)
     {
         drawEnemySkillChances(enemy_skill_chances);
+        drawEnemyChanceTypes(enemy);
         createEnemySkillName(enemy);
-        //createEnemySkillEffects(player);
+        createEnemySkillEffects(enemy);
+    }
+
+    function createEnemySkillEffects(enemy)
+    {
+        for(let i=0; i<enemy.getSkills().length; i++)
+        {
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-repeat", "no-repeat");
+            switch(enemy.getSkills()[i].getSkillEffect().type)
+            {
+                case DMG:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().dmg);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case HEAL:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+            }
+        }
     }
 
     function createEnemySkillName(enemy)
@@ -595,8 +615,39 @@ function BattleGraphics(battle_table, engine)
             $("#enemy_skill_"+(i+1)+" .skill_right_part").append('<div class="skill_right_part_top"></div>');
             $("#enemy_skill_"+(i+1)+" .skill_right_part").append('<div class="skill_right_part_bottom"></div>');
 
+            $("#enemy_skill_"+(i+1)+ " .skill_right_part_top").append('<div class="enemy_chance_number"></div>');
+            $("#enemy_skill_"+(i+1)+ " .enemy_chance_number").text(enemy_skill_chances[i] + "%");
+            allignTextRight($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+            allignToMiddleY($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
 
-            $("#enemy_skill_"+(i+1)+ " .skill_right_part_top").html(enemy_skill_chances[i] + "%");
+            /*$("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().dmg);
+            allignTextRight($("#skill_" + (i+1) + " .effect_number"));
+            allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));*/
+        }
+    }
+
+    function drawEnemyChanceTypes(enemy)
+    {
+        for(let i=0; i<enemy.getSkills().length; i++)
+        {
+            $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").css("background-repeat", "no-repeat");
+            switch(enemy.getSkills()[i].getSkillChance().type)
+            {
+                case RAGE:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("RAGE");
+                    break;
+                }
+
+                case LUCK:
+                {
+
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("LUCK");
+                    break;
+                }
+            }
         }
     }
 

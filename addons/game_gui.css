@@ -13,10 +13,20 @@ html, body
     user-select: none;
 }
 
-.effect_number
+.RAGE
+{
+    background-image: url("images/chance_types/rage.png");
+}
+
+.LUCK
+{
+    background-image: url("images/chance_types/luck.png");
+}
+
+.effect_number, .enemy_chance_number
 {
     position: absolute;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 #dmg_counter
@@ -123,6 +133,8 @@ html, body
     box-sizing: border-box;
     border: solid #ffd26d;
     border-width: 1px 1px 1px 1px;
+
+    background-repeat: no-repeat;
 }
 
 .skill_right_part_top
@@ -140,6 +152,15 @@ html, body
     box-sizing: border-box;
     border: solid #ffd26d;
     border-width: 0px 0px 1px 0px;
+}
+
+.skill_right_part_bottom
+{
+    position: absolute;
+    top: 21px;
+    left: 0px;
+    width: 55px;
+    height: 34px;
 }
 
 .skill_left_part_top

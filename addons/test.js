@@ -200,6 +200,7 @@ $(function()
                     {
                         let i=0;
 
+
                         graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                         {
                             i++;
@@ -228,39 +229,6 @@ $(function()
                                 });
                             });
                         });
-
-                        /*graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
-                        {
-                            i++;
-                            graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
-                            {
-                                i++;
-                                graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
-                                {
-                                    i++;
-                                    graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
-                                    {
-                                        i++;
-                                        graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
-                                        {
-                                            i++;
-                                            graphics.stopper(skill, player, enemy, battle_table, engine, i).done(function()
-                                            {
-                                                engine.calculateEnemySkillChances(skill, enemy);
-                                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
-
-
-
-                                                player_turn = true;
-                                                player.ap = player.max_ap;
-                                                graphics.deleteEndTurn();
-                                                graphics.drawAbilityPoints(player);
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });*/
                     })
 
                 });
@@ -282,8 +250,10 @@ $(function()
             $.getScript("addons/config.js"),
             $.getScript("addons/skillpattern.js"),
             $.getScript("addons/skill.js"),
-            $.getScript("addons/effect.js"),
             $.getScript("addons/effect_types.js"),
+            $.getScript("addons/effect.js"),
+            $.getScript("addons/chance_types.js"),
+            $.getScript("addons/chance.js"),
             $.getScript("addons/preloader.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );

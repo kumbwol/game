@@ -70,24 +70,18 @@ function BattleEngine(battle_table)
     {
         for(let i=0; i<enemy.getSkills().length; i++)
         {
-            switch(enemy.getSkills()[i].getSkillChanceType())
+            switch(enemy.getSkills()[i].getSkillChance().type)
             {
-                case "rage":
+                case RAGE:
                 {
                     //this.enemy_skill_chances[i] = "100";
                     this.enemy_skill_chances[i] = enemy.max_hp - enemy.hp;
                     break;
                 }
 
-                case "magmas":
+                case LUCK:
                 {
-                    this.enemy_skill_chances[i] = "100";
-                    break;
-                }
-
-                case "nagy":
-                {
-                    this.enemy_skill_chances[i] = "100";
+                    this.enemy_skill_chances[i] = enemy.getSkills()[i].getSkillChance().modifier;
                     break;
                 }
             }

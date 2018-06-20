@@ -6,7 +6,7 @@ function Skill(name)
     let visual_pattern = [];
     let pattern;
     let effect;
-    let chance_type;
+    let chance;
 
     switch(this.name)
     {
@@ -99,21 +99,21 @@ function Skill(name)
         case "Duhos":
         {
             effect = new Effect("DMG2");
-            chance_type = "rage";
+            chance = new Chance(RAGE, 0);
             break;
         }
 
         case "Vedekezes":
         {
             effect = new Effect("Heal");
-            chance_type = "magmas";
+            chance = new Chance(LUCK, 100);
             break;
         }
 
         case "Valami":
         {
             effect = new Effect("AGR");
-            chance_type = "nagy";
+            chance = new Chance(LUCK, 100);
             break;
         }
     }
@@ -122,11 +122,11 @@ function Skill(name)
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
     this.getSkillEffect = getSkillEffect;
-    this.getSkillChanceType = getSkillChanceType;
+    this.getSkillChance = getSkillChance;
 
-    function getSkillChanceType()
+    function getSkillChance()
     {
-        return chance_type;
+        return chance;
     }
 
     function getSkillPatternHeight()

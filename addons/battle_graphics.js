@@ -27,10 +27,33 @@ function BattleGraphics(battle_table, engine)
     this.updateHpBar = updateHpBar;
     this.updateEnemyHpBar = updateEnemyHpBar;
     this.updateEnemySkillChances = updateEnemySkillchances;
+    this.drawChanceExplainer = drawChanceExplainer;
+    this.drawEffectExplainer = drawEffectExplainer;
 
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function drawEffectExplainer(unit, id)
+    {
+        let x = $('<div id="explain_box">');
+        x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type] + '</div>');
+        x.append('<div class="explain_box_line"></div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type] + '</div>');
+
+        return x;
+    }
+
+    function drawChanceExplainer(enemy, id)
+    {
+        let x = $('<div id="explain_box">');
+        x.append('<div class="explain_box_title">' + paragraphs.chance.titles[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type] + '</div>');
+        x.append('<div class="explain_box_line"></div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphs.chance.paragraphs[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type] + '</div>');
+
+        return x;
+    }
+
 
     function updateEnemySkillchances(enemy_skill_chances)
     {
@@ -146,7 +169,6 @@ function BattleGraphics(battle_table, engine)
 
     function enemysTurn(skill, player, enemy, battle_table, engine, i)
     {
-        alert(i);
         let done = $.Deferred();
 
         if(engine.enemy_skill_plays[i])
@@ -366,8 +388,59 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
+    function generateRandomNumber(max_number)
+    {
+        return Math.floor(Math.random() * max_number);
+    }
+
     function startFillTable(engine)
     {
+        //...::: EGYENKENT ESES KEZDETKOR :::...
+        /*let dropped_downs_per_column = [];
+
+        for(let i=0; i<engine.battle_table.width; i++)
+        {
+            dropped_downs_per_column[i] = 0;
+        }
+
+        let quit;
+
+        let x = setInterval(function()
+        {
+            quit = true;
+            let random_column = generateRandomNumber(engine.battle_table.width);
+
+            if(dropped_downs_per_column[random_column] < engine.battle_table.height)
+            {
+                dropped_downs_per_column[random_column]++;
+                let class_name = $("#y_" + (engine.battle_table.height-dropped_downs_per_column[random_column]) + "_x_" + random_column).attr("class");
+                //console.log("#y_" + (engine.battle_table.height-dropped_downs_per_column[random_column]) + "_x_" + random_column);
+                $("#y_" + (engine.battle_table.height-dropped_downs_per_column[random_column]) + "_x_" + random_column).css(
+                    {
+                        "-webkit-animation-duration": "1.5s",
+                        "-moz-animation-duration": "1.5s",
+                        "-ms-animation-duration": "1.5s",
+                        "-o-animation-duration": "1.5s",
+                        "animation-duration": "1.5s"
+                    }
+                );
+                $("#y_" + (engine.battle_table.height-dropped_downs_per_column[random_column]) + "_x_" + random_column).css("top", (engine.battle_table.height-dropped_downs_per_column[random_column])*(field_size+1)+1);
+                $("#y_" + (engine.battle_table.height-dropped_downs_per_column[random_column]) + "_x_" + random_column).attr("class", class_name + " animated bounceInDown");
+            }
+
+            for(let i=0; i<engine.battle_table.width; i++)
+            {
+                if(dropped_downs_per_column[i] != engine.battle_table.height) quit = false;
+            }
+
+            if(quit)
+            {
+                x = clearInterval(x);
+            }
+        }, 20);*/
+
+
+        //...::: EGYSZERRE ESES KEZDETKOR :::...
         for(let i=0; i<engine.battle_table.width; i++)
         {
             for(let j=0; j<engine.battle_table.height; j++)

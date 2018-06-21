@@ -1,5 +1,5 @@
 console.log("effect_types.js loaded");
 
-const DMG       = 1; //damage
-const HEAL      = 2; //heal
-const TRANSFORM = 3; //transform
+const DMG       = 0; //damage
+const HEAL      = 1; //heal
+const TRANSFORM = 2; //transform

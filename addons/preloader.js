@@ -11,7 +11,9 @@ let images = [
     "addons/images/success.png",
     "addons/images/failure.png",
     "addons/images/skill_effects/dmg.png",
-    "addons/images/skill_effects/heal.png"
+    "addons/images/skill_effects/heal.png",
+    "addons/images/chance_types/luck.png",
+    "addons/images/chance_types/rage.png"
 ];
 
 this.$object = [];

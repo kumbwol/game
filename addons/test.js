@@ -42,7 +42,6 @@ $(function()
             graphics.startFillTable(engine);
             //graphics.reFillTable(engine);
             engine.refreshTable();
-
         });
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move", function()
@@ -177,13 +176,64 @@ $(function()
             return false;
         });
 
-        $("#game_background").on("mouseenter", ".move", function()
+        $("#game_background").on("mousedown", ".skill_right_part_bottom, .skill_left_part_bottom_left", function(ev)
         {
-            if(skill.moving)
+            //console.log($(this).attr("class"));
+            //console.log($(this).parent().parent().attr("id"));
+            //console.log($(this).parent().parent().attr("id")[6]);
+            let right_click = 3;
+
+            if(ev.which == right_click)
             {
-                //alert("szia");
+                let mouse_x = (ev.pageX);
+                let mouse_y = (ev.pageY);
+
+
+                if($(this).parent().parent().attr("id").length > 7) // if its enemy ID
+                {
+                    if($(this).attr("class") === "skill_left_part_bottom_left")
+                    {
+                        $("#game_background").append(graphics.drawEffectExplainer(enemy, $(this).parent().parent().attr("id")[12]));
+                    }
+                    else
+                    {
+                        $("#game_background").append(graphics.drawChanceExplainer(enemy, $(this).parent().parent().attr("id")[12]));
+                    }
+
+                    $("#explain_box").css(
+                    {
+                        "border-radius": "30px 0px 30px 30px",
+                        top: mouse_y + "px",
+                        left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                    });
+                }
+                else
+                {
+                    if($(this).attr("class") === "skill_left_part_bottom_left")
+                    {
+                        $("#game_background").append(graphics.drawEffectExplainer(player, $(this).parent().parent().attr("id")[6]));
+                    }
+
+                    $("#explain_box").css(
+                    {
+                        "border-radius": "0px 30px 30px 30px",
+                        top: mouse_y + "px",
+                        left: mouse_x+ "px"
+                    });
+                }
+
+
             }
+
+
         });
+
+
+        $("#game_background").on("mouseup", function()
+        {
+            $("#explain_box").remove();
+        });
+
 
         $("#game_background").on("click", "#end_turn", function()
         {
@@ -209,23 +259,19 @@ $(function()
                                 i++;
                                 graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                                 {
-                                    i++;
-                                    graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                                    engine.calculateEnemySkillChances(skill, enemy);
+                                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+
+
+
+                                    player_turn = true;
+                                    player.ap = player.max_ap;
+                                    if(skill.moving)
                                     {
-                                        engine.calculateEnemySkillChances(skill, enemy);
-                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
-
-
-
-                                        player_turn = true;
-                                        player.ap = player.max_ap;
-                                        if(skill.moving)
-                                        {
-                                            engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
-                                        }
-                                        graphics.deleteEndTurn();
-                                        graphics.drawAbilityPoints(player);
-                                    });
+                                        engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
+                                    }
+                                    graphics.deleteEndTurn();
+                                    graphics.drawAbilityPoints(player);
                                 });
                             });
                         });
@@ -260,6 +306,7 @@ $(function()
             })
         ).done(function()
         {
+            $.getScript("addons/paragraphs.js");
             start_game();
         });
     }

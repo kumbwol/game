@@ -13,6 +13,40 @@ html, body
     user-select: none;
 }
 
+.explain_box_line
+{
+    width: auto;
+    border: 1px solid black;
+}
+
+.explain_box_title
+{
+    margin-left: 30px;
+
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.explain_box_paragraph
+{
+    margin-left: 10px;
+    padding-top: 5px;
+    font-size: 14px;
+}
+
+#explain_box
+{
+    position: absolute;
+    width: 250px;
+    height: 100px;
+    background-color: #e2c678;
+
+    border: 2px solid black;
+}
+
+
+
 .RAGE
 {
     background-image: url("images/chance_types/rage.png");
@@ -174,6 +208,8 @@ html, body
     box-sizing: border-box;
     border: solid #ffd26d;
     border-width: 1px 1px 0px 1px;
+
+    background-color: #a6a9a8;
 }
 
 .skill_left_part_bottom
@@ -230,10 +266,6 @@ html, body
     left: 69px;
     width: 69px;
     height: 34px;
-
-    box-sizing: border-box;
-    border: solid #ffd26d;
-    border-width: 0px 0px 0px 0px;
 }
 
 .skill_pattern_table
@@ -256,6 +288,10 @@ html, body
     left: 2px;
     color: black;
     float: left;
+
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
 }
 
 .profile

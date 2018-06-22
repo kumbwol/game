@@ -3,10 +3,10 @@ console.log("player.js loaded");
 function Player(name)
 {
     this.name = name;
-    this.hp = 3;
-    this.max_hp = 10;
-    this.ap = 1;
-    this.max_ap = 1;
+    this.hp = 50;
+    this.max_hp = 50;
+    this.ap = 3;
+    this.max_ap = 3;
 
     let skills = [];
     skills[0] = new Skill("Shock");

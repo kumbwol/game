@@ -351,6 +351,10 @@ function BattleEngine(battle_table)
         let temp = this.table[y0][x0].type;
         this.table[y0][x0].type = this.table[y1][x1].type;
         this.table[y1][x1].type = temp;
+
+        temp = this.temp_table[y0][x0].type;
+        this.temp_table[y0][x0].type = this.temp_table[y1][x1].type;
+        this.temp_table[y1][x1].type = temp;
     }
 
     function fillUpTable(table)
@@ -378,7 +382,7 @@ function BattleEngine(battle_table)
             {
                 if(this.temp_table[i][j].type == MOV || this.temp_table[i][j].type == DEF)
                 {
-                    if(generateRandomNumber(6) > 1)
+                    if((generateRandomNumber(100) + 1) > 25)
                     {
                         this.temp_table[i][j].type = ATT;
                         this.table_modified = true;

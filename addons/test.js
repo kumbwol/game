@@ -93,24 +93,6 @@ $(function()
                     graphics.deleteSelector(engine.selected_field_id);
                     engine.activateSkill(skill.effect, player, enemy, player_turn);
 
-                    /*graphics.animateDamageNumbers(skill.effect).done(function()
-                    {
-                        graphics.modifyTable(engine).done(function()
-                        {
-                            engine.refreshTable();
-                            engine.calculateNewTable();
-                            engine.calculateEnemySkillChances(skill, enemy);
-                            //graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
-                            graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
-                            graphics.updateEnemySkillChances(engine.enemy_skill_chances);
-                            graphics.reNameIds(engine);
-                            graphics.reFillTable(engine);
-                            engine.refreshTable();
-                            engine.table_modified = false;
-                            skill_activation_finished = true;
-                        });
-                    });*/
-
                     graphics.animateDamageNumbers(skill.effect, player_turn).done(function()
                     {
                         skill_activation_finished = true;
@@ -128,11 +110,20 @@ $(function()
                         graphics.reNameIds(engine);
                         graphics.reFillTable(engine);
                         engine.refreshTable();
+                        //engine.logTable();
                         engine.table_modified = false;
                     });
                 }
             }
         });
+
+        $(window).keypress(function (e) {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
+                e.preventDefault();
+                engine.logTable();
+            }
+        })
 
         $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
         {
@@ -239,6 +230,10 @@ $(function()
         {
             if(player_turn)
             {
+                /*graphics.reNameIds(engine);
+                graphics.reFillTable(engine);
+                engine.refreshTable();*/
+
                 player_turn = false;
                 graphics.disableEndTurn();
 

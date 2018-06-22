@@ -34,12 +34,21 @@ function BattleGraphics(battle_table, engine)
     let field_size = 50;
     this.field_size = field_size;
 
+    function paragraphMacroChanger(text)
+    {
+        text = text.replace("MOVE", '<span style="color:forestgreen; font-weight:bold">MOVE</span>');
+        text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
+        text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
+
+        return text;
+    }
+
     function drawEffectExplainer(unit, id)
     {
         let x = $('<div id="explain_box">');
         x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type] + '</div>');
         x.append('<div class="explain_box_line"></div>');
-        x.append('<div class="explain_box_paragraph">' + paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type] + '</div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type]) + '</div>');
 
         return x;
     }
@@ -49,7 +58,7 @@ function BattleGraphics(battle_table, engine)
         let x = $('<div id="explain_box">');
         x.append('<div class="explain_box_title">' + paragraphs.chance.titles[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type] + '</div>');
         x.append('<div class="explain_box_line"></div>');
-        x.append('<div class="explain_box_paragraph">' + paragraphs.chance.paragraphs[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type] + '</div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.chance.paragraphs[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type]) + '</div>');
 
         return x;
     }
@@ -653,6 +662,16 @@ function BattleGraphics(battle_table, engine)
                     allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
                     break;
                 }
+
+                case SHADOWFORM:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    //$("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
             }
         }
     }
@@ -763,6 +782,16 @@ function BattleGraphics(battle_table, engine)
                     $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
                     $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
                     $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case SHADOWFORM:
+                {
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
+                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    //$("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
                     allignTextRight($("#skill_" + (i+1) + " .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
                     break;

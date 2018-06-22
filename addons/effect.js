@@ -3,7 +3,6 @@ console.log("effect.js loaded");
 function Effect(name)
 {
     this.name = name;
-    let dmg = 0;
 
     let effect =
      {
@@ -35,13 +34,13 @@ function Effect(name)
         case "AGR":
         {
             effect.type = DMG;
-            effect.dmg = 5;
+            effect.dmg = 10;
             break;
         }
 
         case "Transform":
         {
-            effect.type = TRANSFORM;
+            effect.type = SHADOWFORM;
             effect.transform = true;
             break;
         }

@@ -8,6 +8,9 @@ function Effect(name)
      {
          self: false,
          transform: false,
+         stun: false,
+         stun_amount: 0,
+         poison_amount: 0,
          dmg: 0,
          chance_type: "",
          heal: 0,
@@ -50,6 +53,22 @@ function Effect(name)
             effect.type = HEAL;
             effect.self = true;
             effect.heal = 5;
+            break;
+        }
+
+        case "Stun":
+        {
+            effect.type = STUN;
+            effect.stun = true;
+            effect.stun_amount = 20;
+            break;
+        }
+
+        case "Poison":
+        {
+            effect.type = POISON;
+            effect.poison_amount = 20;
+            effect.transform = true;
             break;
         }
     }

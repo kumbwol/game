@@ -648,6 +648,13 @@ html, body
     background-image: url("images/move.png");
 }
 
+.selected_skill div.poison,
+#battle_table div.poison
+{
+    background-color: #6aff23;
+    background-image: url("images/poison.png");
+}
+
 .selected_skill div.nul,
 #battle_table div.nul
 {

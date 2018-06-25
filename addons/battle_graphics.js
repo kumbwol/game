@@ -29,10 +29,81 @@ function BattleGraphics(battle_table, engine)
     this.updateEnemySkillChances = updateEnemySkillchances;
     this.drawChanceExplainer = drawChanceExplainer;
     this.drawEffectExplainer = drawEffectExplainer;
+    this.poisonActivationAnimation = poisonActivationAnimation;
+    this.clearAntiVenoms = clearAntiVenoms;
 
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function clearAntiVenoms(engine)
+    {
+        let done = $.Deferred();
+
+        if(engine.isThereAntiVenom())
+        {
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    if(engine.table[i][j].type === ANT)
+                    {
+                        //alert("cs");
+                        engine.table[i][j].type = NUL;
+                        $("#y_" + i + "_x_" + j).remove();
+                    }
+                }
+            }
+            //alert("ok");
+            engine.calculateNewTable();
+            this.reNameIds(engine);
+            this.reFillTable(engine).done(function()
+            {
+                engine.refreshTable();
+                done.resolve();
+            });
+        }
+
+        return done;
+    }
+
+    function poisonActivationAnimation(engine)
+    {
+        let done = $.Deferred();
+        let number_of_poisons = 0;
+
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(engine.table[i][j].type === NUL)
+                {
+                    number_of_poisons++;
+                    $("#y_" + i + "_x_" + j).css("z-index", 1);
+                    $("#y_" + i + "_x_" + j).css("background-size", "34px");
+
+                    $("#y_" + i + "_x_" + j).animate({
+                        width: '+=8px',
+                        height: '+=8px',
+                        top: "-=4px",
+                        left: "-=4px",
+                        backgroundSize: "+=8px"
+                    }, 200, function()
+                    {
+                        let element = $(this).attr("id");
+                        number_of_poisons--;
+                        $("#" + element).remove();
+                        if(number_of_poisons === 0)
+                        {
+                            done.resolve();
+                        }
+                    });
+                }
+            }
+        }
+
+        return done;
+    }
 
     function paragraphMacroChanger(text)
     {
@@ -188,6 +259,11 @@ function BattleGraphics(battle_table, engine)
 
             if(engine.table_modified)
             {
+                /*if(skill.effect.type == STUN)
+                {
+                    alert("szia");
+                    done.resolve();
+                }*/
                 this.modifyTable(engine).done(function()
                 {
                     engine.refreshTable();
@@ -320,8 +396,24 @@ function BattleGraphics(battle_table, engine)
         $("#ability_point").css("left", "-=1px");
     }
 
-    function myfade(object, cb)
+    function myFade(change_field_type, object, cb)
     {
+        let changed_field_type_string;
+        switch(change_field_type)
+        {
+            case ATT:
+            {
+                changed_field_type_string = "attack";
+                break;
+            }
+
+            case POI:
+            {
+                changed_field_type_string = "poison";
+                break;
+            }
+        }
+
         let fade_speed = "0.6s";
 
         let class_name = object.attr("class");
@@ -337,13 +429,22 @@ function BattleGraphics(battle_table, engine)
         object.attr("class", class_name + " animated fadeOut").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
         {
             object.removeClass();
-            object.attr("class", "attack animated fadeIn").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
+            object.attr("class", changed_field_type_string + " animated fadeIn").one("webkitanimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function()
             {
                 object.removeClass();
-                object.attr("class", "attack");
+                object.attr("class", changed_field_type_string);
                 cb();
             });
         });
+    }
+
+    function stunFieldAnimation(object, cb)
+    {
+        setTimeout(function()
+        {
+            object.css("background-color", "#2f2f2f");
+            cb();
+        }, 500);
     }
 
     function modifyTable(engine)
@@ -356,11 +457,21 @@ function BattleGraphics(battle_table, engine)
         {
             for(let j=0; j<engine.battle_table.width; j++)
             {
-                if(engine.table[i][j].type != engine.temp_table[i][j].type && engine.table[i][j].type != NUL)
+                if(engine.table[i][j].type !== engine.temp_table[i][j].type && engine.table[i][j].type !== NUL)
                 {
+                    let changed_field_type = engine.temp_table[i][j].type;
                     wait_animation = true;
 
-                    myfade($("#y_" + i + "_x_" + j), function()
+                    myFade(changed_field_type, $("#y_" + i + "_x_" + j), function()
+                    {
+                        done.resolve();
+                    });
+                }
+
+                if(engine.table[i][j].stunned)
+                {
+                    wait_animation = true;
+                    stunFieldAnimation($("#y_" + i + "_x_" + j), function()
                     {
                         done.resolve();
                     });
@@ -472,7 +583,9 @@ function BattleGraphics(battle_table, engine)
 
     function reFillTable(engine)
     {
+        let done = $.Deferred();
         let esesek = [];
+        let count_drops = 0;
 
         for(let i=0; i<engine.battle_table.width; i++)
         {
@@ -486,7 +599,7 @@ function BattleGraphics(battle_table, engine)
 
             for(let j=engine.battle_table.height-1; j>=0; j--)
             {
-                if(engine.table[j][i].type == NUL)
+                if(engine.table[j][i].type === NUL)
                 {
                     height++;
                 }
@@ -511,11 +624,20 @@ function BattleGraphics(battle_table, engine)
             {
                 if(esesek[j]>0)
                 {
-                    bounceDown($("#y_" + j + "_x_" + i), esesek[j], 400);
+                    count_drops++;
+                    bounceDown($("#y_" + j + "_x_" + i), esesek[j], 400).done(function()
+                    {
+                        count_drops--;
+                        if(count_drops === 0)
+                        {
+                            done.resolve();
+                        }
+                    });
                 }
             }
         }
 
+        return done;
         /*for(let i=0; i<engine.battle_table.height; i++)
         {
             alert(esesek[i]);
@@ -524,14 +646,18 @@ function BattleGraphics(battle_table, engine)
 
     function bounceDown(object, height, time)
     {
-        //alert(height);
-        //alert($("#battle_table div").css("height"));
+        let done = $.Deferred();
 
         let eses = (height*(field_size+1))+8;
 
         let magassag = "+=" + eses;
 
-        object.animate({"top": magassag}, (time)).animate({"top": "-=20"}, (time/3)).animate({"top": "+=16"}, (time/3)).animate({"top": "-=6"}, (time/6)).animate({"top": "+=2"}, (time/6));
+        object.animate({"top": magassag}, (time)).animate({"top": "-=20"}, (time/3)).animate({"top": "+=16"}, (time/3)).animate({"top": "-=6"}, (time/6)).animate({"top": "+=2"}, (time/6), function()
+        {
+            done.resolve();
+        });
+
+        return done;
     }
 
     function drawTopBar()
@@ -893,6 +1019,8 @@ function BattleGraphics(battle_table, engine)
 
     function swapFields(engine)
     {
+        let done = $.Deferred();
+        let in_place = 0;
         engine.allow_select = false;
         //alert(engine.selected_fields.y0 + " " + engine.selected_fields.x0 + " " + engine.selected_fields.y1 + " " + engine.selected_fields.x1);
         let field_id =
@@ -912,27 +1040,33 @@ function BattleGraphics(battle_table, engine)
 
         $("#" + field_id.first).animate({"top": field_pos.second.top, "left": field_pos.second.left}, swap_animation_speed, function()
         {
+            in_place++;
             engine.selected_fields.y0 = -1;
             engine.selected_fields.x0 = -1;
             engine.selected_fields.y1 = -1;
             engine.selected_fields.x1 = -1;
             $("#" + field_id.first).css("z-index", 0);
             engine.allow_select = true;
+            if(in_place === 2) done.resolve();
         });
         $("#" + field_id.second).animate({"top": field_pos.first.top, "left": field_pos.first.left}, swap_animation_speed, function()
         {
+            in_place++;
             engine.selected_fields.y0 = -1;
             engine.selected_fields.x0 = -1;
             engine.selected_fields.y1 = -1;
             engine.selected_fields.x1 = -1;
             $("#" + field_id.second).css("z-index", 0);
             engine.allow_select = true;
+            if(in_place === 2) done.resolve();
         });
 
         $("#" + field_id.first).attr("id", "temp1");
         $("#" + field_id.second).attr("id", "temp2");
         $("#temp1").attr("id", field_id.second);
         $("#temp2").attr("id", field_id.first);
+
+        return done;
     }
 
     function allignToMiddle(object)
@@ -1056,6 +1190,12 @@ function BattleGraphics(battle_table, engine)
             case MOV:
             {
                 $object.attr('class', "move");
+                break;
+            }
+
+            case POI:
+            {
+                $object.attr('class', "poison");
                 break;
             }
         }

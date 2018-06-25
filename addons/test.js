@@ -2,6 +2,14 @@ $(function()
 {
     start_program();
 
+    function recursiveVenomClearing(graphics, engine)
+    {
+        graphics.clearAntiVenoms(engine).done(function()
+        {
+            if(engine.isThereAntiVenom()) recursiveVenomClearing(graphics, engine);
+        });
+    }
+
     function start_game()
     {
         let battle_table = {
@@ -44,14 +52,14 @@ $(function()
             engine.refreshTable();
         });
 
-        $("#game_background").on("click", ".attack, .mana, .defense, .move", function()
+        $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison", function()
         {
             if(player.ap > 0 && player_turn)
             {
-                if(engine.allow_select && !skill.moving)
+                let y = ($(this).attr("id"))[2];
+                let x = ($(this).attr("id"))[6];
+                if(engine.allow_select && !skill.moving && !engine.isFieldStunned(parseInt(x), parseInt(y)))
                 {
-                    let y = ($(this).attr("id"))[2];
-                    let x = ($(this).attr("id"))[6];
                     if(!engine.selectField(y, x))
                     {
                         if(engine.table[y][x].selected) graphics.drawSelector($(this).attr("id"));
@@ -60,10 +68,30 @@ $(function()
                     else
                     {
                         graphics.deleteSelector(engine.selected_field_id);
-                        graphics.swapFields(engine);
-                        player.ap--;
-                        if(player.ap > 0) graphics.refreshAbilityPoint(player);
-                        else graphics.drawEndTurn();
+                        graphics.swapFields(engine).done(function()
+                        {
+                            player.ap--;
+                            if(player.ap > 0) graphics.refreshAbilityPoint(player);
+                            else graphics.drawEndTurn();
+
+                            if(engine.isPlayerPoisoned())
+                            {
+                                recursiveVenomClearing(graphics, engine);
+                                /*graphics.clearAntiVenoms(engine).done(function()
+                                {
+                                    graphics.clearAntiVenoms(engine).done(function()
+                                    {
+                                        graphics.clearAntiVenoms(engine).done(function()
+                                        {
+                                            graphics.clearAntiVenoms(engine).done(function()
+                                            {
+
+                                            });
+                                        });
+                                    });
+                                });*/
+                            }
+                        });
                     }
                 }
             }
@@ -108,8 +136,10 @@ $(function()
                         engine.calculateEnemySkillChances(skill, enemy);
                         graphics.updateEnemySkillChances(engine.enemy_skill_chances);
                         graphics.reNameIds(engine);
-                        graphics.reFillTable(engine);
-                        engine.refreshTable();
+                        graphics.reFillTable(engine).done(function()
+                        {
+                            engine.refreshTable();
+                        });
                         //engine.logTable();
                         engine.table_modified = false;
                     });
@@ -127,22 +157,25 @@ $(function()
 
         $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
         {
-            if(skill.moving) $(".selected_skill").remove();
-            let skill_id = $(this).attr("id");
-            player_selected_skill_id = skill_id[6];
+            if(player_turn)
+            {
+                if(skill.moving) $(".selected_skill").remove();
+                let skill_id = $(this).attr("id");
+                player_selected_skill_id = skill_id[6];
 
-            graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill);
-            engine.addSkillValue(player, parseInt(skill_id[6])-1, skill);
+                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill);
+                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill);
 
-            if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
-            else $(".selected_skill").css("left", 0);
+                if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
+                else $(".selected_skill").css("left", 0);
 
-            if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
-            else $(".selected_skill").css("top", 540-skill.height);
+                if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
+                else $(".selected_skill").css("top", 540-skill.height);
 
-            //alert(skill.effect);
+                //alert(skill.effect);
 
-            skill.moving = true;
+                skill.moving = true;
+            }
         });
 
 
@@ -212,11 +245,7 @@ $(function()
                         left: mouse_x+ "px"
                     });
                 }
-
-
             }
-
-
         });
 
 
@@ -228,51 +257,35 @@ $(function()
 
         $("#game_background").on("click", "#end_turn", function()
         {
+            //console.log(player_turn);
             if(player_turn)
             {
-                /*graphics.reNameIds(engine);
-                graphics.reFillTable(engine);
-                engine.refreshTable();*/
-
                 player_turn = false;
-                graphics.disableEndTurn();
-
-                engine.decideEnemySkills();
-
-                graphics.enemySkillSelection(engine.enemy_skill_plays).done(function()
+                if(engine.isPlayerPoisoned())
                 {
-                    graphics.shadowingEnemySkills(engine.enemy_skill_plays).done(function()
+                    engine.activatePoisons();
+                    graphics.poisonActivationAnimation(engine).done(function()
                     {
-                        let i=0;
-
-
-                        graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                        engine.calculateNewTable();
+                        graphics.reNameIds(engine);
+                        graphics.reFillTable(engine).done(function()
                         {
-                            i++;
-                            graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                            engine.refreshTable();
+
+                            enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
                             {
-                                i++;
-                                graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
-                                {
-                                    engine.calculateEnemySkillChances(skill, enemy);
-                                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
-
-
-
-                                    player_turn = true;
-                                    player.ap = player.max_ap;
-                                    if(skill.moving)
-                                    {
-                                        engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
-                                    }
-                                    graphics.deleteEndTurn();
-                                    graphics.drawAbilityPoints(player);
-                                });
+                                player_turn = true;
                             });
                         });
-                    })
-
-                });
+                    });
+                }
+                else
+                {
+                    enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                    {
+                        player_turn = true;
+                    });
+                }
             }
         });
 
@@ -304,5 +317,46 @@ $(function()
             $.getScript("addons/paragraphs.js");
             start_game();
         });
+    }
+
+    function enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id)
+    {
+        let done = $.Deferred();
+        graphics.disableEndTurn();
+
+        engine.decideEnemySkills();
+
+        graphics.enemySkillSelection(engine.enemy_skill_plays).done(function()
+        {
+            graphics.shadowingEnemySkills(engine.enemy_skill_plays).done(function()
+            {
+                let i=0;
+
+
+                graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                {
+                    i++;
+                    graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                    {
+                        i++;
+                        graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                        {
+                            engine.calculateEnemySkillChances(skill, enemy);
+                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+
+                            player.ap = player.max_ap;
+                            if(skill.moving)
+                            {
+                                engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
+                            }
+                            graphics.deleteEndTurn();
+                            graphics.drawAbilityPoints(player);
+                            done.resolve();
+                        });
+                    });
+                });
+            })
+        });
+        return done;
     }
 });

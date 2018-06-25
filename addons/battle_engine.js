@@ -51,6 +51,164 @@ function BattleEngine(battle_table)
     this.enemyTakesTurn = enemyTakesTurn;
     this.calculateEnemySkillChances = calculateEnemySkillChances;
     this.decideEnemySkills = decideEnemySkills;
+    this.stunTable = stunTable;
+    this.stunField = stunField;
+    this.isFieldStunned = isFieldStunned;
+    this.isPlayerPoisoned = isPlayerPoisoned;
+    this.activatePoisons = activatePoisons;
+    this.isThereAntiVenom = isThereAntiVenom;
+    this.createAntiPoisonInRow = createAntiPoisonInRow;
+    this.createAntiPoisonInColumn = createAntiPoisonInColumn;
+
+    function isThereAntiVenom()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type === POI)
+                {
+                    this.createAntiPoisonInRow(i, j);
+                    this.createAntiPoisonInColumn(i, j);
+                }
+            }
+        }
+
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type === ANT)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    function createAntiPoisonInRow(y, x)
+    {
+        let number_of_poisons_left = 0;
+        let number_of_poisons_right = 0;
+
+        for(let i = x; i>=0; i--)
+        {
+            if(this.table[y][i].type === POI || this.table[y][i].type === ANT) number_of_poisons_left++;
+            else break;
+        }
+
+        for(let i = x; i<this.battle_table.width; i++)
+        {
+            if(this.table[y][i].type === POI || this.table[y][i].type === ANT) number_of_poisons_right++;
+            else break;
+        }
+
+        if(((number_of_poisons_left + number_of_poisons_right)-1) >= 3)
+        {
+            for(let i = x; i>=0; i--)
+            {
+                if(this.table[y][i].type === POI || this.table[y][i].type === ANT) this.table[y][i].type = ANT;
+                else break;
+            }
+
+            for(let i = x; i<this.battle_table.width; i++)
+            {
+                if(this.table[y][i].type === POI || this.table[y][i].type === ANT) this.table[y][i].type = ANT;
+                else break;
+            }
+        }
+    }
+
+    function createAntiPoisonInColumn(y, x)
+    {
+        let number_of_poisons_up = 0;
+        let number_of_poisons_down = 0;
+
+        for(let i = y; i>=0; i--)
+        {
+            if(this.table[i][x].type === POI || this.table[i][x].type === ANT) number_of_poisons_up++;
+            else break;
+        }
+
+        for(let i = y; i<this.battle_table.height; i++)
+        {
+            if(this.table[i][x].type === POI || this.table[i][x].type === ANT) number_of_poisons_down++;
+            else break;
+        }
+
+        if(((number_of_poisons_up + number_of_poisons_down)-1) >= 3)
+        {
+            for(let i = y; i>=0; i--)
+            {
+                if(this.table[i][x].type === POI || this.table[i][x].type === ANT) this.table[i][x].type = ANT;
+                else break;
+            }
+
+            for(let i = y; i<this.battle_table.height; i++)
+            {
+                if(this.table[i][x].type === POI || this.table[i][x].type === ANT) this.table[i][x].type = ANT;
+                else break;
+            }
+        }
+    }
+
+    function activatePoisons()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type === POI) this.table[i][j].type = NUL;
+            }
+        }
+    }
+
+    function isPlayerPoisoned()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type === POI) return true;
+            }
+        }
+
+        return false;
+    }
+
+    function isFieldStunned(x, y)
+    {
+        return this.table[y][x].stunned;
+    }
+
+    function stunField(x, y)
+    {
+        this.table[y][x].stunned = true;
+    }
+
+    function stunTable(stun_amount)
+    {
+        this.table_modified = false;
+
+        do
+        {
+            let y = generateRandomNumber(this.battle_table.height);
+            let x = generateRandomNumber(this.battle_table.width);
+            //console.log(y + " " + x);
+
+            if(!this.table[y][x].stunned)
+            {
+                //stunField(x, y);
+                this.temp_table[y][x].stunned = true;
+                this.stunField(x, y);
+                stun_amount--;
+            }
+            this.table_modified = true;
+            //console.log(stun_amount);
+        }while(stun_amount != 0);
+    }
 
     function decideEnemySkills()
     {
@@ -62,7 +220,7 @@ function BattleEngine(battle_table)
                 this.enemy_skill_plays[i] = true;
             }
             else this.enemy_skill_plays[i] = false;
-            console.log(chance);
+            //console.log(chance);
         }
     }
 
@@ -108,10 +266,7 @@ function BattleEngine(battle_table)
 
     function activateSkill(effect, player, enemy, players_turn)
     {
-        this.skill_type.dmg = false;
-        this.skill_type.heal = false;
-        this.skill_type.transform = false;
-
+        this.table_modified = false;
         let unit;
         if(effect.self == true)
         {
@@ -160,7 +315,12 @@ function BattleEngine(battle_table)
 
         if(effect.transform == true)
         {
-            this.transformTable();
+            this.transformTable(effect.type);
+        }
+
+        if(effect.stun == true)
+        {
+            this.stunTable(effect.stun_amount);
         }
     }
 
@@ -182,7 +342,7 @@ function BattleEngine(battle_table)
     function canActivateSkill(skill, x, y)
     {
         //alert("beleptem");
-        this.logTable();
+        //this.logTable();
         if((x+skill.table_width)<=this.battle_table.width && (y+skill.table_height)<=this.battle_table.height)
         {
             for(let i=0; i<skill.table_height; i++)
@@ -242,6 +402,7 @@ function BattleEngine(battle_table)
             for(let j=0; j<this.battle_table.width; j++)
             {
                 this.table[i][j].type = this.temp_table[i][j].type;
+                this.table[i][j].stunned = this.temp_table[i][j].stunned;
                 this.table[i][j].selected = false;
             }
         }
@@ -254,6 +415,7 @@ function BattleEngine(battle_table)
             for(let j=0; j<this.battle_table.width; j++)
             {
                 this.temp_table[i][j].type = this.table[i][j].type;
+                this.temp_table[i][j].stunned = this.table[i][j].stunned;
             }
         }
 
@@ -261,11 +423,12 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.height; j++)
             {
-                if(this.temp_table[j][i].type==NUL)
+                if(this.temp_table[j][i].type === NUL)
                 {
                     for(let k=j; k>=1; k--)
                     {
                         this.temp_table[k][i].type = this.temp_table[k-1][i].type;
+                        this.temp_table[k][i].stunned = this.temp_table[k-1][i].stunned;
                         this.temp_table[k-1][i].type = NUL;
                     }
                 }
@@ -363,7 +526,7 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(table[i][j].type == NUL)
+                if(table[i][j].type === NUL)
                 {
                     table[i][j].type = generateRandomNumber(4)+1;
                     //table[i][j].type = ATT;
@@ -371,24 +534,53 @@ function BattleEngine(battle_table)
                 }
             }
         }
+
+
+        if(table[8][8].type === ATT)
+        {
+            table[0][1].type = POI;
+            table[1][1].type = POI;
+            table[2][1].type = ATT;
+            table[3][0].type = POI;
+            table[3][2].type = POI;
+            table[4][1].type = POI;
+            table[5][1].type = POI;
+            table[6][0].type = POI;
+        }
     }
 
-    function transformTable()
+    function transformTable(effect_type)
     {
         this.table_modified = false;
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.temp_table[i][j].type == MOV || this.temp_table[i][j].type == DEF)
+                let random_number = (generateRandomNumber(100) + 1);
+
+                if(effect_type === SHADOWFORM)
                 {
-                    if((generateRandomNumber(100) + 1) > 25)
+                    if(this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === DEF)
                     {
-                        this.temp_table[i][j].type = ATT;
+                        if(random_number > 25)
+                        {
+                            //console.log("att>" + random_number);
+                            this.temp_table[i][j].type = ATT;
+                            this.table_modified = true;
+                        }
+                    }
+                }
+                else if(effect_type === POISON)
+                {
+                    if(random_number > 80)
+                    {
+                        //console.log("poi>" + random_number);
+                        this.temp_table[i][j].type = POI;
                         this.table_modified = true;
                     }
-                    this.table[i][j].selected = false;
                 }
+
+                this.table[i][j].selected = false;
             }
         }
     }

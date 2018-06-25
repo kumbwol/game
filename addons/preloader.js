@@ -4,6 +4,7 @@ let images = [
     "addons/images/move.png",
     "addons/images/attack.png",
     "addons/images/defense.png",
+    "addons/images/poison.png",
     "addons/images/heal.png",
     "addons/images/self.png",
     "addons/images/skeleton.png",
@@ -12,6 +13,7 @@ let images = [
     "addons/images/failure.png",
     "addons/images/skill_effects/dmg.png",
     "addons/images/skill_effects/heal.png",
+    "addons/images/skill_effects/shadowform.png",
     "addons/images/chance_types/luck.png",
     "addons/images/chance_types/rage.png"
 ];

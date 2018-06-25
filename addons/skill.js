@@ -14,12 +14,12 @@ function Skill(name)
         {
             visual_pattern =
                 [
+                    /*[ATT,ATT,NUL],
                     [ATT,ATT,NUL],
-                    [ATT,ATT,NUL],
-                    [NUL,NUL,NUL]
-                    /*[ATT,NUL,NUL],
-                    [NUL,NUL,NUL],
                     [NUL,NUL,NUL]*/
+                    [ATT,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("DMG");
@@ -42,16 +42,16 @@ function Skill(name)
         case "Shield":
         {
             visual_pattern =
-                /*[
+                [
                     [DEF,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];*/
-                [
+                ];
+                /*[
                     [DEF,NUL,NUL],
                     [DEF,NUL,NUL],
                     [DEF,NUL,NUL]
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("Heal");
             break;
@@ -86,16 +86,16 @@ function Skill(name)
         case "Shadowform":
         {
             visual_pattern =
-                [
+                /*[
                     [MAN,MOV,MAN],
                     [MOV,MAN,MOV],
                     [MAN,MOV,MAN],
-                ];
-                /*[
+                ];*/
+                [
                     [MAN,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL],
-                ];*/
+                ];
                 /*[
                     [DEF,NUL,NUL],
                     [DEF,NUL,NUL],
@@ -113,9 +113,9 @@ function Skill(name)
             break;
         }
 
-        case "Vedekezes":
+        case "Poison":
         {
-            effect = new Effect("Heal");
+            effect = new Effect("Poison");
             chance = new Chance(LUCK, 100);
             break;
         }
@@ -123,7 +123,7 @@ function Skill(name)
         case "Valami":
         {
             effect = new Effect("AGR");
-            chance = new Chance(LUCK, 100);
+            chance = new Chance(LUCK, 0);
             break;
         }
     }

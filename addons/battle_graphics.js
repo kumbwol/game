@@ -793,7 +793,16 @@ function BattleGraphics(battle_table, engine)
                 {
                     $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
                     $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    //$("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case POISON:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/poison.png")');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().poison_amount);
                     allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
                     allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
                     break;

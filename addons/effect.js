@@ -67,7 +67,7 @@ function Effect(name)
         case "Poison":
         {
             effect.type = POISON;
-            effect.poison_amount = 20;
+            effect.poison_amount = 10;
             effect.transform = true;
             break;
         }

@@ -77,19 +77,6 @@ $(function()
                             if(engine.isPlayerPoisoned())
                             {
                                 recursiveVenomClearing(graphics, engine);
-                                /*graphics.clearAntiVenoms(engine).done(function()
-                                {
-                                    graphics.clearAntiVenoms(engine).done(function()
-                                    {
-                                        graphics.clearAntiVenoms(engine).done(function()
-                                        {
-                                            graphics.clearAntiVenoms(engine).done(function()
-                                            {
-
-                                            });
-                                        });
-                                    });
-                                });*/
                             }
                         });
                     }
@@ -109,7 +96,7 @@ $(function()
                     {
                         for(let j=0; j<skill.table_width; j++)
                         {
-                            if(skill.table[i][j] != NUL)
+                            if(skill.table[i][j] !== NUL)
                             {
                                 $("#y_" + (parseInt($(this).attr("id")[2])+i).toString() + "_x_" + (parseInt($(this).attr("id")[6])+j)).remove();
                                 engine.deleteField(parseInt($(this).attr("id")[6])+j, parseInt($(this).attr("id")[2])+i);
@@ -139,6 +126,10 @@ $(function()
                         graphics.reFillTable(engine).done(function()
                         {
                             engine.refreshTable();
+                            if(engine.isPlayerPoisoned())
+                            {
+                                recursiveVenomClearing(graphics, engine);
+                            }
                         });
                         //engine.logTable();
                         engine.table_modified = false;

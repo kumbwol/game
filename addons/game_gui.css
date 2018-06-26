@@ -11,6 +11,8 @@ html, body
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    cursor: default;
 }
 
 .text_attack
@@ -624,35 +626,35 @@ html, body
 #battle_table div.attack
 {
     background-color: crimson;
-    background-image: url("images/attack.png");
+    background-image: url("images/field_types/attack.png");
 }
 
 .selected_skill div.mana,
 #battle_table div.mana
 {
     background-color: aqua;
-    background-image: url("images/heal.png");
+    background-image: url("images/field_types/magic.png");
 }
 
 .selected_skill div.defense,
 #battle_table div.defense
 {
     background-color: bisque;
-    background-image: url("images/defense.png");
+    background-image: url("images/field_types/defense.png");
 }
 
 .selected_skill div.move,
 #battle_table div.move
 {
     background-color: forestgreen;
-    background-image: url("images/move.png");
+    background-image: url("images/field_types/move.png");
 }
 
 .selected_skill div.poison,
 #battle_table div.poison
 {
     background-color: #6aff23;
-    background-image: url("images/poison.png");
+    background-image: url("images/field_types/poison.png");
 }
 
 .selected_skill div.nul,

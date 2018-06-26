@@ -315,7 +315,7 @@ function BattleEngine(battle_table)
 
         if(effect.transform == true)
         {
-            this.transformTable(effect.type);
+            this.transformTable(effect);
         }
 
         if(effect.stun == true)
@@ -535,8 +535,7 @@ function BattleEngine(battle_table)
             }
         }
 
-
-        if(table[8][8].type === ATT)
+        /*if(table[8][8].type === ATT)
         {
             table[0][1].type = POI;
             table[1][1].type = POI;
@@ -546,20 +545,29 @@ function BattleEngine(battle_table)
             table[4][1].type = POI;
             table[5][1].type = POI;
             table[6][0].type = POI;
-        }
+        }*/
     }
 
-    function transformTable(effect_type)
+    function transformTable(effect)
     {
         this.table_modified = false;
+
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                let random_number = (generateRandomNumber(100) + 1);
+                this.table[i][j].selected = false;
+            }
+        }
 
-                if(effect_type === SHADOWFORM)
+        if(effect.type === SHADOWFORM)
+        {
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
                 {
+                    let random_number = (generateRandomNumber(100) + 1);
+
                     if(this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === DEF)
                     {
                         if(random_number > 25)
@@ -570,18 +578,65 @@ function BattleEngine(battle_table)
                         }
                     }
                 }
-                else if(effect_type === POISON)
-                {
-                    if(random_number > 80)
-                    {
-                        //console.log("poi>" + random_number);
-                        this.temp_table[i][j].type = POI;
-                        this.table_modified = true;
-                    }
-                }
-
-                this.table[i][j].selected = false;
             }
+        }
+        else if(effect.type === POISON)
+        {
+            let save_table = [];
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                save_table[i] = [];
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    save_table[i][j] = this.table[i][j].type;
+                }
+            }
+
+            let cycles = effect.poison_amount;
+            let counter = 0;
+
+            do
+            {
+                let random_y = (generateRandomNumber(this.battle_table.height));
+                let random_x = (generateRandomNumber(this.battle_table.width));
+                let original_field_type = this.table[random_y][random_x].type;
+
+
+                if(original_field_type !== POI)
+                {
+                    this.table[random_y][random_x].type = POI;
+
+                    if(this.isThereAntiVenom())
+                    {
+                        counter++;
+                        this.table[random_y][random_x].type = original_field_type;
+
+                        for(let i=0; i<this.battle_table.height; i++)
+                        {
+                            for(let j=0; j<this.battle_table.width; j++)
+                            {
+                                if(this.table[i][j].type === ANT)
+                                {
+                                    this.table[i][j].type = POI;
+                                }
+                            }
+                        }
+                    }
+                    else cycles--;
+                }
+                if(counter === 5000 ) break;
+            }while(cycles !== 0);
+
+
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    this.temp_table[i][j].type = this.table[i][j].type;
+                    this.table[i][j].type = save_table[i][j];
+                }
+            }
+            this.table_modified = true;
         }
     }
 

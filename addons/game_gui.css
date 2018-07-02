@@ -602,6 +602,17 @@ html, body
     box-sizing: border-box;
 }
 
+#freeze
+{
+    position: absolute;
+    background-color: blue;
+    opacity: 0;
+    pointer-events:none;
+    z-index: 2;
+    width: inherit;
+    height: inherit;
+}
+
 #battle_table
 {
     position: absolute;
@@ -613,7 +624,7 @@ html, body
     width: 300px;*/
 }
 
-#battle_table div
+#battle_table .attack, .mana, .defense, .move, .poison
 {
     padding: 0px;
     border: 1px solid black;

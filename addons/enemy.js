@@ -8,14 +8,24 @@ function Enemy(name)
 
     let skills = [];
 
-    if(this.name == "Skeleton")
+    if(this.name === "Skeleton")
     {
         this.max_hp = 100;
         this.hp = this.max_hp;
 
-        skills[0] = new Skill("Duhos");
-        skills[1] = new Skill("Heal");
-        skills[2] = new Skill("Valami");
+        skills[0] = new Skill("Raging storm");
+        skills[1] = new Skill("Regeneration");
+        skills[2] = new Skill("Punch");
+    }
+
+    if(this.name === "Test")
+    {
+        this.max_hp = 100;
+        this.hp = this.max_hp;
+
+        skills[0] = new Skill("Freeze");
+        skills[1] = new Skill("Stun");
+        skills[2] = new Skill("Poison");
     }
 
 

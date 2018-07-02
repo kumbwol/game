@@ -32,9 +32,44 @@ function BattleGraphics(battle_table, engine)
     this.poisonActivationAnimation = poisonActivationAnimation;
     this.clearAntiVenoms = clearAntiVenoms;
     this.freeStunnedFields = freeStunnedFields;
+    this.freezeAnimation = freezeAnimation;
+    this.stopFreezeAnimation = stopFreezeAnimation;
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function stopFreezeAnimation()
+    {
+        $("#freeze").remove();
+    }
+
+    function freezeAnimation()
+    {
+        let done = $.Deferred();
+
+        //$sound_object[0].trigger('play');
+        $sound_object[0].get(0).play();
+
+        $("#battle_table").append('<div id="freeze"></div>');
+        let opacity = 0;
+
+        let x = setInterval(function()
+        {
+            $("#freeze").css("opacity", opacity);
+            opacity += 0.004;
+        }, 20);
+
+        setTimeout(function()
+        {
+            clearInterval(x);
+            $sound_object[0].get(0).pause();
+            $sound_object[0].get(0).currentTime = 0;
+            done.resolve();
+        }, 2000);
+
+
+        return done;
+    }
 
     function freeStunnedFields()
     {
@@ -59,6 +94,8 @@ function BattleGraphics(battle_table, engine)
     {
         let done = $.Deferred();
 
+        let frozen = engine.isPlayerFreezed();
+
         if(engine.isThereAntiVenom())
         {
             for(let i=0; i<this.battle_table.height; i++)
@@ -69,18 +106,27 @@ function BattleGraphics(battle_table, engine)
                     {
                         //alert("cs");
                         engine.table[i][j].type = NUL;
+                        engine.temp_table[i][j].type = NUL;
                         $("#y_" + i + "_x_" + j).remove();
                     }
                 }
             }
             //alert("ok");
-            engine.calculateNewTable();
-            this.reNameIds(engine);
-            this.reFillTable(engine).done(function()
+            if(!frozen)
+            {
+                engine.calculateNewTable();
+                this.reNameIds(engine);
+                this.reFillTable(engine).done(function()
+                {
+                    engine.refreshTable();
+                    done.resolve();
+                });
+            }
+            else
             {
                 engine.refreshTable();
                 done.resolve();
-            });
+            }
         }
         else
         {
@@ -293,6 +339,8 @@ function BattleGraphics(battle_table, engine)
 
             engine.enemyTakesTurn(skill, player, enemy, battle_table, i);
 
+            //console.log(skill.effect.type_primary);
+
             if(engine.table_modified)
             {
                 /*if(skill.effect.type == STUN)
@@ -304,6 +352,13 @@ function BattleGraphics(battle_table, engine)
                 {
                     engine.refreshTable();
                     engine.resetTempTable();
+                    done.resolve();
+                });
+            }
+            else if(skill.effect.type_primary === FREEZE)
+            {
+                this.freezeAnimation().done(function()
+                {
                     done.resolve();
                 });
             }
@@ -675,6 +730,10 @@ function BattleGraphics(battle_table, engine)
                     });
                 }
             }
+        }
+        if(count_drops === 0)
+        {
+            done.resolve();
         }
 
         return done;
@@ -1099,6 +1158,16 @@ function BattleGraphics(battle_table, engine)
                     allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
                     break;
                 }
+
+                case STUN:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/stun.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + selector + "_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().stun_amount);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
             }
         }
     }
@@ -1294,7 +1363,7 @@ function BattleGraphics(battle_table, engine)
 
     function deleteSelector(id)
     {
-        if(id!="")
+        if(id !== "")
         {
             let $object = $("#" + id);
             /*let current_bg = $object.css("background-image");
@@ -1456,8 +1525,8 @@ function BattleGraphics(battle_table, engine)
                     if(i>difference)
                     {
                         clearInterval(x);
-                        if(player.hp == 0) object.remove();
-                        if(player.hp == player.max_hp) object.css("width", (player.max_hp/player.max_hp) * object.parent().width() - 1);
+                        if(player.hp === 0) object.remove();
+                        if(player.hp === player.max_hp) object.css("width", (player.max_hp/player.max_hp) * object.parent().width() - 1);
 
                         i = 0;
                         let y = setInterval(function()
@@ -1556,8 +1625,8 @@ function BattleGraphics(battle_table, engine)
                     if(i>difference)
                     {
                         clearInterval(x);
-                        if(enemy.hp == 0) object.remove();
-                        if(enemy.hp == enemy.max_hp) object.css("width", (enemy.max_hp/enemy.max_hp) * object.parent().width() - 1);
+                        if(enemy.hp === 0) object.remove();
+                        if(enemy.hp === enemy.max_hp) object.css("width", (enemy.max_hp/enemy.max_hp) * object.parent().width() - 1);
 
                         i = 0;
                         let y = setInterval(function()

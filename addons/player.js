@@ -9,7 +9,7 @@ function Player(name)
     this.max_ap = 1;
 
     let skills = [];
-    skills[0] = new Skill("Shock");
+    skills[0] = new Skill("SelfPoison");
     skills[1] = new Skill("Spiritarrow");
     skills[2] = new Skill("Shield");
     skills[3] = new Skill("Shadowform");

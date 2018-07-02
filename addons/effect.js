@@ -22,11 +22,19 @@ function Effect(name)
 
     switch(this.name)
     {
-        case "DMG":
+        case "DMG0":
         {
             effect.type_primary = DMG;
             effect.type_secondary = NOTHING;
             effect.dmg = 5;
+            break;
+        }
+
+        case "DMG":
+        {
+            effect.type_primary = DMG;
+            effect.type_secondary = NOTHING;
+            effect.dmg = 15;
             break;
         }
 
@@ -38,7 +46,7 @@ function Effect(name)
             break;
         }
 
-        case "AGR":
+        case "DMG1":
         {
             effect.type_primary = DMG;
             effect.type_secondary = NOTHING;
@@ -63,6 +71,15 @@ function Effect(name)
             break;
         }
 
+        case "Regeneration":
+        {
+            effect.type_primary = HEAL;
+            effect.type_secondary = NOTHING;
+            effect.self = true;
+            effect.heal = 10;
+            break;
+        }
+
         case "Stun":
         {
             effect.type_primary = STUN;
@@ -79,6 +96,13 @@ function Effect(name)
             effect.type_secondary = POISON_DMG;
             effect.poison_dmg = 3;
             effect.transform = true;
+            break;
+        }
+
+        case "Freeze":
+        {
+            effect.type_primary = FREEZE;
+            effect.type_secondary = NOTHING;
             break;
         }
     }

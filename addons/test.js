@@ -26,7 +26,7 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
-        let enemy  = new Enemy("Skeleton");
+        let enemy  = new Enemy("Test");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
         let poison_animation_finished = true;
@@ -120,12 +120,28 @@ $(function()
 
                     graphics.modifyTable(engine).done(function()
                     {
-                        engine.refreshTable();
-                        engine.calculateNewTable();
                         engine.calculateEnemySkillChances(skill, enemy);
                         graphics.updateEnemySkillChances(engine.enemy_skill_chances);
-                        graphics.reNameIds(engine);
-                        graphics.reFillTable(engine).done(function()
+                        if(!engine.isPlayerFreezed())
+                        {
+                            engine.refreshTable();
+                            engine.calculateNewTable();
+                            graphics.reNameIds(engine);
+                            graphics.reFillTable(engine).done(function()
+                            {
+                                skill_activation_finished = true;
+                                engine.refreshTable();
+                                if(engine.isPlayerPoisoned())
+                                {
+                                    poison_animation_finished = false;
+                                    recursiveVenomClearing(graphics, engine, function()
+                                    {
+                                        poison_animation_finished = true;
+                                    });
+                                }
+                            });
+                        }
+                        else
                         {
                             skill_activation_finished = true;
                             engine.refreshTable();
@@ -137,7 +153,9 @@ $(function()
                                     poison_animation_finished = true;
                                 });
                             }
-                        });
+                        }
+
+
                         engine.table_modified = false;
                     });
                 }
@@ -288,52 +306,112 @@ $(function()
             graphics.freeStunnedFields();
             engine.clearSunnedFields();
             //console.log(player_turn);
+
             if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished)
             {
                 player_turn = false;
-                if(engine.isPlayerPoisoned())
+                engine.refreshTable();
+
+                if(engine.isPlayerFreezed())
                 {
-                    let poison_dmg = engine.activatePoisons();
-
-                    player.hp -= poison_dmg;
-                    if(player.hp < 0)
+                    graphics.stopFreezeAnimation();
+                    engine.calculateNewTable();
+                    graphics.reNameIds(engine);
+                    graphics.reFillTable(engine).done(function()
                     {
-                        player.hp = 0;
-                    }
-
-                    if(poison_dmg > 0)
-                    {
-                        dmg_heal_number_animation_finished = false;
-
-                        graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
+                        engine.refreshTable();
+                        if(engine.isPlayerPoisoned())
                         {
-                            dmg_heal_number_animation_finished = true;
-                        });
+                            let poison_dmg = engine.activatePoisons();
 
-                        if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
-                    }
+                            player.hp -= poison_dmg;
+                            if(player.hp < 0)
+                            {
+                                player.hp = 0;
+                            }
 
-                    graphics.poisonActivationAnimation(engine).done(function()
-                    {
-                        engine.calculateNewTable();
-                        graphics.reNameIds(engine);
-                        graphics.reFillTable(engine).done(function()
+                            if(poison_dmg > 0)
+                            {
+                                dmg_heal_number_animation_finished = false;
+
+                                graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
+                                {
+                                    dmg_heal_number_animation_finished = true;
+                                });
+
+                                if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
+                            }
+
+                            graphics.poisonActivationAnimation(engine).done(function()
+                            {
+                                engine.calculateNewTable();
+                                graphics.reNameIds(engine);
+                                graphics.reFillTable(engine).done(function()
+                                {
+                                    engine.refreshTable();
+
+                                    enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                                    {
+                                        player_turn = true;
+                                    });
+                                });
+                            });
+                        }
+                        else
                         {
-                            engine.refreshTable();
-
                             enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
                             {
                                 player_turn = true;
                             });
-                        });
+                        }
                     });
                 }
                 else
                 {
-                    enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                    if(engine.isPlayerPoisoned())
                     {
-                        player_turn = true;
-                    });
+                        let poison_dmg = engine.activatePoisons();
+
+                        player.hp -= poison_dmg;
+                        if(player.hp < 0)
+                        {
+                            player.hp = 0;
+                        }
+
+                        if(poison_dmg > 0)
+                        {
+                            dmg_heal_number_animation_finished = false;
+
+                            graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
+                            {
+                                dmg_heal_number_animation_finished = true;
+                            });
+
+                            if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
+                        }
+
+                        graphics.poisonActivationAnimation(engine).done(function()
+                        {
+                            engine.calculateNewTable();
+                            graphics.reNameIds(engine);
+                            graphics.reFillTable(engine).done(function()
+                            {
+                                engine.refreshTable();
+
+                                enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                                {
+                                    player_turn = true;
+                                });
+                            });
+                        });
+                    }
+                    else
+                    {
+                        enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                        {
+                            player_turn = true;
+                        });
+                    }
                 }
             }
         });

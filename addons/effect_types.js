@@ -7,3 +7,4 @@ const SHADOWFORM =  2; // transform
 const STUN       =  3; // stun field
 const POISON     =  4; // poison
 const POISON_DMG =  5; // poison damage
+const FREEZE     =  6; // freeze player

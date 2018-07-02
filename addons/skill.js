@@ -22,20 +22,7 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("DMG");
-            break;
-        }
-
-        case "Stab":
-        {
-            visual_pattern =
-                [
-                    [MOV,ATT,ATT],
-                    [NUL,NUL,NUL],
-                    [NUL,NUL,NUL]
-                ];
-            pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("AGR");
+            effect  = new Effect("DMG0");
             break;
         }
 
@@ -71,20 +58,7 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("DMG2");
-            break;
-        }
-
-        case "Shieldslam":
-        {
-            visual_pattern =
-                [
-                    [ATT,DEF,NUL],
-                    [ATT,DEF,NUL],
-                    [NUL,NUL,NUL],
-                ];
-            pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("AGR");
+            effect  = new Effect("DMG");
             break;
         }
 
@@ -111,23 +85,60 @@ function Skill(name)
             break;
         }
 
-        case "Duhos":
+        case "SelfPoison":
+        {
+            visual_pattern =
+                [/*
+                    [ATT,ATT,NUL],
+                    [ATT,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [ATT,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            effect  = new Effect("Poison");
+            break;
+        }
+
+        case "Raging storm":
         {
             effect = new Effect("DMG2");
             chance = new Chance(RAGE, 0);
             break;
         }
 
-        case "Heal":
+        case "Regeneration":
         {
-            effect = new Effect("Stun");
+            effect = new Effect("Regeneration");
             chance = new Chance(LUCK, 30);
             break;
         }
 
-        case "Valami":
+        case "Punch":
+        {
+            effect = new Effect("DMG1");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "Poison":
         {
             effect = new Effect("Poison");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "Stun":
+        {
+            effect = new Effect("Stun");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "Freeze":
+        {
+            effect = new Effect("Freeze");
             chance = new Chance(LUCK, 100);
             break;
         }

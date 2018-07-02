@@ -33,6 +33,8 @@ function BattleEngine(battle_table)
         }
     }
 
+    this.freezed = false;
+
     this.logTable = logTable;
     this.logTempTable = logTempTable;
     this.fillUpTable = fillUpTable;
@@ -60,6 +62,18 @@ function BattleEngine(battle_table)
     this.createAntiPoisonInRow = createAntiPoisonInRow;
     this.createAntiPoisonInColumn = createAntiPoisonInColumn;
     this.clearSunnedFields = clearStunnedFields;
+    this.freezePlayer = freezePlayer;
+    this.isPlayerFreezed = isPlayerFreezed;
+
+    function isPlayerFreezed()
+    {
+        return this.freezed;
+    }
+
+    function freezePlayer()
+    {
+        this.freezed = true;
+    }
 
     function clearStunnedFields()
     {
@@ -70,6 +84,7 @@ function BattleEngine(battle_table)
                 if(this.table[i][j].stunned === true)
                 {
                     this.table[i][j].stunned = false;
+                    this.temp_table[i][j].stunned = false;
                 }
             }
         }
@@ -259,7 +274,10 @@ function BattleEngine(battle_table)
                 case RAGE:
                 {
                     //this.enemy_skill_chances[i] = "100";
-                    this.enemy_skill_chances[i] = enemy.max_hp - enemy.hp;
+                    /*alert((1 - (enemy.hp / enemy.max_hp)) * 100);
+                    alert(Math.ceil((1 - (enemy.hp / enemy.max_hp))*100));*/
+
+                    this.enemy_skill_chances[i] = Math.round((1 - (enemy.hp / enemy.max_hp))*100);
                     break;
                 }
 
@@ -296,7 +314,6 @@ function BattleEngine(battle_table)
         let unit;
         if(effect.self === true)
         {
-
             if(players_turn)
             {
                 unit = player;
@@ -347,6 +364,11 @@ function BattleEngine(battle_table)
         if(effect.stun === true)
         {
             this.stunTable(effect.stun_amount);
+        }
+
+        if(effect.type_primary === FREEZE)
+        {
+            this.freezePlayer();
         }
     }
 
@@ -689,15 +711,15 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.table[i][j].stunned)
+                /*if(this.table[i][j].stunned)
                 {
                     row_string += "1" + " ";
                 }
                 else
                 {
                     row_string += "0" + " ";
-                }
-                //row_string += this.table[i][j].stunned + " ";
+                }*/
+                row_string += this.table[i][j].type + " ";
             }
             console.log(row_string);
             console.log("\n");
@@ -714,15 +736,15 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.temp_table[i][j].stunned)
+                /*if(this.temp_table[i][j].stunned)
                 {
                     row_string += "1" + " ";
                 }
                 else
                 {
                     row_string += "0" + " ";
-                }
-                //row_string += this.temp_table[i][j].stunned + " ";
+                }*/
+                row_string += this.temp_table[i][j].type + " ";
             }
             console.log(row_string);
             console.log("\n");

@@ -20,9 +20,19 @@ let images = [
     "addons/images/chance_types/rage.png"
 ];
 
+let sounds = [
+    "addons/sounds/effects/freeze.mp3",
+];
+
 this.$object = [];
+this.$sound_object = [];
 
 for(let i=0; i<images.length; i++)
 {
     this.$object[i] = $("<img>").attr("src", images[i]);
+}
+
+for(let i=0; i<sounds.length; i++)
+{
+    this.$sound_object[i] = $("<audio>").attr("src", sounds[i]);
 }

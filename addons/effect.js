@@ -11,10 +11,12 @@ function Effect(name)
          stun: false,
          stun_amount: 0,
          poison_amount: 0,
+         poison_dmg: 0,
          dmg: 0,
          chance_type: "",
          heal: 0,
-         type: ""
+         type_primary: -1,
+         type_secondary: -1
      };
 
 
@@ -22,35 +24,40 @@ function Effect(name)
     {
         case "DMG":
         {
-            effect.type = DMG;
+            effect.type_primary = DMG;
+            effect.type_secondary = NOTHING;
             effect.dmg = 5;
             break;
         }
 
         case "DMG2":
         {
-            effect.type = DMG;
+            effect.type_primary = DMG;
+            effect.type_secondary = NOTHING;
             effect.dmg = 20;
             break;
         }
 
         case "AGR":
         {
-            effect.type = DMG;
+            effect.type_primary = DMG;
+            effect.type_secondary = NOTHING;
             effect.dmg = 10;
             break;
         }
 
         case "Transform":
         {
-            effect.type = SHADOWFORM;
+            effect.type_primary = SHADOWFORM;
+            effect.type_secondary = NOTHING;
             effect.transform = true;
             break;
         }
 
         case "Heal":
         {
-            effect.type = HEAL;
+            effect.type_primary = HEAL;
+            effect.type_secondary = NOTHING;
             effect.self = true;
             effect.heal = 5;
             break;
@@ -58,16 +65,19 @@ function Effect(name)
 
         case "Stun":
         {
-            effect.type = STUN;
+            effect.type_primary = STUN;
+            effect.type_secondary = NOTHING;
             effect.stun = true;
-            effect.stun_amount = 20;
+            effect.stun_amount = 5;
             break;
         }
 
         case "Poison":
         {
-            effect.type = POISON;
-            effect.poison_amount = 10;
+            effect.type_primary = POISON;
+            effect.poison_amount = 5;
+            effect.type_secondary = POISON_DMG;
+            effect.poison_dmg = 3;
             effect.transform = true;
             break;
         }

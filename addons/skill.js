@@ -13,8 +13,8 @@ function Skill(name)
         case "Shock":
         {
             visual_pattern =
-                [
-                    /*[ATT,ATT,NUL],
+                [/*
+                    [ATT,ATT,NUL],
                     [ATT,ATT,NUL],
                     [NUL,NUL,NUL]*/
                     [ATT,NUL,NUL],
@@ -60,10 +60,15 @@ function Skill(name)
         case "Spiritarrow":
         {
             visual_pattern =
-                [
+                /*[
                     [ATT,ATT,NUL],
                     [ATT,MAN,NUL],
                     [NUL,NUL,MAN]
+                ];*/
+                [
+                    [ATT,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             effect  = new Effect("DMG2");
@@ -113,17 +118,17 @@ function Skill(name)
             break;
         }
 
-        case "Poison":
+        case "Heal":
         {
-            effect = new Effect("Poison");
-            chance = new Chance(LUCK, 100);
+            effect = new Effect("Stun");
+            chance = new Chance(LUCK, 30);
             break;
         }
 
         case "Valami":
         {
-            effect = new Effect("AGR");
-            chance = new Chance(LUCK, 0);
+            effect = new Effect("Poison");
+            chance = new Chance(LUCK, 100);
             break;
         }
     }

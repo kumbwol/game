@@ -14,7 +14,7 @@ function Enemy(name)
         this.hp = this.max_hp;
 
         skills[0] = new Skill("Duhos");
-        skills[1] = new Skill("Poison");
+        skills[1] = new Skill("Heal");
         skills[2] = new Skill("Valami");
     }
 

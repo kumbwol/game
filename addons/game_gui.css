@@ -264,6 +264,7 @@ html, body
     border-width: 0px 1px 0px 0px;
 }
 
+.skill_left_part_bottom_right_image,
 .skill_left_part_bottom_left_image
 {
     position: absolute;
@@ -273,6 +274,7 @@ html, body
     height: 34px;
 }
 
+.skill_left_part_bottom_right_number,
 .skill_left_part_bottom_left_number
 {
     position: absolute;
@@ -655,6 +657,12 @@ html, body
 {
     background-color: #6aff23;
     background-image: url("images/field_types/poison.png");
+}
+
+.selected_skill div.stunIt,
+#battle_table div.stunIt
+{
+    background-color: #2f2f2f;
 }
 
 .selected_skill div.nul,

@@ -31,10 +31,29 @@ function BattleGraphics(battle_table, engine)
     this.drawEffectExplainer = drawEffectExplainer;
     this.poisonActivationAnimation = poisonActivationAnimation;
     this.clearAntiVenoms = clearAntiVenoms;
-
+    this.freeStunnedFields = freeStunnedFields;
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function freeStunnedFields()
+    {
+
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                $("#y_" + i + "_x_" + j).removeClass("stunIt");
+            }
+        }
+
+        /*let done = $.Deferred();
+
+
+        done.resolve();
+
+        return done;*/
+    }
 
     function clearAntiVenoms(engine)
     {
@@ -63,6 +82,10 @@ function BattleGraphics(battle_table, engine)
                 done.resolve();
             });
         }
+        else
+        {
+            done.resolve();
+        }
 
         return done;
     }
@@ -88,14 +111,17 @@ function BattleGraphics(battle_table, engine)
                         top: "-=4px",
                         left: "-=4px",
                         backgroundSize: "+=8px"
-                    }, 200, function()
+                    }, 300, function()
                     {
                         let element = $(this).attr("id");
                         number_of_poisons--;
                         $("#" + element).remove();
                         if(number_of_poisons === 0)
                         {
-                            done.resolve();
+                            setTimeout(function()
+                            {
+                                done.resolve();
+                            }, 100);
                         }
                     });
                 }
@@ -114,12 +140,22 @@ function BattleGraphics(battle_table, engine)
         return text;
     }
 
-    function drawEffectExplainer(unit, id)
+    function drawEffectExplainer(unit, primary, id)
     {
         let x = $('<div id="explain_box">');
-        x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type] + '</div>');
-        x.append('<div class="explain_box_line"></div>');
-        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type]) + '</div>');
+        if(primary)
+        {
+            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type_primary] + '</div>');
+            x.append('<div class="explain_box_line"></div>');
+            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type_primary]) + '</div>');
+        }
+        else
+        {
+            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type_secondary] + '</div>');
+            x.append('<div class="explain_box_line"></div>');
+            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect().type_secondary]) + '</div>');
+        }
+
 
         return x;
     }
@@ -145,31 +181,31 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
-    function animateDamageNumbers(effect, player_on_turn)
+    function animateDamageNumbers(dmg, heal, player_on_turn)
     {
         let done = $.Deferred();
 
-        if(effect.dmg > 0 || effect.heal > 0)
+        if(dmg > 0 || heal > 0)
         {
             let object;
 
-            if(effect.dmg > 0)
+            if(dmg > 0)
             {
                 if(player_on_turn) $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
                 else $("#self").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
                 object.css("color", "red");
-                object.html("-" + effect.dmg);
+                object.html("-" + dmg);
             }
-            else if(effect.heal > 0)
+            else if(heal > 0)
             {
                 if(player_on_turn) $("#self").append('<div id="dmg_counter"></div>');
                 else $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
                 object.css("color", "lawngreen");
-                object.html("+" + effect.heal);
+                object.html("+" + heal);
             }
 
             allignToMiddle(object);
@@ -285,7 +321,7 @@ function BattleGraphics(battle_table, engine)
                         complete: function(){
                             $("#cut").remove();*/
 
-                            animateDamageNumbers(skill.effect, false).done(function()
+                            animateDamageNumbers(skill.effect.dmg, skill.effect.heal, false).done(function()
                             {
                                 done.resolve();
                             });
@@ -396,20 +432,23 @@ function BattleGraphics(battle_table, engine)
         $("#ability_point").css("left", "-=1px");
     }
 
-    function myFade(change_field_type, object, cb)
+    function myFade(change_field_type, object, isStunned, cb)
     {
         let changed_field_type_string;
+        let stunField = "";
+        if(isStunned) stunField = " stunIt";
+
         switch(change_field_type)
         {
             case ATT:
             {
-                changed_field_type_string = "attack";
+                changed_field_type_string = "attack" + stunField;
                 break;
             }
 
             case POI:
             {
-                changed_field_type_string = "poison";
+                changed_field_type_string = "poison" + stunField;
                 break;
             }
         }
@@ -442,7 +481,8 @@ function BattleGraphics(battle_table, engine)
     {
         setTimeout(function()
         {
-            object.css("background-color", "#2f2f2f");
+            //object.css("background-color", "#2f2f2f");
+            object.addClass("stunIt");
             cb();
         }, 500);
     }
@@ -462,7 +502,7 @@ function BattleGraphics(battle_table, engine)
                     let changed_field_type = engine.temp_table[i][j].type;
                     wait_animation = true;
 
-                    myFade(changed_field_type, $("#y_" + i + "_x_" + j), function()
+                    myFade(changed_field_type, $("#y_" + i + "_x_" + j), engine.temp_table[i][j].stunned, function()
                     {
                         done.resolve();
                     });
@@ -489,7 +529,7 @@ function BattleGraphics(battle_table, engine)
             let number_of_holes = 0;
             for(let i=engine.battle_table.height-1; i>=0; i--)
             {
-                if(engine.table[i][j].type == NUL)
+                if(engine.table[i][j].type === NUL)
                 {
                     number_of_holes++;
                 }
@@ -650,12 +690,70 @@ function BattleGraphics(battle_table, engine)
 
         let eses = (height*(field_size+1))+8;
 
-        let magassag = "+=" + eses;
+        let magassag = "+=" + eses + "px";
 
-        object.animate({"top": magassag}, (time)).animate({"top": "-=20"}, (time/3)).animate({"top": "+=16"}, (time/3)).animate({"top": "-=6"}, (time/6)).animate({"top": "+=2"}, (time/6), function()
+        /*object.velocity({"top": "+=200px"}, 500, function()
         {
             done.resolve();
-        });
+        });*
+
+        /*object.velocity({"top": magassag}, (time), function()
+        {
+            object.velocity({"top": "-=20"}, (time/3), function()
+            {
+                object.velocity({"top": "+=16"}, (time/3), function()
+                {
+                    object.velocity({"top": "-=6"}, (time/6), function()
+                    {
+                        object.velocity({"top": "+=2"}, (time/6), function()
+                        {
+                            done.resolve();
+                        });
+                    });
+                });
+            });
+        });*/
+
+        //object.css("position", "absolute");
+
+        /*let szint = object.css("top").substring(0, object.css("top").length - 2);
+
+        szint = (parseInt(szint) + eses);
+
+        object.velocity({"top": (szint + "px")}, (time), function()
+        {
+            szint = (parseInt(szint) - 20);
+            object.velocity({"top": (szint + "px")}, (time/3), function()
+            {
+                szint = (parseInt(szint) + 16);
+                object.velocity({"top": (szint + "px")}, (time/3), function()
+                {
+                    szint = (parseInt(szint) - 6);
+                    object.velocity({"top": (szint + "px")}, (time/6), function()
+                    {
+                        szint = (parseInt(szint) + 2);
+                        object.velocity({"top": (szint + "px")}, (time/6), function()
+                        {
+                            done.resolve();
+                        });
+                    });
+                });
+            });
+        });*/
+
+        let third = time/3;
+        let sixed = time/6;
+
+        //setTimeout(function()
+        //{
+            object.animate({"top": magassag}, (time)).animate({"top": "-=20px"}, third).animate({"top": "+=16px"}, third).animate({"top": "-=6px"}, sixed).animate({"top": "+=2px"}, sixed, function()
+            {
+                done.resolve();
+            });
+        //}, generateRandomNumber(200));
+
+
+        //console.log(object.is(".velocity-animating"));
 
         return done;
     }
@@ -764,51 +862,8 @@ function BattleGraphics(battle_table, engine)
 
     function createEnemySkillEffects(enemy)
     {
-        for(let i=0; i<enemy.getSkills().length; i++)
-        {
-            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-repeat", "no-repeat");
-            switch(enemy.getSkills()[i].getSkillEffect().type)
-            {
-                case DMG:
-                {
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().dmg);
-                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    break;
-                }
-
-                case HEAL:
-                {
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().heal);
-                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    break;
-                }
-
-                case SHADOWFORM:
-                {
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    break;
-                }
-
-                case POISON:
-                {
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/poison.png")');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().poison_amount);
-                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
-                    break;
-                }
-            }
-        }
+        drawEnemySkillEffects(enemy, true);
+        drawEnemySkillEffects(enemy, false);
     }
 
     function createEnemySkillName(enemy)
@@ -834,7 +889,8 @@ function BattleGraphics(battle_table, engine)
             //$("#skill_" + (i+1) + " .skill_left_part_bottom_left").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
 
             $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
-            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-repeat", "no-repeat");
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_image"></div>');
+            $("#enemy_skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_number"></div>');
             //$("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
 
             $("#enemy_skill_"+(i+1)).append('<div class="skill_right_part"></div>');
@@ -897,16 +953,35 @@ function BattleGraphics(battle_table, engine)
 
     function createSkillEffects(player)
     {
+        drawPlayerSkillEffects(player, true);
+        drawPlayerSkillEffects(player, false);
+    }
+
+    function drawPlayerSkillEffects(player, primary)
+    {
+        let selector = "";
+        let effect_type = 0;
+
         for(let i=0; i<player.getSkills().length; i++)
         {
-            $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-repeat", "no-repeat");
-            switch(player.getSkills()[i].getSkillEffect().type)
+            if(primary)
+            {
+                selector = " .skill_left_part_bottom_left";
+                effect_type = player.getSkills()[i].getSkillEffect().type_primary;
+            }
+            else
+            {
+                selector = " .skill_left_part_bottom_right";
+                effect_type = player.getSkills()[i].getSkillEffect().type_secondary;
+            }
+
+            switch(effect_type)
             {
                 case DMG:
                 {
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().dmg);
+                    $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+                    $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect().dmg);
                     allignTextRight($("#skill_" + (i+1) + " .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
                     break;
@@ -914,9 +989,9 @@ function BattleGraphics(battle_table, engine)
 
                 case HEAL:
                 {
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
+                    $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
+                    $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
                     allignTextRight($("#skill_" + (i+1) + " .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
                     break;
@@ -924,19 +999,107 @@ function BattleGraphics(battle_table, engine)
 
                 case SHADOWFORM:
                 {
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
-                    $("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
+                    $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
                     //$("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
                     allignTextRight($("#skill_" + (i+1) + " .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
                     break;
                 }
+
+                case POISON:
+                {
+                    $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/poison.png")');
+                    $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect().poison_amount);
+                    allignTextRight($("#skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case POISON_DMG:
+                {
+                    $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/poison_dmg.png")');
+                    $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect().poison_dmg);
+                    allignTextRight($("#skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+            }
+        }
+    }
+
+    function drawEnemySkillEffects(enemy, primary)
+    {
+        let selector = "";
+        let effect_type = 0;
+
+        for(let i=0; i<enemy.getSkills().length; i++)
+        {
+            if(primary)
+            {
+                selector = " .skill_left_part_bottom_left";
+                effect_type = enemy.getSkills()[i].getSkillEffect().type_primary;
+            }
+            else
+            {
+                selector = " .skill_left_part_bottom_right";
+                effect_type = enemy.getSkills()[i].getSkillEffect().type_secondary;
             }
 
-            //alert(player.getSkills()[i].getSkillEffect().dmg);
-            //$("#skill_" + (i+1) + " .skill_left_part_bottom_left_number").html(player.getSkills()[i].getSkillEffect());
-            /*let class_selector = "#skill_" + (i+1) + " .skill_name_string";
-            $(class_selector).html(player.getSkills()[i].name);*/
+            switch(effect_type)
+            {
+                case DMG:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + selector + "_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().dmg);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case HEAL:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + selector + "_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case SHADOWFORM:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/shadowform.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    //$("#skill_" + (i+1) + " .skill_left_part_bottom_left_number .effect_number").text(player.getSkills()[i].getSkillEffect().heal);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case POISON:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/poison.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + selector + "_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().poison_amount);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+
+                case POISON_DMG:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/poison_dmg.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    $("#enemy_skill_" + (i+1) + selector + "_number .effect_number").text(enemy.getSkills()[i].getSkillEffect().poison_dmg);
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .effect_number"));
+                    break;
+                }
+            }
         }
     }
 
@@ -961,7 +1124,8 @@ function BattleGraphics(battle_table, engine)
             //$("#skill_" + (i+1) + " .skill_left_part_bottom_left").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
 
             $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
-            $("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-repeat", "no-repeat");
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_image"></div>');
+            $("#skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_number"></div>');
             //$("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
 
             $("#skill_"+(i+1)).append('<div class="skill_right_part"></div>');

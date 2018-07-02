@@ -3,8 +3,8 @@ console.log("player.js loaded");
 function Player(name)
 {
     this.name = name;
-    this.hp = 50;
-    this.max_hp = 50;
+    this.hp = 80;
+    this.max_hp = 80;
     this.ap = 1;
     this.max_ap = 1;
 

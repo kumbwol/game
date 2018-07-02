@@ -15,6 +15,7 @@ let images = [
     "addons/images/skill_effects/heal.png",
     "addons/images/skill_effects/shadowform.png",
     "addons/images/skill_effects/poison.png",
+    "addons/images/skill_effects/poison_dmg.png",
     "addons/images/chance_types/luck.png",
     "addons/images/chance_types/rage.png"
 ];

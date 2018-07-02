@@ -59,6 +59,21 @@ function BattleEngine(battle_table)
     this.isThereAntiVenom = isThereAntiVenom;
     this.createAntiPoisonInRow = createAntiPoisonInRow;
     this.createAntiPoisonInColumn = createAntiPoisonInColumn;
+    this.clearSunnedFields = clearStunnedFields;
+
+    function clearStunnedFields()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].stunned === true)
+                {
+                    this.table[i][j].stunned = false;
+                }
+            }
+        }
+    }
 
     function isThereAntiVenom()
     {
@@ -156,13 +171,21 @@ function BattleEngine(battle_table)
 
     function activatePoisons()
     {
+        let dmg = 0;
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.table[i][j].type === POI) this.table[i][j].type = NUL;
+                if(this.table[i][j].type === POI)
+                {
+                    dmg += this.table[i][j].poison_dmg;
+                    this.table[i][j].type = NUL;
+                    this.table[i][j].poison_dmg = 0;
+                }
             }
         }
+
+        return dmg;
     }
 
     function isPlayerPoisoned()
@@ -192,6 +215,8 @@ function BattleEngine(battle_table)
     {
         this.table_modified = false;
 
+        let tries = 0;
+
         do
         {
             let y = generateRandomNumber(this.battle_table.height);
@@ -205,9 +230,10 @@ function BattleEngine(battle_table)
                 this.stunField(x, y);
                 stun_amount--;
             }
+            tries++;
             this.table_modified = true;
             //console.log(stun_amount);
-        }while(stun_amount != 0);
+        }while(stun_amount !== 0 && tries!==5000);
     }
 
     function decideEnemySkills()
@@ -268,7 +294,7 @@ function BattleEngine(battle_table)
     {
         this.table_modified = false;
         let unit;
-        if(effect.self == true)
+        if(effect.self === true)
         {
 
             if(players_turn)
@@ -313,12 +339,12 @@ function BattleEngine(battle_table)
         }
 
 
-        if(effect.transform == true)
+        if(effect.transform === true)
         {
             this.transformTable(effect);
         }
 
-        if(effect.stun == true)
+        if(effect.stun === true)
         {
             this.stunTable(effect.stun_amount);
         }
@@ -343,15 +369,15 @@ function BattleEngine(battle_table)
     {
         //alert("beleptem");
         //this.logTable();
-        if((x+skill.table_width)<=this.battle_table.width && (y+skill.table_height)<=this.battle_table.height)
+        if((x+skill.table_width) <= this.battle_table.width && (y+skill.table_height) <= this.battle_table.height)
         {
             for(let i=0; i<skill.table_height; i++)
             {
                 for(let j=0; j<skill.table_width; j++)
                 {
-                    if(skill.table[i][j] != NUL)
+                    if(skill.table[i][j] !== NUL)
                     {
-                        if(skill.table[i][j] != this.table[y+i][x+j].type)
+                        if(skill.table[i][j] !== this.table[y+i][x+j].type || this.table[y+i][x+j].stunned)
                         {
                             /*alert(i);
                             alert(j);
@@ -403,6 +429,7 @@ function BattleEngine(battle_table)
             {
                 this.table[i][j].type = this.temp_table[i][j].type;
                 this.table[i][j].stunned = this.temp_table[i][j].stunned;
+                this.table[i][j].poison_dmg = this.temp_table[i][j].poison_dmg;
                 this.table[i][j].selected = false;
             }
         }
@@ -416,6 +443,7 @@ function BattleEngine(battle_table)
             {
                 this.temp_table[i][j].type = this.table[i][j].type;
                 this.temp_table[i][j].stunned = this.table[i][j].stunned;
+                this.temp_table[i][j].poison_dmg = this.table[i][j].poison_dmg;
             }
         }
 
@@ -429,7 +457,10 @@ function BattleEngine(battle_table)
                     {
                         this.temp_table[k][i].type = this.temp_table[k-1][i].type;
                         this.temp_table[k][i].stunned = this.temp_table[k-1][i].stunned;
+                        this.temp_table[k][i].poison_dmg = this.temp_table[k-1][i].poison_dmg;
                         this.temp_table[k-1][i].type = NUL;
+                        this.temp_table[k-1][i].poison_dmg = 0;
+                        this.temp_table[k-1][i].stunned = false;
                     }
                 }
             }
@@ -458,7 +489,7 @@ function BattleEngine(battle_table)
         else
         {
             this.table[y][x].selected = true;
-            if(this.selected_fields.y0 == -1 && this.selected_fields.x0 == -1)
+            if(this.selected_fields.y0 === -1 && this.selected_fields.x0 === -1)
             {
                 this.selected_fields.y0 = y;
                 this.selected_fields.x0 = x;
@@ -511,13 +542,19 @@ function BattleEngine(battle_table)
 
     function swapFields(x0, y0, x1, y1)
     {
-        let temp = this.table[y0][x0].type;
+        let temp_type = this.table[y0][x0].type;
+        let temp_poison_dmg = this.table[y0][x0].poison_dmg;
         this.table[y0][x0].type = this.table[y1][x1].type;
-        this.table[y1][x1].type = temp;
+        this.table[y0][x0].poison_dmg = this.table[y1][x1].poison_dmg;
+        this.table[y1][x1].type = temp_type;
+        this.table[y1][x1].poison_dmg = temp_poison_dmg;
 
-        temp = this.temp_table[y0][x0].type;
+        temp_type = this.temp_table[y0][x0].type;
+        temp_poison_dmg = this.temp_table[y0][x0].poison_dmg;
         this.temp_table[y0][x0].type = this.temp_table[y1][x1].type;
-        this.temp_table[y1][x1].type = temp;
+        this.temp_table[y0][x0].poison_dmg = this.temp_table[y1][x1].poison_dmg;
+        this.temp_table[y1][x1].type = temp_type;
+        this.temp_table[y1][x1].poison_dmg = temp_poison_dmg;
     }
 
     function fillUpTable(table)
@@ -560,7 +597,7 @@ function BattleEngine(battle_table)
             }
         }
 
-        if(effect.type === SHADOWFORM)
+        if(effect.type_primary === SHADOWFORM)
         {
             for(let i=0; i<this.battle_table.height; i++)
             {
@@ -580,7 +617,7 @@ function BattleEngine(battle_table)
                 }
             }
         }
-        else if(effect.type === POISON)
+        else if(effect.type_primary === POISON)
         {
             let save_table = [];
             for(let i=0; i<this.battle_table.height; i++)
@@ -601,8 +638,7 @@ function BattleEngine(battle_table)
                 let random_x = (generateRandomNumber(this.battle_table.width));
                 let original_field_type = this.table[random_y][random_x].type;
 
-
-                if(original_field_type !== POI)
+                if(original_field_type !== POI && original_field_type !== NUL)
                 {
                     this.table[random_y][random_x].type = POI;
 
@@ -622,7 +658,11 @@ function BattleEngine(battle_table)
                             }
                         }
                     }
-                    else cycles--;
+                    else
+                    {
+                        cycles--;
+                        this.table[random_y][random_x].poison_dmg = effect.poison_dmg;
+                    }
                 }
                 if(counter === 5000 ) break;
             }while(cycles !== 0);
@@ -633,6 +673,7 @@ function BattleEngine(battle_table)
                 for(let j=0; j<this.battle_table.width; j++)
                 {
                     this.temp_table[i][j].type = this.table[i][j].type;
+                    this.temp_table[i][j].poison_dmg = this.table[i][j].poison_dmg;
                     this.table[i][j].type = save_table[i][j];
                 }
             }
@@ -648,7 +689,15 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                row_string += this.table[i][j].type + " ";
+                if(this.table[i][j].stunned)
+                {
+                    row_string += "1" + " ";
+                }
+                else
+                {
+                    row_string += "0" + " ";
+                }
+                //row_string += this.table[i][j].stunned + " ";
             }
             console.log(row_string);
             console.log("\n");
@@ -665,7 +714,15 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                row_string += this.temp_table[i][j].type + " ";
+                if(this.temp_table[i][j].stunned)
+                {
+                    row_string += "1" + " ";
+                }
+                else
+                {
+                    row_string += "0" + " ";
+                }
+                //row_string += this.temp_table[i][j].stunned + " ";
             }
             console.log(row_string);
             console.log("\n");

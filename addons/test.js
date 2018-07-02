@@ -2,14 +2,6 @@ $(function()
 {
     start_program();
 
-    function recursiveVenomClearing(graphics, engine)
-    {
-        graphics.clearAntiVenoms(engine).done(function()
-        {
-            if(engine.isThereAntiVenom()) recursiveVenomClearing(graphics, engine);
-        });
-    }
-
     function start_game()
     {
         let battle_table = {
@@ -37,6 +29,8 @@ $(function()
         let enemy  = new Enemy("Skeleton");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
+        let poison_animation_finished = true;
+        let dmg_heal_number_animation_finished = true;
 
         $("#create_table").on("click", function()
         {
@@ -54,7 +48,7 @@ $(function()
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison", function()
         {
-            if(player.ap > 0 && player_turn)
+            if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished)
             {
                 let y = ($(this).attr("id"))[2];
                 let x = ($(this).attr("id"))[6];
@@ -76,7 +70,11 @@ $(function()
 
                             if(engine.isPlayerPoisoned())
                             {
-                                recursiveVenomClearing(graphics, engine);
+                                poison_animation_finished = false;
+                                recursiveVenomClearing(graphics, engine, function()
+                                {
+                                    poison_animation_finished = true;
+                                });
                             }
                         });
                     }
@@ -89,7 +87,7 @@ $(function()
 
             if(skill.moving && player_turn)
             {
-                if(skill_activation_finished && engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
+                if(dmg_heal_number_animation_finished && poison_animation_finished && skill_activation_finished && engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
                 {
                     skill_activation_finished = false;
                     for(let i=0; i<skill.table_height; i++)
@@ -108,13 +106,17 @@ $(function()
                     graphics.deleteSelector(engine.selected_field_id);
                     engine.activateSkill(skill.effect, player, enemy, player_turn);
 
-                    graphics.animateDamageNumbers(skill.effect, player_turn).done(function()
+                    if(skill.effect.dmg > 0 || skill.effect.heal > 0)
                     {
-                        skill_activation_finished = true;
-                    });
+                        dmg_heal_number_animation_finished = false;
+                        graphics.animateDamageNumbers(skill.effect.dmg, skill.effect.heal, player_turn).done(function()
+                        {
+                            dmg_heal_number_animation_finished = true;
+                        });
+                        if(skill.effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+                        if(skill.effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
+                    }
 
-                    if(skill.effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
-                    if(skill.effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
 
                     graphics.modifyTable(engine).done(function()
                     {
@@ -125,13 +127,17 @@ $(function()
                         graphics.reNameIds(engine);
                         graphics.reFillTable(engine).done(function()
                         {
+                            skill_activation_finished = true;
                             engine.refreshTable();
                             if(engine.isPlayerPoisoned())
                             {
-                                recursiveVenomClearing(graphics, engine);
+                                poison_animation_finished = false;
+                                recursiveVenomClearing(graphics, engine, function()
+                                {
+                                    poison_animation_finished = true;
+                                });
                             }
                         });
-                        //engine.logTable();
                         engine.table_modified = false;
                     });
                 }
@@ -143,8 +149,9 @@ $(function()
                 // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
                 e.preventDefault();
                 engine.logTable();
+                engine.logTempTable();
             }
-        })
+        });
 
         $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
         {
@@ -191,14 +198,14 @@ $(function()
             return false;
         });
 
-        $("#game_background").on("mousedown", ".skill_right_part_bottom, .skill_left_part_bottom_left", function(ev)
+        $("#game_background").on("mousedown", ".skill_right_part_bottom, .skill_left_part_bottom_left, .skill_left_part_bottom_right", function(ev)
         {
             //console.log($(this).attr("class"));
             //console.log($(this).parent().parent().attr("id"));
             //console.log($(this).parent().parent().attr("id")[6]);
             let right_click = 3;
 
-            if(ev.which == right_click)
+            if(ev.which === right_click)
             {
                 let mouse_x = (ev.pageX);
                 let mouse_y = (ev.pageY);
@@ -208,33 +215,63 @@ $(function()
                 {
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
-                        $("#game_background").append(graphics.drawEffectExplainer(enemy, $(this).parent().parent().attr("id")[12]));
+                        $("#game_background").append(graphics.drawEffectExplainer(enemy, true, $(this).parent().parent().attr("id")[12]));
+                        $("#explain_box").css(
+                            {
+                                "border-radius": "30px 0px 30px 30px",
+                                top: mouse_y + "px",
+                                left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                            });
+                    }
+                    else if($(this).attr("class") === "skill_left_part_bottom_right")
+                    {
+                        if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect().type_secondary !== NOTHING)
+                        {
+                            $("#game_background").append(graphics.drawEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
+                            $("#explain_box").css(
+                                {
+                                    "border-radius": "30px 0px 30px 30px",
+                                    top: mouse_y + "px",
+                                    left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                                });
+                        }
                     }
                     else
                     {
                         $("#game_background").append(graphics.drawChanceExplainer(enemy, $(this).parent().parent().attr("id")[12]));
+                        $("#explain_box").css(
+                            {
+                                "border-radius": "30px 0px 30px 30px",
+                                top: mouse_y + "px",
+                                left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                            });
                     }
-
-                    $("#explain_box").css(
-                    {
-                        "border-radius": "30px 0px 30px 30px",
-                        top: mouse_y + "px",
-                        left: (mouse_x-($("#explain_box").outerWidth())) + "px"
-                    });
                 }
                 else
                 {
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
-                        $("#game_background").append(graphics.drawEffectExplainer(player, $(this).parent().parent().attr("id")[6]));
+                        $("#game_background").append(graphics.drawEffectExplainer(player, true, $(this).parent().parent().attr("id")[6]));
+                        $("#explain_box").css(
+                            {
+                                "border-radius": "0px 30px 30px 30px",
+                                top: mouse_y + "px",
+                                left: mouse_x+ "px"
+                            });
                     }
-
-                    $("#explain_box").css(
+                    else if($(this).attr("class") === "skill_left_part_bottom_right")
                     {
-                        "border-radius": "0px 30px 30px 30px",
-                        top: mouse_y + "px",
-                        left: mouse_x+ "px"
-                    });
+                        if(player.getSkills()[(parseInt($(this).parent().parent().attr("id")[6])-1)].getSkillEffect().type_secondary !== NOTHING)
+                        {
+                            $("#game_background").append(graphics.drawEffectExplainer(player, false, $(this).parent().parent().attr("id")[6]));
+                            $("#explain_box").css(
+                                {
+                                    "border-radius": "0px 30px 30px 30px",
+                                    top: mouse_y + "px",
+                                    left: mouse_x+ "px"
+                                });
+                        }
+                    }
                 }
             }
         });
@@ -248,13 +285,34 @@ $(function()
 
         $("#game_background").on("click", "#end_turn", function()
         {
+            graphics.freeStunnedFields();
+            engine.clearSunnedFields();
             //console.log(player_turn);
-            if(player_turn)
+            if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished)
             {
                 player_turn = false;
                 if(engine.isPlayerPoisoned())
                 {
-                    engine.activatePoisons();
+                    let poison_dmg = engine.activatePoisons();
+
+                    player.hp -= poison_dmg;
+                    if(player.hp < 0)
+                    {
+                        player.hp = 0;
+                    }
+
+                    if(poison_dmg > 0)
+                    {
+                        dmg_heal_number_animation_finished = false;
+
+                        graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
+                        {
+                            dmg_heal_number_animation_finished = true;
+                        });
+
+                        if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
+                    }
+
                     graphics.poisonActivationAnimation(engine).done(function()
                     {
                         engine.calculateNewTable();
@@ -349,5 +407,17 @@ $(function()
             })
         });
         return done;
+    }
+
+    function recursiveVenomClearing(graphics, engine, cb)
+    {
+        graphics.clearAntiVenoms(engine).done(function()
+        {
+            if(engine.isThereAntiVenom()) recursiveVenomClearing(graphics, engine, cb);
+            else
+            {
+                cb();
+            }
+        });
     }
 });

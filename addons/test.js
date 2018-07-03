@@ -312,44 +312,41 @@ $(function()
                 player_turn = false;
                 engine.refreshTable();
 
-                if(engine.isPlayerFreezed())
+                if(engine.isPlayerPoisoned())
                 {
-                    graphics.stopFreezeAnimation();
-                    engine.calculateNewTable();
-                    graphics.reNameIds(engine);
-                    graphics.reFillTable(engine).done(function()
+                    let number_of_poisons = engine.countPoisons();
+                    let poison_dmg = engine.activatePoisons();
+
+                    player.hp -= poison_dmg;
+                    if(player.hp < 0)
                     {
-                        engine.refreshTable();
-                        if(engine.isPlayerPoisoned())
+                        player.hp = 0;
+                    }
+
+                    if(poison_dmg > 0)
+                    {
+                        dmg_heal_number_animation_finished = false;
+
+                        graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
                         {
-                            let poison_dmg = engine.activatePoisons();
+                            dmg_heal_number_animation_finished = true;
+                        });
 
-                            player.hp -= poison_dmg;
-                            if(player.hp < 0)
-                            {
-                                player.hp = 0;
-                            }
+                        if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
+                    }
 
-                            if(poison_dmg > 0)
-                            {
-                                dmg_heal_number_animation_finished = false;
-
-                                graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
-                                {
-                                    dmg_heal_number_animation_finished = true;
-                                });
-
-                                if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
-                            }
-
-                            graphics.poisonActivationAnimation(engine).done(function()
+                    graphics.poisonActivationAnimation(engine, number_of_poisons).done(function()
+                    {
+                        if(engine.isPlayerFreezed())
+                        {
+                            engine.stopFreeze();
+                            graphics.stopFreezeAnimation().done(function()
                             {
                                 engine.calculateNewTable();
                                 graphics.reNameIds(engine);
                                 graphics.reFillTable(engine).done(function()
                                 {
                                     engine.refreshTable();
-
                                     enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
                                     {
                                         player_turn = true;
@@ -359,45 +356,31 @@ $(function()
                         }
                         else
                         {
-                            enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                            engine.calculateNewTable();
+                            graphics.reNameIds(engine);
+                            graphics.reFillTable(engine).done(function()
                             {
-                                player_turn = true;
+                                engine.refreshTable();
+                                enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
+                                {
+                                    player_turn = true;
+                                });
                             });
                         }
                     });
                 }
                 else
                 {
-                    if(engine.isPlayerPoisoned())
+                    if(engine.isPlayerFreezed())
                     {
-                        let poison_dmg = engine.activatePoisons();
-
-                        player.hp -= poison_dmg;
-                        if(player.hp < 0)
-                        {
-                            player.hp = 0;
-                        }
-
-                        if(poison_dmg > 0)
-                        {
-                            dmg_heal_number_animation_finished = false;
-
-                            graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
-                            {
-                                dmg_heal_number_animation_finished = true;
-                            });
-
-                            if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
-                        }
-
-                        graphics.poisonActivationAnimation(engine).done(function()
+                        engine.stopFreeze();
+                        graphics.stopFreezeAnimation().done(function()
                         {
                             engine.calculateNewTable();
                             graphics.reNameIds(engine);
                             graphics.reFillTable(engine).done(function()
                             {
                                 engine.refreshTable();
-
                                 enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id).done(function()
                                 {
                                     player_turn = true;
@@ -415,7 +398,6 @@ $(function()
                 }
             }
         });
-
     }
 
     function start_program()

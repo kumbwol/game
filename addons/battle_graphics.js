@@ -40,15 +40,31 @@ function BattleGraphics(battle_table, engine)
 
     function stopFreezeAnimation()
     {
-        $("#freeze").remove();
+        let done = $.Deferred();
+
+        let opacity = FREEZE_OPACITY;
+
+        let x = setInterval(function()
+        {
+            $("#freeze").css("opacity", opacity);
+            opacity -= ((FREEZE_OPACITY/FREEZE_ANIMATION_LENGTH)*10);
+        }, 10);
+
+        setTimeout(function()
+        {
+            clearInterval(x);
+            $("#freeze").remove();
+            done.resolve();
+        }, FREEZE_ANIMATION_LENGTH);
+
+        return done;
     }
 
     function freezeAnimation()
     {
         let done = $.Deferred();
 
-        //$sound_object[0].trigger('play');
-        $sound_object[0].get(0).play();
+        //$sound_object[0].get(0).play();
 
         $("#battle_table").append('<div id="freeze"></div>');
         let opacity = 0;
@@ -56,16 +72,16 @@ function BattleGraphics(battle_table, engine)
         let x = setInterval(function()
         {
             $("#freeze").css("opacity", opacity);
-            opacity += 0.004;
-        }, 20);
+            opacity += ((FREEZE_OPACITY/FREEZE_ANIMATION_LENGTH)*10);
+        }, 10);
 
         setTimeout(function()
         {
             clearInterval(x);
-            $sound_object[0].get(0).pause();
-            $sound_object[0].get(0).currentTime = 0;
+            /*$sound_object[0].get(0).pause();
+            $sound_object[0].get(0).currentTime = 0;*/
             done.resolve();
-        }, 2000);
+        }, FREEZE_ANIMATION_LENGTH);
 
 
         return done;
@@ -136,10 +152,11 @@ function BattleGraphics(battle_table, engine)
         return done;
     }
 
-    function poisonActivationAnimation(engine)
+    function poisonActivationAnimation(engine, number_of_poisons)
     {
         let done = $.Deferred();
-        let number_of_poisons = 0;
+
+        engine.logTable();
 
         for(let i=0; i<this.battle_table.height; i++)
         {
@@ -147,7 +164,6 @@ function BattleGraphics(battle_table, engine)
             {
                 if(engine.table[i][j].type === NUL)
                 {
-                    number_of_poisons++;
                     $("#y_" + i + "_x_" + j).css("z-index", 1);
                     $("#y_" + i + "_x_" + j).css("background-size", "34px");
 
@@ -1280,7 +1296,7 @@ function BattleGraphics(battle_table, engine)
         $("#" + field_id.first).css("z-index", 1);
         $("#" + field_id.second).css("z-index", 1);
 
-        $("#" + field_id.first).animate({"top": field_pos.second.top, "left": field_pos.second.left}, swap_animation_speed, function()
+        $("#" + field_id.first).animate({"top": field_pos.second.top, "left": field_pos.second.left}, SWAP_ANIMATION_SPEED, function()
         {
             in_place++;
             engine.selected_fields.y0 = -1;
@@ -1291,7 +1307,7 @@ function BattleGraphics(battle_table, engine)
             engine.allow_select = true;
             if(in_place === 2) done.resolve();
         });
-        $("#" + field_id.second).animate({"top": field_pos.first.top, "left": field_pos.first.left}, swap_animation_speed, function()
+        $("#" + field_id.second).animate({"top": field_pos.first.top, "left": field_pos.first.left}, SWAP_ANIMATION_SPEED, function()
         {
             in_place++;
             engine.selected_fields.y0 = -1;

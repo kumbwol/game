@@ -18,7 +18,7 @@ this.paragraphs =
 //     ...::: ENEMY CHANCES :::...
 this.paragraphs.chance.titles[LUCK] = "Luck";
 this.paragraphs.chance.titles[RAGE] = "Rage";
-this.paragraphs.chance.paragraphs[LUCK] = "Konstans szerencs.";
+this.paragraphs.chance.paragraphs[LUCK] = "Konstans szerencse.";
 this.paragraphs.chance.paragraphs[RAGE] = "Hianyzo HP alapjan no az esely.";
 
 //     ...::: SKILL EFFECTS :::...

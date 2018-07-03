@@ -7,7 +7,6 @@ html, body
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -45,22 +44,6 @@ html, body
     border: 1px solid black;
 }
 
-.explain_box_title
-{
-    margin-left: 30px;
-
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.explain_box_paragraph
-{
-    margin-left: 10px;
-    padding-top: 5px;
-    font-size: 14px;
-}
-
 #explain_box
 {
     position: absolute;
@@ -70,8 +53,6 @@ html, body
 
     border: 2px solid black;
 }
-
-
 
 .RAGE
 {
@@ -83,35 +64,6 @@ html, body
     background-image: url("images/chance_types/luck.png");
 }
 
-.effect_number, .enemy_chance_number
-{
-    position: absolute;
-    font-size: 22px;
-}
-
-#dmg_counter
-{
-    position: absolute;
-    /*top: 30px;*/
-    font-weight: bold;
-    font-size: 70px;
-
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-
-    font-family: Lato;
-}
-
-#end_turn_string
-{
-    position: absolute;
-    top: 4px;
-    font-weight: bold;
-    font-size: 30px;
-    color: black;
-
-    font-family: Lato;
-}
-
 #end_turn
 {
     position: absolute;
@@ -120,18 +72,6 @@ html, body
     height: 40px;
     border: 2px solid black;
     border-radius: 10px;
-}
-
-#ability_point
-{
-    position: absolute;
-    top: 2px;
-    z-index: 2;
-    font-weight: bold;
-    font-size: 40px;
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-family: Lato;
 }
 
 #ability_point_bg
@@ -197,23 +137,6 @@ html, body
     background-repeat: no-repeat;
 }
 
-.skill_right_part_top
-{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 55px;
-    height: 21px;
-
-
-    font-size: 24px;
-    text-align: right;
-
-    box-sizing: border-box;
-    border: solid #ffd26d;
-    border-width: 0px 0px 1px 0px;
-}
-
 .skill_right_part_bottom
 {
     position: absolute;
@@ -274,19 +197,6 @@ html, body
     height: 34px;
 }
 
-.skill_left_part_bottom_right_number,
-.skill_left_part_bottom_left_number
-{
-    position: absolute;
-    top: 0px;
-    left: 35px;
-    width: 34px;
-    height: 34px;
-
-    font-size: 26px;
-    text-align: right;
-}
-
 .skill_left_part_bottom_right
 {
     position: absolute;
@@ -308,18 +218,6 @@ html, body
     height: 15px;
     width:  15px;
     border: 1px solid black;
-}
-
-.skill_name_string
-{
-    position: absolute;
-    left: 2px;
-    color: black;
-    float: left;
-
-    color: black;
-    font-size: 17px;
-    font-weight: bold;
 }
 
 .profile
@@ -406,23 +304,6 @@ html, body
     background-color: #c3c3c3;
     border: 1px solid black;
     box-sizing: border-box;
-}
-
-
-.name_string
-{
-    position: absolute;
-    top: 5px;
-}
-
-.hp_string
-{
-    position: absolute;
-    top: 0px;
-    z-index: 2;
-    font-weight: bold;
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .profile_picture

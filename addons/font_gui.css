@@ -1,0 +1,136 @@
+/*
+          INTERNET EXPLORERBEN INSTALLABLE-E KELL TENNI A FONT TYPE-OKAT: https://www.andrebacklund.com/fontfixer.html
+ */
+
+@font-face {
+    font-family: myFirstFont;
+    src: url("fonts/Delicious Adventures.ttf");
+}
+
+@font-face {
+    font-family: myLato;
+    src: url("fonts/Lato-Regular.ttf");
+}
+
+.font_preloader
+{
+    /*font-family: myLato;*/
+}
+
+.explain_box_title
+{
+    margin-left: 30px;
+
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+
+    font-family: myFirstFont;
+}
+
+.explain_box_paragraph
+{
+    margin-left: 10px;
+    padding-top: 5px;
+    font-size: 14px;
+    font-family: myFirstFont;
+}
+
+.effect_number, .enemy_chance_number
+{
+    position: absolute;
+    font-size: 22px;
+}
+
+#dmg_counter
+{
+    position: absolute;
+    /*top: 30px;*/
+    font-weight: bold;
+    font-size: 70px;
+
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+    font-family: myLato;
+}
+
+#end_turn_string
+{
+    position: absolute;
+    top: 0px;
+    font-weight: bold;
+    font-size: 30px;
+    color: black;
+
+    font-family: myLato;
+}
+
+#ability_point
+{
+    position: absolute;
+    top: -1px;
+    z-index: 2;
+    font-weight: bold;
+    font-size: 40px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: myLato;
+}
+
+.skill_right_part_top
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 55px;
+    height: 21px;
+
+
+    font-size: 24px;
+    text-align: right;
+
+    box-sizing: border-box;
+    border: solid #ffd26d;
+    border-width: 0px 0px 1px 0px;
+}
+
+.skill_left_part_bottom_right_number,
+.skill_left_part_bottom_left_number
+{
+    position: absolute;
+    top: 0px;
+    left: 35px;
+    width: 34px;
+    height: 34px;
+
+    font-size: 26px;
+    text-align: right;
+}
+
+.skill_name_string
+{
+    position: absolute;
+    left: 2px;
+    color: black;
+    float: left;
+
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.name_string
+{
+    position: absolute;
+    top: 5px;
+}
+
+.hp_string
+{
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    font-weight: bold;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}

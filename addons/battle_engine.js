@@ -57,6 +57,7 @@ function BattleEngine(battle_table)
     this.stunField = stunField;
     this.isFieldStunned = isFieldStunned;
     this.isPlayerPoisoned = isPlayerPoisoned;
+    this.countPoisons = countPoisons;
     this.activatePoisons = activatePoisons;
     this.isThereAntiVenom = isThereAntiVenom;
     this.createAntiPoisonInRow = createAntiPoisonInRow;
@@ -64,6 +65,7 @@ function BattleEngine(battle_table)
     this.clearSunnedFields = clearStunnedFields;
     this.freezePlayer = freezePlayer;
     this.isPlayerFreezed = isPlayerFreezed;
+    this.stopFreeze = stopFreeze;
 
     function isPlayerFreezed()
     {
@@ -73,6 +75,11 @@ function BattleEngine(battle_table)
     function freezePlayer()
     {
         this.freezed = true;
+    }
+
+    function stopFreeze()
+    {
+        this.freezed = false;
     }
 
     function clearStunnedFields()
@@ -182,6 +189,23 @@ function BattleEngine(battle_table)
                 else break;
             }
         }
+    }
+
+    function countPoisons()
+    {
+        let counter = 0;
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type === POI)
+                {
+                    counter++;
+                }
+            }
+        }
+
+        return counter;
     }
 
     function activatePoisons()

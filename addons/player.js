@@ -3,18 +3,21 @@ console.log("player.js loaded");
 function Player(name)
 {
     this.name = name;
-    this.hp = 80;
-    this.max_hp = 80;
+    this.hp = 50;
+    this.max_hp = 50;
+    this.mp = 20;
+    this.max_mp = 40;
     this.ap = 1;
     this.max_ap = 1;
 
     let skills = [];
-    skills[0] = new Skill("SelfPoison");
+    /*skills[0] = new Skill("Shock");
     skills[1] = new Skill("Spiritarrow");
     skills[2] = new Skill("Shield");
-    skills[3] = new Skill("Shadowform");
-    /*skills[0] = new Skill("Shock");
-    skills[1] = new Skill("Stab");
+    skills[3] = new Skill("Shadowform");*/
+    skills[0] = new Skill("Shock");
+    skills[1] = new Skill("Loss");
+    /*skills[1] = new Skill("Stab");
     skills[2] = new Skill("Shield");
     skills[3] = new Skill("Spiritarrow");
     skills[4] = new Skill("Shieldslam");

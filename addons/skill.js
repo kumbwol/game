@@ -5,7 +5,8 @@ function Skill(name)
     this.name = name;
     let visual_pattern = [];
     let pattern;
-    let effect;
+    let primary_effect;
+    let secondary_effect;
     let chance;
 
     switch(this.name)
@@ -22,7 +23,25 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("DMG0");
+            primary_effect    = new Effect("REGEN");
+            secondary_effect  = new Effect("REGEN");
+            break;
+        }
+
+        case "Loss":
+        {
+            visual_pattern =
+                [/*
+                    [ATT,ATT,NUL],
+                    [ATT,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("LOSS");
+            secondary_effect  = new Effect("LOSS");
             break;
         }
 
@@ -40,7 +59,8 @@ function Skill(name)
                     [DEF,NUL,NUL]
                 ];*/
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("Heal");
+            primary_effect   = new Effect("Heal");
+            secondary_effect = new Effect("NOTHING");
             break;
         }
 
@@ -58,7 +78,8 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("DMG");
+            primary_effect  = new Effect("DMG");
+            secondary_effect = new Effect("NOTHING");
             break;
         }
 
@@ -81,7 +102,8 @@ function Skill(name)
                     [NUL,NUL,NUL],
                 ];*/
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("Transform");
+            primary_effect  = new Effect("Transform");
+            secondary_effect = new Effect("NOTHING");
             break;
         }
 
@@ -97,48 +119,63 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            effect  = new Effect("Poison");
+            primary_effect  = new Effect("Poison");
+            secondary_effect = new Effect("NOTHING");
             break;
         }
 
         case "Raging storm":
         {
-            effect = new Effect("DMG2");
+            primary_effect = new Effect("DMG2");
+            secondary_effect = new Effect("NOTHING");
             chance = new Chance(RAGE, 0);
             break;
         }
 
         case "Regeneration":
         {
-            effect = new Effect("Regeneration");
+            primary_effect = new Effect("Regeneration");
+            secondary_effect = new Effect("NOTHING");
             chance = new Chance(LUCK, 30);
             break;
         }
 
         case "Punch":
         {
-            effect = new Effect("DMG1");
+            primary_effect = new Effect("DMG1");
+            secondary_effect = new Effect("NOTHING");
             chance = new Chance(LUCK, 100);
             break;
         }
 
         case "Poison":
         {
-            effect = new Effect("Poison");
+            primary_effect = new Effect("Poison");
+            secondary_effect = new Effect("PoisonDMG");
             chance = new Chance(LUCK, 100);
             break;
         }
 
         case "Stun":
         {
-            effect = new Effect("Stun");
+            primary_effect = new Effect("Stun");
+            secondary_effect = new Effect("NOTHING");
             chance = new Chance(LUCK, 100);
             break;
         }
 
         case "Freeze":
         {
-            effect = new Effect("Freeze");
+            primary_effect = new Effect("Freeze");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "Double Punch":
+        {
+            primary_effect = new Effect("DMG0");
+            secondary_effect = new Effect("DMG");
             chance = new Chance(LUCK, 100);
             break;
         }
@@ -170,8 +207,9 @@ function Skill(name)
         return pattern.getSkillPatternValue(x, y);
     }
 
-    function getSkillEffect()
+    function getSkillEffect(id)
     {
-        return effect.getSkillEffect();
+        if(id === PRIMARY) return primary_effect.getSkillEffect();
+        else return secondary_effect.getSkillEffect();
     }
 }

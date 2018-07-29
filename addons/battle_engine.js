@@ -50,7 +50,6 @@ function BattleEngine(battle_table)
     this.resetTempTable = resetTempTable;
     this.anyFieldSelected = anyFieldSelected;
     this.deselectField = deselectField;
-    this.enemyTakesTurn = enemyTakesTurn;
     this.calculateEnemySkillChances = calculateEnemySkillChances;
     this.decideEnemySkills = decideEnemySkills;
     this.stunTable = stunTable;
@@ -58,6 +57,7 @@ function BattleEngine(battle_table)
     this.isFieldStunned = isFieldStunned;
     this.isPlayerPoisoned = isPlayerPoisoned;
     this.countPoisons = countPoisons;
+    this.addPoisonDMG = addPoisonDMG;
     this.activatePoisons = activatePoisons;
     this.isThereAntiVenom = isThereAntiVenom;
     this.createAntiPoisonInRow = createAntiPoisonInRow;
@@ -66,6 +66,20 @@ function BattleEngine(battle_table)
     this.freezePlayer = freezePlayer;
     this.isPlayerFreezed = isPlayerFreezed;
     this.stopFreeze = stopFreeze;
+    this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
+    this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
+
+    function enemyActivatePrimarySkill(skill, player, enemy, player_turn, id)
+    {
+        skill.primary_effect = enemy.getSkills()[id].getSkillEffect(PRIMARY);
+        this.activateSkill(skill.primary_effect, player, enemy, player_turn);
+    }
+
+    function enemyActivateSecondarySkill(skill, player, enemy, player_turn, id)
+    {
+        skill.secondary_effect = enemy.getSkills()[id].getSkillEffect(SECONDARY);
+        this.activateSkill(skill.secondary_effect, player, enemy, player_turn);
+    }
 
     function isPlayerFreezed()
     {
@@ -123,6 +137,19 @@ function BattleEngine(battle_table)
         }
 
         return false;
+    }
+
+    function addPoisonDMG(dmg)
+    {
+        //ITT AZERT LEHET BUG!
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].poison_dmg === -1) this.table[i][j].poison_dmg = dmg;
+                if(this.temp_table[i][j].poison_dmg === -1) this.temp_table[i][j].poison_dmg = dmg;
+            }
+        }
     }
 
     function createAntiPoisonInRow(y, x)
@@ -314,13 +341,6 @@ function BattleEngine(battle_table)
         }
     }
 
-    function enemyTakesTurn(skill, player, enemy, battle_table, id)
-    {
-        let player_turn = false;
-        skill.effect = enemy.getSkills()[id].getSkillEffect();
-        this.activateSkill(skill.effect, player, enemy, player_turn);
-    }
-
     function resetTempTable()
     {
         for(let i=0; i<this.battle_table.height; i++)
@@ -363,6 +383,13 @@ function BattleEngine(battle_table)
                 unit.hp = 0;
             }
 
+            /*unit.mp -= (effect.dmg+1);
+
+            if(unit.mp < 0)
+            {
+                unit.mp = 0;
+            }*/
+
 
             this.skill_type.dmg = true;
         }
@@ -379,10 +406,39 @@ function BattleEngine(battle_table)
             this.skill_type.heal = true;
         }
 
+        if(effect.mana_regen > 0)
+        {
+            unit.mp += effect.mana_regen;
+
+            if(unit.mp > unit.max_mp)
+            {
+                unit.mp = unit.max_mp;
+            }
+
+            this.skill_type.mana_regen = true;
+        }
+
+        if(effect.mana_loss > 0)
+        {
+            unit.mp -= effect.mana_loss;
+
+            if(unit.mp < 0)
+            {
+                unit.mp = 0;
+            }
+
+            this.skill_type.mana_loss = true;
+        }
+
 
         if(effect.transform === true)
         {
             this.transformTable(effect);
+        }
+
+        if(effect.poison_dmg > 0)
+        {
+            this.addPoisonDMG(effect.poison_dmg);
         }
 
         if(effect.stun === true)
@@ -390,7 +446,7 @@ function BattleEngine(battle_table)
             this.stunTable(effect.stun_amount);
         }
 
-        if(effect.type_primary === FREEZE)
+        if(effect.type === FREEZE)
         {
             this.freezePlayer();
         }
@@ -401,7 +457,6 @@ function BattleEngine(battle_table)
         for(let i=0; i<player.getSkills()[skill_id].getSkillPatternHeight(); i++)
         {
             skill.table[i] = [];
-            skill.effect = player.getSkills()[skill_id].getSkillEffect();
             for(let j=0; j<player.getSkills()[skill_id].getSkillPatternWidth(); j++)
             {
                 skill.table[i][j] = player.getSkills()[skill_id].getSkillPatternValue(j, i);
@@ -409,6 +464,8 @@ function BattleEngine(battle_table)
         }
         skill.table_width  = player.getSkills()[skill_id].getSkillPatternWidth();
         skill.table_height = player.getSkills()[skill_id].getSkillPatternHeight();
+        skill.primary_effect = player.getSkills()[skill_id].getSkillEffect(PRIMARY);
+        skill.secondary_effect = player.getSkills()[skill_id].getSkillEffect(SECONDARY);
     }
 
     function canActivateSkill(skill, x, y)
@@ -643,7 +700,7 @@ function BattleEngine(battle_table)
             }
         }
 
-        if(effect.type_primary === SHADOWFORM)
+        if(effect.type === SHADOWFORM)
         {
             for(let i=0; i<this.battle_table.height; i++)
             {
@@ -663,7 +720,7 @@ function BattleEngine(battle_table)
                 }
             }
         }
-        else if(effect.type_primary === POISON)
+        else if(effect.type === POISON)
         {
             let save_table = [];
             for(let i=0; i<this.battle_table.height; i++)
@@ -707,7 +764,7 @@ function BattleEngine(battle_table)
                     else
                     {
                         cycles--;
-                        this.table[random_y][random_x].poison_dmg = effect.poison_dmg;
+                        this.table[random_y][random_x].poison_dmg = -1;
                     }
                 }
                 if(counter === 5000 ) break;
@@ -744,6 +801,7 @@ function BattleEngine(battle_table)
                     row_string += "0" + " ";
                 }*/
                 row_string += this.table[i][j].type + " ";
+                //row_string += this.table[i][j].poison_dmg + " ";
             }
             console.log(row_string);
             console.log("\n");
@@ -769,6 +827,7 @@ function BattleEngine(battle_table)
                     row_string += "0" + " ";
                 }*/
                 row_string += this.temp_table[i][j].type + " ";
+                //row_string += this.temp_table[i][j].poison_dmg + " ";
             }
             console.log(row_string);
             console.log("\n");

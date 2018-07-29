@@ -5,6 +5,8 @@ function Enemy(name)
     this.name = name;
     this.hp;
     this.max_hp;
+    this.mp;
+    this.max_mp;
 
     let skills = [];
 
@@ -18,7 +20,7 @@ function Enemy(name)
         skills[2] = new Skill("Punch");
     }
 
-    if(this.name === "Test")
+    if(this.name === "Fagyaszt")
     {
         this.max_hp = 100;
         this.hp = this.max_hp;
@@ -28,6 +30,15 @@ function Enemy(name)
         skills[2] = new Skill("Poison");
     }
 
+    if(this.name === "Test")
+    {
+        this.max_hp = 100;
+        this.hp = 50;
+        this.max_mp = 60;
+        this.mp = 10;
+
+        skills[0] = new Skill("Double Punch");
+    }
 
     this.getSkills = getSkills;
 

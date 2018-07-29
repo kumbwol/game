@@ -125,7 +125,7 @@
     top: 5px;
 }
 
-.hp_string
+.hp_string, .mp_string
 {
     position: absolute;
     top: 0px;

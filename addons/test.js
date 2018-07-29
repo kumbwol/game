@@ -16,7 +16,8 @@ $(function()
             table: [],
             table_width: 0,
             table_height: 0,
-            effect: 0,
+            primary_effect: 0,
+            secondary_effect: 0,
             moving: false
         };
 
@@ -104,59 +105,60 @@ $(function()
 
                     engine.resetTempTable();
                     graphics.deleteSelector(engine.selected_field_id);
-                    engine.activateSkill(skill.effect, player, enemy, player_turn);
 
-                    if(skill.effect.dmg > 0 || skill.effect.heal > 0)
+                    dmg_heal_number_animation_finished = false;
+
+                    activatePrimarySkill(engine, graphics, skill, player,enemy, player_turn).done(function()
                     {
-                        dmg_heal_number_animation_finished = false;
-                        graphics.animateDamageNumbers(skill.effect.dmg, skill.effect.heal, player_turn).done(function()
+                        graphics.modifyTable(engine).done(function()
                         {
-                            dmg_heal_number_animation_finished = true;
-                        });
-                        if(skill.effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
-                        if(skill.effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
-                    }
-
-
-                    graphics.modifyTable(engine).done(function()
-                    {
-                        engine.calculateEnemySkillChances(skill, enemy);
-                        graphics.updateEnemySkillChances(engine.enemy_skill_chances);
-                        if(!engine.isPlayerFreezed())
-                        {
+                            engine.table_modified = false;
                             engine.refreshTable();
-                            engine.calculateNewTable();
-                            graphics.reNameIds(engine);
-                            graphics.reFillTable(engine).done(function()
+
+                            activateSecondarySkill(engine, graphics, skill, player,enemy, player_turn).done(function()
                             {
-                                skill_activation_finished = true;
-                                engine.refreshTable();
-                                if(engine.isPlayerPoisoned())
+                                dmg_heal_number_animation_finished = true;
+                                graphics.modifyTable(engine).done(function()
                                 {
-                                    poison_animation_finished = false;
-                                    recursiveVenomClearing(graphics, engine, function()
+                                    engine.calculateEnemySkillChances(skill, enemy);
+                                    graphics.updateEnemySkillChances(engine.enemy_skill_chances);
+                                    if(!engine.isPlayerFreezed())
                                     {
-                                        poison_animation_finished = true;
-                                    });
-                                }
-                            });
-                        }
-                        else
-                        {
-                            skill_activation_finished = true;
-                            engine.refreshTable();
-                            if(engine.isPlayerPoisoned())
-                            {
-                                poison_animation_finished = false;
-                                recursiveVenomClearing(graphics, engine, function()
-                                {
-                                    poison_animation_finished = true;
+                                        engine.refreshTable();
+                                        engine.calculateNewTable();
+                                        graphics.reNameIds(engine);
+                                        graphics.reFillTable(engine).done(function()
+                                        {
+                                            skill_activation_finished = true;
+                                            engine.refreshTable();
+                                            if(engine.isPlayerPoisoned())
+                                            {
+                                                poison_animation_finished = false;
+                                                recursiveVenomClearing(graphics, engine, function()
+                                                {
+                                                    poison_animation_finished = true;
+                                                });
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        skill_activation_finished = true;
+                                        engine.refreshTable();
+                                        if(engine.isPlayerPoisoned())
+                                        {
+                                            poison_animation_finished = false;
+                                            recursiveVenomClearing(graphics, engine, function()
+                                            {
+                                                poison_animation_finished = true;
+                                            });
+                                        }
+                                    }
+
+                                    engine.table_modified = false;
                                 });
-                            }
-                        }
-
-
-                        engine.table_modified = false;
+                            });
+                        });
                     });
                 }
             }
@@ -173,7 +175,7 @@ $(function()
 
         $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
         {
-            if(player_turn)
+            if(player_turn && dmg_heal_number_animation_finished)
             {
                 if(skill.moving) $(".selected_skill").remove();
                 let skill_id = $(this).attr("id");
@@ -243,7 +245,7 @@ $(function()
                     }
                     else if($(this).attr("class") === "skill_left_part_bottom_right")
                     {
-                        if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect().type_secondary !== NOTHING)
+                        if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
                         {
                             $("#game_background").append(graphics.drawEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
                             $("#explain_box").css(
@@ -279,7 +281,7 @@ $(function()
                     }
                     else if($(this).attr("class") === "skill_left_part_bottom_right")
                     {
-                        if(player.getSkills()[(parseInt($(this).parent().parent().attr("id")[6])-1)].getSkillEffect().type_secondary !== NOTHING)
+                        if(player.getSkills()[(parseInt($(this).parent().parent().attr("id")[6])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
                         {
                             $("#game_background").append(graphics.drawEffectExplainer(player, false, $(this).parent().parent().attr("id")[6]));
                             $("#explain_box").css(
@@ -327,7 +329,7 @@ $(function()
                     {
                         dmg_heal_number_animation_finished = false;
 
-                        graphics.animateDamageNumbers(poison_dmg, 0, false).done(function()
+                        graphics.animateDamageNumbers(poison_dmg, 0, 0, false).done(function()
                         {
                             dmg_heal_number_animation_finished = true;
                         });
@@ -479,5 +481,47 @@ $(function()
                 cb();
             }
         });
+    }
+
+    function activatePrimarySkill(engine, graphics, skill, player, enemy, player_turn)
+    {
+        let done = $.Deferred();
+        engine.activateSkill(skill.primary_effect, player, enemy, player_turn);
+
+        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_loss > 0)
+        {
+            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_loss, player_turn).done(function()
+            {
+                done.resolve();
+            });
+            if(skill.primary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
+            if(skill.primary_effect.mana_regen > 0) graphics.updateMpBar($("#player_mp"), player, false);
+            if(skill.primary_effect.mana_loss > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
+        }
+        else done.resolve();
+
+        return done;
+    }
+
+    function activateSecondarySkill(engine, graphics, skill, player, enemy, player_turn)
+    {
+        let done = $.Deferred();
+        engine.activateSkill(skill.secondary_effect, player, enemy, player_turn);
+
+        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_loss > 0)
+        {
+            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_loss, player_turn).done(function()
+            {
+                done.resolve();
+            });
+            if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
+            if(skill.primary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
+            if(skill.secondary_effect.mana_loss > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
+        }
+        else done.resolve();
+
+        return done;
     }
 });

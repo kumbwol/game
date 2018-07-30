@@ -15,13 +15,22 @@ function Player(name)
     skills[1] = new Skill("Spiritarrow");
     skills[2] = new Skill("Shield");
     skills[3] = new Skill("Shadowform");*/
-    skills[0] = new Skill("Shock");
-    skills[1] = new Skill("Loss");
+    /*skills[0] = new Skill("Shadowform");
+    skills[1] = new Skill("Shield");
+    skills[2] = new Skill("Spiritarrow");*/
     /*skills[1] = new Skill("Stab");
     skills[2] = new Skill("Shield");
     skills[3] = new Skill("Spiritarrow");
     skills[4] = new Skill("Shieldslam");
     skills[5] = new Skill("Shadowform");*/
+
+    skills[0] = [];
+    skills[1] = [];
+
+    skills[0][0] = new Skill("Shock");
+    skills[0][1] = new Skill("Loss");
+    skills[1][0] = new Skill("Loss");
+    skills[1][1] = new Skill("Shock");
 
     this.getSkills = getSkills;
 

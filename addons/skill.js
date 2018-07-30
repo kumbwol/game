@@ -8,6 +8,17 @@ function Skill(name)
     let primary_effect;
     let secondary_effect;
     let chance;
+    let rank = 0;
+
+    //this.name = (this.name).split(",")[1];
+    //alert((this.name).split(",").length);
+    /*if((this.name).split(",").length > 1)
+    {
+        this.name = (this.name).split(",")[1];
+    }
+    else*/ //this.name = (this.name).split(",")[rank];
+
+    //alert((this.name).split(",").length);
 
     switch(this.name)
     {

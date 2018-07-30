@@ -21,6 +21,7 @@ function BattleEngine(battle_table)
     this.enemy_skill_chances = [];
     this.enemy_skill_plays = [];
     this.table_modified = false;
+    this.rank = [];
 
     for(let i=0; i<this.battle_table.height; i++)
     {
@@ -68,6 +69,21 @@ function BattleEngine(battle_table)
     this.stopFreeze = stopFreeze;
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
+    this.resetRanks = resetRanks;
+    this.increaseRank = increaseRank;
+
+    function increaseRank(skill_id)
+    {
+        this.rank[skill_id]++;
+    }
+
+    function resetRanks(skill_amount)
+    {
+        for(let i=0; i<skill_amount; i++)
+        {
+            this.rank[i] = 0;
+        }
+    }
 
     function enemyActivatePrimarySkill(skill, player, enemy, player_turn, id)
     {
@@ -418,16 +434,16 @@ function BattleEngine(battle_table)
             this.skill_type.mana_regen = true;
         }
 
-        if(effect.mana_loss > 0)
+        if(effect.mana_drain > 0)
         {
-            unit.mp -= effect.mana_loss;
+            unit.mp -= effect.mana_drain;
 
             if(unit.mp < 0)
             {
                 unit.mp = 0;
             }
 
-            this.skill_type.mana_loss = true;
+            this.skill_type.mana_drain = true;
         }
 
 
@@ -452,20 +468,21 @@ function BattleEngine(battle_table)
         }
     }
 
-    function addSkillValues(player, skill_id, skill)
+    function addSkillValues(player, skill_id, skill, rank)
     {
-        for(let i=0; i<player.getSkills()[skill_id].getSkillPatternHeight(); i++)
+        //alert(player.getSkills()[skill_id].name);
+        for(let i=0; i<player.getSkills()[skill_id][rank].getSkillPatternHeight(); i++)
         {
             skill.table[i] = [];
-            for(let j=0; j<player.getSkills()[skill_id].getSkillPatternWidth(); j++)
+            for(let j=0; j<player.getSkills()[skill_id][rank].getSkillPatternWidth(); j++)
             {
-                skill.table[i][j] = player.getSkills()[skill_id].getSkillPatternValue(j, i);
+                skill.table[i][j] = player.getSkills()[skill_id][rank].getSkillPatternValue(j, i);
             }
         }
-        skill.table_width  = player.getSkills()[skill_id].getSkillPatternWidth();
-        skill.table_height = player.getSkills()[skill_id].getSkillPatternHeight();
-        skill.primary_effect = player.getSkills()[skill_id].getSkillEffect(PRIMARY);
-        skill.secondary_effect = player.getSkills()[skill_id].getSkillEffect(SECONDARY);
+        skill.table_width  = player.getSkills()[skill_id][rank].getSkillPatternWidth();
+        skill.table_height = player.getSkills()[skill_id][rank].getSkillPatternHeight();
+        skill.primary_effect = player.getSkills()[skill_id][rank].getSkillEffect(PRIMARY);
+        skill.secondary_effect = player.getSkills()[skill_id][rank].getSkillEffect(SECONDARY);
     }
 
     function canActivateSkill(skill, x, y)

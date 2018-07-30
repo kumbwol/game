@@ -247,11 +247,11 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
-    function animateDamageNumbers(dmg, heal, mana_regen, mana_loss, player_on_turn)
+    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, player_on_turn)
     {
         let done = $.Deferred();
 
-        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_loss)
+        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain)
         {
             let object;
 
@@ -282,14 +282,14 @@ function BattleGraphics(battle_table, engine)
                 object.css("color", "deepskyblue");
                 object.html("+" + mana_regen);
             }
-            else if(mana_loss > 0)
+            else if(mana_drain > 0)
             {
                 if(player_on_turn) $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
                 else $("#self").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
                 object.css("color", "blue");
-                object.html("-" + mana_loss);
+                object.html("-" + mana_drain);
             }
 
             allignToMiddle(object);
@@ -924,31 +924,31 @@ function BattleGraphics(battle_table, engine)
         $("#game_background").append('<div class="top_bar"></div>');
     }
 
-    function drawSelectedSkill(player, skill_id, skill)
+    function drawSelectedSkill(player, skill_id, skill, rank)
     {
         $("#game_background").append('<div class="selected_skill"></div>');
-        for(let i=0; i<player.getSkills()[skill_id].getSkillPatternHeight(); i++)
+        for(let i=0; i<player.getSkills()[skill_id][rank].getSkillPatternHeight(); i++)
         {
-            for(let j=0; j<player.getSkills()[skill_id].getSkillPatternWidth(); j++)
+            for(let j=0; j<player.getSkills()[skill_id][rank].getSkillPatternWidth(); j++)
             {
                 let row_id = "y_" + i;
                 let column_id = row_id + "_x_" + j;
-                $(".selected_skill").append(createField(column_id, player.getSkills()[skill_id].getSkillPatternValue(j, i), j, i, false));
+                $(".selected_skill").append(createField(column_id, player.getSkills()[skill_id][rank].getSkillPatternValue(j, i), j, i, false));
             }
         }
-        skill.height = player.getSkills()[skill_id].getSkillPatternHeight()*(field_size+1) + 1;
-        skill.width  = player.getSkills()[skill_id].getSkillPatternWidth()*(field_size+1)  + 1;
+        skill.height = player.getSkills()[skill_id][rank].getSkillPatternHeight()*(field_size+1) + 1;
+        skill.width  = player.getSkills()[skill_id][rank].getSkillPatternWidth()*(field_size+1)  + 1;
     }
 
-    function drawSkillBars(player, enemy, enemy_skill_chances)
+    function drawSkillBars(player, enemy, enemy_skill_chances, rank)
     {
         $("#player_profile").remove();
         $("#enemy_profile").remove();
-        drawSkillBarPlayer(player);
+        drawSkillBarPlayer(player, rank);
         drawSkillBarEnemy(enemy, enemy_skill_chances);
     }
 
-    function drawSkillBarPlayer(player)
+    function drawSkillBarPlayer(player, rank)
     {
         $("#game_background").append('<div class="profile" id="player_profile"></div>');
 
@@ -978,7 +978,7 @@ function BattleGraphics(battle_table, engine)
         $("#player_profile").append('<div class="active_skill" id="skill_4"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_5"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_6"></div>');
-        createPlayerSkills(player);
+        createPlayerSkills(player, rank);
     }
 
     function drawSkillBarEnemy(enemy, enemy_skill_chances)
@@ -1104,30 +1104,30 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
-    function createPlayerSkills(player)
+    function createPlayerSkills(player, rank)
     {
-        createSkillPattern(player);
-        createSkillName(player);
-        createSkillEffects(player);
+        createSkillPattern(player, rank);
+        createSkillName(player, rank);
+        createSkillEffects(player, rank);
     }
 
-    function createSkillName(player)
+    function createSkillName(player, rank)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
             $("#skill_" + (i+1) + " .skill_left_part_top").append('<div class="skill_name_string"></div>');
             let class_selector = "#skill_" + (i+1) + " .skill_name_string";
-            $(class_selector).html(player.getSkills()[i].name);
+            $(class_selector).html(player.getSkills()[i][rank[i]].name);
         }
     }
 
-    function createSkillEffects(player)
+    function createSkillEffects(player, rank)
     {
-        drawPlayerSkillEffects(player, true);
-        drawPlayerSkillEffects(player, false);
+        drawPlayerSkillEffects(player, true, rank);
+        drawPlayerSkillEffects(player, false, rank);
     }
 
-    function drawPlayerSkillEffects(player, primary)
+    function drawPlayerSkillEffects(player, primary, rank)
     {
         let selector = "";
         let effect_type = 0;
@@ -1138,13 +1138,13 @@ function BattleGraphics(battle_table, engine)
             if(primary)
             {
                 selector = " .skill_left_part_bottom_left";
-                effect_type = player.getSkills()[i].getSkillEffect(PRIMARY).type;
+                effect_type = player.getSkills()[i][rank[i]].getSkillEffect(PRIMARY).type;
                 prim_or_second = PRIMARY;
             }
             else
             {
                 selector = " .skill_left_part_bottom_right";
-                effect_type = player.getSkills()[i].getSkillEffect(SECONDARY).type;
+                effect_type = player.getSkills()[i][rank[i]].getSkillEffect(SECONDARY).type;
                 prim_or_second = SECONDARY;
             }
 
@@ -1154,7 +1154,7 @@ function BattleGraphics(battle_table, engine)
                 {
                     $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
                     $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect(prim_or_second).dmg);
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).dmg);
                     allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
@@ -1164,7 +1164,7 @@ function BattleGraphics(battle_table, engine)
                 {
                     $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/heal.png")');
                     $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect(prim_or_second).heal);
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).heal);
                     allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
@@ -1184,7 +1184,7 @@ function BattleGraphics(battle_table, engine)
                 {
                     $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/poison.png")');
                     $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect(prim_or_second).poison_amount);
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).poison_amount);
                     allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
@@ -1194,7 +1194,7 @@ function BattleGraphics(battle_table, engine)
                 {
                     $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/poison_dmg.png")');
                     $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect(prim_or_second).poison_dmg);
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).poison_dmg);
                     allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
@@ -1204,17 +1204,17 @@ function BattleGraphics(battle_table, engine)
                 {
                     $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/regen.png")');
                     $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect(prim_or_second).mana_regen);
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_regen);
                     allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
                 }
 
-                case MANA_LOSS:
+                case MANA_DRAIN:
                 {
                     $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/loss.png")');
                     $("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
-                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i].getSkillEffect(prim_or_second).mana_loss);
+                    $("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_drain);
                     allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
@@ -1305,6 +1305,16 @@ function BattleGraphics(battle_table, engine)
                     allignToMiddleY($("#enemy_skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
                 }
+
+                case FREEZE:
+                {
+                    $("#enemy_skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/freeze.png")');
+                    $("#enemy_skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    //$("#enemy_skill_" + (i+1) + selector + "_number .effect_number").text(enemy.getSkills()[i].getSkillEffect(prim_or_second).stun_amount);
+                    //allignTextRight($("#enemy_skill_" + (i+1) + selector + "_number .effect_number"));
+                    //allignToMiddleY($("#enemy_skill_" + (i+1) + selector + "_number .effect_number"));
+                    break;
+                }
             }
         }
     }
@@ -1317,7 +1327,7 @@ function BattleGraphics(battle_table, engine)
         $(object).css("left", (parent_object_width-object_width) - 2);
     }
 
-    function createSkillPattern(player)
+    function createSkillPattern(player, rank)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
@@ -1340,15 +1350,15 @@ function BattleGraphics(battle_table, engine)
 
             $("#skill_" + (i+1) + " .skill_right_part").append('<table class="skill_pattern_table"></table>');
             let table_selector = "#skill_" + (i+1) + " .skill_pattern_table";
-            for(let j=0; j<player.getSkills()[i].getSkillPatternHeight(); j++)
+            for(let j=0; j<player.getSkills()[i][rank[i]].getSkillPatternHeight(); j++)
             {
                 $(table_selector).append(createRow("skill_pattern_row" + j));
                 let row_selector = table_selector + " .skill_pattern_row" + j;
-                for(let k=0; k<player.getSkills()[i].getSkillPatternWidth(); k++)
+                for(let k=0; k<player.getSkills()[i][rank[i]].getSkillPatternWidth(); k++)
                 {
                     $(row_selector).append(createColumn("skill_pattern_column" + k +j));
                     //alert(player.getSkills()[i].getSkillPatternValue(k,j));
-                    switch(player.getSkills()[i].getSkillPatternValue(k,j))
+                    switch(player.getSkills()[i][rank[i]].getSkillPatternValue(k,j))
                     {
                         case NUL:
                         {

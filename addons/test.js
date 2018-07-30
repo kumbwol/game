@@ -27,7 +27,7 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
-        let enemy  = new Enemy("Test");
+        let enemy  = new Enemy("Fagyaszt");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
         let poison_animation_finished = true;
@@ -35,8 +35,9 @@ $(function()
 
         $("#create_table").on("click", function()
         {
+            engine.resetRanks(player.getSkills().length);
             engine.calculateEnemySkillChances(skill, enemy);
-            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
             graphics.drawTable(battle_table);
             graphics.drawAbilityPoints(player);
 
@@ -90,6 +91,7 @@ $(function()
             {
                 if(dmg_heal_number_animation_finished && poison_animation_finished && skill_activation_finished && engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
                 {
+                    stopSkillSelection(skill);
                     skill_activation_finished = false;
                     for(let i=0; i<skill.table_height; i++)
                     {
@@ -108,14 +110,14 @@ $(function()
 
                     dmg_heal_number_animation_finished = false;
 
-                    activatePrimarySkill(engine, graphics, skill, player,enemy, player_turn).done(function()
+                    activatePrimarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                     {
                         graphics.modifyTable(engine).done(function()
                         {
                             engine.table_modified = false;
                             engine.refreshTable();
 
-                            activateSecondarySkill(engine, graphics, skill, player,enemy, player_turn).done(function()
+                            activateSecondarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                             {
                                 dmg_heal_number_animation_finished = true;
                                 graphics.modifyTable(engine).done(function()
@@ -156,6 +158,9 @@ $(function()
                                     }
 
                                     engine.table_modified = false;
+
+                                    engine.increaseRank(player_selected_skill_id - 1);
+                                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
                                 });
                             });
                         });
@@ -181,8 +186,8 @@ $(function()
                 let skill_id = $(this).attr("id");
                 player_selected_skill_id = skill_id[6];
 
-                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill);
-                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill);
+                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
+                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
 
                 if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
                 else $(".selected_skill").css("left", 0);
@@ -208,13 +213,7 @@ $(function()
 
         $("#game_background").on("contextmenu", function()
         {
-            if(skill.moving)
-            {
-                $(".selected_skill").remove();
-                skill.moving = false;
-                skill.height = 0;
-                skill.width  = 0;
-            }
+            stopSkillSelection(skill);
             return false;
         });
 
@@ -453,12 +452,12 @@ $(function()
                         graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                         {
                             engine.calculateEnemySkillChances(skill, enemy);
-                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
 
                             player.ap = player.max_ap;
                             if(skill.moving)
                             {
-                                engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill);
+                                engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, engine.rank);
                             }
                             graphics.deleteEndTurn();
                             graphics.drawAbilityPoints(player);
@@ -488,16 +487,16 @@ $(function()
         let done = $.Deferred();
         engine.activateSkill(skill.primary_effect, player, enemy, player_turn);
 
-        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_loss > 0)
+        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0)
         {
-            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_loss, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, player_turn).done(function()
             {
                 done.resolve();
             });
             if(skill.primary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
             if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
             if(skill.primary_effect.mana_regen > 0) graphics.updateMpBar($("#player_mp"), player, false);
-            if(skill.primary_effect.mana_loss > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
+            if(skill.primary_effect.mana_drain > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
         }
         else done.resolve();
 
@@ -509,19 +508,30 @@ $(function()
         let done = $.Deferred();
         engine.activateSkill(skill.secondary_effect, player, enemy, player_turn);
 
-        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_loss > 0)
+        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0)
         {
-            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_loss, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, player_turn).done(function()
             {
                 done.resolve();
             });
             if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
             if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
             if(skill.primary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
-            if(skill.secondary_effect.mana_loss > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
+            if(skill.secondary_effect.mana_drain > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
         }
         else done.resolve();
 
         return done;
+    }
+
+    function stopSkillSelection(skill)
+    {
+        if(skill.moving)
+        {
+            $(".selected_skill").remove();
+            skill.moving = false;
+            skill.height = 0;
+            skill.width  = 0;
+        }
     }
 });

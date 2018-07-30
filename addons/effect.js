@@ -17,7 +17,7 @@ function Effect(name)
         heal: 0,
         type: -1,
         mana_regen: 0,
-        mana_loss: 0
+        mana_drain: 0
     };
 
 
@@ -33,8 +33,8 @@ function Effect(name)
 
         case "LOSS":
         {
-            effect.type = MANA_LOSS;
-            effect.mana_loss = 5;
+            effect.type = MANA_DRAIN;
+            effect.mana_drain = 5;
             break;
         }
 

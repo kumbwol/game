@@ -30,10 +30,12 @@ function BattleGraphics(battle_table, engine)
     this.updateEnemyMpBar = updateEnemyMpBar;
     this.updateEnemySkillChances = updateEnemySkillchances;
     this.drawChanceExplainer = drawChanceExplainer;
-    this.drawEffectExplainer = drawEffectExplainer;
+    this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
+    this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
     this.poisonActivationAnimation = poisonActivationAnimation;
     this.clearAntiVenoms = clearAntiVenoms;
     this.freeStunnedFields = freeStunnedFields;
+    this.freeParalyzedFields = freeParalyzedFields;
     this.freezeAnimation = freezeAnimation;
     this.stopFreezeAnimation = stopFreezeAnimation;
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
@@ -93,7 +95,6 @@ function BattleGraphics(battle_table, engine)
 
     function freeStunnedFields()
     {
-
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
@@ -101,13 +102,17 @@ function BattleGraphics(battle_table, engine)
                 $("#y_" + i + "_x_" + j).removeClass("stunIt");
             }
         }
+    }
 
-        /*let done = $.Deferred();
-
-
-        done.resolve();
-
-        return done;*/
+    function freeParalyzedFields()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                $("#y_" + i + "_x_" + j).removeClass("paralyzeIt");
+            }
+        }
     }
 
     function clearAntiVenoms(engine)
@@ -206,7 +211,7 @@ function BattleGraphics(battle_table, engine)
         return text;
     }
 
-    function drawEffectExplainer(unit, primary, id)
+    function drawEnemyEffectExplainer(unit, primary, id)
     {
         let x = $('<div id="explain_box">');
         if(primary)
@@ -222,6 +227,24 @@ function BattleGraphics(battle_table, engine)
             x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(SECONDARY).type]) + '</div>');
         }
 
+        return x;
+    }
+
+    function drawPlayerEffectExplainer(unit, primary, id, rank)
+    {
+        let x = $('<div id="explain_box">');
+        if(primary)
+        {
+            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)][rank[(parseInt(id)-1)]].getSkillEffect(PRIMARY).type] + '</div>');
+            x.append('<div class="explain_box_line"></div>');
+            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)][rank[(parseInt(id)-1)]].getSkillEffect(PRIMARY).type]) + '</div>');
+        }
+        else
+        {
+            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)][rank[(parseInt(id)-1)]].getSkillEffect(SECONDARY).type] + '</div>');
+            x.append('<div class="explain_box_line"></div>');
+            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)][rank[(parseInt(id)-1)]].getSkillEffect(SECONDARY).type]) + '</div>');
+        }
 
         return x;
     }
@@ -257,7 +280,7 @@ function BattleGraphics(battle_table, engine)
 
             if(dmg > 0)
             {
-                if(player_on_turn) $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+                if(player_on_turn) $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
                 else $("#self").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
@@ -267,7 +290,7 @@ function BattleGraphics(battle_table, engine)
             else if(heal > 0)
             {
                 if(player_on_turn) $("#self").append('<div id="dmg_counter"></div>');
-                else $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+                else $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
                 object.css("color", "lawngreen");
@@ -276,7 +299,7 @@ function BattleGraphics(battle_table, engine)
             else if(mana_regen > 0)
             {
                 if(player_on_turn) $("#self").append('<div id="dmg_counter"></div>');
-                else $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+                else $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
                 object.css("color", "deepskyblue");
@@ -284,7 +307,7 @@ function BattleGraphics(battle_table, engine)
             }
             else if(mana_drain > 0)
             {
-                if(player_on_turn) $("#enemy_skeleton").append('<div id="dmg_counter"></div>');
+                if(player_on_turn) $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
                 else $("#self").append('<div id="dmg_counter"></div>');
 
                 object = $("#dmg_counter");
@@ -589,23 +612,24 @@ function BattleGraphics(battle_table, engine)
         $("#ability_point").css("left", "-=1px");
     }
 
-    function myFade(change_field_type, object, isStunned, cb)
+    function myFade(change_field_type, object, isStunned, isParalyzed, cb)
     {
         let changed_field_type_string;
-        let stunField = "";
-        if(isStunned) stunField = " stunIt";
+        let debuffField = "";
+        if(isStunned) debuffField = " stunIt";
+        else if(isParalyzed) debuffField = " paralyzeIt";
 
         switch(change_field_type)
         {
             case ATT:
             {
-                changed_field_type_string = "attack" + stunField;
+                changed_field_type_string = "attack" + debuffField;
                 break;
             }
 
             case POI:
             {
-                changed_field_type_string = "poison" + stunField;
+                changed_field_type_string = "poison" + debuffField;
                 break;
             }
         }
@@ -644,6 +668,16 @@ function BattleGraphics(battle_table, engine)
         }, 500);
     }
 
+    function paralyzeFieldAnimation(object, cb)
+    {
+        setTimeout(function()
+        {
+            //object.css("background-color", "#2f2f2f");
+            object.addClass("paralyzeIt");
+            cb();
+        }, 500);
+    }
+
     function modifyTable(engine)
     {
         let done = $.Deferred();
@@ -659,7 +693,7 @@ function BattleGraphics(battle_table, engine)
                     let changed_field_type = engine.temp_table[i][j].type;
                     wait_animation = true;
 
-                    myFade(changed_field_type, $("#y_" + i + "_x_" + j), engine.temp_table[i][j].stunned, function()
+                    myFade(changed_field_type, $("#y_" + i + "_x_" + j), engine.temp_table[i][j].stunned, engine.temp_table[i][j].paralyzed, function()
                     {
                         done.resolve();
                     });
@@ -669,6 +703,15 @@ function BattleGraphics(battle_table, engine)
                 {
                     wait_animation = true;
                     stunFieldAnimation($("#y_" + i + "_x_" + j), function()
+                    {
+                        done.resolve();
+                    });
+                }
+
+                if(engine.table[i][j].paralyzed)
+                {
+                    wait_animation = true;
+                    paralyzeFieldAnimation($("#y_" + i + "_x_" + j), function()
                     {
                         done.resolve();
                     });
@@ -1004,7 +1047,7 @@ function BattleGraphics(battle_table, engine)
         $("#enemy_name").append('<div class="name_string" id="enemy_name_string"></div>');
         $("#enemy_name_string").html(enemy.name);
         allignToMiddle("#enemy_name_string");
-        $("#enemy_profile").append('<div class="profile_picture" id="enemy_skeleton"></div>');
+        $("#enemy_profile").append('<div class="profile_picture" id=' + enemy.name + '></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_1"></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_2"></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_3"></div>');
@@ -1016,6 +1059,9 @@ function BattleGraphics(battle_table, engine)
         $("#enemy_skill_1").append('<div class="skill_chance" id="enemy_skill_chance_1"></div>');
         $("#enemy_skill_2").append('<div class="skill_chance" id="enemy_skill_chance_2"></div>');
         $("#enemy_skill_3").append('<div class="skill_chance" id="enemy_skill_chance_3"></div>');
+        $("#enemy_skill_4").append('<div class="skill_chance" id="enemy_skill_chance_4"></div>');
+        $("#enemy_skill_5").append('<div class="skill_chance" id="enemy_skill_chance_5"></div>');
+        $("#enemy_skill_6").append('<div class="skill_chance" id="enemy_skill_chance_6"></div>');
 
 
 

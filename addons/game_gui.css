@@ -344,7 +344,6 @@ html, body
     background-color: gray;
     border: 1px solid black;
     box-sizing: border-box;
-    background-image: url("images/self.png");
 }
 
 #cut
@@ -360,11 +359,6 @@ html, body
 #self
 {
     background-image: url("images/self.png");
-}
-
-#enemy_skeleton
-{
-    background-image: url("images/skeleton.png");
 }
 
 .active_skill
@@ -583,6 +577,12 @@ html, body
 #battle_table div.stunIt
 {
     background-color: #2f2f2f;
+}
+
+.selected_skill div.paralyzeIt,
+#battle_table div.paralyzeIt
+{
+    background-color: slategray;
 }
 
 .selected_skill div.nul,

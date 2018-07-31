@@ -190,6 +190,14 @@ function Skill(name)
             chance = new Chance(LUCK, 100);
             break;
         }
+
+        case "Paralyze":
+        {
+            primary_effect = new Effect("PARALYZE");
+            secondary_effect = new Effect("DMG");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
     }
 
     this.getSkillPatternHeight = getSkillPatternHeight;

@@ -9,7 +9,9 @@ function Effect(name)
         self: false,
         transform: false,
         stun: false,
+        paralyze: false,
         stun_amount: 0,
+        paralyze_amount: 0,
         poison_amount: 0,
         poison_dmg: 0,
         dmg: 0,
@@ -130,6 +132,14 @@ function Effect(name)
         case "Freeze":
         {
             effect.type = FREEZE;
+            break;
+        }
+
+        case "PARALYZE":
+        {
+            effect.type = PARALYZE;
+            effect.paralyze = true;
+            effect.paralyze_amount = 5;
             break;
         }
     }

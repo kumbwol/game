@@ -12,3 +12,4 @@ const PRIMARY    =  7; // primary effect
 const SECONDARY  =  8; // secondary effect
 const MANA_REGEN =  9; // mana regeneration
 const MANA_DRAIN = 10; // mana cost
+const PARALYZE   = 11; // paralyze field

@@ -27,7 +27,7 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
-        let enemy  = new Enemy("Fagyaszt");
+        let enemy  = new Enemy("Test");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
         let poison_animation_finished = true;
@@ -54,7 +54,7 @@ $(function()
             {
                 let y = ($(this).attr("id"))[2];
                 let x = ($(this).attr("id"))[6];
-                if(engine.allow_select && !skill.moving && !engine.isFieldStunned(parseInt(x), parseInt(y)))
+                if(engine.allow_select && !skill.moving && !engine.isFieldStunned(parseInt(x), parseInt(y)) && !engine.isFieldParalyzed(parseInt(x), parseInt(y)))
                 {
                     if(!engine.selectField(y, x))
                     {
@@ -159,7 +159,7 @@ $(function()
 
                                     engine.table_modified = false;
 
-                                    engine.increaseRank(player_selected_skill_id - 1);
+                                    engine.increaseRank(player_selected_skill_id - 1, player);
                                     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
                                 });
                             });
@@ -234,7 +234,7 @@ $(function()
                 {
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
-                        $("#game_background").append(graphics.drawEffectExplainer(enemy, true, $(this).parent().parent().attr("id")[12]));
+                        $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, true, $(this).parent().parent().attr("id")[12]));
                         $("#explain_box").css(
                             {
                                 "border-radius": "30px 0px 30px 30px",
@@ -246,7 +246,7 @@ $(function()
                     {
                         if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
                         {
-                            $("#game_background").append(graphics.drawEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
+                            $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
                             $("#explain_box").css(
                                 {
                                     "border-radius": "30px 0px 30px 30px",
@@ -270,7 +270,7 @@ $(function()
                 {
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
-                        $("#game_background").append(graphics.drawEffectExplainer(player, true, $(this).parent().parent().attr("id")[6]));
+                        $("#game_background").append(graphics.drawPlayerEffectExplainer(player, true, $(this).parent().parent().attr("id")[6], engine.rank));
                         $("#explain_box").css(
                             {
                                 "border-radius": "0px 30px 30px 30px",
@@ -280,9 +280,9 @@ $(function()
                     }
                     else if($(this).attr("class") === "skill_left_part_bottom_right")
                     {
-                        if(player.getSkills()[(parseInt($(this).parent().parent().attr("id")[6])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
+                        if(player.getSkills()[(parseInt($(this).parent().parent().attr("id")[6])-1)][engine.rank[(parseInt($(this).parent().parent().attr("id")[6])-1)]].getSkillEffect(SECONDARY).type !== NOTHING)
                         {
-                            $("#game_background").append(graphics.drawEffectExplainer(player, false, $(this).parent().parent().attr("id")[6]));
+                            $("#game_background").append(graphics.drawPlayerEffectExplainer(player, false, $(this).parent().parent().attr("id")[6], engine.rank));
                             $("#explain_box").css(
                                 {
                                     "border-radius": "0px 30px 30px 30px",
@@ -305,7 +305,9 @@ $(function()
         $("#game_background").on("click", "#end_turn", function()
         {
             graphics.freeStunnedFields();
-            engine.clearSunnedFields();
+            graphics.freeParalyzedFields();
+            engine.clearStunnedFields();
+            engine.clearParalyzedFields();
             //console.log(player_turn);
 
             if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished)

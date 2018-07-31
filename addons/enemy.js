@@ -42,6 +42,7 @@ function Enemy(name)
         this.mp = 10;
 
         skills[0] = new Skill("Double Punch");
+        skills[1] = new Skill("Paralyze");
     }
 
     this.getSkills = getSkills;

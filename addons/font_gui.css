@@ -12,6 +12,19 @@
     src: url("fonts/Lato-Regular.ttf");
 }
 
+@font-face {
+    font-family: myTrajan;
+    src: url("fonts/Trajan Pro Regular.ttf");
+}
+
+.roman_number
+{
+    position: absolute;
+    font-size: 18px;
+
+    font-family: myTrajan;
+}
+
 .font_preloader
 {
     /*font-family: myLato;*/
@@ -57,9 +70,10 @@
 #end_turn_string
 {
     position: absolute;
-    top: 0px;
+    top: 5px;
+    left: 4px;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 16px;
     color: black;
 
     font-family: myLato;

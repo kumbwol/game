@@ -7,7 +7,7 @@ let images = [
     "addons/images/field_types/poison.png",
     "addons/images/field_types/magic.png",
     "addons/images/self.png",
-    "addons/images/skeleton.png",
+    "addons/images/enemy/skeleton.png",
     "addons/images/selector.gif",
     "addons/images/success.png",
     "addons/images/failure.png",
@@ -27,7 +27,8 @@ let sounds = [
 
 let fonts = [
     "myLato",
-    "myFirstFont"
+    "myFirstFont",
+    "myTrajan"
 ];
 
 this.$object = [];
@@ -48,4 +49,5 @@ for(let i=0; i<fonts.length; i++)
     let string = "<div class="+ "font_preloader" + i +">Font preloader</div>";
     $("#game_background").append(string);
     $("." + "font_preloader" + i).css("font-family", fonts[i]);
+    if(i === fonts.length-1) preload_finished = true;
 }

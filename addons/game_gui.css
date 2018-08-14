@@ -14,6 +14,40 @@ html, body
     cursor: default;
 }
 
+.trapezoid_border
+{
+    position: absolute;
+    left: 200px;
+    top: 183px;
+
+    border-left: 32px solid #000000;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    height: 39px;
+}
+
+.trapezoid_inside
+{
+    position: absolute;
+    top: -9px;
+    left: -31px;
+
+    border-left: 30px solid #efe4b0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    height: 37px;
+}
+
+#player_ability_container
+{
+    position: absolute;
+    width: 284px;
+    height: 61px;
+    top: 471px;
+    left: 338px;
+    background-image: url("images/battle_gui/player_ability_container.png");
+}
+
 .text_attack
 {
     width: 10px;
@@ -67,9 +101,10 @@ html, body
 #end_turn
 {
     position: absolute;
-    top: 490px;
-    width: 130px;
-    height: 40px;
+    top: 484px;
+    left: 630px;
+    width: 90px;
+    height: 31px;
     border: 2px solid black;
     border-radius: 10px;
 }
@@ -82,11 +117,12 @@ html, body
     background-repeat: no-repeat;
     background-position: center;
     background-color: gold;
-    top: 487px;
+    top: 476px;
+    left: 250px;
     position: absolute;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 51px;
+    height: 51px;
 }
 
 .top_bar
@@ -519,10 +555,11 @@ html, body
 #battle_table
 {
     position: absolute;
-    top: 5px;
+    top: 0px;
     background-color: dimgrey;
     padding: 0px;
-    border: 10px solid black;
+    border: 2px solid black;
+    border-width: 2px 3px 3px 3px;
     /*height: 300px;
     width: 300px;*/
 }

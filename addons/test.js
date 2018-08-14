@@ -4,6 +4,8 @@ $(function()
 
     function start_game()
     {
+        $("#game_background").append('<button id="create_table">Create</button>');
+
         let battle_table = {
             height: 9,
             width: 9
@@ -40,6 +42,9 @@ $(function()
             graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
             graphics.drawTable(battle_table);
             graphics.drawAbilityPoints(player);
+            graphics.drawEndTurn();
+            graphics.drawPlayerAbilities(player);
+            graphics.drawSkillRanks(player);
 
             engine.calculateNewTable();
             graphics.reNameIds(engine);
@@ -67,8 +72,8 @@ $(function()
                         graphics.swapFields(engine).done(function()
                         {
                             player.ap--;
-                            if(player.ap > 0) graphics.refreshAbilityPoint(player);
-                            else graphics.drawEndTurn();
+                            graphics.refreshAbilityPoint(player);
+                            graphics.refreshEndButton(player.ap);
 
                             if(engine.isPlayerPoisoned())
                             {
@@ -304,15 +309,17 @@ $(function()
 
         $("#game_background").on("click", "#end_turn", function()
         {
-            graphics.freeStunnedFields();
-            graphics.freeParalyzedFields();
-            engine.clearStunnedFields();
-            engine.clearParalyzedFields();
             //console.log(player_turn);
 
             if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished)
             {
                 player_turn = false;
+
+                graphics.freeStunnedFields();
+                graphics.freeParalyzedFields();
+                engine.clearStunnedFields();
+                engine.clearParalyzedFields();
+
                 engine.refreshTable();
 
                 if(engine.isPlayerPoisoned())
@@ -420,14 +427,26 @@ $(function()
             $.getScript("addons/effect.js"),
             $.getScript("addons/chance_types.js"),
             $.getScript("addons/chance.js"),
-            $.getScript("addons/preloader.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );
             })
         ).done(function()
         {
-            $.getScript("addons/paragraphs.js");
-            start_game();
+            $.when
+            (
+                $.getScript("addons/preloader.js"),
+                $.Deferred(function( deferred ){
+                    $( deferred.resolve );
+                })
+            ).done(function()
+            {
+                $.getScript("addons/paragraphs.js");
+                do {
+                    //TODO: Itt kene egy downloading/loading gif vagy vmi
+                    console.log("ragadok");
+                }while(!preload_finished);
+                start_game();
+            });
         });
     }
 
@@ -461,8 +480,8 @@ $(function()
                             {
                                 engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, engine.rank);
                             }
-                            graphics.deleteEndTurn();
-                            graphics.drawAbilityPoints(player);
+                            graphics.refreshEndButton(player.ap);
+                            graphics.refreshAbilityPoint(player);
                             done.resolve();
                         });
                     });

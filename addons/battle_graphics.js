@@ -40,9 +40,59 @@ function BattleGraphics(battle_table, engine)
     this.stopFreezeAnimation = stopFreezeAnimation;
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
+    this.drawPlayerAbilities = drawPlayerAbilities;
+    this.refreshEndButton = refreshEndButton;
+    this.drawSkillRanks = drawSkillRanks;
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function drawSkillRanks(player)
+    {
+        for(let i=0; i<player.getSkills().length; i++)
+        {
+            if(player.getSkills()[i].length > 1) createSkillRank(i);
+        }
+    }
+
+    function createSkillRank(id)
+    {
+        let $object_border = $('<div></div>');
+        $object_border.attr("id", "skill_rank_border_" + id);
+        $object_border.addClass("trapezoid_border");
+
+        let $object_inside = $('<div></div>');
+        $object_inside.attr("id", "skill_rank_inside_" + id);
+        $object_inside.addClass("trapezoid_inside");
+
+        let $object_number = $('<div>IX</div>');
+        $object_number.addClass("roman_number");
+
+        $object_border.append($object_inside);
+        $object_inside.append($object_number);
+
+        $("#game_background").append($object_border);
+        $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
+
+        let inside_width = $object_inside.outerWidth();
+        let number_width = $object_number.outerWidth();
+        $object_number.css("left", "-=30px"); //go left
+        $object_number.css("left", "+=" + (inside_width-number_width)/2);
+        $object_number.css("top", "+=7px");
+
+        //alert($object_number.css("width"));
+    }
+
+    function refreshEndButton(ap)
+    {
+        if(ap > 0) $("#end_turn").css("background-color", end_turn_color_have_ap_left);
+        else $("#end_turn").css("background-color", end_turn_color_no_ap_left);
+    }
+
+    function drawPlayerAbilities(player)
+    {
+        $("#game_background").append('<div id="player_ability_container"></div>');
+    }
 
     function stopFreezeAnimation()
     {
@@ -551,7 +601,7 @@ function BattleGraphics(battle_table, engine)
 
     function disableEndTurn()
     {
-        $("#end_turn").css("background-color", "grey");
+        $("#end_turn").css("background-color", end_turn_color_disable);
     }
 
     function deleteEndTurn()
@@ -580,27 +630,19 @@ function BattleGraphics(battle_table, engine)
 
     function drawEndTurn()
     {
-        $("#ability_point_bg").remove();
+        //$("#ability_point_bg").remove();
         $("#game_background").append('<div id="end_turn"></div>');
-        $("#end_turn").css("background-color", end_turn_color);
-        allignToMiddle($("#end_turn"));
-        $("#end_turn").append('<div id="end_turn_string">End Turn</div>');
-        allignToMiddle($("#end_turn_string"));
+        $("#end_turn").css("background-color", end_turn_color_have_ap_left);
+        //allignToMiddle($("#end_turn"));
+        $("#end_turn").append('<div id="end_turn_string">END TURN</div>');
+        //allignToMiddle($("#end_turn_string"));
+        //allignToVerticalMiddle($("#end_turn_string"));
     }
 
     function drawAbilityPoints(player)
     {
-        if(player.ap > 0)
-        {
-            $("#game_background").append('<div id="ability_point_bg"></div>');
-            allignToMiddle($("#ability_point_bg"));
-
-            refreshAbilityPoints(player);
-        }
-        else
-        {
-            this.drawEndTurn();
-        }
+        $("#game_background").append('<div id="ability_point_bg"></div>');
+        refreshAbilityPoints(player);
     }
 
     function refreshAbilityPoints(player)

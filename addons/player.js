@@ -7,8 +7,8 @@ function Player(name)
     this.max_hp = 50;
     this.mp = 20;
     this.max_mp = 40;
-    this.ap = 1;
-    this.max_ap = 1;
+    this.ap = 2;
+    this.max_ap = 2;
 
     let skills = [];
     /*skills[0] = new Skill("Shock");
@@ -26,6 +26,8 @@ function Player(name)
 
     skills[0] = [];
     skills[1] = [];
+    skills[2] = [];
+    skills[3] = [];
 
     skills[0][0] = new Skill("Shock");
     skills[0][1] = new Skill("Loss");
@@ -33,6 +35,9 @@ function Player(name)
     skills[0][3] = new Skill("Spiritarrow");
     skills[1][0] = new Skill("Loss");
     skills[1][1] = new Skill("Shock");
+    skills[2][0] = new Skill("Shock");
+    skills[3][0] = new Skill("Loss");
+    skills[3][1] = new Skill("Shock");
 
     this.getSkills = getSkills;
 

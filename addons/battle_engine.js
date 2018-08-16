@@ -23,6 +23,7 @@ function BattleEngine(battle_table)
     this.table_modified = false;
     this.rank = [];
 
+
     for(let i=0; i<this.battle_table.height; i++)
     {
         this.table[i] = [];
@@ -75,6 +76,28 @@ function BattleEngine(battle_table)
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
     this.resetRanks = resetRanks;
     this.increaseRank = increaseRank;
+    this.isAbilitySelected = isAbilitySelected;
+    this.selectAbility = selectAbility;
+    this.deSelectAbility = deSelectAbility;
+
+    function deSelectAbility(player)
+    {
+        for(let i=0; i<player.abilities.length; i++)
+        {
+            player.abilities[i].selected = false;
+        }
+    }
+
+    function selectAbility(player, id)
+    {
+        deSelectAbility(player);
+        player.abilities[id].selected = true;
+    }
+
+    function isAbilitySelected(player, id)
+    {
+        //alert(id);
+    }
 
     function increaseRank(skill_id, player)
     {

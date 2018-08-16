@@ -44,7 +44,7 @@ $(function()
             graphics.drawAbilityPoints(player);
             graphics.drawEndTurn();
             graphics.drawPlayerAbilities(player);
-            graphics.drawSkillRanks(player);
+            graphics.drawSkillRanks(player, engine);
 
             engine.calculateNewTable();
             graphics.reNameIds(engine);
@@ -165,6 +165,7 @@ $(function()
                                     engine.table_modified = false;
 
                                     engine.increaseRank(player_selected_skill_id - 1, player);
+                                    graphics.updateSkillRanks(player, engine);
                                     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
                                 });
                             });
@@ -206,6 +207,12 @@ $(function()
             }
         });
 
+        $("#game_background").on("click", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function(ev)
+        {
+            engine.selectAbility(player, $(this).attr("id")[8]);
+            graphics.drawAbilitySelector(player);
+        });
+
 
         $("#game_background").on("mousemove", function(ev)
         {
@@ -219,6 +226,8 @@ $(function()
         $("#game_background").on("contextmenu", function()
         {
             stopSkillSelection(skill);
+            engine.deSelectAbility(player);
+            graphics.deleteAbilitySelector();
             return false;
         });
 
@@ -299,7 +308,6 @@ $(function()
                 }
             }
         });
-
 
         $("#game_background").on("mouseup", function()
         {
@@ -427,6 +435,8 @@ $(function()
             $.getScript("addons/effect.js"),
             $.getScript("addons/chance_types.js"),
             $.getScript("addons/chance.js"),
+            $.getScript("addons/ability_types.js"),
+            $.getScript("addons/ability.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );
             })

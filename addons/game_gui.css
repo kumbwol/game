@@ -14,6 +14,41 @@ html, body
     cursor: default;
 }
 
+.color_rank_1
+{
+    border-left: 30px solid #efe4b0;
+}
+
+.color_rank_2
+{
+    border-left: 30px solid red;
+}
+
+.color_rank_3
+{
+    border-left: 30px solid royalblue;
+}
+
+.color_rank_4
+{
+    border-left: 30px solid gold;
+}
+
+.color_rank_5
+{
+    border-left: 30px solid green;
+}
+
+.color_rank_6
+{
+    border-left: 30px solid darkmagenta;
+}
+
+.color_rank_7
+{
+    border-left: 30px solid orchid;
+}
+
 .trapezoid_border
 {
     position: absolute;
@@ -32,7 +67,6 @@ html, body
     top: -9px;
     left: -31px;
 
-    border-left: 30px solid #efe4b0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     height: 37px;

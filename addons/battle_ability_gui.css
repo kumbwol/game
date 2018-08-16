@@ -1,0 +1,68 @@
+#ability_0
+{
+    position: absolute;
+    top: 16px;
+    left: 1px;
+}
+
+#ability_1
+{
+    position: absolute;
+    top: 1px;
+    left: 46px;
+}
+
+#ability_2
+{
+    position: absolute;
+    top: 31px;
+    left: 46px;
+}
+
+#ability_3
+{
+    position: absolute;
+    top: 1px;
+    left: 179px;
+}
+
+#ability_4
+{
+    position: absolute;
+    top: 31px;
+    left: 179px;
+}
+
+#ability_5
+{
+    position: absolute;
+    top: 16px;
+    left: 224px;
+}
+
+.ability_size
+{
+    width: 59px;
+    height: 29px;
+}
+
+.no_ability
+{
+    background-image: url("images/ability_types/no_ability.png");
+}
+
+.ability_knight_move
+{
+    background-image: url("images/ability_types/knight_move.png");
+}
+
+#ability_selector
+{
+    position: absolute;
+    width: 63px;
+    height: 33px;
+    background-image: url("images/battle_gui/ability_selector.png");
+    top: -2px;
+    left: -2px;
+    z-index: 2;
+}

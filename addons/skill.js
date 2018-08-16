@@ -25,8 +25,8 @@ function Skill(name)
         case "Shock":
         {
             visual_pattern =
-                [/*
-                    [ATT,ATT,NUL],
+                [
+                    /*[MOV,ATT,NUL],
                     [ATT,ATT,NUL],
                     [NUL,NUL,NUL]*/
                     [ATT,NUL,NUL],

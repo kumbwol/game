@@ -46,18 +46,99 @@ function BattleGraphics(battle_table, engine)
     this.updateSkillRanks = updateSkillRanks;
     this.drawAbilitySelector = drawAbilitySelector;
     this.deleteAbilitySelector = deleteAbilitySelector;
+    this.reduceManaIfAbilityUsed = reduceManaIfAbilityUsed;
+    this.changeCursor = changeCursor;
+    this.createCursor = createCursor;
+    this.contrastSkills = contrastSkills;
+    this.stopContrastSkills = stopContrastSkills;
 
     let field_size = 50;
     this.field_size = field_size;
 
-    function deleteAbilitySelector()
+    function contrastSkills()
     {
-        $("#ability_selector").remove();
+        $("#game_background").append('<div id="hole"></div>');
+
+        let opacity = 0;
+        let opacity_string = "0 0 0 99999px rgba(0, 0, 0, " + opacity + ")";
+        //$("#hole").css("box-shadow", opacity_string);
+
+        let x = setInterval(function()
+        {
+            opacity += ((SPECIAL_ABILITY_OPACITY/SPECIAL_ABILITY_ANIMATION_LENGTH)*20);
+            opacity_string = "0 0 0 99999px rgba(0, 0, 0, " + opacity + ")";
+            $("#hole").css("box-shadow", opacity_string);
+        }, 20);
+
+        setTimeout(function()
+        {
+            if(parseInt(opacity) !== SPECIAL_ABILITY_OPACITY) //TODO: figyeljunk arra hogy folyamatos legyen az opacity atmenet meg lassab szomlasnal is
+            {
+                opacity = SPECIAL_ABILITY_OPACITY;
+                opacity_string = "0 0 0 99999px rgba(0, 0, 0, " + opacity + ")";
+                $("#hole").css("box-shadow", opacity_string);
+            }
+            clearInterval(x);
+        }, SPECIAL_ABILITY_ANIMATION_LENGTH);
     }
 
-    function drawAbilitySelector(player)
+    function stopContrastSkills()
     {
-        deleteAbilitySelector();
+        $("#hole").remove();
+    }
+
+    function createCursor()
+    {
+        $("#game_background").css("cursor", "none");
+        $("#game_background").append('<figure id="mouse-pointer"></figure>');
+    }
+
+    function changeCursor(player, engine)
+    {
+        if(engine.isAbilitySelected())
+        {
+            if(player.abilities[engine.active_ability_id].type === ROTATE_LEFT)
+            {
+                $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/use_ability.png")');
+            }
+            else
+            {
+                $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/default.png")');
+            }
+        }
+        else
+        {
+            $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/default.png")');
+        }
+    }
+
+    function reduceManaIfAbilityUsed(engine, player)
+    {
+        if(engine.ability_used)
+        {
+            player.mp -= player.abilities[engine.active_ability_id].mana_cost;
+            updateMpBar($("#player_mp"), player, false);
+
+            if(player.mp < player.abilities[engine.active_ability_id].mana_cost)
+            {
+                engine.deSelectAbility(player);
+                deleteAbilitySelector(player, engine);
+            }
+
+            engine.ability_used = false;
+        }
+    }
+
+    function deleteAbilitySelector(player, engine)
+    {
+        changeCursor(player, engine);
+        $("#ability_selector").remove();
+        stopContrastSkills();
+    }
+
+    function drawAbilitySelector(engine, player)
+    {
+        deleteAbilitySelector(player, engine);
         for(let i=0; i<player.abilities.length; i++)
         {
             if(player.abilities[i].selected)
@@ -215,6 +296,18 @@ function BattleGraphics(battle_table, engine)
                 case KNIGHT_MOVE:
                 {
                     $("#ability_" + i).addClass("ability_knight_move");
+                    break;
+                }
+
+                case DIAGONAL_MOVE:
+                {
+                    $("#ability_" + i).addClass("ability_diagonal_move");
+                    break;
+                }
+
+                case ROTATE_LEFT:
+                {
+                    $("#ability_" + i).addClass("ability_rotate_left");
                     break;
                 }
             }

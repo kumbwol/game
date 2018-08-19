@@ -56,6 +56,16 @@
     background-image: url("images/ability_types/knight_move.png");
 }
 
+.ability_diagonal_move
+{
+    background-image: url("images/ability_types/diagonal_move.png");
+}
+
+.ability_rotate_left
+{
+    background-image: url("images/ability_types/rotate_left.png");
+}
+
 #ability_selector
 {
     position: absolute;

@@ -13,5 +13,17 @@ function Ability(type)
             this.mana_cost = 5;
             break;
         }
+
+        case DIAGONAL_MOVE:
+        {
+            this.mana_cost = 6;
+            break;
+        }
+
+        case ROTATE_LEFT:
+        {
+            this.mana_cost = 8;
+            break;
+        }
     }
 }

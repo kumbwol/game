@@ -22,7 +22,8 @@ function BattleEngine(battle_table)
     this.enemy_skill_plays = [];
     this.table_modified = false;
     this.rank = [];
-
+    this.active_ability_id = -1;
+    this.ability_used = false;
 
     for(let i=0; i<this.battle_table.height; i++)
     {
@@ -76,9 +77,29 @@ function BattleEngine(battle_table)
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
     this.resetRanks = resetRanks;
     this.increaseRank = increaseRank;
-    this.isAbilitySelected = isAbilitySelected;
     this.selectAbility = selectAbility;
     this.deSelectAbility = deSelectAbility;
+    this.swapAbilityUsed = swapAbilityUsed;
+    this.isAbilitySelected = isAbilitySelected;
+    this.isSpecialAbilitySelected = isSpecialAbilitySelected;
+
+    function isSpecialAbilitySelected(player)
+    {
+        if(this.isAbilitySelected())
+        {
+            if(player.abilities[this.active_ability_id].type === ROTATE_LEFT)
+            {
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+    }
+
+    function isAbilitySelected()
+    {
+        return this.active_ability_id !== -1;
+    }
 
     function deSelectAbility(player)
     {
@@ -86,17 +107,27 @@ function BattleEngine(battle_table)
         {
             player.abilities[i].selected = false;
         }
+        this.active_ability_id = -1;
     }
 
     function selectAbility(player, id)
     {
-        deSelectAbility(player);
-        player.abilities[id].selected = true;
-    }
-
-    function isAbilitySelected(player, id)
-    {
-        //alert(id);
+        if(player.abilities[id].selected)
+        {
+            this.deSelectAbility(player);
+            return true;
+        }
+        else
+        {
+            if(player.mp >= player.abilities[id].mana_cost)
+            {
+                this.deSelectAbility(player);
+                player.abilities[id].selected = true;
+                this.active_ability_id = id;
+                return true;
+            }
+        }
+        return false;
     }
 
     function increaseRank(skill_id, player)
@@ -599,7 +630,7 @@ function BattleEngine(battle_table)
             alert(this.selected_fields.x1);*/
             if(this.anyFieldSelected())
             {
-                this.deselectField();
+                this.deselectField(player);
             }
 
             return true;
@@ -620,9 +651,9 @@ function BattleEngine(battle_table)
         return (this.selected_fields.y0 >= 0 && this.selected_fields.x0 >= 0);
     }
 
-    function deselectField()
+    function deselectField(player)
     {
-        this.selectField(this.selected_fields.y0, this.selected_fields.x0);
+        this.selectField(this.selected_fields.y0, this.selected_fields.x0, player);
     }
 
     function refreshTable()
@@ -682,7 +713,7 @@ function BattleEngine(battle_table)
         this.table[y][x].type = NUL;
     }
 
-    function selectField(y, x)
+    function selectField(y, x, player)
     {
         let swap_field = false;
         if(this.table[y][x].selected)
@@ -715,6 +746,23 @@ function BattleEngine(battle_table)
                     this.swapFields(this.selected_fields.x0, this.selected_fields.y0, this.selected_fields.x1, this.selected_fields.y1);
                     return swap_field;
                 }
+                else if(this.active_ability_id !== -1)
+                {
+                    if(this.swapAbilityUsed(this.selected_fields, player.abilities[this.active_ability_id].type))
+                    {
+                        this.table[this.selected_fields.y0][this.selected_fields.x0].selected = false;
+                        this.table[this.selected_fields.y1][this.selected_fields.x1].selected = false;
+                        swap_field = true;
+                        this.swapFields(this.selected_fields.x0, this.selected_fields.y0, this.selected_fields.x1, this.selected_fields.y1);
+                        return swap_field;
+                    }
+                    else
+                    {
+                        this.selected_fields.y1 = -1;
+                        this.selected_fields.x1 = -1;
+                        this.table[y][x].selected = false;
+                    }
+                }
                 else
                 {
                     this.selected_fields.y1 = -1;
@@ -744,6 +792,55 @@ function BattleEngine(battle_table)
             if(parseInt(this.selected_fields.x0) === parseInt(this.selected_fields.x1)-1 || parseInt(this.selected_fields.x0) === parseInt(this.selected_fields.x1)+1)
             {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    function swapAbilityUsed(selected_fields, active_ability_type)
+    {
+        switch(active_ability_type)
+        {
+            case KNIGHT_MOVE:
+            {
+                if ((parseInt(selected_fields.x0)+1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-2 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)+2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)+2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)+1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+2 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+2 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-2 === parseInt(selected_fields.y1)))
+                {
+                    this.ability_used = true;
+                    return true;
+                }
+
+                return false;
+            }
+
+            case DIAGONAL_MOVE:
+            {
+                if ((parseInt(selected_fields.x0)+1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)+1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-1 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-1 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)+2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-2 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)+2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+2 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)+2 === parseInt(selected_fields.y1)) ||
+                    (parseInt(selected_fields.x0)-2 === parseInt(selected_fields.x1) && parseInt(selected_fields.y0)-2 === parseInt(selected_fields.y1)))
+                {
+                    this.ability_used = true;
+                    return true;
+                }
+
+                return false;
+            }
+
+            default:
+            {
+                return false;
             }
         }
     }

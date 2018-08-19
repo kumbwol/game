@@ -34,9 +34,11 @@ $(function()
         let skill_activation_finished = true;
         let poison_animation_finished = true;
         let dmg_heal_number_animation_finished = true;
+        let skill_selection_allowed = true;
 
         $("#create_table").on("click", function()
         {
+            graphics.createCursor();
             engine.resetRanks(player.getSkills().length);
             engine.calculateEnemySkillChances(skill, enemy);
             graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
@@ -55,13 +57,13 @@ $(function()
 
         $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison", function()
         {
-            if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished)
+            if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished && !engine.isSpecialAbilitySelected(player))
             {
                 let y = ($(this).attr("id"))[2];
                 let x = ($(this).attr("id"))[6];
                 if(engine.allow_select && !skill.moving && !engine.isFieldStunned(parseInt(x), parseInt(y)) && !engine.isFieldParalyzed(parseInt(x), parseInt(y)))
                 {
-                    if(!engine.selectField(y, x))
+                    if(!engine.selectField(y, x, player))
                     {
                         if(engine.table[y][x].selected) graphics.drawSelector($(this).attr("id"));
                         else graphics.deleteSelector($(this).attr("id"));
@@ -72,6 +74,7 @@ $(function()
                         graphics.swapFields(engine).done(function()
                         {
                             player.ap--;
+                            graphics.reduceManaIfAbilityUsed(engine, player);
                             graphics.refreshAbilityPoint(player);
                             graphics.refreshEndButton(player.ap);
 
@@ -87,7 +90,7 @@ $(function()
                     }
                 }
             }
-            else if(!skill.moving)
+            else if(!skill.moving && !engine.isSpecialAbilitySelected(player))
             {
                 graphics.shakeEndTurn();
             }
@@ -184,33 +187,55 @@ $(function()
             }
         });
 
+        $(window).mousemove(function(event) {
+            $('#mouse-pointer').css({
+                'top' : event.pageY + 'px',
+                'left' : event.pageX + 'px'
+            });
+        });
+
         $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
         {
             if(player_turn && dmg_heal_number_animation_finished)
             {
-                if(skill.moving) $(".selected_skill").remove();
-                let skill_id = $(this).attr("id");
-                player_selected_skill_id = skill_id[6];
+                if(engine.isSpecialAbilitySelected(player))
+                {
+                    alert('hey');
+                }
+                else
+                {
+                    if(skill.moving) $(".selected_skill").remove();
+                    let skill_id = $(this).attr("id");
+                    player_selected_skill_id = skill_id[6];
 
-                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
-                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
+                    graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
+                    engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
 
-                if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
-                else $(".selected_skill").css("left", 0);
+                    if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $(".selected_skill").css("left", ev.pageX-graphics.field_size/2);
+                    else $(".selected_skill").css("left", 0);
 
-                if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
-                else $(".selected_skill").css("top", 540-skill.height);
+                    if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $(".selected_skill").css("top",  ev.pageY-graphics.field_size/2);
+                    else $(".selected_skill").css("top", 540-skill.height);
 
-                //alert(skill.effect);
-
-                skill.moving = true;
+                    skill.moving = true;
+                }
             }
         });
 
-        $("#game_background").on("click", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function(ev)
+        $("#game_background").on("click", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function(ev) //TODO: teglalap detection helyett rombusz detection
         {
-            engine.selectAbility(player, $(this).attr("id")[8]);
-            graphics.drawAbilitySelector(player);
+            if(engine.allow_select && !engine.isSpecialAbilitySelected(player))
+            {
+                if(engine.selectAbility(player, $(this).attr("id")[8]))
+                {
+                    graphics.drawAbilitySelector(engine, player);
+                    graphics.changeCursor(player, engine);
+                    if(engine.isSpecialAbilitySelected(player))
+                    {
+                        graphics.contrastSkills();
+                    }
+                }
+            }
         });
 
 
@@ -225,9 +250,13 @@ $(function()
 
         $("#game_background").on("contextmenu", function()
         {
-            stopSkillSelection(skill);
-            engine.deSelectAbility(player);
-            graphics.deleteAbilitySelector();
+            if(engine.allow_select)
+            {
+                stopSkillSelection(skill);
+                engine.deSelectAbility(player);
+                graphics.deleteAbilitySelector(player, engine);
+            }
+
             return false;
         });
 
@@ -244,7 +273,7 @@ $(function()
                 let mouse_y = (ev.pageY);
 
 
-                if($(this).parent().parent().attr("id").length > 7) // if its enemy ID
+                if($(this).parent().parent().attr("id").length > 7 && !engine.isSpecialAbilitySelected(player)) // if its enemy ID
                 {
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
@@ -312,6 +341,7 @@ $(function()
         $("#game_background").on("mouseup", function()
         {
             $("#explain_box").remove();
+            graphics.changeCursor(player, engine);
         });
 
 
@@ -319,7 +349,7 @@ $(function()
         {
             //console.log(player_turn);
 
-            if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished)
+            if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished && !engine.isSpecialAbilitySelected(player))
             {
                 player_turn = false;
 

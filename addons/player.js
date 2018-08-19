@@ -5,7 +5,7 @@ function Player(name)
     this.name = name;
     this.hp = 50;
     this.max_hp = 50;
-    this.mp = 20;
+    this.mp = 8;
     this.max_mp = 40;
     this.ap = 2;
     this.max_ap = 2;
@@ -13,8 +13,8 @@ function Player(name)
     this.abilities = [];
 
     this.abilities[0] = new Ability(KNIGHT_MOVE);
-    this.abilities[1] = new Ability(NO_ABILITY);
-    this.abilities[2] = new Ability(NO_ABILITY);
+    this.abilities[1] = new Ability(DIAGONAL_MOVE);
+    this.abilities[2] = new Ability(ROTATE_LEFT);
     this.abilities[3] = new Ability(NO_ABILITY);
     this.abilities[4] = new Ability(NO_ABILITY);
     this.abilities[5] = new Ability(NO_ABILITY);

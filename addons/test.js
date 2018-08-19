@@ -167,6 +167,7 @@ $(function()
 
                                     engine.table_modified = false;
 
+                                    engine.resetSkillToOriginalPattern(player, player_selected_skill_id);
                                     engine.increaseRank(player_selected_skill_id - 1, player);
                                     graphics.updateSkillRanks(player, engine);
                                     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
@@ -200,7 +201,8 @@ $(function()
             {
                 if(engine.isSpecialAbilitySelected(player))
                 {
-                    alert('hey');
+                    engine.rotateSkill(player, parseInt($(this).attr("id")[6]));
+                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
                 }
                 else
                 {

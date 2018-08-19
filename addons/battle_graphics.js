@@ -79,6 +79,7 @@ function BattleGraphics(battle_table, engine)
                 $("#hole").css("box-shadow", opacity_string);
             }
             clearInterval(x);
+            $("#hole").css("pointer-events", "none");
         }, SPECIAL_ABILITY_ANIMATION_LENGTH);
     }
 
@@ -1658,6 +1659,7 @@ function BattleGraphics(battle_table, engine)
 
             $("#skill_" + (i+1) + " .skill_right_part").append('<table class="skill_pattern_table"></table>');
             let table_selector = "#skill_" + (i+1) + " .skill_pattern_table";
+            //alert(player.getSkills()[i][rank[i]].getSkillPatternRotation());
             for(let j=0; j<player.getSkills()[i][rank[i]].getSkillPatternHeight(); j++)
             {
                 $(table_selector).append(createRow("skill_pattern_row" + j));

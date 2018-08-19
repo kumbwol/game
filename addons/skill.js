@@ -26,12 +26,12 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    /*[MOV,ATT,NUL],
-                    [ATT,ATT,NUL],
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
                     [NUL,NUL,NUL]*/
-                    [ATT,NUL,NUL],
                     [NUL,NUL,NUL],
-                    [NUL,NUL,NUL]
+                    [NUL,NUL,NUL],
+                    [MAN,MOV,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("REGEN");
@@ -203,6 +203,8 @@ function Skill(name)
     this.getSkillPatternHeight = getSkillPatternHeight;
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
+    this.rotateSkillPattern    = rotateSkillPattern;
+    this.resetOriginalPattern  = resetOriginalPattern;
     this.getSkillEffect = getSkillEffect;
     this.getSkillChance = getSkillChance;
 
@@ -224,6 +226,16 @@ function Skill(name)
     function getSkillPatternValue(x, y)
     {
         return pattern.getSkillPatternValue(x, y);
+    }
+
+    function rotateSkillPattern()
+    {
+        return pattern.rotateSkillPattern();
+    }
+
+    function resetOriginalPattern()
+    {
+        return pattern.resetOriginalPattern();
     }
 
     function getSkillEffect(id)

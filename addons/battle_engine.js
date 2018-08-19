@@ -82,9 +82,27 @@ function BattleEngine(battle_table)
     this.swapAbilityUsed = swapAbilityUsed;
     this.isAbilitySelected = isAbilitySelected;
     this.isSpecialAbilitySelected = isSpecialAbilitySelected;
+    this.rotateSkill = rotateSkill;
+    this.resetSkillToOriginalPattern = resetSkillToOriginalPattern;
+
+    function resetSkillToOriginalPattern(player, id)
+    {
+        //alert(id);
+        //player.getSkills()[id-1][this.rank[id-1]].pattern = player.getSkills()[id-1][this.rank[id-1]].original_pattern;
+        player.getSkills()[id-1][this.rank[id-1]].resetOriginalPattern();
+    }
+
+    function rotateSkill(player, id)
+    {
+        if(player.abilities[this.active_ability_id].type === ROTATE_LEFT)
+        {
+            player.getSkills()[id-1][this.rank[id-1]].rotateSkillPattern(ROTATE_LEFT);
+        }
+    }
 
     function isSpecialAbilitySelected(player)
     {
+        //alert('h');
         if(this.isAbilitySelected())
         {
             if(player.abilities[this.active_ability_id].type === ROTATE_LEFT)

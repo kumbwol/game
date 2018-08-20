@@ -66,6 +66,31 @@
     background-image: url("images/ability_types/rotate_left.png");
 }
 
+.ability_rotate_right
+{
+    background-image: url("images/ability_types/rotate_right.png");
+}
+
+.ability_mirror_horizontally
+{
+    background-image: url("images/ability_types/mirror_horizontally.png");
+}
+
+.ability_mirror_vertically
+{
+    background-image: url("images/ability_types/mirror_vertically.png");
+}
+
+.ability_magic_to_move
+{
+    background-image: url("images/ability_types/magic_to_move.png");
+}
+
+.ability_defense_to_attack
+{
+    background-image: url("images/ability_types/defense_to_attack.png");
+}
+
 #ability_selector
 {
     position: absolute;

@@ -5,19 +5,19 @@ function Player(name)
     this.name = name;
     this.hp = 50;
     this.max_hp = 50;
-    this.mp = 8;
+    this.mp = 16;
     this.max_mp = 40;
     this.ap = 2;
     this.max_ap = 2;
 
     this.abilities = [];
 
-    this.abilities[0] = new Ability(KNIGHT_MOVE);
-    this.abilities[1] = new Ability(DIAGONAL_MOVE);
+    this.abilities[0] = new Ability(DEFENSE_TO_ATTACK);
+    this.abilities[1] = new Ability(ROTATE_RIGHT);
     this.abilities[2] = new Ability(ROTATE_LEFT);
-    this.abilities[3] = new Ability(NO_ABILITY);
-    this.abilities[4] = new Ability(NO_ABILITY);
-    this.abilities[5] = new Ability(NO_ABILITY);
+    this.abilities[3] = new Ability(MIRROR_HORIZONTALLY);
+    this.abilities[4] = new Ability(MIRROR_VERTICALLY);
+    this.abilities[5] = new Ability(MAGIC_TO_MOVE);
 
     let skills = [];
     /*skills[0] = new Skill("Shock");

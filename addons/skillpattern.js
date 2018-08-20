@@ -68,6 +68,8 @@ function SkillPattern(pattern)
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
     this.rotateSkillPattern    = rotateSkillPattern;
+    this.mirrorSkillPattern    = mirrorSkillPattern;
+    this.transformSkillPattern = transformSkillPattern;
     this.resetOriginalPattern  = resetOriginalPattern;
 
     function resetOriginalPattern()
@@ -133,23 +135,169 @@ function SkillPattern(pattern)
         //return this.pattern[0].length;
     }
 
-    function rotateSkillPattern()
+    function rotateSkillPattern(direction)
     {
         let new_pattern = JSON.parse(JSON.stringify(this.pattern));
 
-        new_pattern[0][0] = this.pattern[2][0];
-        new_pattern[0][2] = this.pattern[0][0];
-        new_pattern[2][2] = this.pattern[0][2];
-        new_pattern[2][0] = this.pattern[2][2];
+        if(direction === ROTATE_RIGHT)
+        {
+            new_pattern[0][0] = this.pattern[2][0];
+            new_pattern[0][2] = this.pattern[0][0];
+            new_pattern[2][2] = this.pattern[0][2];
+            new_pattern[2][0] = this.pattern[2][2];
 
-        new_pattern[0][1] = this.pattern[1][0];
-        new_pattern[1][2] = this.pattern[0][1];
-        new_pattern[2][1] = this.pattern[1][2];
-        new_pattern[1][0] = this.pattern[2][1];
+            new_pattern[0][1] = this.pattern[1][0];
+            new_pattern[1][2] = this.pattern[0][1];
+            new_pattern[2][1] = this.pattern[1][2];
+            new_pattern[1][0] = this.pattern[2][1];
+        }
+        else if(direction === ROTATE_LEFT)
+        {
+            new_pattern[0][0] = this.pattern[0][2];
+            new_pattern[0][2] = this.pattern[2][2];
+            new_pattern[2][2] = this.pattern[2][0];
+            new_pattern[2][0] = this.pattern[0][0];
+
+            new_pattern[0][1] = this.pattern[1][2];
+            new_pattern[1][2] = this.pattern[2][1];
+            new_pattern[2][1] = this.pattern[1][0];
+            new_pattern[1][0] = this.pattern[0][1];
+        }
 
         clearEmptyRow(new_pattern);
         clearEmptyColumn(new_pattern);
 
-        this.pattern = JSON.parse(JSON.stringify(new_pattern));
+        let same = true;
+
+        for(let i=0; i<new_pattern.length; i++)
+        {
+            for(let j=0; j<pattern[i].length; j++)
+            {
+                if(new_pattern[i][j] !== this.pattern[i][j])
+                {
+                    same = false;
+                }
+            }
+        }
+
+        if(same)
+        {
+            return false;
+        }
+        else
+        {
+            this.pattern = JSON.parse(JSON.stringify(new_pattern));
+            return true;
+        }
+    }
+
+    function mirrorSkillPattern(type)
+    {
+        let new_pattern = JSON.parse(JSON.stringify(this.pattern));
+
+        if(type === MIRROR_VERTICALLY)
+        {
+            new_pattern[0][0] = this.pattern[0][2];
+            new_pattern[1][0] = this.pattern[1][2];
+            new_pattern[2][0] = this.pattern[2][2];
+
+            new_pattern[0][2] = this.pattern[0][0];
+            new_pattern[1][2] = this.pattern[1][0];
+            new_pattern[2][2] = this.pattern[2][0];
+        }
+        else if(type === MIRROR_HORIZONTALLY)
+        {
+            new_pattern[0][0] = this.pattern[2][0];
+            new_pattern[0][1] = this.pattern[2][1];
+            new_pattern[0][2] = this.pattern[2][2];
+
+            new_pattern[2][0] = this.pattern[0][0];
+            new_pattern[2][1] = this.pattern[0][1];
+            new_pattern[2][2] = this.pattern[0][2];
+        }
+
+        clearEmptyRow(new_pattern);
+        clearEmptyColumn(new_pattern);
+
+        let same = true;
+
+        for(let i=0; i<new_pattern.length; i++)
+        {
+            for(let j=0; j<pattern[i].length; j++)
+            {
+                if(new_pattern[i][j] !== this.pattern[i][j])
+                {
+                    same = false;
+                }
+            }
+        }
+
+        if(same)
+        {
+            return false;
+        }
+        else
+        {
+            this.pattern = JSON.parse(JSON.stringify(new_pattern));
+            return true;
+        }
+    }
+
+    function transformSkillPattern(type)
+    {
+        let new_pattern = JSON.parse(JSON.stringify(this.pattern));
+
+        if(type === MAGIC_TO_MOVE)
+        {
+            for(let i=0; i<new_pattern.length; i++)
+            {
+                for(let j=0; j<new_pattern[i].length; j++)
+                {
+                    if(new_pattern[i][j] === MAN)
+                    {
+                        new_pattern[i][j] = MOV;
+                    }
+                }
+            }
+        }
+        else if(type === DEFENSE_TO_ATTACK)
+        {
+            for(let i=0; i<new_pattern.length; i++)
+            {
+                for(let j=0; j<new_pattern[i].length; j++)
+                {
+                    if(new_pattern[i][j] === DEF)
+                    {
+                        new_pattern[i][j] = ATT;
+                    }
+                }
+            }
+        }
+
+        clearEmptyRow(new_pattern);
+        clearEmptyColumn(new_pattern);
+
+        let same = true;
+
+        for(let i=0; i<new_pattern.length; i++)
+        {
+            for(let j=0; j<pattern[i].length; j++)
+            {
+                if(new_pattern[i][j] !== this.pattern[i][j])
+                {
+                    same = false;
+                }
+            }
+        }
+
+        if(same)
+        {
+            return false;
+        }
+        else
+        {
+            this.pattern = JSON.parse(JSON.stringify(new_pattern));
+            return true;
+        }
     }
 }

@@ -29,13 +29,13 @@ function Skill(name)
                     /*[DEF,NUL,NUL],
                     [NUL,ATT,NUL],
                     [NUL,NUL,NUL]*/
-                    [NUL,NUL,NUL],
-                    [NUL,NUL,NUL],
-                    [MAN,MOV,NUL]
+                    [DEF,ATT,NUL],
+                    [DEF,DEF,NUL],
+                    [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect    = new Effect("REGEN");
-            secondary_effect  = new Effect("REGEN");
+            primary_effect    = new Effect("DMG");
+            secondary_effect  = new Effect("DMG");
             break;
         }
 
@@ -204,6 +204,8 @@ function Skill(name)
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
     this.rotateSkillPattern    = rotateSkillPattern;
+    this.mirrorSkillPattern    = mirrorSkillPattern;
+    this.transformSkillPattern = transformSkillPattern;
     this.resetOriginalPattern  = resetOriginalPattern;
     this.getSkillEffect = getSkillEffect;
     this.getSkillChance = getSkillChance;
@@ -228,9 +230,19 @@ function Skill(name)
         return pattern.getSkillPatternValue(x, y);
     }
 
-    function rotateSkillPattern()
+    function rotateSkillPattern(direction)
     {
-        return pattern.rotateSkillPattern();
+        return pattern.rotateSkillPattern(direction);
+    }
+
+    function mirrorSkillPattern(type)
+    {
+        return pattern.mirrorSkillPattern(type);
+    }
+
+    function transformSkillPattern(type)
+    {
+        return pattern.transformSkillPattern(type);
     }
 
     function resetOriginalPattern()

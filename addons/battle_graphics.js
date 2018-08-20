@@ -98,7 +98,7 @@ function BattleGraphics(battle_table, engine)
     {
         if(engine.isAbilitySelected())
         {
-            if(player.abilities[engine.active_ability_id].type === ROTATE_LEFT)
+            if(engine.isSpecialAbilitySelected(player))
             {
                 $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/use_ability.png")');
             }
@@ -118,7 +118,6 @@ function BattleGraphics(battle_table, engine)
         if(engine.ability_used)
         {
             player.mp -= player.abilities[engine.active_ability_id].mana_cost;
-            updateMpBar($("#player_mp"), player, false);
 
             if(player.mp < player.abilities[engine.active_ability_id].mana_cost)
             {
@@ -309,6 +308,36 @@ function BattleGraphics(battle_table, engine)
                 case ROTATE_LEFT:
                 {
                     $("#ability_" + i).addClass("ability_rotate_left");
+                    break;
+                }
+
+                case ROTATE_RIGHT:
+                {
+                    $("#ability_" + i).addClass("ability_rotate_right");
+                    break;
+                }
+
+                case MIRROR_VERTICALLY:
+                {
+                    $("#ability_" + i).addClass("ability_mirror_vertically");
+                    break;
+                }
+
+                case MIRROR_HORIZONTALLY:
+                {
+                    $("#ability_" + i).addClass("ability_mirror_horizontally");
+                    break;
+                }
+
+                case MAGIC_TO_MOVE:
+                {
+                    $("#ability_" + i).addClass("ability_magic_to_move");
+                    break;
+                }
+
+                case DEFENSE_TO_ATTACK:
+                {
+                    $("#ability_" + i).addClass("ability_defense_to_attack");
                     break;
                 }
             }

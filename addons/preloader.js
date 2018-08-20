@@ -18,7 +18,16 @@ let images = [
     "addons/images/skill_effects/poison_dmg.png",
     "addons/images/skill_effects/stun.png",
     "addons/images/chance_types/luck.png",
-    "addons/images/chance_types/rage.png"
+    "addons/images/chance_types/rage.png",
+    "addons/images/ability_types/rotate_left.png",
+    "addons/images/ability_types/rotate_right.png",
+    "addons/images/ability_types/mirror_vertically.png",
+    "addons/images/ability_types/mirror_horizontally.png",
+    "addons/images/ability_types/knight_move.png",
+    "addons/images/ability_types/diagonal_move.png",
+    "addons/images/ability_types/no_ability.png",
+    "addons/images/ability_types/magic_to_move.png",
+    "addons/images/ability_types/defense_to_attack.png",
 ];
 
 let sounds = [

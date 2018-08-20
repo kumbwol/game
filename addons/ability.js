@@ -22,6 +22,36 @@ function Ability(type)
 
         case ROTATE_LEFT:
         {
+            this.mana_cost = 3;
+            break;
+        }
+
+        case ROTATE_RIGHT:
+        {
+            this.mana_cost = 4;
+            break;
+        }
+
+        case MIRROR_HORIZONTALLY:
+        {
+            this.mana_cost = 8;
+            break;
+        }
+
+        case MIRROR_VERTICALLY:
+        {
+            this.mana_cost = 8;
+            break;
+        }
+
+        case MAGIC_TO_MOVE:
+        {
+            this.mana_cost = 8;
+            break;
+        }
+
+        case DEFENSE_TO_ATTACK:
+        {
             this.mana_cost = 8;
             break;
         }

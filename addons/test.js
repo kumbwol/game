@@ -74,6 +74,12 @@ $(function()
                         graphics.swapFields(engine).done(function()
                         {
                             player.ap--;
+
+                            graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                            {
+                                dmg_heal_number_animation_finished = true;
+                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                            });
                             graphics.reduceManaIfAbilityUsed(engine, player);
                             graphics.refreshAbilityPoint(player);
                             graphics.refreshEndButton(player.ap);
@@ -211,7 +217,6 @@ $(function()
                         graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
                     });
                     graphics.reduceManaIfAbilityUsed(engine, player);
-                    graphics.updateMpBar($("#player_mp"), player, false);
 
                 }
                 else

@@ -119,6 +119,7 @@ function BattleGraphics(battle_table, engine)
         {
             player.mp -= player.abilities[engine.active_ability_id].mana_cost;
 
+            updateMpBar($("#player_mp"), player, false);
             if(player.mp < player.abilities[engine.active_ability_id].mana_cost)
             {
                 engine.deSelectAbility(player);

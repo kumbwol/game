@@ -36,6 +36,7 @@ function BattleGraphics(battle_table, engine)
     this.clearAntiVenoms = clearAntiVenoms;
     this.freeStunnedFields = freeStunnedFields;
     this.freeParalyzedFields = freeParalyzedFields;
+    this.freePromotedFields = freePromotedFields;
     this.freezeAnimation = freezeAnimation;
     this.stopFreezeAnimation = stopFreezeAnimation;
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
@@ -51,9 +52,70 @@ function BattleGraphics(battle_table, engine)
     this.createCursor = createCursor;
     this.contrastSkills = contrastSkills;
     this.stopContrastSkills = stopContrastSkills;
+    this.drawPromotedFields = drawPromotedFields;
+    this.promoteAnimation = promoteAnimation;
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function promoteAnimation(engine)
+    {
+        let done = $.Deferred();
+        $(".promoted_field").remove();
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(engine.table[i][j].promoted)
+                {
+                    $("#y_" + i + "_x_" + j).removeClass();
+                    switch(engine.table[i][j].type)
+                    {
+                        case PMA:
+                        {
+                            $("#y_" + i + "_x_" + j).addClass("promoted_mana");
+                            break;
+                        }
+
+                        case PAT:
+                        {
+                            $("#y_" + i + "_x_" + j).addClass("promoted_attack");
+                            break;
+                        }
+
+                        case PDE:
+                        {
+                            $("#y_" + i + "_x_" + j).addClass("promoted_defense");
+                            break;
+                        }
+
+                        case PMO:
+                        {
+                            $("#y_" + i + "_x_" + j).addClass("promoted_move");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        done.resolve();
+        return done;
+    }
+
+    function drawPromotedFields(engine)
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(engine.table[i][j].promoted)
+                {
+                    //alert(engine.table[i][j].type);
+                    $("#battle_table").append(createField(("py_" + i + "_px_" + j), PRO, j, i, false));
+                }
+            }
+        }
+    }
 
     function contrastSkills()
     {
@@ -412,6 +474,17 @@ function BattleGraphics(battle_table, engine)
             for(let j=0; j<this.battle_table.width; j++)
             {
                 $("#y_" + i + "_x_" + j).removeClass("paralyzeIt");
+            }
+        }
+    }
+
+    function freePromotedFields()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                $("#y_" + i + "_x_" + j).removeClass("promoteIt");
             }
         }
     }
@@ -1558,6 +1631,16 @@ function BattleGraphics(battle_table, engine)
                     allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
                     break;
                 }
+
+                case PROMOTE:
+                {
+                    $("#skill_" + (i+1) + selector + "_image").css("background-image", 'url("addons/images/skill_effects/promote.png")');
+                    //$("#skill_" + (i+1) + selector + "_number").append('<div class="effect_number"></div>');
+                    //$("#skill_" + (i+1) + selector + "_number .effect_number").text(player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_drain);
+                    //allignTextRight($("#skill_" + (i+1) + selector + "_number .effect_number"));
+                    //allignToMiddleY($("#skill_" + (i+1) + selector + "_number .effect_number"));
+                    break;
+                }
             }
         }
     }
@@ -1904,6 +1987,12 @@ function BattleGraphics(battle_table, engine)
                 break;
             }
 
+            case PMA:
+            {
+                $object.attr('class', "promoted_mana");
+                break;
+            }
+
             case ATT:
             {
                 $object.attr('class', "attack");
@@ -1925,6 +2014,12 @@ function BattleGraphics(battle_table, engine)
             case POI:
             {
                 $object.attr('class', "poison");
+                break;
+            }
+
+            case PRO:
+            {
+                $object.attr('class', "promoted_field");
                 break;
             }
         }

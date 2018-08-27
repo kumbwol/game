@@ -609,10 +609,33 @@ figure#mouse-pointer {
     width: 300px;*/
 }
 
-#battle_table .attack, .mana, .defense, .move, .poison
+#battle_table .promoted_field
 {
     padding: 0px;
     border: 1px solid black;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: yellow;
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+#battle_table .attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move
+{
+    padding: 0px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: burlywood;
+    border-radius: 50%;
+}
+
+#battle_table .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move
+{
+    padding: 0px;
+    border: 2px solid white;
     box-sizing: border-box;
     background-repeat: no-repeat;
     background-position: center;
@@ -627,11 +650,25 @@ figure#mouse-pointer {
     background-image: url("images/field_types/attack.png");
 }
 
+.selected_skill div.promoted_attack,
+#battle_table div.promoted_attack
+{
+    background-color: crimson;
+    background-image: url("images/field_types/promoted_attack.png");
+}
+
 .selected_skill div.mana,
 #battle_table div.mana
 {
     background-color: aqua;
     background-image: url("images/field_types/magic.png");
+}
+
+.selected_skill div.promoted_mana,
+#battle_table div.promoted_mana
+{
+    background-color: aqua;
+    background-image: url("images/field_types/promoted_magic.png");
 }
 
 .selected_skill div.defense,
@@ -641,11 +678,25 @@ figure#mouse-pointer {
     background-image: url("images/field_types/defense.png");
 }
 
+.selected_skill div.promoted_defense,
+#battle_table div.promoted_defense
+{
+    background-color: bisque;
+    background-image: url("images/field_types/promoted_defense.png");
+}
+
 .selected_skill div.move,
 #battle_table div.move
 {
     background-color: forestgreen;
     background-image: url("images/field_types/move.png");
+}
+
+.selected_skill div.promoted_move,
+#battle_table div.promoted_move
+{
+    background-color: forestgreen;
+    background-image: url("images/field_types/promoted_move.png");
 }
 
 .selected_skill div.poison,

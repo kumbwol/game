@@ -39,6 +39,23 @@ function Skill(name)
             break;
         }
 
+        case "Promote":
+        {
+            visual_pattern =
+                [
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("promote");
+            secondary_effect  = new Effect("NOTHING");
+            break;
+        }
+
         case "Loss":
         {
             visual_pattern =

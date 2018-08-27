@@ -7,6 +7,7 @@ function Field(type)
     this.stunned = false;
     this.paralyzed = false;
     this.poison_dmg = 0;
+    this.promoted = false;
 }
 
 

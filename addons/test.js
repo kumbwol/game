@@ -29,7 +29,7 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
-        let enemy  = new Enemy("Test");
+        let enemy  = new Enemy("Fagyaszt");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
         let poison_animation_finished = true;
@@ -55,7 +55,7 @@ $(function()
             engine.refreshTable();
         });
 
-        $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison", function()
+        $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function()
         {
             if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished && !engine.isSpecialAbilitySelected(player))
             {
@@ -75,11 +75,14 @@ $(function()
                         {
                             player.ap--;
 
-                            graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                            if(engine.ability_used)
                             {
-                                dmg_heal_number_animation_finished = true;
-                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
-                            });
+                                graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                                {
+                                    dmg_heal_number_animation_finished = true;
+                                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                                });
+                            }
                             graphics.reduceManaIfAbilityUsed(engine, player);
                             graphics.refreshAbilityPoint(player);
                             graphics.refreshEndButton(player.ap);
@@ -143,10 +146,22 @@ $(function()
                                         engine.refreshTable();
                                         engine.calculateNewTable();
                                         graphics.reNameIds(engine);
+
+                                        graphics.drawPromotedFields(engine);
+
                                         graphics.reFillTable(engine).done(function()
                                         {
                                             skill_activation_finished = true;
                                             engine.refreshTable();
+                                            if(engine.isTherePromotion())
+                                            {
+                                                engine.finalizePromotions();
+                                                graphics.promoteAnimation(engine).done(function()
+                                                {
+                                                    engine.clearPromotedFields();
+                                                    engine.refreshTable();
+                                                });
+                                            }
                                             if(engine.isPlayerPoisoned())
                                             {
                                                 poison_animation_finished = false;
@@ -191,7 +206,7 @@ $(function()
                 // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
                 e.preventDefault();
                 engine.logTable();
-                engine.logTempTable();
+                //engine.logTempTable();
             }
         });
 
@@ -208,15 +223,23 @@ $(function()
             {
                 if(engine.isSpecialAbilitySelected(player))
                 {
-                    dmg_heal_number_animation_finished = false;
-                    engine.useSpecialAbility(player, parseInt($(this).attr("id")[6]));
 
-                    graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                    dmg_heal_number_animation_finished = false;
+
+
+                    if(engine.useSpecialAbility(player, parseInt($(this).attr("id")[6])))
+                    {
+                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                        graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                        {
+                            dmg_heal_number_animation_finished = true;
+                        });
+                        graphics.reduceManaIfAbilityUsed(engine, player);
+                    }
+                    else
                     {
                         dmg_heal_number_animation_finished = true;
-                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
-                    });
-                    graphics.reduceManaIfAbilityUsed(engine, player);
+                    }
 
                 }
                 else

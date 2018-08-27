@@ -25,6 +25,13 @@ function Effect(name)
 
     switch(this.name)
     {
+        case "promote":
+        {
+            effect.type = PROMOTE;
+            effect.self = true;
+            break;
+        }
+
         case "REGEN":
         {
             effect.type = MANA_REGEN;

@@ -84,21 +84,113 @@ function BattleEngine(battle_table)
     this.isSpecialAbilitySelected = isSpecialAbilitySelected;
     this.resetSkillToOriginalPattern = resetSkillToOriginalPattern;
     this.useSpecialAbility = useSpecialAbility;
+    this.promoteFields = promoteFields;
+    this.isTherePromotion = isTherePromotion;
+    this.clearPromotedFields = clearPromotedFields;
+    this.finalizePromotions = finalizePromotions;
+
+    function finalizePromotions()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].promoted)
+                {
+                    //alert(this.table[i][j].type);
+                    switch(this.table[i][j].type)
+                    {
+                        case MAN:
+                        {
+                            this.temp_table[i][j].type =  PMA;
+                            this.table[i][j].type =  PMA;
+                            break;
+                        }
+
+                        case ATT:
+                        {
+                            this.temp_table[i][j].type =  PAT;
+                            this.table[i][j].type =  PAT;
+                            break;
+                        }
+
+                        case DEF:
+                        {
+                            this.temp_table[i][j].type =  PDE;
+                            this.table[i][j].type =  PDE;
+                            break;
+                        }
+
+                        case MOV:
+                        {
+                            this.temp_table[i][j].type =  PMO;
+                            this.table[i][j].type =  PMO;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function clearPromotedFields()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                this.table[i][j].promoted = false;
+            }
+        }
+    }
+
+    function isTherePromotion()
+    {
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].promoted) return true;
+            }
+        }
+
+        return false;
+    }
+
+    function promoteFields()
+    {
+        //this.logTable();
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type === NUL)
+                {
+                    this.table[i][j].promoted = true;
+                }
+            }
+        }
+    }
 
     function useSpecialAbility(player, id)
     {
         if(player.abilities[this.active_ability_id].type === ROTATE_LEFT || player.abilities[this.active_ability_id].type === ROTATE_RIGHT)
         {
-            this.ability_used = player.getSkills()[id-1][this.rank[id-1]].rotateSkillPattern(player.abilities[this.active_ability_id].type);
+            this.ability_used = true;
+            return player.getSkills()[id-1][this.rank[id-1]].rotateSkillPattern(player.abilities[this.active_ability_id].type);
         }
         else if(player.abilities[this.active_ability_id].type === MIRROR_HORIZONTALLY || player.abilities[this.active_ability_id].type === MIRROR_VERTICALLY)
         {
-            this.ability_used = player.getSkills()[id-1][this.rank[id-1]].mirrorSkillPattern(player.abilities[this.active_ability_id].type);
+            this.ability_used = true;
+            return player.getSkills()[id-1][this.rank[id-1]].mirrorSkillPattern(player.abilities[this.active_ability_id].type);
         }
         else if(player.abilities[this.active_ability_id].type === MAGIC_TO_MOVE || player.abilities[this.active_ability_id].type === DEFENSE_TO_ATTACK)
         {
-            this.ability_used = player.getSkills()[id-1][this.rank[id-1]].transformSkillPattern(player.abilities[this.active_ability_id].type);
+            this.ability_used = true;
+            return player.getSkills()[id-1][this.rank[id-1]].transformSkillPattern(player.abilities[this.active_ability_id].type);
         }
+
+        return false;
     }
 
     function resetSkillToOriginalPattern(player, id)
@@ -607,6 +699,11 @@ function BattleEngine(battle_table)
         {
             this.freezePlayer();
         }
+
+        if(effect.type === PROMOTE)
+        {
+            this.promoteFields();
+        }
     }
 
     function addSkillValues(player, skill_id, skill, rank)
@@ -1020,15 +1117,15 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.table[i][j].paralyzed)
+                /*if(this.table[i][j].promoted)
                 {
                     row_string += "1" + " ";
                 }
                 else
                 {
                     row_string += "0" + " ";
-                }
-                //row_string += this.table[i][j].type + " ";
+                }*/
+                row_string += this.table[i][j].type + " ";
                 //row_string += this.table[i][j].poison_dmg + " ";
             }
             console.log(row_string);
@@ -1046,7 +1143,7 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.temp_table[i][j].paralyzed)
+                if(this.temp_table[i][j].promoted)
                 {
                     row_string += "1" + " ";
                 }

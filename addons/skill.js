@@ -63,8 +63,8 @@ function Skill(name)
                     [ATT,ATT,NUL],
                     [ATT,ATT,NUL],
                     [NUL,NUL,NUL]*/
-                    [DEF,NUL,NUL],
-                    [NUL,NUL,NUL],
+                    [PAT,PDE,NUL],
+                    [PMO,PMA,NUL],
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);

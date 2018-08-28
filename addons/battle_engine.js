@@ -735,13 +735,28 @@ function BattleEngine(battle_table)
                 {
                     if(skill.table[i][j] !== NUL)
                     {
-                        if(skill.table[i][j] !== this.table[y+i][x+j].type || this.table[y+i][x+j].stunned)
+                        if(this.table[y+i][x+j].stunned)
                         {
-                            /*alert(i);
-                            alert(j);
-                            alert(skill.table[i][j]);
-                            alert(this.table[y+i][x+j].type);*/
                             return false;
+                        }
+                        else if(skill.table[i][j] !== this.table[y+i][x+j].type)
+                        {
+                            if(skill.table[i][j] === ATT && this.table[y+i][x+j].type !== PAT)
+                            {
+                                return false;
+                            }
+                            else if(skill.table[i][j] === MAN && this.table[y+i][x+j].type !== PMA)
+                            {
+                                return false;
+                            }
+                            else if(skill.table[i][j] === DEF && this.table[y+i][x+j].type !== PDE)
+                            {
+                                return false;
+                            }
+                            else if(skill.table[i][j] === MOV && this.table[y+i][x+j].type !== MOV)
+                            {
+                                return false;
+                            }
                         }
                     }
                 }

@@ -180,7 +180,7 @@ figure#mouse-pointer {
     left: 200px;
 }
 
-.selected_skill
+#selected_skill
 {
     position: absolute;
     border-collapse: collapse;
@@ -189,18 +189,17 @@ figure#mouse-pointer {
     opacity: 0.7;
 }
 
-.selected_skill div
+#selected_skill div
 {
-    position: absolute;
+    /*position: absolute;
     width: 46px;
     height: 46px;
     border: 1px solid black;
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 50%;
-    box-sizing: border-box;
+    box-sizing: border-box;*/
     pointer-events: none;
-    /*opacity: 0.7;*/
 }
 
 .skill_right_part
@@ -621,7 +620,7 @@ figure#mouse-pointer {
     opacity: 0.5;
 }
 
-#battle_table .attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move
+.attack, .mana, .defense, .move, .poison
 {
     padding: 0px;
     border: 1px solid black;
@@ -632,7 +631,7 @@ figure#mouse-pointer {
     border-radius: 50%;
 }
 
-#battle_table .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move
+.promoted_mana, .promoted_attack, .promoted_defense, .promoted_move
 {
     padding: 0px;
     border: 2px solid white;
@@ -643,82 +642,82 @@ figure#mouse-pointer {
     border-radius: 50%;
 }
 
-.selected_skill div.attack,
+#selected_skill div.attack,
 #battle_table div.attack
 {
     background-color: crimson;
     background-image: url("images/field_types/attack.png");
 }
 
-.selected_skill div.promoted_attack,
+#selected_skill div.promoted_attack,
 #battle_table div.promoted_attack
 {
     background-color: crimson;
     background-image: url("images/field_types/promoted_attack.png");
 }
 
-.selected_skill div.mana,
+#selected_skill div.mana,
 #battle_table div.mana
 {
     background-color: aqua;
     background-image: url("images/field_types/magic.png");
 }
 
-.selected_skill div.promoted_mana,
+#selected_skill div.promoted_mana,
 #battle_table div.promoted_mana
 {
     background-color: aqua;
     background-image: url("images/field_types/promoted_magic.png");
 }
 
-.selected_skill div.defense,
+#selected_skill div.defense,
 #battle_table div.defense
 {
     background-color: bisque;
     background-image: url("images/field_types/defense.png");
 }
 
-.selected_skill div.promoted_defense,
+#selected_skill div.promoted_defense,
 #battle_table div.promoted_defense
 {
     background-color: bisque;
     background-image: url("images/field_types/promoted_defense.png");
 }
 
-.selected_skill div.move,
+#selected_skill div.move,
 #battle_table div.move
 {
     background-color: forestgreen;
     background-image: url("images/field_types/move.png");
 }
 
-.selected_skill div.promoted_move,
+#selected_skill div.promoted_move,
 #battle_table div.promoted_move
 {
     background-color: forestgreen;
     background-image: url("images/field_types/promoted_move.png");
 }
 
-.selected_skill div.poison,
+#selected_skill div.poison,
 #battle_table div.poison
 {
     background-color: #6aff23;
     background-image: url("images/field_types/poison.png");
 }
 
-.selected_skill div.stunIt,
+#selected_skill div.stunIt,
 #battle_table div.stunIt
 {
     background-color: #2f2f2f;
 }
 
-.selected_skill div.paralyzeIt,
+#selected_skill div.paralyzeIt,
 #battle_table div.paralyzeIt
 {
     background-color: slategray;
 }
 
-.selected_skill div.nul,
+#selected_skill div.nul,
 #battle_table div.nul
 {
     border: none;

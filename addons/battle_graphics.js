@@ -1335,14 +1335,14 @@ function BattleGraphics(battle_table, engine)
 
     function drawSelectedSkill(player, skill_id, skill, rank)
     {
-        $("#game_background").append('<div class="selected_skill"></div>');
+        $("#game_background").append('<div id="selected_skill"></div>');
         for(let i=0; i<player.getSkills()[skill_id][rank].getSkillPatternHeight(); i++)
         {
             for(let j=0; j<player.getSkills()[skill_id][rank].getSkillPatternWidth(); j++)
             {
-                let row_id = "y_" + i;
-                let column_id = row_id + "_x_" + j;
-                $(".selected_skill").append(createField(column_id, player.getSkills()[skill_id][rank].getSkillPatternValue(j, i), j, i, false));
+                let row_id = "sy_" + i;
+                let column_id = row_id + "_sx_" + j;
+                $("#selected_skill").append(createField(column_id, player.getSkills()[skill_id][rank].getSkillPatternValue(j, i), j, i, false));
             }
         }
         skill.height = player.getSkills()[skill_id][rank].getSkillPatternHeight()*(field_size+1) + 1;
@@ -1795,9 +1795,21 @@ function BattleGraphics(battle_table, engine)
                             break;
                         }
 
+                        case PAT:
+                        {
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, crimson, crimson 3px, #ffffff 3px, #ffffff 6px)");
+                            break;
+                        }
+
                         case MAN:
                         {
                             $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "aqua");
+                            break;
+                        }
+
+                        case PMA:
+                        {
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, aqua, aqua 3px, #ffffff 3px, #ffffff 6px)");
                             break;
                         }
 
@@ -1807,9 +1819,21 @@ function BattleGraphics(battle_table, engine)
                             break;
                         }
 
+                        case PDE:
+                        {
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, bisque, bisque 3px, #ffffff 3px, #ffffff 6px)");
+                            break;
+                        }
+
                         case MOV:
                         {
                             $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "forestgreen");
+                            break;
+                        }
+
+                        case PMO:
+                        {
+                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, forestgreen, forestgreen 3px, #ffffff 3px, #ffffff 6px)");
                             break;
                         }
                     }
@@ -1999,15 +2023,33 @@ function BattleGraphics(battle_table, engine)
                 break;
             }
 
+            case PAT:
+            {
+                $object.attr('class', "promoted_attack");
+                break;
+            }
+
             case DEF:
             {
                 $object.attr('class', "defense");
                 break;
             }
 
+            case PDE:
+            {
+                $object.attr('class', "promoted_defense");
+                break;
+            }
+
             case MOV:
             {
                 $object.attr('class', "move");
+                break;
+            }
+
+            case PMO:
+            {
+                $object.attr('class', "promoted_move");
                 break;
             }
 

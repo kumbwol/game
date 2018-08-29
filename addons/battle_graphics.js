@@ -54,9 +54,61 @@ function BattleGraphics(battle_table, engine)
     this.stopContrastSkills = stopContrastSkills;
     this.drawPromotedFields = drawPromotedFields;
     this.promoteAnimation = promoteAnimation;
+    this.drawRankExplainer = drawRankExplainer;
+    this.removeRankHighlight = removeRankHighlight;
 
     let field_size = 50;
     this.field_size = field_size;
+
+    function removeRankHighlight()
+    {
+        $(".trapezoid_border").removeClass("selected_rank");
+    }
+
+    function deletePlayerSkills()
+    {
+        $("#player_profile > .active_skill").remove();
+        $("#selected_skill").remove();
+    }
+
+    function drawRankExplainerBackground()
+    {
+        $("#player_profile").append('<div id="rank_explainer"></div>');
+    }
+
+    function highlightRank(skill_id)
+    {
+        $("#skill_rank_border_" + skill_id).addClass("selected_rank");
+    }
+
+    function allignRankPatternToMiddle(object, object_width)
+    {
+        let parent_object_width = $(object).parent().outerWidth();
+
+        $(object).css("left", (parent_object_width-object_width)/2);
+    }
+
+    function drawRankPattern(player, skill_id, skill, rank)
+    {
+        drawSelectedSkill(player, skill_id, skill, rank);
+        $("#selected_skill").appendTo("#rank_explainer");
+        $("#selected_skill").css("opacity", 1);
+        $("#selected_skill").css("pointer-events", "");
+        allignRankPatternToMiddle($("#selected_skill"), skill.width);
+
+    }
+
+    function drawRankExplainer(skill_id, rank, player, skill)
+    {
+        //alert(skill_id);
+        //alert(rank);
+        deletePlayerSkills();
+        this.removeRankHighlight();
+        highlightRank(skill_id);
+        drawRankExplainerBackground();
+        drawRankPattern(player, skill_id, skill, rank);
+
+    }
 
     function promoteAnimation(engine)
     {

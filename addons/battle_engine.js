@@ -741,6 +741,7 @@ function BattleEngine(battle_table)
                         }
                         else if(skill.table[i][j] !== this.table[y+i][x+j].type)
                         {
+
                             if(skill.table[i][j] === ATT && this.table[y+i][x+j].type !== PAT)
                             {
                                 return false;
@@ -754,6 +755,10 @@ function BattleEngine(battle_table)
                                 return false;
                             }
                             else if(skill.table[i][j] === MOV && this.table[y+i][x+j].type !== MOV)
+                            {
+                                return false;
+                            }
+                            else
                             {
                                 return false;
                             }

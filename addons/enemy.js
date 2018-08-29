@@ -39,7 +39,7 @@ function Enemy(name)
         this.max_hp = 100;
         this.hp = 50;
         this.max_mp = 60;
-        this.mp = 10;
+        this.mp = 60;
 
         skills[0] = new Skill("Double Punch");
         skills[1] = new Skill("Paralyze");

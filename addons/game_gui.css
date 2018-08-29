@@ -25,6 +25,18 @@ figure#mouse-pointer {
     z-index: 999;
 }
 
+#rank_explainer
+{
+    position: absolute;
+    width: 196px;
+    height: 352px;
+    top: 182px;
+    left: 0px;
+    border: solid black;
+    background-color: #a6a9a8;
+    border-width: 1px 2px 1px 1px;
+}
+
 .color_rank_1
 {
     border-left: 30px solid #efe4b0;
@@ -70,6 +82,11 @@ figure#mouse-pointer {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     height: 39px;
+}
+
+.selected_rank
+{
+    border-left: 32px solid yellow;
 }
 
 .trapezoid_inside

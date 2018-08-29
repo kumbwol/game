@@ -257,6 +257,10 @@ function SkillPattern(pattern)
                     {
                         new_pattern[i][j] = MOV;
                     }
+                    else if(new_pattern[i][j] === PMA)
+                    {
+                        new_pattern[i][j] = PMO;
+                    }
                 }
             }
         }
@@ -269,6 +273,10 @@ function SkillPattern(pattern)
                     if(new_pattern[i][j] === DEF)
                     {
                         new_pattern[i][j] = ATT;
+                    }
+                    else if(new_pattern[i][j] === PDE)
+                    {
+                        new_pattern[i][j] = PAT;
                     }
                 }
             }

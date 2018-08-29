@@ -29,7 +29,7 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
-        let enemy  = new Enemy("Fagyaszt");
+        let enemy  = new Enemy("Test");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
         let poison_animation_finished = true;
@@ -217,6 +217,12 @@ $(function()
             });
         });
 
+        $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function(ev)
+        {
+            skill.moving = false;
+            graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), engine.rank[parseInt(($(this).attr("id"))[18])], player, skill);
+        });
+
         $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
         {
             if(player_turn && dmg_heal_number_animation_finished)
@@ -295,6 +301,8 @@ $(function()
                 stopSkillSelection(skill);
                 engine.deSelectAbility(player);
                 graphics.deleteAbilitySelector(player, engine);
+                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                graphics.removeRankHighlight();
             }
 
             return false;

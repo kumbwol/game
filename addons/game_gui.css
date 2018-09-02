@@ -25,6 +25,32 @@ figure#mouse-pointer {
     z-index: 999;
 }
 
+#right_arrow
+{
+    position: absolute;
+    left: 150px;
+    top: 280px;
+    width: 0;
+    height: 0;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+
+    border-left: 30px solid red;
+}
+
+#left_arrow
+{
+    position: absolute;
+    left: 16px;
+    top: 280px;
+    width: 0;
+    height: 0;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+
+    border-right:30px solid red;
+}
+
 #rank_explainer
 {
     position: absolute;
@@ -35,6 +61,24 @@ figure#mouse-pointer {
     border: solid black;
     background-color: #a6a9a8;
     border-width: 1px 2px 1px 1px;
+}
+
+#exit_rank_explainer
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    left: 175px;
+    border: solid black;
+    border-width: 0px 0px 1px 1px;
+    background-color: firebrick;
+}
+
+#rank_in_explain
+{
+    position: absolute;
+    top: 285px;
 }
 
 .color_rank_1
@@ -146,6 +190,7 @@ figure#mouse-pointer {
     width: 250px;
     height: 100px;
     background-color: #e2c678;
+    z-index: 3;
 
     border: 2px solid black;
 }
@@ -472,6 +517,13 @@ figure#mouse-pointer {
 {
     background-color: black;
     opacity: 0;
+}
+
+#skill_0 /*ez a magyarazo skill, mikor rankra kattintunk*/
+{
+    position: absolute;
+    top: 200px;
+    left: 29px;
 }
 
 #skill_1

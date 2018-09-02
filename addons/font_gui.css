@@ -17,10 +17,28 @@
     src: url("fonts/Trajan Pro Regular.ttf");
 }
 
+#exit_button_inside
+{
+    position: absolute;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: myLato;
+    color: white;
+    left: 5px;
+}
+
 .roman_number
 {
     position: absolute;
     font-size: 18px;
+
+    font-family: myTrajan;
+}
+
+.roman_number_in_explain
+{
+    position: absolute;
+    font-size: 35px;
 
     font-family: myTrajan;
 }

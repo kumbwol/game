@@ -31,7 +31,7 @@ function Skill(name)
                     [NUL,NUL,NUL]*/
                     [DEF,ATT,NUL],
                     [DEF,DEF,NUL],
-                    [NUL,NUL,NUL]
+                    [NUL,DEF,DEF]
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("DMG");
@@ -220,6 +220,7 @@ function Skill(name)
     this.getSkillPatternHeight = getSkillPatternHeight;
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
+    this.getSkillPatternOriginalValue = getSkillPatternOriginalValue;
     this.rotateSkillPattern    = rotateSkillPattern;
     this.mirrorSkillPattern    = mirrorSkillPattern;
     this.transformSkillPattern = transformSkillPattern;
@@ -245,6 +246,11 @@ function Skill(name)
     function getSkillPatternValue(x, y)
     {
         return pattern.getSkillPatternValue(x, y);
+    }
+
+    function getSkillPatternOriginalValue(x, y)
+    {
+        return pattern.getSkillPatternOriginalValue(x, y);
     }
 
     function rotateSkillPattern(direction)

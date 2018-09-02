@@ -67,6 +67,7 @@ function SkillPattern(pattern)
     this.getSkillPatternHeight = getSkillPatternHeight;
     this.getSkillPatternWidth  = getSkillPatternWidth;
     this.getSkillPatternValue  = getSkillPatternValue;
+    this.getSkillPatternOriginalValue  = getSkillPatternOriginalValue;
     this.rotateSkillPattern    = rotateSkillPattern;
     this.mirrorSkillPattern    = mirrorSkillPattern;
     this.transformSkillPattern = transformSkillPattern;
@@ -80,6 +81,11 @@ function SkillPattern(pattern)
     function getSkillPatternValue(x, y)
     {
         return this.pattern[y][x];
+    }
+
+    function getSkillPatternOriginalValue(x, y)
+    {
+        return original_pattern[y][x];
     }
 
     function getSkillPatternHeight()

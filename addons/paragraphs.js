@@ -31,6 +31,8 @@ this.paragraphs.effect.titles[STUN] = "Stun";
 this.paragraphs.effect.titles[FREEZE] = "Freeze";
 this.paragraphs.effect.titles[MANA_REGEN] = "Mana regeneration";
 this.paragraphs.effect.titles[MANA_DRAIN] = "Mana drain";
+this.paragraphs.effect.titles[PARALYZE] = "Paralyze";
+this.paragraphs.effect.titles[PROMOTE] = "Promote";
 this.paragraphs.effect.paragraphs[DMG] = "Elvesz X eletpontot az ellenfeltol.";
 this.paragraphs.effect.paragraphs[HEAL] = "Visszatolt X eletpontot a hasznalojanak.";
 //this.paragraphs.effect.paragraphs[SHADOWFORM] = "A <div class='text_move'></div> es <div class='text_defence'></div> mezok 75% esellyel <div class='text_attack'></div>-a alakulnak.";
@@ -42,3 +44,5 @@ this.paragraphs.effect.paragraphs[STUN] = "X db. mezot elsotetit, melyeket nem t
 this.paragraphs.effect.paragraphs[FREEZE] = "A kor vegeig meg fagy a tabla, ami miatt nem esnek le a mezok.";
 this.paragraphs.effect.paragraphs[MANA_REGEN] = "Visszatolt X manapontot a hasznalojanak.";
 this.paragraphs.effect.paragraphs[MANA_DRAIN] = "Elvesz X manapontot az ellenfeltol.";
+this.paragraphs.effect.paragraphs[PARALYZE] = "X db. mezot elsotetit, melyeket nem tudod mozgatni, de aktivizalni tudod.";
+this.paragraphs.effect.paragraphs[PROMOTE] = "Az aktivizalt mezokre eso uj mezok fel fejlodnek.";

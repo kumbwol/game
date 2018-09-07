@@ -32,6 +32,7 @@ function BattleGraphics(battle_table, engine)
     this.drawChanceExplainer = drawChanceExplainer;
     this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
     this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
+    this.drawFieldExplainer = drawFieldExplainer;
     this.poisonActivationAnimation = poisonActivationAnimation;
     this.clearAntiVenoms = clearAntiVenoms;
     this.freeStunnedFields = freeStunnedFields;
@@ -850,6 +851,28 @@ function BattleGraphics(battle_table, engine)
         return x;
     }
 
+    function drawFieldExplainer(field)
+    {
+        let x = $('<div id="explain_box">');
+
+        x.append('<div class="explain_box_title">' + paragraphs.field.titles[field.type] + '</div>');
+        x.append('<div class="explain_box_line"></div>');
+        if(field.stunned)
+        {
+            x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["stunned"] + '</div>');
+        }
+        else if(field.paralyzed)
+        {
+            x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["paralyzed"] + '</div>');
+        }
+        else
+        {
+            x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["normal"] + '</div>');
+        }
+
+        return x;
+    }
+
     function drawPlayerEffectExplainer(unit, effect_type)
     {
         let x = $('<div id="explain_box">');
@@ -1554,10 +1577,10 @@ function BattleGraphics(battle_table, engine)
 
         //setTimeout(function()
         //{
-            object.animate({"top": magassag}, (time)).animate({"top": "-=20px"}, third).animate({"top": "+=16px"}, third).animate({"top": "-=6px"}, sixed).animate({"top": "+=2px"}, sixed, function()
-            {
-                done.resolve();
-            });
+        object.animate({"top": magassag}, (time)).animate({"top": "-=20px"}, third).animate({"top": "+=16px"}, third).animate({"top": "-=6px"}, sixed).animate({"top": "+=2px"}, sixed, function()
+        {
+            done.resolve();
+        });
         //}, generateRandomNumber(200));
 
 
@@ -2112,16 +2135,16 @@ function BattleGraphics(battle_table, engine)
         engine.allow_select = false;
         //alert(engine.selected_fields.y0 + " " + engine.selected_fields.x0 + " " + engine.selected_fields.y1 + " " + engine.selected_fields.x1);
         let field_id =
-        {
-            first: "y_" + engine.selected_fields.y0 + "_x_" + engine.selected_fields.x0,
-            second: "y_" + engine.selected_fields.y1 + "_x_" + engine.selected_fields.x1
-        };
+            {
+                first: "y_" + engine.selected_fields.y0 + "_x_" + engine.selected_fields.x0,
+                second: "y_" + engine.selected_fields.y1 + "_x_" + engine.selected_fields.x1
+            };
 
         let field_pos =
-        {
-            first: $("#" + field_id.first).position(),
-            second: $("#" + field_id.second).position()
-        };
+            {
+                first: $("#" + field_id.first).position(),
+                second: $("#" + field_id.second).position()
+            };
 
         $("#" + field_id.first).css("z-index", 1);
         $("#" + field_id.second).css("z-index", 1);

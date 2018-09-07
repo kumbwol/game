@@ -88,6 +88,12 @@ function BattleEngine(battle_table)
     this.isTherePromotion = isTherePromotion;
     this.clearPromotedFields = clearPromotedFields;
     this.finalizePromotions = finalizePromotions;
+    this.getField = getField;
+
+    function getField(x, y)
+    {
+        return this.table[x][y];
+    }
 
     function finalizePromotions()
     {
@@ -204,8 +210,8 @@ function BattleEngine(battle_table)
         if(this.isAbilitySelected())
         {
             if(player.abilities[this.active_ability_id].type === ROTATE_LEFT || player.abilities[this.active_ability_id].type === ROTATE_RIGHT ||
-               player.abilities[this.active_ability_id].type === MIRROR_HORIZONTALLY || player.abilities[this.active_ability_id].type === MIRROR_VERTICALLY ||
-               player.abilities[this.active_ability_id].type === MAGIC_TO_MOVE || player.abilities[this.active_ability_id].type === DEFENSE_TO_ATTACK)
+                player.abilities[this.active_ability_id].type === MIRROR_HORIZONTALLY || player.abilities[this.active_ability_id].type === MIRROR_VERTICALLY ||
+                player.abilities[this.active_ability_id].type === MAGIC_TO_MOVE || player.abilities[this.active_ability_id].type === DEFENSE_TO_ATTACK)
             {
                 return true;
             }

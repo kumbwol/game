@@ -12,16 +12,16 @@ $(function()
         };
 
         let skill =
-        {
-            height: 0,
-            width: 0,
-            table: [],
-            table_width: 0,
-            table_height: 0,
-            primary_effect: 0,
-            secondary_effect: 0,
-            moving: false
-        };
+            {
+                height: 0,
+                width: 0,
+                table: [],
+                table_width: 0,
+                table_height: 0,
+                primary_effect: 0,
+                secondary_effect: 0,
+                moving: false
+            };
 
         let player_selected_skill_id = 0;
 
@@ -327,6 +327,28 @@ $(function()
             return false;
         });
 
+        $("#game_background").on("mousedown", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function(ev)
+        {
+            let right_click = 3;
+
+            if(ev.which === right_click)
+            {
+                let mouse_x = (ev.pageX);
+                let mouse_y = (ev.pageY);
+
+                //alert(engine.getFieldType($(this).attr("id")[2], $(this).attr("id")[6]));
+
+                $("#game_background").append(graphics.drawFieldExplainer(engine.getField($(this).attr("id")[2], $(this).attr("id")[6])));
+                $("#explain_box").css(
+                    {
+                        "border-radius": "30px 0px 30px 30px",
+                        top: mouse_y + "px",
+                        left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                    });
+
+            }
+        });
+
         $("#game_background").on("mousedown", ".skill_right_part_bottom, .skill_left_part_bottom_left, .skill_left_part_bottom_right", function(ev)
         {
             //console.log($(this).attr("class"));
@@ -339,7 +361,6 @@ $(function()
             {
                 let mouse_x = (ev.pageX);
                 let mouse_y = (ev.pageY);
-                observing_skill = true;
 
                 if($(this).parent().parent().attr("id").length > 7 && !engine.isSpecialAbilitySelected(player)) // if its enemy ID
                 {

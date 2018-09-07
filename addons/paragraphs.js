@@ -1,18 +1,23 @@
 console.log("paragraphs.js loaded");
 
 this.paragraphs =
-{
-    chance:
-        {
-            titles: [],
-            paragraphs: []
-        },
-    effect:
-        {
-            titles: [],
-            paragraphs: []
-        }
-};
+    {
+        chance:
+            {
+                titles: [],
+                paragraphs: []
+            },
+        effect:
+            {
+                titles: [],
+                paragraphs: []
+            },
+        field:
+            {
+                titles: [],
+                paragraphs: []
+            }
+    };
 
 
 //     ...::: ENEMY CHANCES :::...
@@ -45,4 +50,18 @@ this.paragraphs.effect.paragraphs[FREEZE] = "A kor vegeig meg fagy a tabla, ami 
 this.paragraphs.effect.paragraphs[MANA_REGEN] = "Visszatolt X manapontot a hasznalojanak.";
 this.paragraphs.effect.paragraphs[MANA_DRAIN] = "Elvesz X manapontot az ellenfeltol.";
 this.paragraphs.effect.paragraphs[PARALYZE] = "X db. mezot elsotetit, melyeket nem tudod mozgatni, de aktivizalni tudod.";
-this.paragraphs.effect.paragraphs[PROMOTE] = "Az aktivizalt mezokre eso uj mezok fel fejlodnek.";
+this.paragraphs.effect.paragraphs[PROMOTE] = "Az aktivizalt mezokre eso uj mezok felfejlodnek.";
+
+//     ...::: FIELD TYPES :::...
+this.paragraphs.field.titles[MAN] = "Magic";
+this.paragraphs.field.titles[ATT] = "Attack";
+this.paragraphs.field.titles[DEF] = "Defense";
+this.paragraphs.field.titles[MOV] = "Move";
+this.paragraphs.field.titles[POI] = "Poioson";
+this.paragraphs.field.titles[PMA] = "Magic+";
+this.paragraphs.field.titles[PAT] = "Attack+";
+this.paragraphs.field.titles[PDE] = "Defense+";
+this.paragraphs.field.titles[PMO] = "Move+";
+this.paragraphs.field.paragraphs["paralyzed"] = "Status: paralyzed" + "<br>" + "Activation: Yes" + "<br>" + "Moving: NO";
+this.paragraphs.field.paragraphs["stunned"]   = "Status: stunned"   + "<br>" + "Activation: NO"  + "<br>" + "Moving: YES";
+this.paragraphs.field.paragraphs["normal"]    = "Status: normal"    + "<br>" + "Activation: YES" + "<br>" + "Moving: YES";

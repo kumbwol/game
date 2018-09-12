@@ -16,6 +16,11 @@ this.paragraphs =
             {
                 titles: [],
                 paragraphs: []
+            },
+        ability:
+            {
+                titles: [],
+                paragraphs: []
             }
     };
 
@@ -65,3 +70,24 @@ this.paragraphs.field.titles[PMO] = "Move+";
 this.paragraphs.field.paragraphs["paralyzed"] = "Status: paralyzed" + "<br>" + "Activation: Yes" + "<br>" + "Moving: NO";
 this.paragraphs.field.paragraphs["stunned"]   = "Status: stunned"   + "<br>" + "Activation: NO"  + "<br>" + "Moving: YES";
 this.paragraphs.field.paragraphs["normal"]    = "Status: normal"    + "<br>" + "Activation: YES" + "<br>" + "Moving: YES";
+
+
+//     ...::: ABILITY TYPES :::...
+this.paragraphs.ability.titles[NO_ABILITY]          = "No ability";
+this.paragraphs.ability.titles[KNIGHT_MOVE]         = "Knight move";
+this.paragraphs.ability.titles[DIAGONAL_MOVE]       = "Diagonal move";
+this.paragraphs.ability.titles[ROTATE_LEFT]         = "Left rotation";
+this.paragraphs.ability.titles[ROTATE_RIGHT]        = "Right rotation";
+this.paragraphs.ability.titles[MIRROR_HORIZONTALLY] = "Mirror horizontally";
+this.paragraphs.ability.titles[MIRROR_VERTICALLY]   = "Mirror vertically";
+this.paragraphs.ability.titles[MAGIC_TO_MOVE]       = "Magic to move";
+this.paragraphs.ability.titles[DEFENSE_TO_ATTACK]   = "Defense to attack";
+this.paragraphs.ability.paragraphs[NO_ABILITY]          = "No ability";
+this.paragraphs.ability.paragraphs[KNIGHT_MOVE]         = "Swaps fields in an L shape";
+this.paragraphs.ability.paragraphs[DIAGONAL_MOVE]       = "Swaps fields diagonally in rane of 1 and 2";
+this.paragraphs.ability.paragraphs[ROTATE_LEFT]         = "Rotates the chosen skills pattern left with 90º";
+this.paragraphs.ability.paragraphs[ROTATE_RIGHT]        = "Rotates the chosen skills pattern right with 90º";
+this.paragraphs.ability.paragraphs[MIRROR_HORIZONTALLY] = "Mirrors the chosen skills pattern horizontally";
+this.paragraphs.ability.paragraphs[MIRROR_VERTICALLY]   = "Mirrors the chosen skills pattern vertically";
+this.paragraphs.ability.paragraphs[MAGIC_TO_MOVE]       = "Changes every MAGIC field in the chosen skills pattern to MOVE";
+this.paragraphs.ability.paragraphs[DEFENSE_TO_ATTACK]   = "Changes every DEFENSE field in the chosen skills pattern to ATTACK";

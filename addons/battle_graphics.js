@@ -33,6 +33,7 @@ function BattleGraphics(battle_table, engine)
     this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
     this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
     this.drawFieldExplainer = drawFieldExplainer;
+    this.drawAbilityExplainer = drawAbilityExplainer;
     this.poisonActivationAnimation = poisonActivationAnimation;
     this.clearAntiVenoms = clearAntiVenoms;
     this.freeStunnedFields = freeStunnedFields;
@@ -828,6 +829,7 @@ function BattleGraphics(battle_table, engine)
         text = text.replace("MOVE", '<span style="color:forestgreen; font-weight:bold">MOVE</span>');
         text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
         text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
+        text = text.replace("MAGIC", '<span style="color:aqua; font-weight:bold">MAGIC</span>');
 
         return text;
     }
@@ -869,6 +871,29 @@ function BattleGraphics(battle_table, engine)
         {
             x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["normal"] + '</div>');
         }
+
+        return x;
+    }
+
+    function drawAbilityExplainer(ability_type)
+    {
+        let x = $('<div id="explain_box">');
+
+        x.append('<div class="explain_box_title">' + paragraphs.ability.titles[ability_type] + '</div>');
+        x.append('<div class="explain_box_line"></div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.ability.paragraphs[ability_type]) + '</div>');
+        /*if(field.stunned)
+        {
+            x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["stunned"] + '</div>');
+        }
+        else if(field.paralyzed)
+        {
+            x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["paralyzed"] + '</div>');
+        }
+        else
+        {
+            x.append('<div class="explain_box_paragraph">' + paragraphs.field.paragraphs["normal"] + '</div>');
+        }*/
 
         return x;
     }
@@ -1326,7 +1351,7 @@ function BattleGraphics(battle_table, engine)
                     });
                 }
 
-                if(engine.table[i][j].stunned)
+                if(engine.table[i][j].stunned && !(doesHaveStatus($("#y_" + i + "_x_" + j), "stunIt")))
                 {
                     wait_animation = true;
                     stunFieldAnimation($("#y_" + i + "_x_" + j), function()
@@ -1335,7 +1360,7 @@ function BattleGraphics(battle_table, engine)
                     });
                 }
 
-                if(engine.table[i][j].paralyzed)
+                if(engine.table[i][j].paralyzed && !(doesHaveStatus($("#y_" + i + "_x_" + j), "paralyzeIt")))
                 {
                     wait_animation = true;
                     paralyzeFieldAnimation($("#y_" + i + "_x_" + j), function()
@@ -1347,6 +1372,20 @@ function BattleGraphics(battle_table, engine)
         }
         if(!wait_animation) done.resolve();
         return done;
+    }
+
+    function doesHaveStatus(object, status)
+    {
+        let classes = object.attr("class").split(" ");
+
+        for(let i=0; i<classes.length; i++)
+        {
+            if(classes[i] === status)
+            {
+                return true
+            }
+        }
+        return false;
     }
 
     function reNameIds(engine)
@@ -1942,6 +1981,12 @@ function BattleGraphics(battle_table, engine)
                 case MANA_DRAIN:
                 {
                     effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_drain;
+                    break;
+                }
+
+                default:
+                {
+                    effect_number = 0;
                     break;
                 }
             }

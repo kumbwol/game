@@ -34,7 +34,6 @@ $(function()
         let skill_activation_finished = true;
         let poison_animation_finished = true;
         let dmg_heal_number_animation_finished = true;
-        let skill_selection_allowed = true;
 
         $("#create_table").on("click", function()
         {
@@ -283,7 +282,7 @@ $(function()
             }
         });
 
-        $("#game_background").on("click", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function(ev) //TODO: teglalap detection helyett rombusz detection
+        $("#game_background").on("click", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function() //TODO: teglalap detection helyett rombusz detection
         {
             if(engine.allow_select && !engine.isSpecialAbilitySelected(player) && !skill.moving)
             {
@@ -299,7 +298,7 @@ $(function()
             }
         });
 
-        $("#game_background").on("click", "#exit_rank_explainer", function(ev)
+        $("#game_background").on("click", "#exit_rank_explainer", function()
         {
             graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
             graphics.removeRankHighlight();
@@ -336,16 +335,65 @@ $(function()
                 let mouse_x = (ev.pageX);
                 let mouse_y = (ev.pageY);
 
-                //alert(engine.getFieldType($(this).attr("id")[2], $(this).attr("id")[6]));
-
                 $("#game_background").append(graphics.drawFieldExplainer(engine.getField($(this).attr("id")[2], $(this).attr("id")[6])));
-                $("#explain_box").css(
-                    {
-                        "border-radius": "30px 0px 30px 30px",
-                        top: mouse_y + "px",
-                        left: (mouse_x-($("#explain_box").outerWidth())) + "px"
-                    });
 
+                if((mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight()) && (mouse_x > $("#explain_box").outerWidth()))
+                {
+                    $("#explain_box").css(
+                        {
+                            "border-radius": "30px 0px 30px 30px",
+                            top: mouse_y + "px",
+                            left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                        });
+                }
+                else if(mouse_x > $("#explain_box").outerWidth())
+                {
+                    $("#explain_box").css(
+                        {
+                            "border-radius": "30px 30px 0px 30px",
+                            top:  (mouse_y - $("#explain_box").outerHeight()) + "px",
+                            left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                        });
+                }
+                else $("#explain_box").remove();
+            }
+        });
+
+        $("#game_background").on("mousedown", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function(ev)
+        {
+            let right_click = 3;
+
+            if(ev.which === right_click)
+            {
+                let mouse_x = (ev.pageX);
+                let mouse_y = (ev.pageY);
+
+                //alert("hey");
+
+                //alert($(this).attr("id")[8]);
+                //alert(player.getAbility($(this).attr("id")[8]));
+
+                $("#game_background").append(graphics.drawAbilityExplainer(player.getAbility($(this).attr("id")[8])));
+
+                if((mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight()) && (mouse_x > $("#explain_box").outerWidth()))
+                {
+                    $("#explain_box").css(
+                        {
+                            "border-radius": "30px 0px 30px 30px",
+                            top: mouse_y + "px",
+                            left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                        });
+                }
+                else if(mouse_x > $("#explain_box").outerWidth())
+                {
+                    $("#explain_box").css(
+                        {
+                            "border-radius": "30px 30px 0px 30px",
+                            top:  (mouse_y - $("#explain_box").outerHeight()) + "px",
+                            left: (mouse_x-($("#explain_box").outerWidth())) + "px"
+                        });
+                }
+                else $("#explain_box").remove();
             }
         });
 
@@ -367,6 +415,21 @@ $(function()
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
                         $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, true, $(this).parent().parent().attr("id")[12]));
+                    }
+                    else if($(this).attr("class") === "skill_left_part_bottom_right")
+                    {
+                        if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
+                        {
+                            $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
+                        }
+                    }
+                    else
+                    {
+                        $("#game_background").append(graphics.drawChanceExplainer(enemy, $(this).parent().parent().attr("id")[12]));
+                    }
+
+                    if(mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight())
+                    {
                         $("#explain_box").css(
                             {
                                 "border-radius": "30px 0px 30px 30px",
@@ -374,26 +437,12 @@ $(function()
                                 left: (mouse_x-($("#explain_box").outerWidth())) + "px"
                             });
                     }
-                    else if($(this).attr("class") === "skill_left_part_bottom_right")
-                    {
-                        if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
-                        {
-                            $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
-                            $("#explain_box").css(
-                                {
-                                    "border-radius": "30px 0px 30px 30px",
-                                    top: mouse_y + "px",
-                                    left: (mouse_x-($("#explain_box").outerWidth())) + "px"
-                                });
-                        }
-                    }
                     else
                     {
-                        $("#game_background").append(graphics.drawChanceExplainer(enemy, $(this).parent().parent().attr("id")[12]));
                         $("#explain_box").css(
                             {
-                                "border-radius": "30px 0px 30px 30px",
-                                top: mouse_y + "px",
+                                "border-radius": "30px 30px 0px 30px",
+                                top: (mouse_y - $("#explain_box").outerHeight()) + "px",
                                 left: (mouse_x-($("#explain_box").outerWidth())) + "px"
                             });
                     }
@@ -403,34 +452,37 @@ $(function()
                     if($(this).attr("class") === "skill_left_part_bottom_left")
                     {
                         let skill_id = (parseInt($(this).parent().parent().attr("id")[6])-1);
+                        let effect_type = NOTHING;
 
                         if(skill_id === -1) //amikor rankmagyarazat van
                         {
-                            let effect_type = player.getSkills()[graphics.skill_id][graphics.rank_id].getSkillEffect(PRIMARY).type;
-
-                            if(effect_type !== NOTHING)
-                            {
-                                $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
-                                $("#explain_box").css(
-                                    {
-                                        "border-radius": "0px 30px 30px 30px",
-                                        top: mouse_y + "px",
-                                        left: mouse_x+ "px"
-                                    });
-                            }
+                            effect_type = player.getSkills()[graphics.skill_id][graphics.rank_id].getSkillEffect(PRIMARY).type;
                         }
                         else
                         {
-                            let effect_type = player.getSkills()[skill_id][engine.rank[skill_id]].getSkillEffect(PRIMARY).type;
+                            effect_type = player.getSkills()[skill_id][engine.rank[skill_id]].getSkillEffect(PRIMARY).type;
+                        }
 
-                            if(effect_type !== NOTHING)
+                        if(effect_type !== NOTHING)
+                        {
+                            $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
+
+                            if(mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight())
                             {
-                                $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
                                 $("#explain_box").css(
                                     {
                                         "border-radius": "0px 30px 30px 30px",
-                                        top: mouse_y + "px",
-                                        left: mouse_x+ "px"
+                                        top:  mouse_y + "px",
+                                        left: mouse_x + "px"
+                                    });
+                            }
+                            else
+                            {
+                                $("#explain_box").css(
+                                    {
+                                        "border-radius": "30px 30px 30px 0px",
+                                        top:  (mouse_y - $("#explain_box").outerHeight()) + "px",
+                                        left: mouse_x + "px"
                                     });
                             }
                         }
@@ -438,34 +490,37 @@ $(function()
                     else if($(this).attr("class") === "skill_left_part_bottom_right")
                     {
                         let skill_id = (parseInt($(this).parent().parent().attr("id")[6])-1);
+                        let effect_type = NOTHING;
 
                         if(skill_id === -1) //amikor rankmagyarazat van
                         {
-                            let effect_type = player.getSkills()[graphics.skill_id][graphics.rank_id].getSkillEffect(SECONDARY).type;
-
-                            if(effect_type !== NOTHING)
-                            {
-                                $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
-                                $("#explain_box").css(
-                                    {
-                                        "border-radius": "0px 30px 30px 30px",
-                                        top: mouse_y + "px",
-                                        left: mouse_x+ "px"
-                                    });
-                            }
+                            effect_type = player.getSkills()[graphics.skill_id][graphics.rank_id].getSkillEffect(SECONDARY).type;
                         }
                         else
                         {
-                            let effect_type = player.getSkills()[skill_id][engine.rank[skill_id]].getSkillEffect(SECONDARY).type;
+                            effect_type = player.getSkills()[skill_id][engine.rank[skill_id]].getSkillEffect(SECONDARY).type;
+                        }
 
-                            if(effect_type !== NOTHING)
+                        if(effect_type !== NOTHING)
+                        {
+                            $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
+
+                            if(mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight())
                             {
-                                $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
                                 $("#explain_box").css(
                                     {
                                         "border-radius": "0px 30px 30px 30px",
-                                        top: mouse_y + "px",
-                                        left: mouse_x+ "px"
+                                        top:  mouse_y + "px",
+                                        left: mouse_x + "px"
+                                    });
+                            }
+                            else
+                            {
+                                $("#explain_box").css(
+                                    {
+                                        "border-radius": "30px 30px 30px 0px",
+                                        top:  (mouse_y - $("#explain_box").outerHeight()) + "px",
+                                        left: mouse_x + "px"
                                     });
                             }
                         }

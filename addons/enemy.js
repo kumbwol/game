@@ -45,6 +45,21 @@ function Enemy(name)
         skills[1] = new Skill("Paralyze");
     }
 
+    if(this.name === "SokSkill")
+    {
+        this.max_hp = 100;
+        this.hp = 50;
+        this.max_mp = 60;
+        this.mp = 60;
+
+        skills[0] = new Skill("Double Punch");
+        skills[1] = new Skill("Paralyze");
+        skills[2] = new Skill("Paralyze");
+        skills[3] = new Skill("Paralyze");
+        skills[4] = new Skill("Paralyze");
+        skills[5] = new Skill("Paralyze");
+    }
+
     this.getSkills = getSkills;
 
     function getSkills()

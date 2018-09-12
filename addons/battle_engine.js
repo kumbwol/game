@@ -745,24 +745,35 @@ function BattleEngine(battle_table)
                         {
                             return false;
                         }
-                        else if(skill.table[i][j] !== this.table[y+i][x+j].type)
-                        {
+                        else if(skill.table[i][j] !== this.table[y+i][x+j].type) {
 
-                            if(skill.table[i][j] === ATT && this.table[y+i][x+j].type !== PAT)
+                            if(skill.table[i][j] === ATT)
                             {
-                                return false;
+                                if(this.table[y+i][x+j].type !== PAT)
+                                {
+                                    return false;
+                                }
                             }
-                            else if(skill.table[i][j] === MAN && this.table[y+i][x+j].type !== PMA)
+                            else if(skill.table[i][j] === MAN)
                             {
-                                return false;
+                                if(this.table[y+i][x+j].type !== PMA)
+                                {
+                                    return false;
+                                }
                             }
-                            else if(skill.table[i][j] === DEF && this.table[y+i][x+j].type !== PDE)
+                            else if(skill.table[i][j] === DEF)
                             {
-                                return false;
+                                if(this.table[y+i][x+j].type !== PDE)
+                                {
+                                    return false;
+                                }
                             }
-                            else if(skill.table[i][j] === MOV && this.table[y+i][x+j].type !== MOV)
+                            else if(skill.table[i][j] === MOV)
                             {
-                                return false;
+                                if(this.table[y+i][x+j].type !== PMO)
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
@@ -777,10 +788,10 @@ function BattleEngine(battle_table)
 
             alert(this.selected_fields.y1);
             alert(this.selected_fields.x1);*/
-            if(this.anyFieldSelected())
+            /*if(this.anyFieldSelected())
             {
                 this.deselectField(player);
-            }
+            }*/
 
             return true;
         }

@@ -37,21 +37,32 @@ function Player(name)
     skills[1] = [];
     skills[2] = [];
     skills[3] = [];
+    skills[4] = [];
+    skills[5] = [];
 
     skills[0][0] = new Skill("Promote");
     skills[0][1] = new Skill("Loss");
     skills[0][2] = new Skill("Shield");
     skills[0][3] = new Skill("Spiritarrow");
-    skills[1][0] = new Skill("Shock");
-    skills[1][1] = new Skill("Shock");
+    skills[1][0] = new Skill("Promote");
     skills[2][0] = new Skill("Shock");
-    skills[3][0] = new Skill("Loss");
-    skills[3][1] = new Skill("Shock");
+    skills[2][1] = new Skill("Shock");
+    skills[3][0] = new Skill("Shock");
+    skills[4][0] = new Skill("Loss");
+    skills[4][1] = new Skill("Shock");
+    skills[5][0] = new Skill("Promote");
 
     this.getSkills = getSkills;
 
     function getSkills()
     {
         return skills;
+    }
+
+    this.getAbility = getAbility;
+
+    function getAbility(id)
+    {
+        return this.abilities[id].type;
     }
 }

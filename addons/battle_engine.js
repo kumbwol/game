@@ -24,6 +24,7 @@ function BattleEngine(battle_table)
     this.rank = [];
     this.active_ability_id = -1;
     this.ability_used = false;
+    this.combo_meter = 0;
 
     for(let i=0; i<this.battle_table.height; i++)
     {
@@ -621,6 +622,11 @@ function BattleEngine(battle_table)
                 unit = enemy;
             }
             else unit = player;
+        }
+
+        if(effect.combo_amount > 0)
+        {
+            this.combo_meter += effect.combo_amount;
         }
 
         if(effect.dmg > 0)

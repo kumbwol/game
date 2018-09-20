@@ -22,6 +22,23 @@ function Skill(name)
 
     switch(this.name)
     {
+        case "Combo":
+        {
+            visual_pattern =
+                [
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [MOV,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("combo");
+            secondary_effect  = new Effect("NOTHING");
+            break;
+        }
+
         case "Shock":
         {
             visual_pattern =

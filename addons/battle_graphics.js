@@ -61,10 +61,61 @@ function BattleGraphics(battle_table, engine)
     this.hideCursor = hideCursor;
     this.showCursor = showCursor;
 
+    this.updateComboNumber = updateComboNumber;
+
     let field_size = 50;
     this.field_size = field_size;
     this.rank_id  = -1;
     this.skill_id = -1;
+
+    function updateComboNumber(number)
+    {
+        $("#combo_number").html(number);
+        allignToMiddle($("#combo_number"));
+        allignToMiddleY($("#combo_number"));
+    }
+
+    function createAbilityDetector(parent)
+    {
+
+        let id = parent[9];
+
+        let $left_detector  = $('<div></div>');
+        $left_detector.addClass(id);
+        $left_detector.addClass("ability_detector_side");
+        $left_detector.addClass("left");
+
+        let $right_detector  = $('<div></div>');
+        $right_detector.addClass(id);
+        $right_detector.addClass("ability_detector_side");
+        $right_detector.addClass("right");
+
+        let $middle_detector  = $('<div></div>');
+        $middle_detector.addClass(id);
+        $middle_detector.addClass("ability_detector_middle");
+
+        $(parent).append($left_detector);
+        $(parent).append($right_detector);
+        $(parent).append($middle_detector);
+    }
+
+    function createComboDetector(parent)
+    {
+        let $left_detector  = $('<div></div>');
+        $left_detector.addClass("ability_combo_detector_side");
+        $left_detector.addClass("left");
+
+        let $right_detector  = $('<div></div>');
+        $right_detector.addClass("ability_combo_detector_side");
+        $right_detector.addClass("right");
+
+        let $middle_detector  = $('<div></div>');
+        $middle_detector.addClass("ability_combo_detector_middle");
+
+        $(parent).append($left_detector);
+        $(parent).append($right_detector);
+        $(parent).append($middle_detector);
+    }
 
     function hideCursor()
     {
@@ -591,7 +642,19 @@ function BattleGraphics(battle_table, engine)
         $("#player_ability_container").append('<div id="ability_3"></div>');
         $("#player_ability_container").append('<div id="ability_4"></div>');
         $("#player_ability_container").append('<div id="ability_5"></div>');
+        $("#player_ability_container").append('<div id="combo"></div>');
+        $("#combo").append('<div id="combo_number"></div>');
+        allignToMiddle($("#combo_number"));
+        allignToMiddleY($("#combo_number"));
 
+        createAbilityDetector("#ability_0");
+        createAbilityDetector("#ability_1");
+        createAbilityDetector("#ability_2");
+        createAbilityDetector("#ability_3");
+        createAbilityDetector("#ability_4");
+        createAbilityDetector("#ability_5");
+
+        createComboDetector("#combo");
 
         for(let i=0; i<player.abilities.length; i++)
         {
@@ -1920,6 +1983,12 @@ function BattleGraphics(battle_table, engine)
                 $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/freeze.png")');
                 break;
             }
+
+            case COMBO:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/combo.png")');
+                break;
+            }
         }
     }
 
@@ -1981,6 +2050,12 @@ function BattleGraphics(battle_table, engine)
                 case MANA_DRAIN:
                 {
                     effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_drain;
+                    break;
+                }
+
+                case COMBO:
+                {
+                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).combo_amount;
                     break;
                 }
 

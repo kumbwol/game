@@ -50,7 +50,7 @@ function Player(name)
     skills[3][0] = new Skill("Shock");
     skills[4][0] = new Skill("Loss");
     skills[4][1] = new Skill("Shock");
-    skills[5][0] = new Skill("Promote");
+    skills[5][0] = new Skill("Combo");
 
     this.getSkills = getSkills;
 

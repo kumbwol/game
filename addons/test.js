@@ -132,9 +132,11 @@ $(function()
                         {
                             engine.table_modified = false;
                             engine.refreshTable();
+                            graphics.updateComboNumber(engine.combo_meter);
 
                             activateSecondarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                             {
+                                graphics.updateComboNumber(engine.combo_meter);
                                 dmg_heal_number_animation_finished = true;
                                 graphics.modifyTable(engine).done(function()
                                 {
@@ -282,11 +284,16 @@ $(function()
             }
         });
 
-        $("#game_background").on("click", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function() //TODO: teglalap detection helyett rombusz detection
+        $("#game_background").on("click", ".ability_combo_detector_side, .ability_combo_detector_middle", function()
+        {
+            alert("kombo baby");
+        });
+
+        $("#game_background").on("click", ".ability_detector_side, .ability_detector_middle", function()
         {
             if(engine.allow_select && !engine.isSpecialAbilitySelected(player) && !skill.moving)
             {
-                if(engine.selectAbility(player, $(this).attr("id")[8]))
+                if(engine.selectAbility(player, $(this).attr("class")[0]))
                 {
                     graphics.drawAbilitySelector(engine, player);
                     graphics.changeCursor(player, engine);
@@ -359,7 +366,7 @@ $(function()
             }
         });
 
-        $("#game_background").on("mousedown", "#ability_0, #ability_1, #ability_2, #ability_3, #ability_4, #ability_5", function(ev)
+        $("#game_background").on("mousedown", ".ability_detector_side, .ability_detector_middle", function(ev)
         {
             let right_click = 3;
 
@@ -373,7 +380,7 @@ $(function()
                 //alert($(this).attr("id")[8]);
                 //alert(player.getAbility($(this).attr("id")[8]));
 
-                $("#game_background").append(graphics.drawAbilityExplainer(player.getAbility($(this).attr("id")[8])));
+                $("#game_background").append(graphics.drawAbilityExplainer(player.getAbility($(this).attr("class")[0])));
 
                 if((mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight()) && (mouse_x > $("#explain_box").outerWidth()))
                 {

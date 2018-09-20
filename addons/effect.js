@@ -19,12 +19,21 @@ function Effect(name)
         heal: 0,
         type: -1,
         mana_regen: 0,
-        mana_drain: 0
+        mana_drain: 0,
+        combo_amount: 0,
     };
 
 
     switch(this.name)
     {
+        case "combo":
+        {
+            effect.type = COMBO;
+            effect.combo_amount = 1;
+            effect.self = true;
+            break;
+        }
+
         case "promote":
         {
             effect.type = PROMOTE;

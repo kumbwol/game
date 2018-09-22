@@ -71,7 +71,7 @@ this.paragraphs.field.titles[PAT] = "Attack+";
 this.paragraphs.field.titles[PDE] = "Defense+";
 this.paragraphs.field.titles[PMO] = "Move+";
 this.paragraphs.field.paragraphs["paralyzed"] = "Status: paralyzed" + "<br>" + "Activation: Yes" + "<br>" + "Moving: NO";
-this.paragraphs.field.paragraphs["stunned"]   = "Status: stunned"   + "<br>" + "Activation: NO"  + "<br>" + "Moving: YES";
+this.paragraphs.field.paragraphs["stunned"]   = "Status: stunned"   + "<br>" + "Activation: NO"  + "<br>" + "Moving: NO";
 this.paragraphs.field.paragraphs["normal"]    = "Status: normal"    + "<br>" + "Activation: YES" + "<br>" + "Moving: YES";
 
 

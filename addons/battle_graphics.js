@@ -395,6 +395,16 @@ function BattleGraphics(battle_table, engine)
                         }
                     }
                 }
+
+                if(engine.isFieldParalyzed(j, i))
+                {
+                    $("#y_" + i + "_x_" + j).addClass("paralyzeIt");
+                }
+
+                if(engine.isFieldStunned(j, i))
+                {
+                    $("#y_" + i + "_x_" + j).addClass("stunIt");
+                }
             }
         }
         done.resolve();
@@ -1414,27 +1424,41 @@ function BattleGraphics(battle_table, engine)
                     });
                 }
 
-                if(engine.table[i][j].stunned && !(doesHaveStatus($("#y_" + i + "_x_" + j), "stunIt")))
+                if(isElementExists($("#y_" + i + "_x_" + j)))
                 {
-                    wait_animation = true;
-                    stunFieldAnimation($("#y_" + i + "_x_" + j), function()
+                    if(engine.table[i][j].stunned && !(doesHaveStatus($("#y_" + i + "_x_" + j), "stunIt")))
                     {
-                        done.resolve();
-                    });
+                        wait_animation = true;
+                        stunFieldAnimation($("#y_" + i + "_x_" + j), function()
+                        {
+                            done.resolve();
+                        });
+                    }
                 }
 
-                if(engine.table[i][j].paralyzed && !(doesHaveStatus($("#y_" + i + "_x_" + j), "paralyzeIt")))
+                if(isElementExists($("#y_" + i + "_x_" + j)))
                 {
-                    wait_animation = true;
-                    paralyzeFieldAnimation($("#y_" + i + "_x_" + j), function()
+                    console.log($("#y_" + i + "_x_" + j).attr("class"));
+                    if(engine.table[i][j].paralyzed && !(doesHaveStatus($("#y_" + i + "_x_" + j), "paralyzeIt")))
                     {
-                        done.resolve();
-                    });
+                        alert("hu");
+                        wait_animation = true;
+                        paralyzeFieldAnimation($("#y_" + i + "_x_" + j), function()
+                        {
+                            done.resolve();
+                        });
+                    }
                 }
+
             }
         }
         if(!wait_animation) done.resolve();
         return done;
+    }
+
+    function isElementExists(object)
+    {
+        return object.length;
     }
 
     function doesHaveStatus(object, status)
@@ -2127,6 +2151,12 @@ function BattleGraphics(battle_table, engine)
                 case PARALYZE:
                 {
                     effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).paralyze_amount;
+                    break;
+                }
+
+                default:
+                {
+                    effect_number = 0;
                     break;
                 }
             }

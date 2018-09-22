@@ -17,6 +17,17 @@
     src: url("fonts/Trajan Pro Regular.ttf");
 }
 
+#armor_number
+{
+    position: absolute;
+    top: 4px;
+    z-index: 2;
+    font-weight: bold;
+    color: yellow;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: myLato;
+}
+
 #combo_number
 {
     position: absolute;
@@ -169,8 +180,9 @@
 
 .hp_string, .mp_string
 {
+    font-family: myLato;
     position: absolute;
-    top: 0px;
+    top: -2px;
     z-index: 2;
     font-weight: bold;
     color: white;

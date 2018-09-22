@@ -629,6 +629,8 @@ function BattleEngine(battle_table)
             this.combo_meter += effect.combo_amount;
         }
 
+
+
         if(effect.dmg > 0)
         {
 
@@ -660,6 +662,11 @@ function BattleEngine(battle_table)
             }
 
             this.skill_type.heal = true;
+        }
+
+        if(effect.armor > 0)
+        {
+            unit.armor += effect.armor;
         }
 
         if(effect.mana_regen > 0)

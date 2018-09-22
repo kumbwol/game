@@ -22,6 +22,23 @@ function Skill(name)
 
     switch(this.name)
     {
+        case "Armor":
+        {
+            visual_pattern =
+                [
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [MOV,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("armor");
+            secondary_effect  = new Effect("armor");
+            break;
+        }
+
         case "Combo":
         {
             visual_pattern =

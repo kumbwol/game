@@ -207,7 +207,9 @@ $(function()
             if (e.key === ' ' || e.key === 'Spacebar') {
                 // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
                 e.preventDefault();
-                engine.logTable();
+                //engine.logTable();
+                console.log("elet: " + player.hp);
+                console.log("armor: " + player.armor);
                 //engine.logTempTable();
             }
         });
@@ -746,9 +748,9 @@ $(function()
         let done = $.Deferred();
         engine.activateSkill(skill.primary_effect, player, enemy, player_turn);
 
-        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0)
+        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.armor > 0)
         {
-            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.armor, player_turn).done(function()
             {
                 done.resolve();
             });
@@ -756,6 +758,7 @@ $(function()
             if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
             if(skill.primary_effect.mana_regen > 0) graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.primary_effect.mana_drain > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
+            if(skill.primary_effect.armor > 0) graphics.updateArmor(player.armor, skill.primary_effect.armor, false);
         }
         else done.resolve();
 
@@ -767,16 +770,17 @@ $(function()
         let done = $.Deferred();
         engine.activateSkill(skill.secondary_effect, player, enemy, player_turn);
 
-        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0)
+        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor)
         {
-            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.armor, player_turn).done(function()
             {
                 done.resolve();
             });
             if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
             if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
-            if(skill.primary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
+            if(skill.secondary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.secondary_effect.mana_drain > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
+            if(skill.secondary_effect.armor > 0) graphics.updateArmor(player.armor, skill.secondary_effect.armor, false);
         }
         else done.resolve();
 

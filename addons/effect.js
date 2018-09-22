@@ -21,11 +21,20 @@ function Effect(name)
         mana_regen: 0,
         mana_drain: 0,
         combo_amount: 0,
+        armor: 0,
     };
 
 
     switch(this.name)
     {
+        case "armor":
+        {
+            effect.type = ARMOR;
+            effect.armor = 15;
+            effect.self = true;
+            break;
+        }
+
         case "combo":
         {
             effect.type = COMBO;

@@ -15,3 +15,4 @@ const MANA_DRAIN = 10; // mana cost
 const PARALYZE   = 11; // paralyze field
 const PROMOTE    = 12; // promote field
 const COMBO      = 13; // increase combo
+const ARMOR      = 14; // increase armor

@@ -60,6 +60,7 @@ function BattleGraphics(battle_table, engine)
     this.removeRankHighlight = removeRankHighlight;
     this.hideCursor = hideCursor;
     this.showCursor = showCursor;
+    this.updateArmor = updateArmor;
 
     this.updateComboNumber = updateComboNumber;
 
@@ -67,6 +68,58 @@ function BattleGraphics(battle_table, engine)
     this.field_size = field_size;
     this.rank_id  = -1;
     this.skill_id = -1;
+
+    function breakArmor()
+    {
+        $("#armor").remove();
+    }
+
+    function updateArmor(armor, difference, dmg)
+    {
+        if(armor > 0)
+        {
+            if(!isElementExists($("#armor")))
+            {
+                $("#game_background").append('<div id="armor"></div>');
+                $("#armor").append('<div id="armor_number"></div>');
+            }
+
+            let animation_speed = 30;
+            let smoother = difference/20;
+
+            let i = 0;
+
+            let x = setInterval(function()
+            {
+                console.log(i);
+                i += smoother;
+
+                if(Math.ceil(armor-difference) <= armor)
+                {
+                    if(dmg)
+                    {
+                        $("#armor_number").text(Math.ceil(armor+difference-i));
+                    }
+                    else
+                    {
+                        $("#armor_number").text(Math.ceil(armor-difference+i));
+                    }
+                }
+
+                allignToMiddle($("#armor_number"));
+
+                if(i>=difference)
+                {
+                    clearInterval(x);
+                }
+            }, animation_speed);
+
+        }
+        else
+        {
+            $("#armor_number").remove();
+        }
+    }
 
     function updateComboNumber(number)
     {
@@ -1003,11 +1056,11 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
-    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, player_on_turn)
+    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, armor, player_on_turn)
     {
         let done = $.Deferred();
 
-        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain)
+        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0)
         {
             let object;
 
@@ -1046,6 +1099,15 @@ function BattleGraphics(battle_table, engine)
                 object = $("#dmg_counter");
                 object.css("color", "blue");
                 object.html("-" + mana_drain);
+            }
+            else if(armor > 0)
+            {
+                if(player_on_turn) $("#self").append('<div id="dmg_counter"></div>');
+                else $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
+
+                object = $("#dmg_counter");
+                object.css("color", "grey");
+                object.html("+" + armor);
             }
 
             allignToMiddle(object);
@@ -1438,10 +1500,8 @@ function BattleGraphics(battle_table, engine)
 
                 if(isElementExists($("#y_" + i + "_x_" + j)))
                 {
-                    console.log($("#y_" + i + "_x_" + j).attr("class"));
                     if(engine.table[i][j].paralyzed && !(doesHaveStatus($("#y_" + i + "_x_" + j), "paralyzeIt")))
                     {
-                        alert("hu");
                         wait_animation = true;
                         paralyzeFieldAnimation($("#y_" + i + "_x_" + j), function()
                         {
@@ -2013,6 +2073,12 @@ function BattleGraphics(battle_table, engine)
                 $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/combo.png")');
                 break;
             }
+
+            case ARMOR:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/armor.png")');
+                break;
+            }
         }
     }
 
@@ -2080,6 +2146,12 @@ function BattleGraphics(battle_table, engine)
                 case COMBO:
                 {
                     effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).combo_amount;
+                    break;
+                }
+
+                case ARMOR:
+                {
+                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).armor;
                     break;
                 }
 
@@ -2540,7 +2612,34 @@ function BattleGraphics(battle_table, engine)
                 $(".hp_loosing_background").css("width", (new_hp/player.max_hp) * object.parent().width() - 1);
             }
 
-            if(difference > 0)
+            let from_armor = false;
+
+            if(dmg)
+            {
+                if(difference < parseInt($("#armor_number").text()))
+                {
+                    player.hp += difference;
+                    player.armor -= difference;
+                    updateArmor(parseInt($("#armor_number").text())-difference, difference, true);
+                    from_armor = true;
+                }
+                else if(difference === parseInt($("#armor_number").text()))
+                {
+                    player.hp += difference;
+                    player.armor -= difference;
+                    breakArmor();
+                    from_armor = true;
+                }
+                else if(difference > parseInt($("#armor_number").text()))
+                {
+                    player.hp += player.armor;
+                    player.armor = 0;
+                    breakArmor();
+                    difference = parseInt(old_hp) - player.hp;
+                }
+            }
+
+            if(difference > 0 && !from_armor)
             {
                 let smoother = difference/20;
 

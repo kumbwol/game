@@ -44,6 +44,7 @@ this.paragraphs.effect.titles[MANA_DRAIN] = "Mana drain";
 this.paragraphs.effect.titles[PARALYZE] = "Paralyze";
 this.paragraphs.effect.titles[PROMOTE] = "Promote";
 this.paragraphs.effect.titles[COMBO] = "Combo";
+this.paragraphs.effect.titles[ARMOR] = "Armor";
 
 this.paragraphs.effect.paragraphs[DMG] = "Elvesz X eletpontot az ellenfeltol.";
 this.paragraphs.effect.paragraphs[HEAL] = "Visszatolt X eletpontot a hasznalojanak.";
@@ -59,6 +60,7 @@ this.paragraphs.effect.paragraphs[MANA_DRAIN] = "Elvesz X manapontot az ellenfel
 this.paragraphs.effect.paragraphs[PARALYZE] = "X db. mezot elsotetit, melyeket nem tudod mozgatni, de aktivizalni tudod.";
 this.paragraphs.effect.paragraphs[PROMOTE] = "Az aktivizalt mezokre eso uj mezok felfejlodnek.";
 this.paragraphs.effect.paragraphs[COMBO] = "Noveli a kombo szintet, ami minnel magassab, annal erosebb effektet tartalmaz.";
+this.paragraphs.effect.paragraphs[ARMOR] = "Ad X db. vedelmet, a kovetkezo korod kezdeten elveszik.";
 
 //     ...::: FIELD TYPES :::...
 this.paragraphs.field.titles[MAN] = "Magic";

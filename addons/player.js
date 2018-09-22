@@ -9,6 +9,7 @@ function Player(name)
     this.max_mp = 40;
     this.ap = 2;
     this.max_ap = 2;
+    this.armor = 0;
 
     this.abilities = [];
 
@@ -44,7 +45,7 @@ function Player(name)
     skills[0][1] = new Skill("Loss");
     skills[0][2] = new Skill("Shield");
     skills[0][3] = new Skill("Spiritarrow");
-    skills[1][0] = new Skill("Promote");
+    skills[1][0] = new Skill("Armor");
     skills[2][0] = new Skill("Shock");
     skills[2][1] = new Skill("Shock");
     skills[3][0] = new Skill("Shock");

@@ -14,7 +14,10 @@ function BattleEngine(battle_table)
     this.skill_type = {
         dmg: false,
         heal: false,
-        transform: false
+        transform: false,
+        penetrate: false,
+        mana_drain: false,
+        mana_regen: false
     };
     this.selected_field_id = "";
     this.allow_select = true;
@@ -633,7 +636,6 @@ function BattleEngine(battle_table)
 
         if(effect.dmg > 0)
         {
-
             unit.hp -= effect.dmg;
 
             if(unit.hp < 0)
@@ -641,15 +643,19 @@ function BattleEngine(battle_table)
                 unit.hp = 0;
             }
 
-            /*unit.mp -= (effect.dmg+1);
-
-            if(unit.mp < 0)
-            {
-                unit.mp = 0;
-            }*/
-
-
             this.skill_type.dmg = true;
+        }
+
+        if(effect.penetrate > 0)
+        {
+            unit.hp -= effect.penetrate;
+
+            if(unit.hp < 0)
+            {
+                unit.hp = 0;
+            }
+
+            this.skill_type.penetrate = true;
         }
 
         if(effect.heal > 0)

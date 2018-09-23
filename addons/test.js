@@ -580,7 +580,7 @@ $(function()
                             dmg_heal_number_animation_finished = true;
                         });
 
-                        if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player);
+                        if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player, false);
                     }
 
                     graphics.poisonActivationAnimation(engine, number_of_poisons).done(function()
@@ -748,17 +748,18 @@ $(function()
         let done = $.Deferred();
         engine.activateSkill(skill.primary_effect, player, enemy, player_turn);
 
-        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.armor > 0)
+        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.armor > 0 || skill.primary_effect.penetrate > 0)
         {
-            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.armor, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.armor, skill.primary_effect.penetrate, player_turn).done(function()
             {
                 done.resolve();
             });
             if(skill.primary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
-            if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
+            if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.primary_effect.mana_regen > 0) graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.primary_effect.mana_drain > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.primary_effect.armor > 0) graphics.updateArmor(player.armor, skill.primary_effect.armor, false);
+            if(skill.primary_effect.penetrate > 0) graphics.updateHpBar($("#player_hp"), player, false);
         }
         else done.resolve();
 
@@ -770,14 +771,14 @@ $(function()
         let done = $.Deferred();
         engine.activateSkill(skill.secondary_effect, player, enemy, player_turn);
 
-        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor)
+        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor > 0 || skill.secondary_effect.penetrate > 0)
         {
-            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.armor, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.armor, skill.secondary_effect.penetrate, player_turn).done(function()
             {
                 done.resolve();
             });
             if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
-            if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player);
+            if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.secondary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.secondary_effect.mana_drain > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.secondary_effect.armor > 0) graphics.updateArmor(player.armor, skill.secondary_effect.armor, false);

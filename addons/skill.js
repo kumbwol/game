@@ -22,6 +22,14 @@ function Skill(name)
 
     switch(this.name)
     {
+        case "Penetrate":
+        {
+            primary_effect = new Effect("Penetrate");
+            secondary_effect = new Effect("REGEN");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
         case "Armor":
         {
             visual_pattern =

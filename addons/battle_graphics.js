@@ -1056,11 +1056,11 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
-    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, armor, player_on_turn)
+    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, armor, penetrate, player_on_turn)
     {
         let done = $.Deferred();
 
-        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0)
+        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0 || penetrate > 0)
         {
             let object;
 
@@ -1108,6 +1108,15 @@ function BattleGraphics(battle_table, engine)
                 object = $("#dmg_counter");
                 object.css("color", "grey");
                 object.html("+" + armor);
+            }
+            else if(penetrate > 0)
+            {
+                if(player_on_turn) $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
+                else $("#self").append('<div id="dmg_counter"></div>');
+
+                object = $("#dmg_counter");
+                object.css("color", "purple");
+                object.html("-" + penetrate);
             }
 
             allignToMiddle(object);
@@ -1224,13 +1233,16 @@ function BattleGraphics(battle_table, engine)
                     complete: function(){
                         $("#cut").remove();*/
 
-                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, false).done(function()
+                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.armor, skill.primary_effect.penetrate, false).done(function()
                 {
                     done.resolve();
                 });
 
-                if(skill.primary_effect.dmg > 0) updateHpBar($("#player_hp"), player);
+                if(skill.primary_effect.dmg > 0) updateHpBar($("#player_hp"), player, false);
                 if(skill.primary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy);
+                if(skill.primary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
+                if(skill.primary_effect.mana_drain > 0)  updateMpBar($("#player_mp"), player, false);
+                if(skill.primary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
                 /*     }
                  });*/
             }, 300);
@@ -1278,13 +1290,16 @@ function BattleGraphics(battle_table, engine)
                 complete: function(){
                     $("#cut").remove();*/
 
-            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, false).done(function()
+            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.armor, skill.secondary_effect.penetrate, false).done(function()
             {
                 done.resolve();
             });
 
-            if(skill.secondary_effect.dmg > 0) updateHpBar($("#player_hp"), player);
+            if(skill.secondary_effect.dmg > 0) updateHpBar($("#player_hp"), player, false);
             if(skill.secondary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy);
+            if(skill.secondary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
+            if(skill.secondary_effect.mana_drain > 0)  updateMpBar($("#player_mp"), player, false);
+            if(skill.secondary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
         }
 
         return done;
@@ -1814,7 +1829,7 @@ function BattleGraphics(battle_table, engine)
 
         $("#player_profile").append('<div class="hp_background" id="player_hp_background"</div>');
         $("#player_profile").append('<div class="hp" id="player_hp"></div>');
-        updateHpBar($("#player_hp"), player);
+        updateHpBar($("#player_hp"), player, false);
         $("#player_hp_background").append('<div class="hp_string" id="player_hp_string"></div>');
         $("#player_hp_string").html(player.hp + "/" + player.max_hp);
         allignToMiddle("#player_hp_string");
@@ -2079,6 +2094,12 @@ function BattleGraphics(battle_table, engine)
                 $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/armor.png")');
                 break;
             }
+
+            case PENETRATE:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/penetrate.png")');
+                break;
+            }
         }
     }
 
@@ -2155,6 +2176,12 @@ function BattleGraphics(battle_table, engine)
                     break;
                 }
 
+                case PENETRATE:
+                {
+                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).penetrate;
+                    break;
+                }
+
                 default:
                 {
                     effect_number = 0;
@@ -2223,6 +2250,24 @@ function BattleGraphics(battle_table, engine)
                 case PARALYZE:
                 {
                     effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).paralyze_amount;
+                    break;
+                }
+
+                case MANA_DRAIN:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).mana_drain;
+                    break;
+                }
+
+                case MANA_REGEN:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).mana_regen;
+                    break;
+                }
+
+                case PENETRATE:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).penetrate;
                     break;
                 }
 
@@ -2570,7 +2615,7 @@ function BattleGraphics(battle_table, engine)
         return engine.table[y][x].type;
     }
 
-    function updateHpBar(object, player)
+    function updateHpBar(object, player, penetrating)
     {
         let full_old_hp = $("#player_hp_string").text();
         let old_hp = "";
@@ -2614,7 +2659,7 @@ function BattleGraphics(battle_table, engine)
 
             let from_armor = false;
 
-            if(dmg)
+            if(dmg && !penetrating)
             {
                 if(difference < parseInt($("#armor_number").text()))
                 {

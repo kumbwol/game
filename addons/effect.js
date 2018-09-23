@@ -22,15 +22,24 @@ function Effect(name)
         mana_drain: 0,
         combo_amount: 0,
         armor: 0,
+        penetrate: 0,
     };
 
 
     switch(this.name)
     {
+        case "Penetrate":
+        {
+            effect.type = PENETRATE;
+            effect.penetrate = 10;
+            effect.self = false;
+            break;
+        }
+
         case "armor":
         {
             effect.type = ARMOR;
-            effect.armor = 15;
+            effect.armor = 10;
             effect.self = true;
             break;
         }

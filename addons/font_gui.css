@@ -17,7 +17,7 @@
     src: url("fonts/Trajan Pro Regular.ttf");
 }
 
-#armor_number
+#armor_number, #enemy_armor_number
 {
     position: absolute;
     top: 4px;

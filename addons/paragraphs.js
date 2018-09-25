@@ -45,8 +45,9 @@ this.paragraphs.effect.titles[PARALYZE] = "Paralyze";
 this.paragraphs.effect.titles[PROMOTE] = "Promote";
 this.paragraphs.effect.titles[COMBO] = "Combo";
 this.paragraphs.effect.titles[ARMOR] = "Armor";
+this.paragraphs.effect.titles[PENETRATE] = "Penetrating damage";
 
-this.paragraphs.effect.paragraphs[DMG] = "Elvesz X eletpontot az ellenfeltol.";
+this.paragraphs.effect.paragraphs[DMG] = "X sebzest okoz az ellenfelnek.";
 this.paragraphs.effect.paragraphs[HEAL] = "Visszatolt X eletpontot a hasznalojanak.";
 //this.paragraphs.effect.paragraphs[SHADOWFORM] = "A <div class='text_move'></div> es <div class='text_defence'></div> mezok 75% esellyel <div class='text_attack'></div>-a alakulnak.";
 //this.paragraphs.effect.paragraphs[SHADOWFORM] = "A <span style=\"color:forestgreen\">MOVE</span> es <span style=\"color:bisque\">DEFENSE</span> mezok 75% esellyel <span style=\"color:crimson\">ATTACK</span>-a alakulnak.";
@@ -61,6 +62,7 @@ this.paragraphs.effect.paragraphs[PARALYZE] = "X db. mezot elsotetit, melyeket n
 this.paragraphs.effect.paragraphs[PROMOTE] = "Az aktivizalt mezokre eso uj mezok felfejlodnek.";
 this.paragraphs.effect.paragraphs[COMBO] = "Noveli a kombo szintet, ami minnel magassab, annal erosebb effektet tartalmaz.";
 this.paragraphs.effect.paragraphs[ARMOR] = "Ad X db. vedelmet, a kovetkezo korod kezdeten elveszik.";
+this.paragraphs.effect.paragraphs[PENETRATE] = "Elvesz X eletpontot az ellenfeltol, az ellenfel armorat figyelmen kivul hagyva.";
 
 //     ...::: FIELD TYPES :::...
 this.paragraphs.field.titles[MAN] = "Magic";

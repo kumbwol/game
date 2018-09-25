@@ -30,6 +30,31 @@ function Skill(name)
             break;
         }
 
+        case "ARMOR":
+        {
+            primary_effect = new Effect("armor");
+            secondary_effect = new Effect("REGEN");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "PENETRATE":
+        {
+            visual_pattern =
+                [
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [ATT,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("armor");
+            secondary_effect  = new Effect("Penetrate");
+            break;
+        }
+
         case "Armor":
         {
             visual_pattern =
@@ -68,12 +93,12 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    /*[DEF,NUL,NUL],
+                    [DEF,NUL,NUL],
                     [NUL,ATT,NUL],
-                    [NUL,NUL,NUL]*/
-                    [DEF,ATT,NUL],
+                    [NUL,NUL,NUL]
+                    /*[DEF,ATT,NUL],
                     [DEF,DEF,NUL],
-                    [NUL,DEF,DEF]
+                    [NUL,DEF,DEF]*/
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("DMG");

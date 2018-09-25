@@ -760,6 +760,7 @@ $(function()
             if(skill.primary_effect.mana_drain > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.primary_effect.armor > 0) graphics.updateArmor(player.armor, skill.primary_effect.armor, false);
             if(skill.primary_effect.penetrate > 0) graphics.updateHpBar($("#player_hp"), player, false);
+            if(skill.primary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
         }
         else done.resolve();
 
@@ -777,11 +778,12 @@ $(function()
             {
                 done.resolve();
             });
-            if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy, false);
             if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.secondary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.secondary_effect.mana_drain > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.secondary_effect.armor > 0) graphics.updateArmor(player.armor, skill.secondary_effect.armor, false);
+            if(skill.secondary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
         }
         else done.resolve();
 

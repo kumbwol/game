@@ -38,6 +38,17 @@ figure#mouse-pointer {
     z-index: 2;
 }
 
+#enemy_armor
+{
+    position: absolute;
+    left: 928px;
+    top: -1px;
+    width: 25px;
+    height: 29px;
+    background-image: url("images/battle_gui/armor.png");
+    z-index: 2;
+}
+
 #right_arrow
 {
     position: absolute;

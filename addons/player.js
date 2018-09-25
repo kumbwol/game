@@ -48,7 +48,7 @@ function Player(name)
     skills[1][0] = new Skill("Armor");
     skills[2][0] = new Skill("Shock");
     skills[2][1] = new Skill("Shock");
-    skills[3][0] = new Skill("Shock");
+    skills[3][0] = new Skill("PENETRATE");
     skills[4][0] = new Skill("Loss");
     skills[4][1] = new Skill("Shock");
     skills[5][0] = new Skill("Combo");

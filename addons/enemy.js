@@ -41,6 +41,7 @@ function Enemy(name)
         this.max_mp = 60;
         this.mp = 44;
         this.armor = 0;
+        this.old_armor = 0;
 
         skills[0] = new Skill("ARMOR");
         skills[1] = new Skill("Paralyze");

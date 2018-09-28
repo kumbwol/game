@@ -128,6 +128,10 @@ $(function()
 
                     activatePrimarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                     {
+                        engine.saveSkillChances();
+                        engine.calculateEnemySkillChances(skill, enemy);
+                        graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
+
                         graphics.modifyTable(engine).done(function()
                         {
                             engine.table_modified = false;
@@ -136,12 +140,14 @@ $(function()
 
                             activateSecondarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                             {
+                                engine.saveSkillChances();
+                                engine.calculateEnemySkillChances(skill, enemy);
+                                graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
+
                                 graphics.updateComboNumber(engine.combo_meter);
                                 dmg_heal_number_animation_finished = true;
                                 graphics.modifyTable(engine).done(function()
                                 {
-                                    engine.calculateEnemySkillChances(skill, enemy);
-                                    graphics.updateEnemySkillChances(engine.enemy_skill_chances);
                                     if(!engine.isPlayerFreezed())
                                     {
                                         engine.refreshTable();
@@ -754,12 +760,15 @@ $(function()
             {
                 done.resolve();
             });
-            if(skill.primary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            if(skill.primary_effect.dmg > 0)
+            {
+                graphics.updateArmor(enemy.armor, enemy.old_armor, false);
+                graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            }
             if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.primary_effect.mana_regen > 0) graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.primary_effect.mana_drain > 0)  graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
-            if(skill.primary_effect.armor > 0) graphics.updateArmor(player.armor, skill.primary_effect.armor, false);
-            if(skill.primary_effect.penetrate > 0) graphics.updateHpBar($("#player_hp"), player, false);
+            if(skill.primary_effect.armor > 0) graphics.updateArmor(player.armor, player.old_armor, true);
             if(skill.primary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
         }
         else done.resolve();
@@ -778,11 +787,15 @@ $(function()
             {
                 done.resolve();
             });
-            if(skill.secondary_effect.dmg > 0)  graphics.updateEnemyHpBar($("#enemy_hp"), enemy, false);
+            if(skill.secondary_effect.dmg > 0)
+            {
+                graphics.updateArmor(enemy.armor, enemy.old_armor, false);
+                graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            }
             if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.secondary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.secondary_effect.mana_drain > 0) graphics.updateEnemyMpBar($("#enemy_mp"), enemy, false);
-            if(skill.secondary_effect.armor > 0) graphics.updateArmor(player.armor, skill.secondary_effect.armor, false);
+            if(skill.secondary_effect.armor > 0) graphics.updateArmor(player.armor, player.old_armor, true);
             if(skill.secondary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
         }
         else done.resolve();

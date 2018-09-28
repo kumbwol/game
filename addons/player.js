@@ -9,6 +9,7 @@ function Player(name)
     this.max_mp = 40;
     this.ap = 2;
     this.max_ap = 2;
+    this.old_armor = 0;
     this.armor = 0;
 
     this.abilities = [];

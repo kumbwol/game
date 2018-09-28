@@ -21,6 +21,7 @@ function BattleEngine(battle_table)
     };
     this.selected_field_id = "";
     this.allow_select = true;
+    this.enemy_old_skill_chances = [];
     this.enemy_skill_chances = [];
     this.enemy_skill_plays = [];
     this.table_modified = false;
@@ -93,6 +94,15 @@ function BattleEngine(battle_table)
     this.clearPromotedFields = clearPromotedFields;
     this.finalizePromotions = finalizePromotions;
     this.getField = getField;
+    this.saveSkillChances = saveSkillChances;
+
+    function saveSkillChances()
+    {
+        for(let i=0; i<this.enemy_skill_chances.length; i++)
+        {
+            this.enemy_old_skill_chances[i] = this.enemy_skill_chances[i];
+        }
+    }
 
     function getField(x, y)
     {
@@ -636,11 +646,22 @@ function BattleEngine(battle_table)
 
         if(effect.dmg > 0)
         {
-            unit.hp -= effect.dmg;
+            let damage = effect.dmg;
+            unit.old_armor = unit.armor;
 
-            if(unit.hp < 0)
+            unit.armor -= damage;
+
+            if(unit.armor <= 0)
             {
-                unit.hp = 0;
+                unit.armor = 0;
+                damage -= unit.old_armor;
+
+                unit.hp -= damage;
+
+                if(unit.hp < 0)
+                {
+                    unit.hp = 0;
+                }
             }
 
             this.skill_type.dmg = true;
@@ -672,6 +693,7 @@ function BattleEngine(battle_table)
 
         if(effect.armor > 0)
         {
+            unit.old_armor = unit.armor;
             unit.armor += effect.armor;
         }
 

@@ -69,25 +69,35 @@ function BattleGraphics(battle_table, engine)
     this.rank_id  = -1;
     this.skill_id = -1;
 
-    function breakArmor()
+    function breakArmor(isPlayer)
     {
-        $("#armor").remove();
+        if(isPlayer) $("#armor").remove();
+        else $("#enemy_armor").remove();
     }
 
-    function breakEnemyArmor()
+    function updateArmor(armor, old_armor, isPlayer)
     {
-        $("#enemy_armor").remove();
-    }
+        let selector;
+        if(isPlayer) selector = "#armor";
+        else selector = "#enemy_armor";
 
-    function updateEnemyArmor(armor, difference, dmg)
-    {
-        if(armor > 0)
+        //alert(armor);
+        //alert(old_armor);
+        //alert("hey");
+
+        if(armor !== old_armor)
         {
-            if(!isElementExists($("#enemy_armor")))
+            let dmg = (old_armor > armor);
+            let difference = Math.abs(armor - old_armor);
+
+
+            if(!isElementExists($(selector)))
             {
-                $("#game_background").append('<div id="enemy_armor"></div>');
-                $("#enemy_armor").append('<div id="enemy_armor_number"></div>');
+                if(isPlayer) $("#game_background").append('<div id="armor"></div>');
+                else $("#game_background").append('<div id="enemy_armor"></div>');
+                $(selector).append('<div class="armor_number"></div>');
             }
+
 
             let animation_speed = 30;
             let smoother = difference/20;
@@ -96,80 +106,28 @@ function BattleGraphics(battle_table, engine)
 
             let x = setInterval(function()
             {
-                console.log(i);
                 i += smoother;
 
-                if(Math.ceil(armor-difference) <= armor)
+                if(dmg)
                 {
-                    if(dmg)
-                    {
-                        $("#enemy_armor_number").text(Math.ceil(armor+difference-i));
-                    }
-                    else
-                    {
-                        $("#enemy_armor_number").text(Math.ceil(armor-difference+i));
-                    }
+                    $(selector + " .armor_number").text(Math.ceil(armor+difference-i));
+                }
+                else
+                {
+                    $(selector + " .armor_number").text(Math.ceil(armor-difference+i));
                 }
 
-                allignToMiddle($("#enemy_armor_number"));
+                allignToMiddle($(selector + " .armor_number"));
 
                 if(i>=difference)
                 {
+                    if(armor <= 0)
+                    {
+                        breakArmor(isPlayer);
+                    }
                     clearInterval(x);
                 }
             }, animation_speed);
-
-        }
-        else
-        {
-            $("#enemy_armor_number").remove();
-        }
-    }
-
-    function updateArmor(armor, difference, dmg)
-    {
-        if(armor > 0)
-        {
-            if(!isElementExists($("#armor")))
-            {
-                $("#game_background").append('<div id="armor"></div>');
-                $("#armor").append('<div id="armor_number"></div>');
-            }
-
-            let animation_speed = 30;
-            let smoother = difference/20;
-
-            let i = 0;
-
-            let x = setInterval(function()
-            {
-                console.log(i);
-                i += smoother;
-
-                if(Math.ceil(armor-difference) <= armor)
-                {
-                    if(dmg)
-                    {
-                        $("#armor_number").text(Math.ceil(armor+difference-i));
-                    }
-                    else
-                    {
-                        $("#armor_number").text(Math.ceil(armor-difference+i));
-                    }
-                }
-
-                allignToMiddle($("#armor_number"));
-
-                if(i>=difference)
-                {
-                    clearInterval(x);
-                }
-            }, animation_speed);
-
-        }
-        else
-        {
-            $("#armor_number").remove();
         }
     }
 
@@ -1098,13 +1056,53 @@ function BattleGraphics(battle_table, engine)
     }
 
 
-    function updateEnemySkillchances(enemy_skill_chances)
+    function updateEnemySkillchances(enemy_skill_chances, enemy_old_skill_chances)
     {
+        //alert(enemy_skill_chances);
+        //alert(enemy_old_skill_chances);
         for(let i=0; i<enemy_skill_chances.length; i++)
         {
-            $("#enemy_skill_"+(i+1)+ " .enemy_chance_number").text(enemy_skill_chances[i] + "%");
-            allignTextRight($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
-            allignToMiddleY($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+            //$("#enemy_skill_"+(i+1)+ " .enemy_chance_number").text(enemy_skill_chances[i] + "%");
+
+            let difference = 0;
+            let growing = false;
+            if(enemy_old_skill_chances[i] > enemy_skill_chances[i])
+            {
+                difference = enemy_old_skill_chances[i] - enemy_skill_chances[i];
+                growing = false;
+            }
+            else
+            {
+                difference = enemy_skill_chances[i] - enemy_old_skill_chances[i];
+                growing = true;
+            }
+            let animation_speed = 30;
+            let smoother = difference/20;
+
+            let j = 0;
+
+            let x = setInterval(function()
+            {
+                //console.log(j);
+                j += smoother;
+
+                if(!growing)
+                {
+                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.ceil(enemy_old_skill_chances[i]-j) + "%");
+                }
+                else
+                {
+                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.ceil(enemy_old_skill_chances[i]+j) + "%");
+                }
+
+                allignTextRight($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+                allignToMiddleY($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+
+                if(j>=difference)
+                {
+                    clearInterval(x);
+                }
+            }, animation_speed);
         }
     }
 
@@ -1290,11 +1288,15 @@ function BattleGraphics(battle_table, engine)
                     done.resolve();
                 });
 
-                if(skill.primary_effect.dmg > 0) updateHpBar($("#player_hp"), player, false);
+                if(skill.primary_effect.dmg > 0)
+                {
+                    updateArmor(player.armor, player.old_armor, true);
+                    updateHpBar($("#player_hp"), player, false);
+                }
                 if(skill.primary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy, false);
                 if(skill.primary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
                 if(skill.primary_effect.mana_drain > 0)  updateMpBar($("#player_mp"), player, false);
-                if(skill.primary_effect.armor > 0)  updateEnemyArmor(enemy.armor, skill.primary_effect.armor, false);
+                if(skill.primary_effect.armor > 0)  updateArmor(enemy.armor, enemy.old_armor, false);
                 if(skill.primary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
                 /*     }
                  });*/
@@ -1348,11 +1350,15 @@ function BattleGraphics(battle_table, engine)
                 done.resolve();
             });
 
-            if(skill.secondary_effect.dmg > 0) updateHpBar($("#player_hp"), player, false);
+            if(skill.secondary_effect.dmg > 0)
+            {
+                updateArmor(player.armor, player.old_armor, true);
+                updateHpBar($("#player_hp"), player, false);
+            }
             if(skill.secondary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy, false);
             if(skill.secondary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.secondary_effect.mana_drain > 0)  updateMpBar($("#player_mp"), player, false);
-            if(skill.secondary_effect.armor > 0)  updateEnemyArmor(enemy.armor, skill.secondary_effect.armor, false);
+            if(skill.secondary_effect.armor > 0)  updateArmor(enemy.armor, enemy.old_armor, false);
             if(skill.secondary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
         }
 
@@ -2674,7 +2680,7 @@ function BattleGraphics(battle_table, engine)
         return engine.table[y][x].type;
     }
 
-    function updateHpBar(object, player, penetrating)
+    function updateHpBar(object, player)
     {
         let full_old_hp = $("#player_hp_string").text();
         let old_hp = "";
@@ -2716,34 +2722,7 @@ function BattleGraphics(battle_table, engine)
                 $(".hp_loosing_background").css("width", (new_hp/player.max_hp) * object.parent().width() - 1);
             }
 
-            let from_armor = false;
-
-            if(dmg && !penetrating)
-            {
-                if(difference < parseInt($("#armor_number").text()))
-                {
-                    player.hp += difference;
-                    player.armor -= difference;
-                    updateArmor(parseInt($("#armor_number").text())-difference, difference, true);
-                    from_armor = true;
-                }
-                else if(difference === parseInt($("#armor_number").text()))
-                {
-                    player.hp += difference;
-                    player.armor -= difference;
-                    breakArmor();
-                    from_armor = true;
-                }
-                else if(difference > parseInt($("#armor_number").text()))
-                {
-                    player.hp += player.armor;
-                    player.armor = 0;
-                    breakArmor();
-                    difference = parseInt(old_hp) - player.hp;
-                }
-            }
-
-            if(difference > 0 && !from_armor)
+            if(difference > 0)
             {
                 let smoother = difference/20;
 
@@ -2798,7 +2777,7 @@ function BattleGraphics(battle_table, engine)
         }
     }
 
-    function updateEnemyHpBar(object, enemy, penetrating)
+    function updateEnemyHpBar(object, enemy)
     {
         let full_old_hp = $("#enemy_hp_string").text();
         let old_hp = "";
@@ -2839,36 +2818,8 @@ function BattleGraphics(battle_table, engine)
                 $(".hp_loosing_background").css("width", (new_hp/enemy.max_hp) * object.parent().width() - 1);
             }
 
-            let from_armor = false;
-
-            if(dmg && !penetrating)
-            {
-                if(difference < parseInt($("#enemy_armor_number").text()))
-                {
-                    enemy.hp += difference;
-                    enemy.armor -= difference;
-                    updateEnemyArmor(parseInt($("#enemy_armor_number").text())-difference, difference, true);
-                    from_armor = true;
-                }
-                else if(difference === parseInt($("#enemy_armor_number").text()))
-                {
-                    enemy.hp += difference;
-                    enemy.armor -= difference;
-                    breakEnemyArmor();
-                    from_armor = true;
-                }
-                else if(difference > parseInt($("#enemy_armor_number").text()))
-                {
-                    enemy.hp += enemy.armor;
-                    enemy.armor = 0;
-                    breakEnemyArmor();
-                    difference = parseInt(old_hp) - enemy.hp;
-                }
-            }
-
-
             //alert(((parseInt(new_hp))/enemy.max_hp) * object.parent().width() - 1);
-            if(difference > 0 && !from_armor)
+            if(difference > 0)
             {
                 let smoother = difference/20;
 

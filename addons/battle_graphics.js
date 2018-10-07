@@ -2877,199 +2877,203 @@ function BattleGraphics(battle_table, engine)
 
     function updateMpBar(object, player, first_time)
     {
-        let full_old_mp = $("#player_mp_string").text();
-        let old_mp = "";
-        for(let i=0; i<full_old_mp.length; i++)
+        if(player.max_mp !== 0)
         {
-            if(full_old_mp[i] == "/") break;
-            else old_mp += full_old_mp[i];
-        }
-
-        if(old_mp == "") old_mp = 0;
-
-        let new_mp = player.mp;
-
-        if(first_time)
-        {
-            object.css("width", (player.mp/player.max_mp) * object.parent().width() - 1);
-            $("#player_mp_string").html(player.mp + "/" + player.max_mp);
-            allignToMiddle("#player_mp_string");
-        }
-        else
-        {
-            object.parent().append('<div class="mp_loosing_background"></div>');
-            $(".mp_loosing_background").css("width", (parseInt(old_mp)/player.max_mp) * object.parent().width() - 1);
-
-            let animation_speed = 30;
-            let difference = 0;
-            let dmg;
-            if(parseInt(old_mp) - new_mp > 0)
+            let full_old_mp = $("#player_mp_string").text();
+            let old_mp = "";
+            for(let i=0; i<full_old_mp.length; i++)
             {
-                difference = parseInt(old_mp) - new_mp;
-                dmg = true;
+                if(full_old_mp[i] == "/") break;
+                else old_mp += full_old_mp[i];
+            }
+
+            if(old_mp == "") old_mp = 0;
+
+            let new_mp = player.mp;
+
+            if(first_time)
+            {
+                object.css("width", (player.mp/player.max_mp) * object.parent().width() - 1);
+                $("#player_mp_string").html(player.mp + "/" + player.max_mp);
+                allignToMiddle("#player_mp_string");
             }
             else
             {
-                difference = new_mp - parseInt(old_mp);
-                dmg = false;
-                $(".mp_loosing_background").css("background-color", "lightgreen");
-                $(".mp_loosing_background").css("width", (new_mp/player.max_mp) * object.parent().width() - 1);
-            }
+                object.parent().append('<div class="mp_loosing_background"></div>');
+                $(".mp_loosing_background").css("width", (parseInt(old_mp)/player.max_mp) * object.parent().width() - 1);
 
-            if(difference > 0)
-            {
-                let smoother = difference/20;
-
-                let i = 0;
-
-                let x = setInterval(function()
+                let animation_speed = 30;
+                let difference = 0;
+                let dmg;
+                if(parseInt(old_mp) - new_mp > 0)
                 {
-                    if(dmg)
+                    difference = parseInt(old_mp) - new_mp;
+                    dmg = true;
+                }
+                else
+                {
+                    difference = new_mp - parseInt(old_mp);
+                    dmg = false;
+                    $(".mp_loosing_background").css("background-color", "lightgreen");
+                    $(".mp_loosing_background").css("width", (new_mp/player.max_mp) * object.parent().width() - 1);
+                }
+
+                if(difference > 0)
+                {
+                    let smoother = difference/20;
+
+                    let i = 0;
+
+                    let x = setInterval(function()
                     {
-                        object.css("width", ((parseInt(old_mp)-i)/player.max_mp) * object.parent().width() - 1);
-                        if(Math.floor((parseInt(old_mp)-i)) > 0)
+                        if(dmg)
                         {
-                            $("#player_mp_string").html(Math.floor((parseInt(old_mp)-i)) + "/" + player.max_mp);
-                        }
-                        else $("#player_mp_string").html(0 + "/" + player.max_mp);
-                    }
-                    else
-                    {
-                        object.css("width", ((parseInt(old_mp)+i)/player.max_mp) * object.parent().width() - 1);
-                        if(Math.ceil((parseInt(old_mp)+i)) <= player.max_mp)
-                        {
-                            $("#player_mp_string").html(Math.ceil((parseInt(old_mp)+i)) + "/" + player.max_mp);
-                        }
-                        else $("#player_mp_string").html(player.max_mp + "/" + player.max_mp);
-                    }
-
-                    allignToMiddle("#player_mp_string");
-                    i += smoother;
-                    //console.log(i);
-
-                    if(i>difference)
-                    {
-                        clearInterval(x);
-                        if(player.mp === 0) object.css("wdith", 0);
-                        if(player.mp === player.max_mp) object.css("width", (player.max_mp/player.max_mp) * object.parent().width() - 1);
-
-                        i = 0;
-                        let y = setInterval(function()
-                        {
-                            $(".mp_loosing_background").css("width", ((old_mp-i)/player.max_mp) * $(".mp_loosing_background").parent().width() - 1);
-                            i += smoother;
-
-                            if(i>difference)
+                            object.css("width", ((parseInt(old_mp)-i)/player.max_mp) * object.parent().width() - 1);
+                            if(Math.floor((parseInt(old_mp)-i)) > 0)
                             {
-                                clearInterval(y);
-                                $(".mp_loosing_background").remove();
+                                $("#player_mp_string").html(Math.floor((parseInt(old_mp)-i)) + "/" + player.max_mp);
                             }
-                        }, animation_speed/2);
-                    }
-                }, animation_speed);
+                            else $("#player_mp_string").html(0 + "/" + player.max_mp);
+                        }
+                        else
+                        {
+                            object.css("width", ((parseInt(old_mp)+i)/player.max_mp) * object.parent().width() - 1);
+                            if(Math.ceil((parseInt(old_mp)+i)) <= player.max_mp)
+                            {
+                                $("#player_mp_string").html(Math.ceil((parseInt(old_mp)+i)) + "/" + player.max_mp);
+                            }
+                            else $("#player_mp_string").html(player.max_mp + "/" + player.max_mp);
+                        }
+
+                        allignToMiddle("#player_mp_string");
+                        i += smoother;
+                        //console.log(i);
+
+                        if(i>difference)
+                        {
+                            clearInterval(x);
+                            if(player.mp === 0) object.css("wdith", 0);
+                            if(player.mp === player.max_mp) object.css("width", (player.max_mp/player.max_mp) * object.parent().width() - 1);
+
+                            i = 0;
+                            let y = setInterval(function()
+                            {
+                                $(".mp_loosing_background").css("width", ((old_mp-i)/player.max_mp) * $(".mp_loosing_background").parent().width() - 1);
+                                i += smoother;
+
+                                if(i>difference)
+                                {
+                                    clearInterval(y);
+                                    $(".mp_loosing_background").remove();
+                                }
+                            }, animation_speed/2);
+                        }
+                    }, animation_speed);
+                }
             }
         }
     }
 
     function updateEnemyMpBar(object, enemy, first_time)
     {
-        let full_old_mp = $("#enemy_mp_string").text();
-        let old_mp = "";
-        for(let i=0; i<full_old_mp.length; i++)
+        if(enemy.max_mp !== 0)
         {
-            if(full_old_mp[i] == "/") break;
-            else old_mp += full_old_mp[i];
-        }
-
-        if(old_mp == "") old_mp = 0;
-
-        let new_mp = enemy.mp;
-
-        if(first_time)
-        {
-            object.css("width", (enemy.mp/enemy.max_mp) * object.parent().width() - 1);
-            $("#enemy_mp_string").html(enemy.mp + "/" + enemy.max_mp);
-            allignToMiddle("#enemy_mp_string");
-        }
-        else
-        {
-            object.parent().append('<div class="mp_loosing_background"></div>');
-            $(".mp_loosing_background").css("width", (parseInt(old_mp)/enemy.max_mp) * object.parent().width() - 1);
-
-            let animation_speed = 30;
-            let difference = 0;
-            let dmg;
-            if(parseInt(old_mp) - new_mp > 0)
+            let full_old_mp = $("#enemy_mp_string").text();
+            let old_mp = "";
+            for(let i=0; i<full_old_mp.length; i++)
             {
-                difference = parseInt(old_mp) - new_mp;
-                dmg = true;
+                if(full_old_mp[i] == "/") break;
+                else old_mp += full_old_mp[i];
+            }
+
+            if(old_mp == "") old_mp = 0;
+
+            let new_mp = enemy.mp;
+
+            if(first_time)
+            {
+                object.css("width", (enemy.mp/enemy.max_mp) * object.parent().width() - 1);
+                $("#enemy_mp_string").html(enemy.mp + "/" + enemy.max_mp);
+                allignToMiddle("#enemy_mp_string");
             }
             else
             {
-                difference = new_mp - parseInt(old_mp);
-                dmg = false;
-                $(".mp_loosing_background").css("background-color", "lightgreen");
-                $(".mp_loosing_background").css("width", (new_mp/enemy.max_mp) * object.parent().width() - 1);
-            }
+                object.parent().append('<div class="mp_loosing_background"></div>');
+                $(".mp_loosing_background").css("width", (parseInt(old_mp)/enemy.max_mp) * object.parent().width() - 1);
 
-
-            //alert(((parseInt(new_hp))/enemy.max_hp) * object.parent().width() - 1);
-            if(difference > 0)
-            {
-                let smoother = difference/20;
-
-                //alert(animation_speed/(difference*smoother)*2);
-
-                let i = 0;
-
-                let x = setInterval(function()
+                let animation_speed = 30;
+                let difference = 0;
+                let dmg;
+                if(parseInt(old_mp) - new_mp > 0)
                 {
-                    if(dmg)
+                    difference = parseInt(old_mp) - new_mp;
+                    dmg = true;
+                }
+                else
+                {
+                    difference = new_mp - parseInt(old_mp);
+                    dmg = false;
+                    $(".mp_loosing_background").css("background-color", "lightgreen");
+                    $(".mp_loosing_background").css("width", (new_mp/enemy.max_mp) * object.parent().width() - 1);
+                }
+
+
+                //alert(((parseInt(new_hp))/enemy.max_hp) * object.parent().width() - 1);
+                if(difference > 0)
+                {
+                    let smoother = difference/20;
+
+                    //alert(animation_speed/(difference*smoother)*2);
+
+                    let i = 0;
+
+                    let x = setInterval(function()
                     {
-                        object.css("width", ((parseInt(old_mp)-i)/enemy.max_mp) * object.parent().width() - 1);
-                        if(Math.floor((parseInt(old_mp)-i)) > 0)
+                        if(dmg)
                         {
-                            $("#enemy_mp_string").html(Math.floor((parseInt(old_mp)-i)) + "/" + enemy.max_mp);
-                        }
-                        else $("#enemy_mp_string").html(0 + "/" + enemy.max_mp);
-                    }
-                    else
-                    {
-                        object.css("width", ((parseInt(old_mp)+i)/enemy.max_mp) * object.parent().width() - 1);
-                        if(Math.ceil((parseInt(old_mp)+i)) <= enemy.max_mp)
-                        {
-                            $("#enemy_mp_string").html(Math.ceil((parseInt(old_mp)+i)) + "/" + enemy.max_mp);
-                        }
-                        else $("#enemy_mp_string").html(enemy.max_mp + "/" + enemy.max_mp);
-                    }
-
-                    allignToMiddle("#enemy_mp_string");
-                    i += smoother;
-                    //console.log(i);
-
-                    if(i>difference)
-                    {
-                        clearInterval(x);
-                        if(enemy.mp === 0) object.css("width", 0);
-                        if(enemy.mp === enemy.max_mp) object.css("width", (enemy.max_mp/enemy.max_mp) * object.parent().width() - 1);
-
-                        i = 0;
-                        let y = setInterval(function()
-                        {
-                            $(".mp_loosing_background").css("width", ((old_mp-i)/enemy.max_mp) * $(".mp_loosing_background").parent().width() - 1);
-                            i += smoother;
-
-                            if(i>difference)
+                            object.css("width", ((parseInt(old_mp)-i)/enemy.max_mp) * object.parent().width() - 1);
+                            if(Math.floor((parseInt(old_mp)-i)) > 0)
                             {
-                                clearInterval(y);
-                                $(".mp_loosing_background").remove();
+                                $("#enemy_mp_string").html(Math.floor((parseInt(old_mp)-i)) + "/" + enemy.max_mp);
                             }
-                        }, animation_speed/2);
-                    }
-                }, animation_speed);
+                            else $("#enemy_mp_string").html(0 + "/" + enemy.max_mp);
+                        }
+                        else
+                        {
+                            object.css("width", ((parseInt(old_mp)+i)/enemy.max_mp) * object.parent().width() - 1);
+                            if(Math.ceil((parseInt(old_mp)+i)) <= enemy.max_mp)
+                            {
+                                $("#enemy_mp_string").html(Math.ceil((parseInt(old_mp)+i)) + "/" + enemy.max_mp);
+                            }
+                            else $("#enemy_mp_string").html(enemy.max_mp + "/" + enemy.max_mp);
+                        }
+
+                        allignToMiddle("#enemy_mp_string");
+                        i += smoother;
+                        //console.log(i);
+
+                        if(i>difference)
+                        {
+                            clearInterval(x);
+                            if(enemy.mp === 0) object.css("width", 0);
+                            if(enemy.mp === enemy.max_mp) object.css("width", (enemy.max_mp/enemy.max_mp) * object.parent().width() - 1);
+
+                            i = 0;
+                            let y = setInterval(function()
+                            {
+                                $(".mp_loosing_background").css("width", ((old_mp-i)/enemy.max_mp) * $(".mp_loosing_background").parent().width() - 1);
+                                i += smoother;
+
+                                if(i>difference)
+                                {
+                                    clearInterval(y);
+                                    $(".mp_loosing_background").remove();
+                                }
+                            }, animation_speed/2);
+                        }
+                    }, animation_speed);
+                }
             }
         }
     }
-
-
 }

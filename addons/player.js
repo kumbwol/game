@@ -5,12 +5,15 @@ function Player(name)
     this.name = name;
     this.hp = 50;
     this.max_hp = 50;
-    this.mp = 16;
-    this.max_mp = 40;
+    this.mp = 10;
+    this.max_mp = 10;
     this.ap = 2;
     this.max_ap = 2;
     this.old_armor = 0;
     this.armor = 0;
+
+    this.inventory = new Inventory();
+
 
     this.abilities = [];
 

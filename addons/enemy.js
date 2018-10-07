@@ -16,6 +16,8 @@ function Enemy(name)
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
+        this.armor = 0;
+        this.old_armor = 0;
 
         skills[0] = new Skill("Raging storm");
         skills[1] = new Skill("Regeneration");
@@ -53,6 +55,8 @@ function Enemy(name)
         this.hp = 50;
         this.max_mp = 60;
         this.mp = 60;
+        this.armor = 0;
+        this.old_armor = 0;
 
         skills[0] = new Skill("Double Punch");
         skills[1] = new Skill("Paralyze");

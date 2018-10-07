@@ -29,7 +29,7 @@ $(function()
 
         let engine = new BattleEngine(battle_table);
         let player = new Player("Kumbi");
-        let enemy  = new Enemy("Test");
+        let enemy  = new Enemy("Skeleton");
         let graphics = new BattleGraphics(battle_table, engine, player);
         let skill_activation_finished = true;
         let poison_animation_finished = true;
@@ -550,7 +550,6 @@ $(function()
             graphics.changeCursor(player, engine);
         });
 
-
         $("#game_background").on("click", "#end_turn", function()
         {
             //console.log(player_turn);
@@ -709,7 +708,6 @@ $(function()
             {
                 let i=0;
 
-
                 graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                 {
                     i++;
@@ -718,17 +716,29 @@ $(function()
                         i++;
                         graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                         {
-                            engine.calculateEnemySkillChances(skill, enemy);
-                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
-
-                            player.ap = player.max_ap;
-                            if(skill.moving)
+                            i++;
+                            graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                             {
-                                engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, engine.rank);
-                            }
-                            graphics.refreshEndButton(player.ap);
-                            graphics.refreshAbilityPoint(player);
-                            done.resolve();
+                                i++;
+                                graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                                {
+                                    i++;
+                                    graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
+                                    {
+                                        engine.calculateEnemySkillChances(skill, enemy);
+                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+
+                                        player.ap = player.max_ap;
+                                        if(skill.moving)
+                                        {
+                                            engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, engine.rank);
+                                        }
+                                        graphics.refreshEndButton(player.ap);
+                                        graphics.refreshAbilityPoint(player);
+                                        done.resolve();
+                                    });
+                                });
+                            });
                         });
                     });
                 });

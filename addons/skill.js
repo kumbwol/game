@@ -93,12 +93,12 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [DEF,NUL,NUL],
+                    /*[DEF,NUL,NUL],
                     [NUL,ATT,NUL],
-                    [NUL,NUL,NUL]
-                    /*[DEF,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [DEF,ATT,NUL],
                     [DEF,DEF,NUL],
-                    [NUL,DEF,DEF]*/
+                    [NUL,DEF,DEF]
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("DMG");

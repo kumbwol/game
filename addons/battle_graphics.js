@@ -226,7 +226,7 @@ function BattleGraphics(battle_table, engine)
         $("#selected_skill").css("opacity", 1);
         $("#selected_skill").css("pointer-events", "");
         $("#selected_skill").css("top", "30px");
-        allignRankPatternToMiddle($("#selected_skill"), skill.width);
+        allignRankPatternToMiddle($("#selected_skill"), skill.width+1);
     }
 
     function createSkillInExplainer()
@@ -2764,7 +2764,6 @@ function BattleGraphics(battle_table, engine)
                         {
                             $(".hp_loosing_background").css("width", ((old_hp-i)/player.max_hp) * $(".hp_loosing_background").parent().width() - 1);
                             i += smoother;
-
                             if(i>difference)
                             {
                                 clearInterval(y);

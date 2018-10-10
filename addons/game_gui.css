@@ -396,12 +396,6 @@ figure#mouse-pointer {
     box-sizing: border-box;
 }
 
-#player_profile
-{
-    top: 0px;
-    left: 0px;
-}
-
 #enemy_profile
 {
     top: 0px;
@@ -550,37 +544,37 @@ figure#mouse-pointer {
     left: 29px;
 }
 
-#skill_1
+.battle_skill_position_1
 {
     top: 182px;
     left: 0px;
 }
 
-#skill_2
+.battle_skill_position_2
 {
     top: 241px;
     left: 0px;
 }
 
-#skill_3
+.battle_skill_position_3
 {
     top: 300px;
     left: 0px;
 }
 
-#skill_4
+.battle_skill_position_4
 {
     top: 359px;
     left: 0px;
 }
 
-#skill_5
+.battle_skill_position_5
 {
     top: 418px;
     left: 0px;
 }
 
-#skill_6
+.battle_skill_position_6
 {
     top: 477px;
     left: 0px;

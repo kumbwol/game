@@ -1,5 +1,5 @@
-function Item(type, color)
+function Item(type, rank)
 {
     this.type = type;
-    this.color = color;
+    this.rank = rank;
 }

@@ -1,34 +1,97 @@
+#bag
+{
+    position: absolute;
+    left: 500px;
+    top: 70px;
+}
+
 .bag_field
 {
     position: absolute;
     width: 53px;
     height: 53px;
-    background-color: #b9b9b9;
     box-sizing: border-box;
     border: 1px solid black;
 }
 
+.bag_field.grey
+{
+    background-color: #b9b9b9;
+}
+
+.bag_field.white
+{
+    background-color: white;
+}
+
+.bag_field.green
+{
+    background-color: green;
+}
+
+
 .item
 {
     position: absolute;
-    width: 34px;
-    height: 34px;
+    width: 51px;
+    height: 51px;
 }
 
-.sword
+.item.sword
 {
     background-image: url("images/items/sword.png");
-
 }
 
-.necklace
+.item.necklace
 {
     background-image: url("images/items/necklace.png");
-
 }
 
 .item_hover
 {
     z-index: 1;
     border: 2px solid yellow;
+}
+
+.inventory_skill
+{
+    position: absolute;
+    left: 30px;
+    top: 77px;
+}
+
+.inventory_skill_position_1
+{
+    top: 0px;
+    left: 0px;
+}
+
+.inventory_skill_position_2
+{
+    top: 59px;
+    left: 0px;
+}
+
+.inventory_skill_position_3
+{
+    top: 118px;
+    left: 0px;
+}
+
+.inventory_skill_position_4
+{
+    top: 177px;
+    left: 0px;
+}
+
+.inventory_skill_position_5
+{
+    top: 236px;
+    left: 0px;
+}
+
+.inventory_skill_position_6
+{
+    top: 295px;
+    left: 0px;
 }

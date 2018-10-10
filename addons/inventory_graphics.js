@@ -1,28 +1,33 @@
 function InventoryGraphics(bag)
 {
     this.drawInventory = drawInventory;
+    this.drawSkills = drawSkills;
+
+    function drawSkills(player, rank, inBattle)
+    {
+        let skill_graphics = new SkillGraphics();
+        skill_graphics.drawSkills(player, rank, inBattle);
+    }
 
     function drawInventory(engine)
     {
-        $(".font_preloader0").remove();
-        $(".font_preloader1").remove();
-        $(".font_preloader2").remove();
-        $("#create_table").remove();
-        $("#inventory").remove();
-
         engine.logInventory();
         drawBag(engine);
     }
 
     function drawBag(engine)
     {
+        /*let a = new BattleGraphics();
+        a.drawSkillBars();*/
         //$("#game_background").append('<div class="bag_field"></div>');
         //$("game_background").append(createBagField("alma", 5, 5));
+        $("#game_background").append('<div id="bag"></div>')
+
         for(let i=0; i<bag.height; i++)
         {
             for(let j=0; j<bag.width; j++)
             {
-                $("#game_background").append(createBagField("y_" + i + "_x_" + j, j, i, engine.getType(j, i)));
+                $("#bag").append(createBagField("y_" + i + "_x_" + j, j, i, engine.getItem(j, i)));
 
                 allignToMiddle($("#y_" + i + "_x_" + j).children().first());
                 allignToMiddleY($("#y_" + i + "_x_" + j).children().first());
@@ -38,9 +43,19 @@ function InventoryGraphics(bag)
                             let parent = "#" + ui.draggable.parent().attr("id");
                             let target  = "#" + $(this).attr("id");
 
+                            let parent_class = ui.draggable.parent().attr("class");
+                            let target_class = $(this).attr("class");
+
+                            engine.logInventory();
+
+                            $(parent).removeClass();
+                            $(target).removeClass();
+                            $(target).addClass(parent_class);
+                            $(parent).addClass(target_class);
+
                             if(engine.getType(target[7], target[3]) === EMPTY)
                             {
-                                engine.addItem(target[7], target[3], engine.getType(parent[7], parent[3]));
+                                engine.addItem(target[7], target[3], engine.getItem(parent[7], parent[3]));
                                 engine.deleteItem(parent[7], parent[3]);
 
                                 let element = $(parent).children().first().detach();
@@ -53,10 +68,19 @@ function InventoryGraphics(bag)
                             }
                             else
                             {
-                                let element = $(parent).children().first();
+                                engine.swapItems(parent[7], parent[3], target[7], target[3]);
+
+                                let element = $(parent).children().first().detach();
+                                $(target).append(element);
                                 allignToMiddle(element);
                                 allignToMiddleY(element);
 
+                                element = $(target).children().first().detach();
+                                $(parent).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+
+                                engine.logInventory();
                             }
                         }
                     });
@@ -70,19 +94,17 @@ function InventoryGraphics(bag)
         }
     }
 
-    function createBagField(id, x, y, type)
+    function createBagField(id, x, y, item)
     {
-        let shiftX = 500;
-        let shiftY = 10;
         let $object = $('<div></div>');
 
         $object.attr("id", id);
         $object.addClass("bag_field");
 
-        $object.css('left', shiftX + (x*(bag.field_size))-x+1);
-        $object.css('top',  shiftY + (y*(bag.field_size))-y+1);
+        $object.css('left', (x*(bag.field_size))-x+1);
+        $object.css('top',  (y*(bag.field_size))-y+1);
 
-        switch(type)
+        switch(item.type)
         {
             case SWORD:
             {
@@ -97,6 +119,27 @@ function InventoryGraphics(bag)
             }
         }
 
+        switch(item.rank)
+        {
+            case 0:
+            {
+                $object.addClass("grey");
+                break;
+            }
+
+            case 1:
+            {
+                $object.addClass("white");
+                break;
+            }
+
+            case 2:
+            {
+                $object.addClass("green");
+                break;
+            }
+        }
+
         return $object;
     }
 
@@ -105,7 +148,7 @@ function InventoryGraphics(bag)
         let object_width = $(object).outerWidth();
         let parent_object_width = $(object).parent().outerWidth();
 
-        $(object).css("left", (parent_object_width-object_width)/2);
+        $(object).css("left", (parent_object_width-object_width)/2-1);
     }
 
     function allignToMiddleY(object)
@@ -113,6 +156,6 @@ function InventoryGraphics(bag)
         let object_height = $(object).outerHeight();
         let parent_object_height = $(object).parent().outerHeight();
 
-        $(object).css("top", (parent_object_height-object_height)/2);
+        $(object).css("top", (parent_object_height-object_height)/2-1);
     }
 }

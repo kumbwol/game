@@ -27,6 +27,7 @@ $(function()
             $.getScript("addons/inventory_graphics.js"),
             $.getScript("addons/inventory.js"),
             $.getScript("addons/item.js"),
+            $.getScript("addons/skill_graphics.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );
             })
@@ -52,19 +53,33 @@ $(function()
 
                 $("#create_table").on("click", function()
                 {
+                    deletePage();
                     new Battle();
                 });
 
                 $("#inventory").on("click", function()
                 {
+                    deletePage();
                     let player = new Player("Kumbi");
+                    let rank = [];
 
-                    player.inventory.showInventory();
+                    for(let i=0; i<6; i++) rank[i]=0;
+
+                    player.inventory.showInventory(player, rank);
                 });
 
 
             });
         });
+    }
+
+    function deletePage()
+    {
+        $(".font_preloader0").remove();
+        $(".font_preloader1").remove();
+        $(".font_preloader2").remove();
+        $("#create_table").remove();
+        $("#inventory").remove();
     }
 
 

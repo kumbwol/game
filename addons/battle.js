@@ -120,8 +120,6 @@ function Battle()
                 activatePrimarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                 {
                     engine.saveSkillChances();
-                    engine.calculateEnemySkillChances(skill, enemy);
-                    graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
 
                     graphics.modifyTable(engine).done(function()
                     {

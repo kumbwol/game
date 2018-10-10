@@ -50,8 +50,8 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect    = new Effect("armor");
-            secondary_effect  = new Effect("Penetrate");
+            primary_effect    = new Effect("Penetrate");
+            secondary_effect  = new Effect("NOTHING");
             break;
         }
 

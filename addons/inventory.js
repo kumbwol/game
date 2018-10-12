@@ -1,4 +1,4 @@
-function Inventory(player)
+function Inventory(player, skill_graphics)
 {
     let bag = {
         height: 7,
@@ -19,7 +19,8 @@ function Inventory(player)
         graphics.drawInventory(engine);
 
         $("#game_background").append('<div id="player_profile" class="inventory_skill"></div>');
-        graphics.drawSkills(player, false);
+        graphics.drawSkills(player, skill_graphics, false);
+        skill_graphics.drawSkillRanks(player, false);
         graphics.createBackButton();
         graphics.changeSkillsButton();
     }
@@ -32,5 +33,13 @@ function Inventory(player)
     $("#game_background").on("click", "#change_skills", function()
     {
         engine.changeSkills(player);
+    });
+
+    $("#game_background").on("click", "#exit_rank_explainer_in_inventory", function()
+    {
+        $("#player_profile").remove();
+        $("#game_background").append('<div id="player_profile" class="inventory_skill"></div>');
+        graphics.drawSkills(player, skill_graphics, false);
+        skill_graphics.removeRankHighlight();
     });
 }

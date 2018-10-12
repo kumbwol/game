@@ -1,9 +1,28 @@
-function SkillGraphics()
+function SkillGraphics(player)
 {
-    this.drawSkills = drawSkills;
+    this.drawSkillsSG = drawSkillsSG;
     this.createEffect = createEffect;
     this.updateSkillRanks = updateSkillRanks;
     this.drawSkillRanks = drawSkillRanks;
+    this.removeRankHighlight = removeRankHighlight;
+
+
+    $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function()
+    {
+        drawRankExplainer(parseInt(($(this).attr("id"))[18]), player.rank[parseInt(($(this).attr("id"))[18])], player);
+    });
+
+    $("#game_background").on("click", "#left_arrow", function()
+    {
+        player.observed_rank_id--;
+        drawRankExplainer(player.observed_skill_id, player.observed_rank_id, player);
+    });
+
+    $("#game_background").on("click", "#right_arrow", function()
+    {
+        player.observed_rank_id++;
+        drawRankExplainer(player.observed_skill_id, player.observed_rank_id, player);
+    });
 
     function drawSkillRanks(player, inBattle)
     {
@@ -12,6 +31,361 @@ function SkillGraphics()
             if(player.getSkills()[i].length > 1) createSkillRank(player, i, inBattle);
         }
         this.updateSkillRanks(player);
+    }
+
+    function deletePlayerSkills()
+    {
+        $("#player_profile > .active_skill").remove();
+        $("#rank_explainer").remove();
+        $("#selected_skill").remove();
+    }
+
+    function highlightRank(skill_id)
+    {
+        $("#skill_rank_border_" + skill_id).addClass("selected_rank");
+    }
+
+    function drawRankExplainerBackground(inBattle)
+    {
+        //alert($("#enemy_name").length);
+        $("#player_profile").append('<div id="rank_explainer"></div>');
+        if(!inBattle)
+        {
+            $("#player_profile").css("top", "-105px");
+            $("#rank_explainer").css("border-width", "1px 1px 1px 1px");
+        }
+    }
+
+    function allignRankPatternToMiddle(object, object_width)
+    {
+        let parent_object_width = $(object).parent().outerWidth();
+
+        $(object).css("left", (parent_object_width-object_width)/2);
+    }
+
+    function createField(id, type, x, y, animated, field_size)
+    {
+        let $object  = $('<div></div>');
+        if(animated) $object.attr('id', id);
+        else $object.attr('id', id+"skill");
+
+        $object.css("width",  field_size);
+        $object.css("height", field_size);
+        $object.css('position', 'absolute');
+        $object.css('left', (x*(field_size+2))-x+1);
+        $object.css('top',  (y*(field_size+2))-y+1);
+        switch(type)
+        {
+            case NUL:
+            {
+                $object.attr('class', "nul");
+                break;
+            }
+
+            case MAN:
+            {
+                $object.attr('class', "mana");
+                break;
+            }
+
+            case PMA:
+            {
+                $object.attr('class', "promoted_mana");
+                break;
+            }
+
+            case ATT:
+            {
+                $object.attr('class', "attack");
+                break;
+            }
+
+            case PAT:
+            {
+                $object.attr('class', "promoted_attack");
+                break;
+            }
+
+            case DEF:
+            {
+                $object.attr('class', "defense");
+                break;
+            }
+
+            case PDE:
+            {
+                $object.attr('class', "promoted_defense");
+                break;
+            }
+
+            case MOV:
+            {
+                $object.attr('class', "move");
+                break;
+            }
+
+            case PMO:
+            {
+                $object.attr('class', "promoted_move");
+                break;
+            }
+
+            case POI:
+            {
+                $object.attr('class', "poison");
+                break;
+            }
+
+            case PRO:
+            {
+                $object.attr('class', "promoted_field");
+                break;
+            }
+        }
+        return $object;
+    }
+
+    function drawSelectedSkill(player, skill_id, skill, rank, showOriginalPattern)
+    {
+        let field_size = 50;
+        $("#game_background").append('<div id="selected_skill"></div>');
+        for(let i=0; i<player.getSkills()[skill_id][rank].getSkillPatternHeight(); i++)
+        {
+            for(let j=0; j<player.getSkills()[skill_id][rank].getSkillPatternWidth(); j++)
+            {
+                let row_id = "sy_" + i;
+                let column_id = row_id + "_sx_" + j;
+                if(showOriginalPattern)
+                {
+                    $("#selected_skill").append(createField(column_id, player.getSkills()[skill_id][rank].getSkillPatternOriginalValue(j, i), j, i, false, field_size));
+                }
+                else $("#selected_skill").append(createField(column_id, player.getSkills()[skill_id][rank].getSkillPatternValue(j, i), j, i, false, field_size));
+            }
+        }
+        skill.height = player.getSkills()[skill_id][rank].getSkillPatternHeight()*(field_size+1) + 1; //TODO: Fix how 50 calculated
+        skill.width  = player.getSkills()[skill_id][rank].getSkillPatternWidth()*(field_size+1)  + 1;
+    }
+
+    function drawRankPattern(player, skill_id, rank)
+    {
+        let skill =
+            {
+                height: 0,
+                width: 0
+            };
+        drawSelectedSkill(player, skill_id, skill, rank, true);
+        $("#selected_skill").appendTo("#rank_explainer");
+        $("#selected_skill").css("opacity", 1);
+        $("#selected_skill").css("pointer-events", "");
+        $("#selected_skill").css("top", "30px");
+        allignRankPatternToMiddle($("#selected_skill"), skill.width+1);
+    }
+
+    function removeRankHighlight()
+    {
+        $(".trapezoid_border").removeClass("selected_rank");
+    }
+
+    function createSkillInExplainer()
+    {
+        $("#rank_explainer").append('<div id="skill_0"></div>');
+        $("#skill_0").append('<div class="skill_left_part_top"></div>');
+        $("#skill_0").append('<div class="skill_left_part_bottom"></div>');
+
+        $("#skill_0 .skill_left_part_bottom").append('<div class="skill_left_part_bottom_left"></div>');
+        $("#skill_0 .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_image"></div>');
+        $("#skill_0 .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_number"></div>');
+
+        $("#skill_0 .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
+        $("#skill_0 .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_image"></div>');
+        $("#skill_0 .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_number"></div>');
+
+        $("#skill_0 .skill_left_part_top").append('<div class="skill_name_string"></div>');
+    }
+
+    function createArrows(skill_id, rank_id, max_rank)
+    {
+        if(rank_id > 0) $("#rank_explainer").append('<div id="left_arrow"></div>');
+        if(rank_id+1 < max_rank) $("#rank_explainer").append('<div id="right_arrow"></div>');
+    }
+
+    function createExitButtonInRankExplainer(inBattle)
+    {
+        if(inBattle)
+        {
+            $("#rank_explainer").append('<div id="exit_rank_explainer"></div>');
+            $("#exit_rank_explainer").append('<div id="exit_button_inside">X</div>');
+        }
+        else
+        {
+            $("#rank_explainer").append('<div id="exit_rank_explainer_in_inventory"></div>');
+            $("#exit_rank_explainer_in_inventory").append('<div id="exit_button_inside">X</div>');
+        }
+
+        //alert($("#exit_button_inside").outerWidth());
+        //allignToMiddle("#exit_button_inside");
+    }
+
+    function createRank(rank)
+    {
+        $("#rank_explainer").append('<div id="rank_in_explain" class="roman_number_in_explain"></div>');
+        switch(rank)
+        {
+            case 1:
+            {
+                $("#rank_in_explain").html("I");
+                break;
+            }
+
+            case 2:
+            {
+                $("#rank_in_explain").html("II");
+                break;
+            }
+
+            case 3:
+            {
+                $("#rank_in_explain").html("III");
+                break;
+            }
+
+            case 4:
+            {
+                $("#rank_in_explain").html("IV");
+                break;
+            }
+
+            case 5:
+            {
+                $("#rank_in_explain").html("V");
+                break;
+            }
+
+            case 6:
+            {
+                $("#rank_in_explain").html("VI");
+                break;
+            }
+
+            case 7:
+            {
+                $("#rank_in_explain").html("VII");
+                break;
+            }
+        }
+
+        allignToMiddle("#rank_in_explain");
+    }
+
+    function drawRankExplainer(skill_id, rank_id, player)
+    {
+        //alert("hi");
+        //alert(skill_id);
+        //alert(rank);
+        player.observed_rank_id = rank_id;
+        player.observed_skill_id = skill_id;
+        let inBattle = $("#enemy_name").length;
+        deletePlayerSkills();
+        removeRankHighlight();
+        highlightRank(skill_id);
+        drawRankExplainerBackground(inBattle);
+        drawRankPattern(player, skill_id, rank_id);
+        createSkillInExplainer();
+
+        let skill_name = player.getSkills()[skill_id][rank_id].name;
+        let class_selector = "#skill_0 .skill_name_string";
+        $(class_selector).html(skill_name);
+
+
+        let effect_type = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).type;
+        let effect_number = 0;
+
+        switch(effect_type)
+        {
+            case DMG:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).dmg;
+                break;
+            }
+
+            case HEAL:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).heal;
+                break;
+            }
+
+            case POISON:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).poison_amount;
+                break;
+            }
+
+            case POISON_DMG:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).poison_dmg;
+                break;
+            }
+
+            case MANA_REGEN:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).mana_regen;
+                break;
+            }
+
+            case MANA_DRAIN:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).mana_drain;
+                break;
+            }
+        }
+
+        createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_left_image", "#skill_0 .skill_left_part_bottom_left_number");
+        effect_type = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).type;
+
+        effect_number = 0;
+
+        switch(effect_type)
+        {
+            case DMG:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).dmg;
+                break;
+            }
+
+            case HEAL:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).heal;
+                break;
+            }
+
+            case POISON:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).poison_amount;
+                break;
+            }
+
+            case POISON_DMG:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).poison_dmg;
+                break;
+            }
+
+            case MANA_REGEN:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).mana_regen;
+                break;
+            }
+
+            case MANA_DRAIN:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).mana_drain;
+                break;
+            }
+        }
+        createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_right_image", "#skill_0 .skill_left_part_bottom_right_number");
+        createArrows(skill_id, rank_id, player.getSkills()[skill_id].length);
+        createRank((rank_id+1));
+        createExitButtonInRankExplainer(inBattle);
     }
 
     function createSkillRank(player, id, inBattle)
@@ -134,7 +508,7 @@ function SkillGraphics()
         }
     }
 
-    function drawSkills(player, inBattle)
+    function drawSkillsSG(player, inBattle)
     {
         /*$("#player_profile").append('<div class="active_skill" id="skill_1"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_2"></div>');

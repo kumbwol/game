@@ -12,6 +12,9 @@ function Player(name)
     this.old_armor = 0;
     this.armor = 0;
 
+    this.observed_rank_id  = -1;
+    this.observed_skill_id = -1;
+
     this.rank = [];
     this.rank[0] = 0;
     this.rank[1] = 0;
@@ -84,5 +87,17 @@ function Player(name)
         if(this.rank[skill_id] > (player.getSkills()[skill_id].length - 1)) this.rank[skill_id] = 0;
     }
 
-    this.inventory = new Inventory(this);
+    this.resetRanks = resetRanks;
+
+    function resetRanks(skill_amount)
+    {
+        for(let i=0; i<skill_amount; i++)
+        {
+            this.rank[i] = 0;
+        }
+    }
+
+    this.skill_graphics = new SkillGraphics(this);
+
+    this.inventory = new Inventory(this, this.skill_graphics);
 }

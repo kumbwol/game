@@ -15,11 +15,9 @@ function InventoryGraphics(bag)
         $("#game_background").append('<button id="create_table">Create</button>');
     }
 
-    function drawSkills(player, inBattle)
+    function drawSkills(player, skill_graphics, inBattle)
     {
-        let skill_graphics = new SkillGraphics();
-        skill_graphics.drawSkills(player, inBattle);
-        skill_graphics.drawSkillRanks(player, inBattle);
+        skill_graphics.drawSkillsSG(player, inBattle);
     }
 
     function drawInventory(engine)

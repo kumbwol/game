@@ -87,7 +87,7 @@ figure#mouse-pointer {
     border-width: 1px 2px 1px 1px;
 }
 
-#exit_rank_explainer
+#exit_rank_explainer, #exit_rank_explainer_in_inventory
 {
     position: absolute;
     width: 20px;

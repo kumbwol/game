@@ -51,11 +51,10 @@ $(function()
                 $("#game_background").append('<button id="inventory">Inventory</button>');
                 let player = new Player("Kumbi");
 
-
                 $("#game_background").on("click", "#create_table", function()
                 {
                     deletePage();
-                    new Battle(player);
+                    new Battle(player, player.skill_graphics);
                 });
 
                 $("#inventory").on("click", function()

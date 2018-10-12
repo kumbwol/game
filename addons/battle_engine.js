@@ -25,7 +25,6 @@ function BattleEngine(battle_table)
     this.enemy_skill_chances = [];
     this.enemy_skill_plays = [];
     this.table_modified = false;
-    this.rank = [];
     this.active_ability_id = -1;
     this.ability_used = false;
     this.combo_meter = 0;
@@ -80,7 +79,6 @@ function BattleEngine(battle_table)
     this.stopFreeze = stopFreeze;
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
-    this.resetRanks = resetRanks;
     this.selectAbility = selectAbility;
     this.deSelectAbility = deSelectAbility;
     this.swapAbilityUsed = swapAbilityUsed;
@@ -196,17 +194,17 @@ function BattleEngine(battle_table)
         if(player.abilities[this.active_ability_id].type === ROTATE_LEFT || player.abilities[this.active_ability_id].type === ROTATE_RIGHT)
         {
             this.ability_used = true;
-            return player.getSkills()[id-1][this.rank[id-1]].rotateSkillPattern(player.abilities[this.active_ability_id].type);
+            return player.getSkills()[id-1][player.rank[id-1]].rotateSkillPattern(player.abilities[this.active_ability_id].type);
         }
         else if(player.abilities[this.active_ability_id].type === MIRROR_HORIZONTALLY || player.abilities[this.active_ability_id].type === MIRROR_VERTICALLY)
         {
             this.ability_used = true;
-            return player.getSkills()[id-1][this.rank[id-1]].mirrorSkillPattern(player.abilities[this.active_ability_id].type);
+            return player.getSkills()[id-1][player.rank[id-1]].mirrorSkillPattern(player.abilities[this.active_ability_id].type);
         }
         else if(player.abilities[this.active_ability_id].type === MAGIC_TO_MOVE || player.abilities[this.active_ability_id].type === DEFENSE_TO_ATTACK)
         {
             this.ability_used = true;
-            return player.getSkills()[id-1][this.rank[id-1]].transformSkillPattern(player.abilities[this.active_ability_id].type);
+            return player.getSkills()[id-1][player.rank[id-1]].transformSkillPattern(player.abilities[this.active_ability_id].type);
         }
 
         return false;
@@ -214,7 +212,7 @@ function BattleEngine(battle_table)
 
     function resetSkillToOriginalPattern(player, id)
     {
-        player.getSkills()[id-1][this.rank[id-1]].resetOriginalPattern();
+        player.getSkills()[id-1][player.rank[id-1]].resetOriginalPattern();
     }
 
     function isSpecialAbilitySelected(player)
@@ -265,14 +263,6 @@ function BattleEngine(battle_table)
             }
         }
         return false;
-    }
-
-    function resetRanks(skill_amount)
-    {
-        for(let i=0; i<skill_amount; i++)
-        {
-            this.rank[i] = 0;
-        }
     }
 
     function enemyActivatePrimarySkill(skill, player, enemy, player_turn, id)

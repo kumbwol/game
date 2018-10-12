@@ -1,4 +1,4 @@
-function Battle(player)
+function Battle(player, skill_graphics)
 {
     let battle_table = {
         height: 9,
@@ -24,15 +24,14 @@ function Battle(player)
     let engine = new BattleEngine(battle_table);
     let enemy  = new Enemy("Skeleton");
     let graphics = new BattleGraphics(battle_table);
-    let skill_graphics = new SkillGraphics();
     let skill_activation_finished = true;
     let poison_animation_finished = true;
     let dmg_heal_number_animation_finished = true;
 
     graphics.createCursor();
-    engine.resetRanks(player.getSkills().length);
+    player.resetRanks(player.getSkills().length);
     engine.calculateEnemySkillChances(skill, enemy);
-    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
     graphics.drawTable(battle_table);
     graphics.drawAbilityPoints(player);
     graphics.drawEndTurn();
@@ -70,7 +69,7 @@ function Battle(player)
                             graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
                             {
                                 dmg_heal_number_animation_finished = true;
-                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
                             });
                         }
                         graphics.reduceManaIfAbilityUsed(engine, player);
@@ -188,7 +187,7 @@ function Battle(player)
 
                                 player.increaseRank(player_selected_skill_id - 1, player);
                                 skill_graphics.updateSkillRanks(player);
-                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
                                 graphics.showCursor();
                             });
                         });
@@ -216,25 +215,6 @@ function Battle(player)
         });
     });
 
-    $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function(ev)
-    {
-        graphics.showCursor();
-        skill.moving = false;
-        graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), engine.rank[parseInt(($(this).attr("id"))[18])], player, skill, engine);
-    });
-
-    $("#game_background").on("click", "#left_arrow", function(ev)
-    {
-        graphics.rank_id--;
-        graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
-    });
-
-    $("#game_background").on("click", "#right_arrow", function(ev)
-    {
-        graphics.rank_id++;
-        graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
-    });
-
     $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
     {
         if(player_turn && dmg_heal_number_animation_finished)
@@ -247,7 +227,7 @@ function Battle(player)
 
                 if(engine.useSpecialAbility(player, parseInt($(this).attr("id")[6])))
                 {
-                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
                     graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
                     {
                         dmg_heal_number_animation_finished = true;
@@ -304,8 +284,8 @@ function Battle(player)
 
     $("#game_background").on("click", "#exit_rank_explainer", function()
     {
-        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
-        graphics.removeRankHighlight();
+        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
+        skill_graphics.removeRankHighlight();
     });
 
     $("#game_background").on("mousemove", function(ev)
@@ -460,7 +440,7 @@ function Battle(player)
 
                     if(skill_id === -1) //amikor rankmagyarazat van
                     {
-                        effect_type = player.getSkills()[graphics.skill_id][graphics.rank_id].getSkillEffect(PRIMARY).type;
+                        effect_type = player.getSkills()[player.observed_skill_id][player.observed_rank_id].getSkillEffect(PRIMARY).type;
                     }
                     else
                     {
@@ -498,7 +478,7 @@ function Battle(player)
 
                     if(skill_id === -1) //amikor rankmagyarazat van
                     {
-                        effect_type = player.getSkills()[graphics.skill_id][graphics.rank_id].getSkillEffect(SECONDARY).type;
+                        effect_type = player.getSkills()[player.observed_skill_id][player.observed_rank_id].getSkillEffect(SECONDARY).type;
                     }
                     else
                     {
@@ -672,7 +652,7 @@ function Battle(player)
                                     graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                                     {
                                         engine.calculateEnemySkillChances(skill, enemy);
-                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
+                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
                                         player.ap = player.max_ap;
                                         if(skill.moving)

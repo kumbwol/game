@@ -2,11 +2,24 @@ function InventoryGraphics(bag)
 {
     this.drawInventory = drawInventory;
     this.drawSkills = drawSkills;
+    this.createBackButton = createBackButton;
+    this.changeSkillsButton = changeSkillsButton;
 
-    function drawSkills(player, rank, inBattle)
+    function changeSkillsButton()
+    {
+        $("#game_background").append('<button id="change_skills">Change</button>');
+    }
+
+    function createBackButton()
+    {
+        $("#game_background").append('<button id="create_table">Create</button>');
+    }
+
+    function drawSkills(player, inBattle)
     {
         let skill_graphics = new SkillGraphics();
-        skill_graphics.drawSkills(player, rank, inBattle);
+        skill_graphics.drawSkills(player, inBattle);
+        skill_graphics.drawSkillRanks(player);
     }
 
     function drawInventory(engine)
@@ -21,7 +34,7 @@ function InventoryGraphics(bag)
         a.drawSkillBars();*/
         //$("#game_background").append('<div class="bag_field"></div>');
         //$("game_background").append(createBagField("alma", 5, 5));
-        $("#game_background").append('<div id="bag"></div>')
+        $("#game_background").append('<div id="bag"></div>');
 
         for(let i=0; i<bag.height; i++)
         {

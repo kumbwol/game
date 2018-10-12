@@ -2,8 +2,128 @@ function SkillGraphics()
 {
     this.drawSkills = drawSkills;
     this.createEffect = createEffect;
+    this.updateSkillRanks = updateSkillRanks;
+    this.drawSkillRanks = drawSkillRanks;
 
-    function drawSkills(player, rank, inBattle)
+    function drawSkillRanks(player)
+    {
+        let skill_graphics = new SkillGraphics();
+        for(let i=0; i<player.getSkills().length; i++)
+        {
+            if(player.getSkills()[i].length > 1) createSkillRank(player, i);
+        }
+        skill_graphics.updateSkillRanks(player);
+    }
+
+    function createSkillRank(player, id)
+    {
+        let $object_border = $('<div></div>');
+        $object_border.attr("id", "skill_rank_border_" + id);
+        $object_border.addClass("trapezoid_border");
+
+        let $object_inside = $('<div></div>');
+        $object_inside.attr("id", "skill_rank_inside_" + id);
+        $object_inside.addClass("trapezoid_inside");
+
+        $object_border.append($object_inside);
+
+        $("#game_background").append($object_border);
+        $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
+
+        //alert($object_number.css("width"));
+    }
+
+    function updateSkillRanks(player)
+    {
+        let object_number;
+        let object_inside = ("#skill_rank_inside_");
+        for(let i=0; i<player.getSkills().length; i++)
+        {
+            if(player.getSkills()[i].length > 1)
+            {
+                $("#roman_number_" + i).remove();
+
+                let $object_number = $('<div></div>');
+                $object_number.attr("id", "roman_number_" + i);
+                $object_number.addClass("roman_number");
+                $(object_inside + i).append($object_number);
+
+                object_number = ("#roman_number_" + i);
+                switch(player.rank[i])
+                {
+                    case 0:
+                    {
+                        $(object_number).html("I");
+                        $(object_inside + i).removeClass("color_rank_2");
+                        $(object_inside + i).removeClass("color_rank_3");
+                        $(object_inside + i).removeClass("color_rank_4");
+                        $(object_inside + i).removeClass("color_rank_5");
+                        $(object_inside + i).removeClass("color_rank_6");
+                        $(object_inside + i).removeClass("color_rank_7");
+                        $(object_inside + i).addClass("color_rank_1");
+                        break;
+                    }
+
+                    case 1:
+                    {
+                        $(object_number).html("II");
+                        $(object_inside + i).removeClass("color_rank_1");
+                        $(object_inside + i).addClass("color_rank_2");
+                        break;
+                    }
+
+                    case 2:
+                    {
+                        $(object_number).html("III");
+                        $(object_inside + i).removeClass("color_rank_2");
+                        $(object_inside + i).addClass("color_rank_3");
+                        break;
+                    }
+
+                    case 3:
+                    {
+                        $(object_number).html("IV");
+                        $(object_inside + i).removeClass("color_rank_3");
+                        $(object_inside + i).addClass("color_rank_4");
+                        break;
+                    }
+
+                    case 4:
+                    {
+                        $(object_number).html("V");
+                        $(object_inside + i).removeClass("color_rank_4");
+                        $(object_inside + i).addClass("color_rank_5");
+                        break;
+                    }
+
+                    case 5:
+                    {
+                        $(object_number).html("VI");
+                        $(object_inside + i).removeClass("color_rank_5");
+                        $(object_inside + i).addClass("color_rank_6");
+                        break;
+                    }
+
+                    case 6:
+                    {
+                        $(object_number).html("VII");
+                        $(object_inside + i).removeClass("color_rank_6");
+                        $(object_inside + i).addClass("color_rank_7");
+                        break;
+                    }
+                }
+
+                let inside_width = $(object_inside + i).outerWidth();
+                let number_width = $(object_number).outerWidth();
+
+                $(object_number).css("left", "-=30px"); //go left
+                $(object_number).css("left", "+=" + (inside_width-number_width)/2);
+                $(object_number).css("top", "+=7px");
+            }
+        }
+    }
+
+    function drawSkills(player, inBattle)
     {
         /*$("#player_profile").append('<div class="active_skill" id="skill_1"></div>');
         $("#player_profile").append('<div class="active_skill" id="skill_2"></div>');
@@ -40,7 +160,7 @@ function SkillGraphics()
             }
         }
 
-        createPlayerSkills(player, rank);
+        createPlayerSkills(player);
     }
 
     function allignToMiddle(object)
@@ -51,14 +171,14 @@ function SkillGraphics()
         $(object).css("left", (parent_object_width-object_width)/2);
     }
 
-    function createPlayerSkills(player, rank)
+    function createPlayerSkills(player)
     {
-        createSkillPattern(player, rank);
-        createSkillName(player, rank);
-        createSkillEffects(player, rank);
+        createSkillPattern(player);
+        createSkillName(player);
+        createSkillEffects(player);
     }
 
-    function createSkillPattern(player, rank)
+    function createSkillPattern(player)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
@@ -82,15 +202,15 @@ function SkillGraphics()
             $("#skill_" + (i+1) + " .skill_right_part").append('<table class="skill_pattern_table"></table>');
             let table_selector = "#skill_" + (i+1) + " .skill_pattern_table";
             //alert(player.getSkills()[i][rank[i]].getSkillPatternRotation());
-            for(let j=0; j<player.getSkills()[i][rank[i]].getSkillPatternHeight(); j++)
+            for(let j=0; j<player.getSkills()[i][player.rank[i]].getSkillPatternHeight(); j++)
             {
                 $(table_selector).append(createRow("skill_pattern_row" + j));
                 let row_selector = table_selector + " .skill_pattern_row" + j;
-                for(let k=0; k<player.getSkills()[i][rank[i]].getSkillPatternWidth(); k++)
+                for(let k=0; k<player.getSkills()[i][player.rank[i]].getSkillPatternWidth(); k++)
                 {
                     $(row_selector).append(createColumn("skill_pattern_column" + k +j));
                     //alert(player.getSkills()[i].getSkillPatternValue(k,j));
-                    switch(player.getSkills()[i][rank[i]].getSkillPatternValue(k,j))
+                    switch(player.getSkills()[i][player.rank[i]].getSkillPatternValue(k,j))
                     {
                         case NUL:
                         {
@@ -152,13 +272,13 @@ function SkillGraphics()
         }
     }
 
-    function createSkillName(player, rank)
+    function createSkillName(player)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
             $("#skill_" + (i+1) + " .skill_left_part_top").append('<div class="skill_name_string"></div>');
             let class_selector = "#skill_" + (i+1) + " .skill_name_string";
-            $(class_selector).html(player.getSkills()[i][rank[i]].name);
+            $(class_selector).html(player.getSkills()[i][player.rank[i]].name);
         }
     }
 
@@ -173,10 +293,10 @@ function SkillGraphics()
         object.css("left", x);
     }
 
-    function createSkillEffects(player, rank)
+    function createSkillEffects(player)
     {
-        drawPlayerSkillEffects(player, true, rank);
-        drawPlayerSkillEffects(player, false, rank);
+        drawPlayerSkillEffects(player, true);
+        drawPlayerSkillEffects(player, false);
     }
 
     function allignToVerticalMiddle(object)
@@ -187,7 +307,7 @@ function SkillGraphics()
         $(object).css("top", (parent_object_height-object_height)/2-1);
     }
 
-    function drawPlayerSkillEffects(player, primary, rank)
+    function drawPlayerSkillEffects(player, primary)
     {
         let selector = "";
         let effect_type = 0;
@@ -200,13 +320,13 @@ function SkillGraphics()
             if(primary)
             {
                 selector = " .skill_left_part_bottom_left";
-                effect_type = player.getSkills()[i][rank[i]].getSkillEffect(PRIMARY).type;
+                effect_type = player.getSkills()[i][player.rank[i]].getSkillEffect(PRIMARY).type;
                 prim_or_second = PRIMARY;
             }
             else
             {
                 selector = " .skill_left_part_bottom_right";
-                effect_type = player.getSkills()[i][rank[i]].getSkillEffect(SECONDARY).type;
+                effect_type = player.getSkills()[i][player.rank[i]].getSkillEffect(SECONDARY).type;
                 prim_or_second = SECONDARY;
             }
 
@@ -214,55 +334,55 @@ function SkillGraphics()
             {
                 case DMG:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).dmg;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).dmg;
                     break;
                 }
 
                 case HEAL:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).heal;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).heal;
                     break;
                 }
 
                 case POISON:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).poison_amount;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).poison_amount;
                     break;
                 }
 
                 case POISON_DMG:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).poison_dmg;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).poison_dmg;
                     break;
                 }
 
                 case MANA_REGEN:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_regen;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).mana_regen;
                     break;
                 }
 
                 case MANA_DRAIN:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).mana_drain;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).mana_drain;
                     break;
                 }
 
                 case COMBO:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).combo_amount;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).combo_amount;
                     break;
                 }
 
                 case ARMOR:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).armor;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).armor;
                     break;
                 }
 
                 case PENETRATE:
                 {
-                    effect_number = player.getSkills()[i][rank[i]].getSkillEffect(prim_or_second).penetrate;
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).penetrate;
                     break;
                 }
 

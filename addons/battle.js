@@ -1,4 +1,4 @@
-function Battle()
+function Battle(player)
 {
     let battle_table = {
         height: 9,
@@ -22,9 +22,9 @@ function Battle()
     let player_turn = true;
 
     let engine = new BattleEngine(battle_table);
-    let player = new Player("Kumbi");
     let enemy  = new Enemy("Skeleton");
-    let graphics = new BattleGraphics(battle_table, engine, player);
+    let graphics = new BattleGraphics(battle_table);
+    let skill_graphics = new SkillGraphics();
     let skill_activation_finished = true;
     let poison_animation_finished = true;
     let dmg_heal_number_animation_finished = true;
@@ -37,7 +37,7 @@ function Battle()
     graphics.drawAbilityPoints(player);
     graphics.drawEndTurn();
     graphics.drawPlayerAbilities(player);
-    graphics.drawSkillRanks(player, engine);
+    skill_graphics.drawSkillRanks(player, engine);
 
     engine.calculateNewTable();
     graphics.reNameIds(engine);
@@ -187,7 +187,7 @@ function Battle()
                                 engine.resetSkillToOriginalPattern(player, player_selected_skill_id);
 
                                 engine.increaseRank(player_selected_skill_id - 1, player);
-                                graphics.updateSkillRanks(player, engine);
+                                skill_graphics.updateSkillRanks(player);
                                 graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
                                 graphics.showCursor();
                             });
@@ -220,19 +220,19 @@ function Battle()
     {
         graphics.showCursor();
         skill.moving = false;
-        graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), engine.rank[parseInt(($(this).attr("id"))[18])], player, skill, engine);
+        //graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), engine.rank[parseInt(($(this).attr("id"))[18])], player, skill, engine);
     });
 
     $("#game_background").on("click", "#left_arrow", function(ev)
     {
         graphics.rank_id--;
-        graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
+        //graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
     });
 
     $("#game_background").on("click", "#right_arrow", function(ev)
     {
         graphics.rank_id++;
-        graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
+        //graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
     });
 
     $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)

@@ -49,23 +49,20 @@ $(function()
 
                 $("#game_background").append('<button id="create_table">Create</button>');
                 $("#game_background").append('<button id="inventory">Inventory</button>');
+                let player = new Player("Kumbi");
 
 
-                $("#create_table").on("click", function()
+                $("#game_background").on("click", "#create_table", function()
                 {
                     deletePage();
-                    new Battle();
+                    new Battle(player);
                 });
 
                 $("#inventory").on("click", function()
                 {
                     deletePage();
-                    let player = new Player("Kumbi");
-                    let rank = [];
 
-                    for(let i=0; i<6; i++) rank[i]=0;
-
-                    player.inventory.showInventory(player, rank);
+                    player.inventory.showInventory();
                 });
 
 
@@ -75,11 +72,28 @@ $(function()
 
     function deletePage()
     {
+        /*$("#game_background").remove();
+        $('body').append('<div id="game_background"></div>');*/
+
         $(".font_preloader0").remove();
         $(".font_preloader1").remove();
         $(".font_preloader2").remove();
-        $("#create_table").remove();
         $("#inventory").remove();
+        $("#create_table").remove();
+        $("#change_skills").remove();
+        $("#bag").remove();
+        $("#skill_rank_inside_0").remove();
+        $("#skill_rank_inside_1").remove();
+        $("#skill_rank_inside_2").remove();
+        $("#skill_rank_inside_3").remove();
+        $("#skill_rank_inside_4").remove();
+        $("#skill_rank_inside_5").remove();
+        $("#skill_rank_border_0").remove();
+        $("#skill_rank_border_1").remove();
+        $("#skill_rank_border_2").remove();
+        $("#skill_rank_border_3").remove();
+        $("#skill_rank_border_4").remove();
+        $("#skill_rank_border_5").remove();
     }
 
 

@@ -8,6 +8,30 @@ function InventoryEngine(bag)
     this.addItem = addItem;
     this.deleteItem = deleteItem;
     this.swapItems = swapItems;
+    this.changeSkills = changeSkills;
+
+    function changeSkills(player)
+    {
+        console.log(player.getSkills());
+
+
+        player.getSkills()[0] = [];
+        player.getSkills()[1] = [];
+        player.getSkills()[2] = [];
+        player.getSkills()[3] = [];
+        player.getSkills()[4] = [];
+        player.getSkills()[5] = [];
+
+
+        player.getSkills()[0][0] = new Skill("Promote");
+        player.getSkills()[1][0] = new Skill("Armor");
+        player.getSkills()[2][0] = new Skill("Shock");
+        player.getSkills()[3][0] = new Skill("PENETRATE");
+        player.getSkills()[4][0] = new Skill("Loss");
+        player.getSkills()[5][0] = new Skill("Combo");
+
+        console.log(player.getSkills());
+    }
 
     for(let i=0; i<bag.height; i++)
     {

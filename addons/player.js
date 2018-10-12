@@ -12,7 +12,14 @@ function Player(name)
     this.old_armor = 0;
     this.armor = 0;
 
-    this.inventory = new Inventory();
+    this.rank = [];
+    this.rank[0] = 0;
+    this.rank[1] = 0;
+    this.rank[2] = 0;
+    this.rank[3] = 0;
+    this.rank[4] = 0;
+    this.rank[5] = 0;
+
 
 
     this.abilities = [];
@@ -70,4 +77,6 @@ function Player(name)
     {
         return this.abilities[id].type;
     }
+
+    this.inventory = new Inventory(this);
 }

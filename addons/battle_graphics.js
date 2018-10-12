@@ -1,6 +1,6 @@
 console.log("battle_graph.js loaded");
 
-function BattleGraphics(battle_table, engine)
+function BattleGraphics(battle_table)
 {
     this.battle_table = battle_table;
     this.drawTable = drawTable;
@@ -45,8 +45,6 @@ function BattleGraphics(battle_table, engine)
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
     this.drawPlayerAbilities = drawPlayerAbilities;
     this.refreshEndButton = refreshEndButton;
-    this.drawSkillRanks = drawSkillRanks;
-    this.updateSkillRanks = updateSkillRanks;
     this.drawAbilitySelector = drawAbilitySelector;
     this.deleteAbilitySelector = deleteAbilitySelector;
     this.reduceManaIfAbilityUsed = reduceManaIfAbilityUsed;
@@ -582,123 +580,6 @@ function BattleGraphics(battle_table, engine)
                 $("#ability_" + i).append('<div id="ability_selector"></div>');
             }
         }
-    }
-
-    function updateSkillRanks(player, engine)
-    {
-        let object_number;
-        let object_inside = ("#skill_rank_inside_");
-        for(let i=0; i<player.getSkills().length; i++)
-        {
-            if(player.getSkills()[i].length > 1)
-            {
-                $("#roman_number_" + i).remove();
-
-                let $object_number = $('<div></div>');
-                $object_number.attr("id", "roman_number_" + i);
-                $object_number.addClass("roman_number");
-                $(object_inside + i).append($object_number);
-
-                object_number = ("#roman_number_" + i);
-                switch(engine.rank[i])
-                {
-                    case 0:
-                    {
-                        $(object_number).html("I");
-                        $(object_inside + i).removeClass("color_rank_2");
-                        $(object_inside + i).removeClass("color_rank_3");
-                        $(object_inside + i).removeClass("color_rank_4");
-                        $(object_inside + i).removeClass("color_rank_5");
-                        $(object_inside + i).removeClass("color_rank_6");
-                        $(object_inside + i).removeClass("color_rank_7");
-                        $(object_inside + i).addClass("color_rank_1");
-                        break;
-                    }
-
-                    case 1:
-                    {
-                        $(object_number).html("II");
-                        $(object_inside + i).removeClass("color_rank_1");
-                        $(object_inside + i).addClass("color_rank_2");
-                        break;
-                    }
-
-                    case 2:
-                    {
-                        $(object_number).html("III");
-                        $(object_inside + i).removeClass("color_rank_2");
-                        $(object_inside + i).addClass("color_rank_3");
-                        break;
-                    }
-
-                    case 3:
-                    {
-                        $(object_number).html("IV");
-                        $(object_inside + i).removeClass("color_rank_3");
-                        $(object_inside + i).addClass("color_rank_4");
-                        break;
-                    }
-
-                    case 4:
-                    {
-                        $(object_number).html("V");
-                        $(object_inside + i).removeClass("color_rank_4");
-                        $(object_inside + i).addClass("color_rank_5");
-                        break;
-                    }
-
-                    case 5:
-                    {
-                        $(object_number).html("VI");
-                        $(object_inside + i).removeClass("color_rank_5");
-                        $(object_inside + i).addClass("color_rank_6");
-                        break;
-                    }
-
-                    case 6:
-                    {
-                        $(object_number).html("VII");
-                        $(object_inside + i).removeClass("color_rank_6");
-                        $(object_inside + i).addClass("color_rank_7");
-                        break;
-                    }
-                }
-
-                let inside_width = $(object_inside + i).outerWidth();
-                let number_width = $(object_number).outerWidth();
-
-                $(object_number).css("left", "-=30px"); //go left
-                $(object_number).css("left", "+=" + (inside_width-number_width)/2);
-                $(object_number).css("top", "+=7px");
-            }
-        }
-    }
-
-    function drawSkillRanks(player, engine)
-    {
-        for(let i=0; i<player.getSkills().length; i++)
-        {
-            if(player.getSkills()[i].length > 1) createSkillRank(player, engine, i);
-        }
-        updateSkillRanks(player, engine);
-    }
-
-    function createSkillRank(player, engine, id)
-    {
-        let $object_border = $('<div></div>');
-        $object_border.attr("id", "skill_rank_border_" + id);
-        $object_border.addClass("trapezoid_border");
-
-        let $object_inside = $('<div></div>');
-        $object_inside.attr("id", "skill_rank_inside_" + id);
-        $object_inside.addClass("trapezoid_inside");
-
-        $object_border.append($object_inside);
-
-        $("#game_background").append($object_border);
-        $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
-
-        //alert($object_number.css("width"));
     }
 
     function refreshEndButton(ap)

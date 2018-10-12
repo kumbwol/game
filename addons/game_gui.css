@@ -143,8 +143,6 @@ figure#mouse-pointer {
 .trapezoid_border
 {
     position: absolute;
-    left: 200px;
-    top: 183px;
 
     border-left: 32px solid #000000;
     border-top: 10px solid transparent;

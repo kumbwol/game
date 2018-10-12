@@ -19,7 +19,7 @@ function InventoryGraphics(bag)
     {
         let skill_graphics = new SkillGraphics();
         skill_graphics.drawSkills(player, inBattle);
-        skill_graphics.drawSkillRanks(player);
+        skill_graphics.drawSkillRanks(player, inBattle);
     }
 
     function drawInventory(engine)

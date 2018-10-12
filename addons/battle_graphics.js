@@ -1757,15 +1757,15 @@ function BattleGraphics(battle_table)
         skill.width  = player.getSkills()[skill_id][rank].getSkillPatternWidth()*(field_size+1)  + 1;
     }
 
-    function drawSkillBars(player, enemy, enemy_skill_chances, rank)
+    function drawSkillBars(player, enemy, enemy_skill_chances)
     {
         $("#player_profile").remove();
         $("#enemy_profile").remove();
-        drawSkillBarPlayer(player, rank);
+        drawSkillBarPlayer(player);
         drawSkillBarEnemy(enemy, enemy_skill_chances);
     }
 
-    function drawSkillBarPlayer(player, rank)
+    function drawSkillBarPlayer(player)
     {
         $("#game_background").append('<div class="profile" id="player_profile"></div>');
 
@@ -1790,7 +1790,7 @@ function BattleGraphics(battle_table)
         $("#player_profile").append('<div class="profile_picture" id="self"></div>');
 
         let skill_graphics = new SkillGraphics();
-        skill_graphics.drawSkills(player, rank, true);
+        skill_graphics.drawSkills(player, true);
 
         /*$("#player_profile").append('<div class="name" id="player_name"></div>');
         $("#player_name").append('<div class="name_string" id="player_name_string"></div>');

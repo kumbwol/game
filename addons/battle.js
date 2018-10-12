@@ -32,12 +32,12 @@ function Battle(player)
     graphics.createCursor();
     engine.resetRanks(player.getSkills().length);
     engine.calculateEnemySkillChances(skill, enemy);
-    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
     graphics.drawTable(battle_table);
     graphics.drawAbilityPoints(player);
     graphics.drawEndTurn();
     graphics.drawPlayerAbilities(player);
-    skill_graphics.drawSkillRanks(player, engine);
+    skill_graphics.drawSkillRanks(player, true);
 
     engine.calculateNewTable();
     graphics.reNameIds(engine);
@@ -70,7 +70,7 @@ function Battle(player)
                             graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
                             {
                                 dmg_heal_number_animation_finished = true;
-                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
                             });
                         }
                         graphics.reduceManaIfAbilityUsed(engine, player);
@@ -186,9 +186,9 @@ function Battle(player)
 
                                 engine.resetSkillToOriginalPattern(player, player_selected_skill_id);
 
-                                engine.increaseRank(player_selected_skill_id - 1, player);
+                                player.increaseRank(player_selected_skill_id - 1, player);
                                 skill_graphics.updateSkillRanks(player);
-                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
                                 graphics.showCursor();
                             });
                         });
@@ -220,19 +220,19 @@ function Battle(player)
     {
         graphics.showCursor();
         skill.moving = false;
-        //graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), engine.rank[parseInt(($(this).attr("id"))[18])], player, skill, engine);
+        graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), engine.rank[parseInt(($(this).attr("id"))[18])], player, skill, engine);
     });
 
     $("#game_background").on("click", "#left_arrow", function(ev)
     {
         graphics.rank_id--;
-        //graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
+        graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
     });
 
     $("#game_background").on("click", "#right_arrow", function(ev)
     {
         graphics.rank_id++;
-        //graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
+        graphics.drawRankExplainer(graphics.skill_id, graphics.rank_id, player, skill, engine);
     });
 
     $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
@@ -247,7 +247,7 @@ function Battle(player)
 
                 if(engine.useSpecialAbility(player, parseInt($(this).attr("id")[6])))
                 {
-                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
                     graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
                     {
                         dmg_heal_number_animation_finished = true;
@@ -267,8 +267,8 @@ function Battle(player)
                 let skill_id = $(this).attr("id");
                 player_selected_skill_id = skill_id[6];
 
-                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1], false);
-                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, engine.rank[parseInt(skill_id[6])-1]);
+                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1], false);
+                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1]);
 
                 if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $("#selected_skill").css("left", ev.pageX-graphics.field_size/2);
                 else $("#selected_skill").css("left", 0);
@@ -304,7 +304,7 @@ function Battle(player)
 
     $("#game_background").on("click", "#exit_rank_explainer", function()
     {
-        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
         graphics.removeRankHighlight();
     });
 
@@ -464,7 +464,7 @@ function Battle(player)
                     }
                     else
                     {
-                        effect_type = player.getSkills()[skill_id][engine.rank[skill_id]].getSkillEffect(PRIMARY).type;
+                        effect_type = player.getSkills()[skill_id][player.rank[skill_id]].getSkillEffect(PRIMARY).type;
                     }
 
                     if(effect_type !== NOTHING)
@@ -502,7 +502,7 @@ function Battle(player)
                     }
                     else
                     {
-                        effect_type = player.getSkills()[skill_id][engine.rank[skill_id]].getSkillEffect(SECONDARY).type;
+                        effect_type = player.getSkills()[skill_id][player.rank[skill_id]].getSkillEffect(SECONDARY).type;
                     }
 
                     if(effect_type !== NOTHING)
@@ -672,12 +672,12 @@ function Battle(player)
                                     graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                                     {
                                         engine.calculateEnemySkillChances(skill, enemy);
-                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, engine.rank);
+                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances);
 
                                         player.ap = player.max_ap;
                                         if(skill.moving)
                                         {
-                                            engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, engine.rank);
+                                            engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, player.rank);
                                         }
                                         graphics.refreshEndButton(player.ap);
                                         graphics.refreshAbilityPoint(player);

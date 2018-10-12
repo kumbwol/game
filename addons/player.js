@@ -20,8 +20,6 @@ function Player(name)
     this.rank[4] = 0;
     this.rank[5] = 0;
 
-
-
     this.abilities = [];
 
     this.abilities[0] = new Ability(DEFENSE_TO_ATTACK);
@@ -76,6 +74,14 @@ function Player(name)
     function getAbility(id)
     {
         return this.abilities[id].type;
+    }
+
+    this.increaseRank = increaseRank;
+
+    function increaseRank(skill_id, player)
+    {
+        this.rank[skill_id]++;
+        if(this.rank[skill_id] > (player.getSkills()[skill_id].length - 1)) this.rank[skill_id] = 0;
     }
 
     this.inventory = new Inventory(this);

@@ -5,17 +5,16 @@ function SkillGraphics()
     this.updateSkillRanks = updateSkillRanks;
     this.drawSkillRanks = drawSkillRanks;
 
-    function drawSkillRanks(player)
+    function drawSkillRanks(player, inBattle)
     {
-        let skill_graphics = new SkillGraphics();
         for(let i=0; i<player.getSkills().length; i++)
         {
-            if(player.getSkills()[i].length > 1) createSkillRank(player, i);
+            if(player.getSkills()[i].length > 1) createSkillRank(player, i, inBattle);
         }
-        skill_graphics.updateSkillRanks(player);
+        this.updateSkillRanks(player);
     }
 
-    function createSkillRank(player, id)
+    function createSkillRank(player, id, inBattle)
     {
         let $object_border = $('<div></div>');
         $object_border.attr("id", "skill_rank_border_" + id);
@@ -28,7 +27,19 @@ function SkillGraphics()
         $object_border.append($object_inside);
 
         $("#game_background").append($object_border);
-        $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
+        if(inBattle)
+        {
+            $object_border.css("top", "183px");
+            $object_border.css("left", "200px");
+            $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
+        }
+        else
+        {
+            $object_border.css("top", "77px");
+            $object_border.css("left", "228px");
+            $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
+        }
+
 
         //alert($object_number.css("width"));
     }

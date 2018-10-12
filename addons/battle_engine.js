@@ -81,7 +81,6 @@ function BattleEngine(battle_table)
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
     this.resetRanks = resetRanks;
-    this.increaseRank = increaseRank;
     this.selectAbility = selectAbility;
     this.deSelectAbility = deSelectAbility;
     this.swapAbilityUsed = swapAbilityUsed;
@@ -266,13 +265,6 @@ function BattleEngine(battle_table)
             }
         }
         return false;
-    }
-
-    function increaseRank(skill_id, player)
-    {
-        //alert(player.getSkills()[skill_id].length);
-        this.rank[skill_id]++;
-        if(this.rank[skill_id] > (player.getSkills()[skill_id].length - 1)) this.rank[skill_id] = 0;
     }
 
     function resetRanks(skill_amount)

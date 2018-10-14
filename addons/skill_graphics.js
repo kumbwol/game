@@ -567,93 +567,97 @@ function SkillGraphics(player)
     {
         for(let i=0; i<player.getSkills().length; i++)
         {
-            $("#skill_"+(i+1)).append('<div class="skill_left_part_top"></div>');
-            $("#skill_"+(i+1)).append('<div class="skill_left_part_bottom"></div>');
-
-            $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_left"></div>');
-            $("#skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_image"></div>');
-            $("#skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_number"></div>');
-            //$("#skill_" + (i+1) + " .skill_left_part_bottom_left").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
-
-            $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
-            $("#skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_image"></div>');
-            $("#skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_number"></div>');
-            //$("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
-
-            $("#skill_"+(i+1)).append('<div class="skill_right_part"></div>');
-
-            //alert(("#skill_" + (i+1) + " .skill_right_part"));
-
-            $("#skill_" + (i+1) + " .skill_right_part").append('<table class="skill_pattern_table"></table>');
-            let table_selector = "#skill_" + (i+1) + " .skill_pattern_table";
-            //alert(player.getSkills()[i][rank[i]].getSkillPatternRotation());
-            for(let j=0; j<player.getSkills()[i][player.rank[i]].getSkillPatternHeight(); j++)
+            //console.log(player.getSkills()[i][0].name);
+            if(player.getSkills()[i][0].name!=="EMPTY")
             {
-                $(table_selector).append(createRow("skill_pattern_row" + j));
-                let row_selector = table_selector + " .skill_pattern_row" + j;
-                for(let k=0; k<player.getSkills()[i][player.rank[i]].getSkillPatternWidth(); k++)
+                $("#skill_"+(i+1)).append('<div class="skill_left_part_top"></div>');
+                $("#skill_"+(i+1)).append('<div class="skill_left_part_bottom"></div>');
+
+                $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_left"></div>');
+                $("#skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_image"></div>');
+                $("#skill_" + (i+1) + " .skill_left_part_bottom_left").append('<div class="skill_left_part_bottom_left_number"></div>');
+                //$("#skill_" + (i+1) + " .skill_left_part_bottom_left").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+
+                $("#skill_" + (i+1) + " .skill_left_part_bottom").append('<div class="skill_left_part_bottom_right"></div>');
+                $("#skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_image"></div>');
+                $("#skill_" + (i+1) + " .skill_left_part_bottom_right").append('<div class="skill_left_part_bottom_right_number"></div>');
+                //$("#skill_" + (i+1) + " .skill_left_part_bottom_right").css("background-image", 'url("addons/images/skill_effects/dmg.png")');
+
+                $("#skill_"+(i+1)).append('<div class="skill_right_part"></div>');
+
+                //alert(("#skill_" + (i+1) + " .skill_right_part"));
+
+                $("#skill_" + (i+1) + " .skill_right_part").append('<table class="skill_pattern_table"></table>');
+                let table_selector = "#skill_" + (i+1) + " .skill_pattern_table";
+                //alert(player.getSkills()[i][rank[i]].getSkillPatternRotation());
+                for(let j=0; j<player.getSkills()[i][player.rank[i]].getSkillPatternHeight(); j++)
                 {
-                    $(row_selector).append(createColumn("skill_pattern_column" + k +j));
-                    //alert(player.getSkills()[i].getSkillPatternValue(k,j));
-                    switch(player.getSkills()[i][player.rank[i]].getSkillPatternValue(k,j))
+                    $(table_selector).append(createRow("skill_pattern_row" + j));
+                    let row_selector = table_selector + " .skill_pattern_row" + j;
+                    for(let k=0; k<player.getSkills()[i][player.rank[i]].getSkillPatternWidth(); k++)
                     {
-                        case NUL:
+                        $(row_selector).append(createColumn("skill_pattern_column" + k +j));
+                        //alert(player.getSkills()[i].getSkillPatternValue(k,j));
+                        switch(player.getSkills()[i][player.rank[i]].getSkillPatternValue(k,j))
                         {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("border", "none");
-                            break;
-                        }
+                            case NUL:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("border", "none");
+                                break;
+                            }
 
-                        case ATT:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "crimson");
-                            break;
-                        }
+                            case ATT:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "crimson");
+                                break;
+                            }
 
-                        case PAT:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, crimson, crimson 3px, #ffffff 3px, #ffffff 6px)");
-                            break;
-                        }
+                            case PAT:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, crimson, crimson 3px, #ffffff 3px, #ffffff 6px)");
+                                break;
+                            }
 
-                        case MAN:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "aqua");
-                            break;
-                        }
+                            case MAN:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "aqua");
+                                break;
+                            }
 
-                        case PMA:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, aqua, aqua 3px, #ffffff 3px, #ffffff 6px)");
-                            break;
-                        }
+                            case PMA:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, aqua, aqua 3px, #ffffff 3px, #ffffff 6px)");
+                                break;
+                            }
 
-                        case DEF:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "bisque");
-                            break;
-                        }
+                            case DEF:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "bisque");
+                                break;
+                            }
 
-                        case PDE:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, bisque, bisque 3px, #ffffff 3px, #ffffff 6px)");
-                            break;
-                        }
+                            case PDE:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, bisque, bisque 3px, #ffffff 3px, #ffffff 6px)");
+                                break;
+                            }
 
-                        case MOV:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "forestgreen");
-                            break;
-                        }
+                            case MOV:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "forestgreen");
+                                break;
+                            }
 
-                        case PMO:
-                        {
-                            $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, forestgreen, forestgreen 3px, #ffffff 3px, #ffffff 6px)");
-                            break;
+                            case PMO:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, forestgreen, forestgreen 3px, #ffffff 3px, #ffffff 6px)");
+                                break;
+                            }
                         }
                     }
                 }
+                allignSkillPatternTable($(table_selector));
             }
-            allignSkillPatternTable($(table_selector));
         }
     }
 

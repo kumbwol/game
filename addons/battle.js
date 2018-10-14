@@ -242,21 +242,24 @@ function Battle(player, skill_graphics)
             }
             else
             {
-                graphics.hideCursor();
-                if(skill.moving) $("#selected_skill").remove();
                 let skill_id = $(this).attr("id");
                 player_selected_skill_id = skill_id[6];
 
-                graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1], false);
-                engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1]);
+                if(player.getSkills()[player_selected_skill_id-1][0].name !== "EMPTY")
+                {
+                    graphics.hideCursor();
+                    if(skill.moving) $("#selected_skill").remove();
+                    graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1], false);
+                    engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1]);
 
-                if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $("#selected_skill").css("left", ev.pageX-graphics.field_size/2);
-                else $("#selected_skill").css("left", 0);
+                    if(ev.pageX<960-skill.width +24 && ev.pageX>graphics.field_size/2) $("#selected_skill").css("left", ev.pageX-graphics.field_size/2);
+                    else $("#selected_skill").css("left", 0);
 
-                if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $("#selected_skill").css("top",  ev.pageY-graphics.field_size/2);
-                else $("#selected_skill").css("top", 540-skill.height);
+                    if(ev.pageY<540-skill.height+24 && ev.pageY>graphics.field_size/2) $("#selected_skill").css("top",  ev.pageY-graphics.field_size/2);
+                    else $("#selected_skill").css("top", 540-skill.height);
 
-                skill.moving = true;
+                    skill.moving = true;
+                }
             }
         }
     });

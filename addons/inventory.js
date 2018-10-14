@@ -9,8 +9,8 @@ function Inventory(player, skill_graphics)
     let engine = new InventoryEngine(bag);
     let graphics = new InventoryGraphics(bag);
 
-    engine.addItem(0, 0, new Item(SWORD, 1));
-    engine.addItem(1, 1, new Item(NECKLACE, 2));
+    engine.addItem(0, 0, new Item(C_HEAD, SWORD, 1));
+    engine.addItem(1, 1, new Item(C_NECKLACE, NECKLACE, 2));
 
     this.showInventory = showInventory;
 
@@ -33,6 +33,8 @@ function Inventory(player, skill_graphics)
     $("#game_background").on("click", "#change_skills", function()
     {
         engine.changeSkills(player);
+        graphics.updateSkills(player, skill_graphics);
+
     });
 
     $("#game_background").on("click", "#exit_rank_explainer_in_inventory", function()

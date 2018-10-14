@@ -22,6 +22,7 @@ function Skill(name)
 
     switch(this.name)
     {
+
         case "Penetrate":
         {
             primary_effect = new Effect("Penetrate");
@@ -51,6 +52,23 @@ function Skill(name)
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("Penetrate");
+            secondary_effect  = new Effect("NOTHING");
+            break;
+        }
+
+        case "EMPTY":
+        {
+            visual_pattern =
+                [
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("NOTHING");
             secondary_effect  = new Effect("NOTHING");
             break;
         }

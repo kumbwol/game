@@ -22,12 +22,14 @@ $(function()
             $.getScript("addons/ability_types.js"),
             $.getScript("addons/ability.js"),
             $.getScript("addons/battle.js"),
+            $.getScript("addons/item_images.js"),
             $.getScript("addons/item_types.js"),
             $.getScript("addons/inventory_engine.js"),
             $.getScript("addons/inventory_graphics.js"),
             $.getScript("addons/inventory.js"),
             $.getScript("addons/item.js"),
             $.getScript("addons/skill_graphics.js"),
+            $.getScript("addons/skill_engine.js"),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );
             })

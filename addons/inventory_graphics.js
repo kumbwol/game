@@ -4,6 +4,17 @@ function InventoryGraphics(bag)
     this.drawSkills = drawSkills;
     this.createBackButton = createBackButton;
     this.changeSkillsButton = changeSkillsButton;
+    this.updateSkills = updateSkills;
+
+    function updateSkills(player, skill_graphics)
+    {
+        $("#player_profile").remove();
+        $(".trapezoid_border").remove();
+
+        $("#game_background").append('<div id="player_profile" class="inventory_skill"></div>');
+        drawSkills(player, skill_graphics, false);
+        skill_graphics.drawSkillRanks(player, false);
+    }
 
     function changeSkillsButton()
     {
@@ -24,6 +35,7 @@ function InventoryGraphics(bag)
     {
         engine.logInventory();
         drawBag(engine);
+        //drawPlayerItems();
     }
 
     function drawBag(engine)
@@ -64,7 +76,7 @@ function InventoryGraphics(bag)
                             $(target).addClass(parent_class);
                             $(parent).addClass(target_class);
 
-                            if(engine.getType(target[7], target[3]) === EMPTY)
+                            if(engine.getImage(target[7], target[3]) === EMPTY)
                             {
                                 engine.addItem(target[7], target[3], engine.getItem(parent[7], parent[3]));
                                 engine.deleteItem(parent[7], parent[3]);
@@ -115,7 +127,7 @@ function InventoryGraphics(bag)
         $object.css('left', (x*(bag.field_size))-x+1);
         $object.css('top',  (y*(bag.field_size))-y+1);
 
-        switch(item.type)
+        switch(item.image)
         {
             case SWORD:
             {

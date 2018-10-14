@@ -33,37 +33,14 @@ function Player(name)
     this.abilities[5] = new Ability(MAGIC_TO_MOVE);
 
     let skills = [];
-    /*skills[0] = new Skill("Shock");
-    skills[1] = new Skill("Spiritarrow");
-    skills[2] = new Skill("Shield");
-    skills[3] = new Skill("Shadowform");*/
-    /*skills[0] = new Skill("Shadowform");
-    skills[1] = new Skill("Shield");
-    skills[2] = new Skill("Spiritarrow");*/
-    /*skills[1] = new Skill("Stab");
-    skills[2] = new Skill("Shield");
-    skills[3] = new Skill("Spiritarrow");
-    skills[4] = new Skill("Shieldslam");
-    skills[5] = new Skill("Shadowform");*/
 
-    skills[0] = [];
-    skills[1] = [];
-    skills[2] = [];
-    skills[3] = [];
-    skills[4] = [];
-    skills[5] = [];
-
-    skills[0][0] = new Skill("Promote");
-    skills[0][1] = new Skill("Loss");
-    skills[0][2] = new Skill("Shield");
-    skills[0][3] = new Skill("Spiritarrow");
-    skills[1][0] = new Skill("Armor");
-    skills[2][0] = new Skill("Shock");
-    skills[2][1] = new Skill("Shock");
-    skills[3][0] = new Skill("PENETRATE");
-    skills[4][0] = new Skill("Loss");
-    skills[4][1] = new Skill("Shock");
-    skills[5][0] = new Skill("Combo");
+    this.items = [];
+    this.items[C_HEAD]       = new Item(C_HEAD,       -1, EMPTY);
+    this.items[C_NECKLACE]   = new Item(C_NECKLACE,   -1, EMPTY);
+    this.items[C_TORSO]      = new Item(C_TORSO,      -1, EMPTY);
+    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  -1, EMPTY);
+    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, -1, EMPTY);
+    this.items[C_BOOTS]      = new Item(C_BOOTS,      -1, EMPTY);
 
     this.getSkills = getSkills;
 
@@ -98,6 +75,9 @@ function Player(name)
     }
 
     this.skill_graphics = new SkillGraphics(this);
+    this.skill_engine = new SkillEngine();
+    this.skill_engine.resetSkills(this);
+    this.skill_engine.updateSkills(this);
 
     this.inventory = new Inventory(this, this.skill_graphics);
 }

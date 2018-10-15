@@ -4,7 +4,7 @@ function InventoryEngine(bag)
 
     this.logInventory = logInventory;
     this.getImage = getImage;
-    this.getItem = getItem;
+    this.getBagItem = getBagItem;
     this.addItem = addItem;
     this.deleteItem = deleteItem;
     this.swapItems = swapItems;
@@ -21,7 +21,7 @@ function InventoryEngine(bag)
         this.inventory[i] = [];
         for(let j=0; j<bag.width; j++)
         {
-            this.inventory[i][j] = new Item(EMPTY, EMPTY, 0);
+            this.inventory[i][j] = new Item(-1, EMPTY, 0);
         }
     }
 
@@ -47,7 +47,7 @@ function InventoryEngine(bag)
         return this.inventory[y][x].image;
     }
 
-    function getItem(x, y)
+    function getBagItem(x, y)
     {
         return this.inventory[y][x];
     }

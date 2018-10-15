@@ -3,6 +3,7 @@ function SkillEngine()
     this.updateSkills = updateSkills;
     this.resetSkills = resetSkills;
 
+
     function updateSkills(player)
     {
         for(let i=0; i<player.getSkills().length; i++)

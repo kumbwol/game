@@ -4,3 +4,10 @@ const C_TORSO      = 2;
 const C_LEFT_HAND  = 3;
 const C_RIGHT_HAND = 4;
 const C_BOOTS      = 5;
+
+const S_HEAD       = "c_head";
+const S_NECKLACE   = "c_necklace";
+const S_TORSO      = "c_torso";
+const S_LEFT_HAND  = "c_hand";
+const S_RIGHT_HAND = "c_hand";
+const S_BOOTS      = "c_boots";

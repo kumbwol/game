@@ -15,6 +15,12 @@ function Item(type, rank, image)
         this.skills[0] = new Skill("Shield");
         this.skills[1] = new Skill("Promote");
     }
+    if(rank === 2)
+    {
+        this.skills[0] = new Skill("Shield");
+        this.skills[1] = new Skill("Promote");
+        this.skills[1] = new Skill("Shock");
+    }
 
     /*for(let i=0; i<=rank; i++)
     {

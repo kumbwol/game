@@ -6,6 +6,11 @@ function InventoryGraphics(bag)
     this.changeSkillsButton = changeSkillsButton;
     this.updateSkills = updateSkills;
 
+    const BAG_TO_CHARACTER       = 0;
+    const CHARACTER_TO_CHARACTER = 1;
+    const BAG_TO_BAG             = 2;
+    const CHARACTER_TO_BAG       = 3;
+
     function updateSkills(player, skill_graphics)
     {
         $("#player_profile").remove();
@@ -31,14 +36,210 @@ function InventoryGraphics(bag)
         skill_graphics.drawSkillsSG(player, inBattle);
     }
 
-    function drawInventory(engine)
+    function drawInventory(engine, player)
     {
         engine.logInventory();
-        drawBag(engine);
+        drawBag(player, engine);
+        drawItems(player, engine);
         //drawPlayerItems();
     }
 
-    function drawBag(engine)
+    function drawItems(player, engine)
+    {
+        $("#game_background").append('<div id="items"></div>');
+        for(let i=0; i<player.getSkills().length; i++)
+        {
+            $("#items").append(createField("item_" + i, 0, i, player.items[i], false));
+
+            allignToMiddle($("#item_" + i).children().first());
+            allignToMiddleY($("#item_" + i).children().first());
+            let accepting = "";
+            switch(player.items[i].type)
+            {
+                case C_HEAD:
+                {
+                    accepting = S_HEAD;
+                    break;
+                }
+
+                case C_NECKLACE:
+                {
+                    accepting = S_NECKLACE;
+                    break;
+                }
+
+                case C_TORSO:
+                {
+                    accepting = S_TORSO;
+                    break;
+                }
+
+                case C_LEFT_HAND:
+                {
+                    accepting = S_LEFT_HAND;
+                    break;
+                }
+
+                case C_RIGHT_HAND:
+                {
+                    accepting = S_RIGHT_HAND;
+                    break;
+                }
+
+                case C_BOOTS:
+                {
+                    accepting = S_BOOTS;
+                    break;
+                }
+
+                default:
+                {
+                    accepting = "nothing";
+                    break;
+                }
+            }
+            $("#item_" + i).children().first().addClass("ui-widget-content");
+            $("#item_" + i).addClass("ui-widget-header");
+
+            $("#item_" + i).droppable(
+                {
+                    hoverClass: 'item_hover',
+                    accept: "." + accepting,
+                    drop: function(event, ui)
+                    {
+                        let parent = "#" + ui.draggable.parent().attr("id");
+                        let target  = "#" + $(this).attr("id");
+
+                        let parent_class = ui.draggable.parent().attr("class");
+                        let target_class = $(this).attr("class");
+
+                        let type_of_put = decideTypeOfPut(parent.length);
+
+                        $(parent).removeClass();
+                        $(target).removeClass();
+                        $(target).addClass(parent_class);
+                        $(parent).addClass(target_class);
+
+                        if(type_of_put === BAG_TO_CHARACTER)
+                        {
+                            if(player.items[target[6]].rank === -1)
+                            {
+                                player.wearItem(target[6], engine.getBagItem(parent[7], parent[3]));
+                                engine.deleteItem(parent[7], parent[3]);
+                                let element = $(parent).children().first().detach();
+                                $(target).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+                            }
+                            else
+                            {
+                                let tmp = engine.getBagItem(parent[7], parent[3]);
+                                engine.deleteItem(parent[7], parent[3]);
+                                engine.addItem(parent[7], parent[3], player.items[target[6]]);
+                                player.wearItem(target[6], tmp);
+
+                                let element = $(parent).children().first().detach();
+                                $(target).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+
+                                element = $(target).children().first().detach();
+                                $(parent).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+                            }
+
+                            $(target).children().first().addClass("using");
+                            $(target).children().first().removeClass("ui-widget-content");
+                            $(parent).children().first().removeClass("using");
+
+                            engine.logInventory();
+                            player.logItems();
+                            changeBagsDroppables();
+                        }
+
+                        if(type_of_put === CHARACTER_TO_CHARACTER)
+                        {
+                            if(player.items[target[6]].rank === -1)
+                            {
+                                let tmp = player.items[parent[6]];
+                                player.wearItem(parent[6], player.items[target[6]]);
+                                player.wearItem(target[6], tmp);
+
+                                let element = $(parent).children().first().detach();
+                                $(target).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+                            }
+                            else
+                            {
+                                let tmp = player.items[parent[6]];
+                                player.wearItem(parent[6], player.items[target[6]]);
+                                player.wearItem(target[6], tmp);
+
+                                let element = $(parent).children().first().detach();
+                                $(target).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+
+                                element = $(target).children().first().detach();
+                                $(parent).append(element);
+                                allignToMiddle(element);
+                                allignToMiddleY(element);
+                            }
+
+                            player.logItems();
+                        }
+                    }
+                });
+        }
+    }
+
+    function decideTypeOfPut(type)
+    {
+        switch(type)
+        {
+            case 7:
+                return CHARACTER_TO_CHARACTER;
+            case 8:
+                return BAG_TO_CHARACTER;
+            case 6:
+                return BAG_TO_BAG;
+            case 5:
+                return CHARACTER_TO_BAG;
+        }
+    }
+
+    function getItemType($object)
+    {
+        if($object.hasClass(S_HEAD))       return "." + S_HEAD;
+        if($object.hasClass(S_NECKLACE))   return "." + S_NECKLACE;
+        if($object.hasClass(S_TORSO))      return "." + S_TORSO;
+        if($object.hasClass(S_LEFT_HAND))  return "." + S_LEFT_HAND;
+        if($object.hasClass(S_RIGHT_HAND)) return "." + S_RIGHT_HAND;
+        if($object.hasClass(S_BOOTS))      return "." + S_BOOTS;
+    }
+
+    function changeBagsDroppables()
+    {
+        for(let i=0; i<bag.height; i++)
+        {
+            for(let j=0; j<bag.width; j++)
+            {
+                if($("#y_" + i + "_x_" + j).children().first().hasClass("item"))
+                {
+                    let item_type = ", .using" + getItemType($("#y_" + i + "_x_" + j).children().first());
+                    $("#y_" + i + "_x_" + j).droppable({accept: ".ui-widget-content" + item_type});
+                }
+                else
+                {
+                    $("#y_" + i + "_x_" + j).droppable({accept: ".ui-widget-content, .using"});
+                }
+            }
+        }
+    }
+
+    function drawBag(player, engine)
     {
         /*let a = new BattleGraphics();
         a.drawSkillBars();*/
@@ -50,10 +251,11 @@ function InventoryGraphics(bag)
         {
             for(let j=0; j<bag.width; j++)
             {
-                $("#bag").append(createBagField("y_" + i + "_x_" + j, j, i, engine.getItem(j, i)));
+                $("#bag").append(createField("y_" + i + "_x_" + j, j, i, engine.getBagItem(j, i), true));
 
                 allignToMiddle($("#y_" + i + "_x_" + j).children().first());
                 allignToMiddleY($("#y_" + i + "_x_" + j).children().first());
+                addType($("#y_" + i + "_x_" + j).children().first(), engine.getBagItem(j, i).type);
                 $("#y_" + i + "_x_" + j).children().first().addClass("ui-widget-content");
                 $("#y_" + i + "_x_" + j).addClass("ui-widget-header");
 
@@ -69,42 +271,78 @@ function InventoryGraphics(bag)
                             let parent_class = ui.draggable.parent().attr("class");
                             let target_class = $(this).attr("class");
 
-                            engine.logInventory();
+
+                            //$(parent).droppable({accept: ".ui-widget-content"});
+
+                            let type_of_put = decideTypeOfPut(parent.length-2);
 
                             $(parent).removeClass();
                             $(target).removeClass();
                             $(target).addClass(parent_class);
                             $(parent).addClass(target_class);
 
-                            if(engine.getImage(target[7], target[3]) === EMPTY)
+                            if(type_of_put === BAG_TO_BAG)
                             {
-                                engine.addItem(target[7], target[3], engine.getItem(parent[7], parent[3]));
-                                engine.deleteItem(parent[7], parent[3]);
+                                if(engine.getImage(target[7], target[3]) === EMPTY)
+                                {
+                                    engine.addItem(target[7], target[3], engine.getBagItem(parent[7], parent[3]));
+                                    engine.deleteItem(parent[7], parent[3]);
 
-                                let element = $(parent).children().first().detach();
-                                $(target).append(element);
+                                    let element = $(parent).children().first().detach();
+                                    $(target).append(element);
 
-                                allignToMiddle(element);
-                                allignToMiddleY(element);
+                                    allignToMiddle(element);
+                                    allignToMiddleY(element);
+                                }
+                                else
+                                {
+                                    engine.swapItems(parent[7], parent[3], target[7], target[3]);
 
+                                    let element = $(parent).children().first().detach();
+                                    $(target).append(element);
+                                    allignToMiddle(element);
+                                    allignToMiddleY(element);
+
+                                    element = $(target).children().first().detach();
+                                    $(parent).append(element);
+                                    allignToMiddle(element);
+                                    allignToMiddleY(element);
+                                }
                                 engine.logInventory();
                             }
-                            else
+
+                            if(type_of_put === CHARACTER_TO_BAG)
                             {
-                                engine.swapItems(parent[7], parent[3], target[7], target[3]);
+                                if(engine.getImage(target[7], target[3]) === EMPTY)
+                                {
+                                    engine.addItem(target[7], target[3], player.items[parent[6]]);
+                                    player.deleteItem(parent[6]);
 
-                                let element = $(parent).children().first().detach();
-                                $(target).append(element);
-                                allignToMiddle(element);
-                                allignToMiddleY(element);
+                                    let element = $(parent).children().first().detach();
+                                    $(target).append(element);
+                                    allignToMiddle(element);
+                                    allignToMiddleY(element);
+                                }
+                                else
+                                {
+                                    let tmp = engine.getBagItem(target[7], target[3]);
+                                    engine.addItem(target[7], target[3], player.items[parent[6]]);
+                                    player.wearItem(parent[6], tmp);
 
-                                element = $(target).children().first().detach();
-                                $(parent).append(element);
-                                allignToMiddle(element);
-                                allignToMiddleY(element);
+                                    let element = $(parent).children().first().detach();
+                                    $(target).append(element);
+                                    allignToMiddle(element);
+                                    allignToMiddleY(element);
 
+                                    element = $(target).children().first().detach();
+                                    $(parent).append(element);
+                                    allignToMiddle(element);
+                                    allignToMiddleY(element);
+                                }
                                 engine.logInventory();
+                                player.logItems();
                             }
+                            changeBagsDroppables();
                         }
                     });
                 $("#y_" + i + "_x_" + j).children().first().draggable(
@@ -115,17 +353,71 @@ function InventoryGraphics(bag)
 
             }
         }
+        changeBagsDroppables();
     }
 
-    function createBagField(id, x, y, item)
+    function addType($object, type)
+    {
+        switch(type)
+        {
+            case C_HEAD:
+            {
+                $object.addClass(S_HEAD);
+                break;
+            }
+
+            case C_NECKLACE:
+            {
+                $object.addClass(C_NECKLACE);
+                break;
+            }
+
+            case C_TORSO:
+            {
+                $object.addClass(C_TORSO);
+                break;
+            }
+
+            case C_LEFT_HAND:
+            {
+                $object.addClass(S_LEFT_HAND);
+                break;
+            }
+
+            case C_RIGHT_HAND:
+            {
+                $object.addClass(S_RIGHT_HAND);
+                break;
+            }
+
+            case C_BOOTS:
+            {
+                $object.addClass(S_BOOTS);
+                break;
+            }
+        }
+    }
+
+    function createField(id, x, y, item, inBag)
     {
         let $object = $('<div></div>');
 
-        $object.attr("id", id);
-        $object.addClass("bag_field");
+        if(inBag)
+        {
+            $object.attr("id", id);
+            $object.addClass("inventory_field");
 
-        $object.css('left', (x*(bag.field_size))-x+1);
-        $object.css('top',  (y*(bag.field_size))-y+1);
+            $object.css('left', (x*(bag.field_size))-x+1);
+            $object.css('top',  (y*(bag.field_size))-y+1);
+        }
+        else
+        {
+            $object.attr("id", id);
+            $object.addClass("inventory_field");
+
+            $object.css('left', (x*(bag.field_size))-x+1);
+            $object.css('top',  (y*(bag.field_size))-y+1+(y*7));
+        }
 
         switch(item.image)
         {
@@ -144,6 +436,12 @@ function InventoryGraphics(bag)
 
         switch(item.rank)
         {
+            case -1:
+            {
+                $object.addClass("grey");
+                break;
+            }
+
             case 0:
             {
                 $object.addClass("grey");

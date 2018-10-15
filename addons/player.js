@@ -35,6 +35,13 @@ function Player(name)
     let skills = [];
 
     this.items = [];
+    this.wearItem = wearItem;
+
+    function wearItem(place, item)
+    {
+        this.items[place] = item;
+    }
+
     this.items[C_HEAD]       = new Item(C_HEAD,       -1, EMPTY);
     this.items[C_NECKLACE]   = new Item(C_NECKLACE,   -1, EMPTY);
     this.items[C_TORSO]      = new Item(C_TORSO,      -1, EMPTY);
@@ -43,6 +50,26 @@ function Player(name)
     this.items[C_BOOTS]      = new Item(C_BOOTS,      -1, EMPTY);
 
     this.getSkills = getSkills;
+    this.logItems = logItems;
+
+    function logItems()
+    {
+        let s="";
+        for(let i=0; i<6; i++)
+        {
+            s += this.items[i].image;
+            s += " ";
+        }
+        console.log(s);
+        console.log("-----------");
+    }
+
+    this.deleteItem = deleteItem;
+
+    function deleteItem(i)
+    {
+        this.items[i] = new Item(i, -1, EMPTY);
+    }
 
     function getSkills()
     {

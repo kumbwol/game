@@ -5,7 +5,14 @@
     top: 70px;
 }
 
-.bag_field
+#items
+{
+    position: absolute;
+    left: 250px;
+    top: 79px;
+}
+
+.inventory_field
 {
     position: absolute;
     width: 53px;
@@ -14,17 +21,17 @@
     border: 1px solid black;
 }
 
-.bag_field.grey
+.inventory_field.grey
 {
     background-color: #b9b9b9;
 }
 
-.bag_field.white
+.inventory_field.white
 {
     background-color: white;
 }
 
-.bag_field.green
+.inventory_field.green
 {
     background-color: green;
 }

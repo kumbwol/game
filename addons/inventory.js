@@ -9,14 +9,15 @@ function Inventory(player, skill_graphics)
     let engine = new InventoryEngine(bag);
     let graphics = new InventoryGraphics(bag);
 
-    engine.addItem(0, 0, new Item(C_HEAD, SWORD, 1));
-    engine.addItem(1, 1, new Item(C_NECKLACE, NECKLACE, 2));
+    engine.addItem(0, 0, new Item(C_LEFT_HAND,  1, SWORD));
+    engine.addItem(1, 1, new Item(C_RIGHT_HAND, 2, NECKLACE));
+    engine.addItem(0, 1, new Item(C_HEAD,       2, NECKLACE));
 
     this.showInventory = showInventory;
 
     function showInventory()
     {
-        graphics.drawInventory(engine);
+        graphics.drawInventory(engine, player);
 
         $("#game_background").append('<div id="player_profile" class="inventory_skill"></div>');
         graphics.drawSkills(player, skill_graphics, false);

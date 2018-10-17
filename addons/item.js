@@ -19,7 +19,7 @@ function Item(type, rank, image)
     {
         this.skills[0] = new Skill("Shield");
         this.skills[1] = new Skill("Promote");
-        this.skills[1] = new Skill("Shock");
+        this.skills[2] = new Skill("Shock");
     }
 
     /*for(let i=0; i<=rank; i++)

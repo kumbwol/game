@@ -1,14 +1,14 @@
 #bag
 {
     position: absolute;
-    left: 500px;
+    left: 625px;
     top: 70px;
 }
 
 #items
 {
     position: absolute;
-    left: 250px;
+    left: 300px;
     top: 79px;
 }
 
@@ -36,7 +36,6 @@
     background-color: green;
 }
 
-
 .item
 {
     position: absolute;
@@ -63,7 +62,7 @@
 .inventory_skill
 {
     position: absolute;
-    left: 30px;
+    left: 20px;
     top: 77px;
 }
 
@@ -101,4 +100,24 @@
 {
     top: 295px;
     left: 0px;
+}
+
+#inventory_character
+{
+    position: absolute;
+    width: 233px;
+    height: 326px;
+    top: 100px;
+    left: 370px;
+    background-image: url("images/inventory_gui/character_big.png");
+}
+
+.line
+{
+    position: absolute;
+    width: 83px;
+    height: 1px;
+    left: 218px;
+    background-color: red;
+    z-index: 1;
 }

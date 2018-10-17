@@ -5,6 +5,7 @@ function InventoryGraphics(bag)
     this.createBackButton = createBackButton;
     this.changeSkillsButton = changeSkillsButton;
     this.updateSkills = updateSkills;
+    this.drawConnenctingLines = drawConnenctingLines;
 
     const BAG_TO_CHARACTER       = 0;
     const CHARACTER_TO_CHARACTER = 1;
@@ -21,6 +22,16 @@ function InventoryGraphics(bag)
         skill_graphics.drawSkillRanks(player, false);
     }
 
+    function drawLine(id)
+    {
+        let $object = $('<div></div>');
+        $object.attr("id", "line_" + id);
+        $object.attr("class", "line");
+        $object.css("top", (id*59)+107 + "px");
+
+        return $object;
+    }
+
     function changeSkillsButton()
     {
         $("#game_background").append('<button id="change_skills">Change</button>');
@@ -34,17 +45,36 @@ function InventoryGraphics(bag)
     function drawSkills(player, skill_graphics, inBattle)
     {
         skill_graphics.drawSkillsSG(player, inBattle);
+        drawConnenctingLines(player);
     }
 
-    function drawInventory(engine, player)
+    function drawConnenctingLines(player)
+    {
+        $(".line").remove();
+        for(let i=0; i<player.items.length; i++)
+        {
+            if(player.items[i].rank !== -1)
+            {
+                $("#game_background").append(drawLine(i));
+            }
+        }
+    }
+
+    function drawInventory(engine, player, skill_graphics)
     {
         engine.logInventory();
-        drawBag(player, engine);
-        drawItems(player, engine);
+        drawBag(player, engine, skill_graphics);
+        drawItems(player, engine, skill_graphics);
+        drawCharacter();
         //drawPlayerItems();
     }
 
-    function drawItems(player, engine)
+    function drawCharacter()
+    {
+        $("#game_background").append('<div id="inventory_character"></div>');
+    }
+
+    function drawItems(player, engine, skill_graphics)
     {
         $("#game_background").append('<div id="items"></div>');
         for(let i=0; i<player.getSkills().length; i++)
@@ -153,6 +183,8 @@ function InventoryGraphics(bag)
                             $(target).children().first().removeClass("ui-widget-content");
                             $(parent).children().first().removeClass("using");
 
+                            engine.changeSkills(player);
+                            updateSkills(player, skill_graphics);
                             engine.logInventory();
                             player.logItems();
                             changeBagsDroppables();
@@ -188,6 +220,8 @@ function InventoryGraphics(bag)
                                 allignToMiddleY(element);
                             }
 
+                            engine.changeSkills(player);
+                            updateSkills(player, skill_graphics);
                             player.logItems();
                         }
                     }
@@ -239,7 +273,7 @@ function InventoryGraphics(bag)
         }
     }
 
-    function drawBag(player, engine)
+    function drawBag(player, engine, skill_graphics)
     {
         /*let a = new BattleGraphics();
         a.drawSkillBars();*/
@@ -339,6 +373,9 @@ function InventoryGraphics(bag)
                                     allignToMiddle(element);
                                     allignToMiddleY(element);
                                 }
+
+                                engine.changeSkills(player);
+                                updateSkills(player, skill_graphics);
                                 engine.logInventory();
                                 player.logItems();
                             }

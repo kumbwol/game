@@ -397,6 +397,7 @@ function SkillGraphics(player)
         let $object_inside = $('<div></div>');
         $object_inside.attr("id", "skill_rank_inside_" + id);
         $object_inside.addClass("trapezoid_inside");
+        $object_inside.css("z-index", 2);
 
         $object_border.append($object_inside);
 
@@ -410,7 +411,7 @@ function SkillGraphics(player)
         else
         {
             $object_border.css("top", "77px");
-            $object_border.css("left", "228px");
+            $object_border.css("left", "218px");
             $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
         }
 

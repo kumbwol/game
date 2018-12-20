@@ -568,6 +568,21 @@ function BattleEngine(battle_table)
         {
             switch(enemy.getSkills()[i].getSkillChance().type)
             {
+                case MAGIC:
+                {
+                    //console.log(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_drain);
+                    console.log(enemy.mp);
+                    if(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_drain <= enemy.mp)
+                    {
+                        this.enemy_skill_chances[i] = 100;
+                    }
+                    else
+                    {
+                        this.enemy_skill_chances[i] = 0;
+                    }
+                    break;
+                }
+
                 case RAGE:
                 {
                     //this.enemy_skill_chances[i] = "100";

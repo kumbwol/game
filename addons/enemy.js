@@ -15,11 +15,11 @@ function Enemy(name)
         this.max_hp = 100;
         this.hp = this.max_hp;
         this.mp = 0;
-        this.max_mp = 0;
+        this.max_mp = 10;
         this.armor = 0;
         this.old_armor = 0;
 
-        skills[0] = new Skill("Raging storm");
+        skills[0] = new Skill("Magic chance");
         skills[1] = new Skill("Regeneration");
         skills[2] = new Skill("Punch");
     }

@@ -5,7 +5,6 @@ function InventoryGraphics(bag)
     this.createBackButton = createBackButton;
     this.changeSkillsButton = changeSkillsButton;
     this.updateSkills = updateSkills;
-    this.drawConnenctingLines = drawConnenctingLines;
 
     const BAG_TO_CHARACTER       = 0;
     const CHARACTER_TO_CHARACTER = 1;
@@ -262,7 +261,9 @@ function InventoryGraphics(bag)
             {
                 if($("#y_" + i + "_x_" + j).children().first().hasClass("item"))
                 {
-                    let item_type = ", .using" + getItemType($("#y_" + i + "_x_" + j).children().first());
+                    $("#y_" + i + "_x_" + j).children().first().removeClass("using");
+                    $("#y_" + i + "_x_" + j).children().first().addClass("ui-widget-content");
+                    let item_type = ", " + getItemType($("#y_" + i + "_x_" + j).children().first());
                     $("#y_" + i + "_x_" + j).droppable({accept: ".ui-widget-content" + item_type});
                 }
                 else
@@ -378,8 +379,8 @@ function InventoryGraphics(bag)
                                 updateSkills(player, skill_graphics);
                                 engine.logInventory();
                                 player.logItems();
+                                changeBagsDroppables();
                             }
-                            changeBagsDroppables();
                         }
                     });
                 $("#y_" + i + "_x_" + j).children().first().draggable(

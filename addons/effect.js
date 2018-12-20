@@ -62,7 +62,7 @@ function Effect(name)
         case "REGEN":
         {
             effect.type = MANA_REGEN;
-            effect.mana_regen = 5;
+            effect.mana_regen = 3;
             effect.self = true;
             break;
         }

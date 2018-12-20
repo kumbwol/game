@@ -95,6 +95,8 @@ $(function()
         $("#skill_rank_border_3").remove();
         $("#skill_rank_border_4").remove();
         $("#skill_rank_border_5").remove();
+        $(".line").remove();
+        $(".item").remove();
     }
 
 

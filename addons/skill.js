@@ -237,6 +237,14 @@ function Skill(name)
             break;
         }
 
+        case "Magic chance":
+        {
+            primary_effect = new Effect("DMG2");
+            secondary_effect = new Effect("LOSS");
+            chance = new Chance(MAGIC, 0);
+            break;
+        }
+
         case "Raging storm":
         {
             primary_effect = new Effect("DMG2");
@@ -247,9 +255,9 @@ function Skill(name)
 
         case "Regeneration":
         {
-            primary_effect = new Effect("Regeneration");
+            primary_effect = new Effect("REGEN");
             secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, 30);
+            chance = new Chance(LUCK, 70);
             break;
         }
 

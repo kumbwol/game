@@ -17,7 +17,8 @@ function BattleEngine(battle_table)
         transform: false,
         penetrate: false,
         mana_drain: false,
-        mana_regen: false
+        mana_regen: false,
+        mana_cost: false
     };
     this.selected_field_id = "";
     this.allow_select = true;
@@ -568,11 +569,11 @@ function BattleEngine(battle_table)
         {
             switch(enemy.getSkills()[i].getSkillChance().type)
             {
-                case MAGIC:
+                case SPELL:
                 {
                     //console.log(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_drain);
                     console.log(enemy.mp);
-                    if(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_drain <= enemy.mp)
+                    if(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_cost <= enemy.mp)
                     {
                         this.enemy_skill_chances[i] = 100;
                     }
@@ -716,6 +717,18 @@ function BattleEngine(battle_table)
             }
 
             this.skill_type.mana_drain = true;
+        }
+
+        if(effect.mana_cost > 0)
+        {
+            unit.mp -= effect.mana_cost;
+
+            if(unit.mp < 0)
+            {
+                unit.mp = 0;
+            }
+
+            this.skill_type.mana_cost = true;
         }
 
 

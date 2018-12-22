@@ -774,11 +774,11 @@ function BattleGraphics(battle_table)
         }
     }
 
-    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, armor, penetrate, player_on_turn)
+    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, mana_cost, armor, penetrate, player_on_turn)
     {
         let done = $.Deferred();
 
-        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0 || penetrate > 0)
+        if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0 || penetrate > 0 || mana_cost > 0)
         {
             let object;
 
@@ -835,6 +835,15 @@ function BattleGraphics(battle_table)
                 object = $("#dmg_counter");
                 object.css("color", "purple");
                 object.html("-" + penetrate);
+            }
+            else if(mana_cost > 0)
+            {
+                if(player_on_turn) $("#self").append('<div id="dmg_counter"></div>');
+                else $("#enemy_profile .profile_picture").append('<div id="dmg_counter"></div>');
+
+                object = $("#dmg_counter");
+                object.css("color", "blue");
+                object.html("-" + mana_cost);
             }
 
             allignToMiddle(object);
@@ -951,7 +960,7 @@ function BattleGraphics(battle_table)
                     complete: function(){
                         $("#cut").remove();*/
 
-                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.armor, skill.primary_effect.penetrate, false).done(function()
+                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, false).done(function()
                 {
                     done.resolve();
                 });
@@ -964,6 +973,7 @@ function BattleGraphics(battle_table)
                 if(skill.primary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy, false);
                 if(skill.primary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
                 if(skill.primary_effect.mana_drain > 0)  updateMpBar($("#player_mp"), player, false);
+                if(skill.primary_effect.mana_cost > 0)  updateEnemyMpBar($("#enemy_mp"), enemy, false);
                 if(skill.primary_effect.armor > 0)  updateArmor(enemy.armor, enemy.old_armor, false);
                 if(skill.primary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
                 /*     }
@@ -1013,7 +1023,7 @@ function BattleGraphics(battle_table)
                 complete: function(){
                     $("#cut").remove();*/
 
-            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.armor, skill.secondary_effect.penetrate, false).done(function()
+            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, false).done(function()
             {
                 done.resolve();
             });
@@ -1026,6 +1036,7 @@ function BattleGraphics(battle_table)
             if(skill.secondary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy, false);
             if(skill.secondary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.secondary_effect.mana_drain > 0)  updateMpBar($("#player_mp"), player, false);
+            if(skill.secondary_effect.mana_cost > 0)  updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.secondary_effect.armor > 0)  updateArmor(enemy.armor, enemy.old_armor, false);
             if(skill.secondary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
         }
@@ -1681,6 +1692,12 @@ function BattleGraphics(battle_table)
             $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").css("background-repeat", "no-repeat");
             switch(enemy.getSkills()[i].getSkillChance().type)
             {
+                case SPELL:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("SPELL");
+                    break;
+                }
+
                 case RAGE:
                 {
                     $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("RAGE");
@@ -1760,6 +1777,12 @@ function BattleGraphics(battle_table)
                 case MANA_DRAIN:
                 {
                     effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).mana_drain;
+                    break;
+                }
+
+                case MANA_COST:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).mana_cost;
                     break;
                 }
 

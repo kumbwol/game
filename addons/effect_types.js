@@ -17,3 +17,4 @@ const PROMOTE    = 12; // promote field
 const COMBO      = 13; // increase combo
 const ARMOR      = 14; // increase armor
 const PENETRATE  = 15; // penetrate dmg neglects armor
+const MANA_COST  = 16; // cost of activating effect

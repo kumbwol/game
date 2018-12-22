@@ -337,6 +337,12 @@ function SkillGraphics(player)
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).mana_drain;
                 break;
             }
+
+            case MANA_COST:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).mana_cost;
+                break;
+            }
         }
 
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_left_image", "#skill_0 .skill_left_part_bottom_left_number");
@@ -379,6 +385,12 @@ function SkillGraphics(player)
             case MANA_DRAIN:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).mana_drain;
+                break;
+            }
+
+            case MANA_COST:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).mana_cost;
                 break;
             }
         }
@@ -758,6 +770,12 @@ function SkillGraphics(player)
                     break;
                 }
 
+                case MANA_COST:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).mana_cost;
+                    break;
+                }
+
                 case COMBO:
                 {
                     effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).combo_amount;
@@ -837,7 +855,13 @@ function SkillGraphics(player)
 
             case MANA_DRAIN:
             {
-                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/loss.png")');
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/mana_drain.png")');
+                break;
+            }
+
+            case MANA_COST:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/mana_cost.png")');
                 break;
             }
 

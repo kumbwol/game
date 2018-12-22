@@ -217,6 +217,11 @@ figure#mouse-pointer {
     border: 2px solid black;
 }
 
+.SPELL
+{
+    background-image: url("images/chance_types/spell.png");
+}
+
 .RAGE
 {
     background-image: url("images/chance_types/rage.png");

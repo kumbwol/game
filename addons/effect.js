@@ -20,6 +20,7 @@ function Effect(name)
         type: -1,
         mana_regen: 0,
         mana_drain: 0,
+        mana_cost: 0,
         combo_amount: 0,
         armor: 0,
         penetrate: 0,
@@ -69,8 +70,9 @@ function Effect(name)
 
         case "LOSS":
         {
-            effect.type = MANA_DRAIN;
-            effect.mana_drain = 5;
+            effect.self = true;
+            effect.type = MANA_COST;
+            effect.mana_cost = 5;
             break;
         }
 

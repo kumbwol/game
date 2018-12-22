@@ -241,7 +241,7 @@ function Skill(name)
         {
             primary_effect = new Effect("DMG2");
             secondary_effect = new Effect("LOSS");
-            chance = new Chance(MAGIC, 0);
+            chance = new Chance(SPELL, 0);
             break;
         }
 

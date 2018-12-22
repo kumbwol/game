@@ -2,4 +2,4 @@ console.log("chance_types.js loaded");
 
 const LUCK  = 0;
 const RAGE  = 1;
-const MAGIC = 2;
+const SPELL = 2;

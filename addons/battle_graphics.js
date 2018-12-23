@@ -1692,6 +1692,12 @@ function BattleGraphics(battle_table)
             $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").css("background-repeat", "no-repeat");
             switch(enemy.getSkills()[i].getSkillChance().type)
             {
+                case BALANCE:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("BALANCE");
+                    break;
+                }
+
                 case SPELL:
                 {
                     $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("SPELL");

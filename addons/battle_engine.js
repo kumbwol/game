@@ -2,6 +2,7 @@ console.log("battle_engine.js loaded");
 
 function BattleEngine(battle_table)
 {
+    let turn = 0;
     this.battle_table = battle_table;
     this.table = [];
     this.temp_table = [];
@@ -100,6 +101,7 @@ function BattleEngine(battle_table)
         {
             this.enemy_old_skill_chances[i] = this.enemy_skill_chances[i];
         }
+        console.log(this.enemy_old_skill_chances);
     }
 
     function getField(x, y)
@@ -551,6 +553,7 @@ function BattleEngine(battle_table)
 
     function decideEnemySkills()
     {
+        turn++;
         for(let i=0; i<this.enemy_skill_chances.length; i++)
         {
             let chance = (generateRandomNumber(100) + 1);
@@ -569,10 +572,39 @@ function BattleEngine(battle_table)
         {
             switch(enemy.getSkills()[i].getSkillChance().type)
             {
+                case BALANCE:
+                {
+                    /*console.log(this.enemy_skill_chances.length);
+                    for(let i=0; i<this.enemy_skill_chances.length; i++)
+                    {
+                        console.log(this.enemy_skill_plays[i]);
+                    }*/
+
+                    console.log('hey');
+
+                    if(turn === 0) //first turn
+                    {
+                        this.enemy_skill_chances[i] = 0;
+                    }
+                    else
+                    {
+                        let successfull_skill_last_round = 0;
+                        for(let j=0; j<this.enemy_skill_chances.length; j++)
+                        {
+                            if(this.enemy_skill_plays[j] && j !== i) successfull_skill_last_round++;
+                        }
+                        //console.log(successfull_skill_last_round);
+
+                        this.enemy_skill_chances[i] = Math.round((((this.enemy_skill_chances.length - 1) - successfull_skill_last_round) / (this.enemy_skill_chances.length - 1))*100);
+                        console.log(this.enemy_skill_chances[i]);
+                    }
+                    break;
+                }
+
                 case SPELL:
                 {
                     //console.log(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_drain);
-                    console.log(enemy.mp);
+                    //console.log(enemy.mp);
                     if(enemy.getSkills()[i].getSkillEffect(SECONDARY).mana_cost <= enemy.mp)
                     {
                         this.enemy_skill_chances[i] = 100;

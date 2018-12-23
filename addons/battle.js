@@ -187,7 +187,7 @@ function Battle(player, skill_graphics)
 
                                 player.increaseRank(player_selected_skill_id - 1, player);
                                 skill_graphics.updateSkillRanks(player);
-                                graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
+                                //graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
                                 graphics.showCursor();
                             });
                         });

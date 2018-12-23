@@ -22,6 +22,8 @@ function Enemy(name)
         skills[0] = new Skill("Magic chance");
         skills[1] = new Skill("Regeneration");
         skills[2] = new Skill("Punch");
+        skills[3] = new Skill("Regeneration");
+
     }
 
     if(this.name === "Fagyaszt")

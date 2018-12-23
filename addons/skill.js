@@ -52,7 +52,7 @@ function Skill(name)
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("Penetrate");
-            secondary_effect  = new Effect("NOTHING");
+            secondary_effect  = new Effect("Penetrate");
             break;
         }
 
@@ -241,7 +241,7 @@ function Skill(name)
         {
             primary_effect = new Effect("DMG2");
             secondary_effect = new Effect("LOSS");
-            chance = new Chance(SPELL, 0);
+            chance = new Chance(BALANCE, 0);
             break;
         }
 
@@ -257,7 +257,7 @@ function Skill(name)
         {
             primary_effect = new Effect("REGEN");
             secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, 70);
+            chance = new Chance(SPELL, 0);
             break;
         }
 

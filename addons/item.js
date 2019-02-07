@@ -12,14 +12,15 @@ function Item(type, rank, image)
     }
     if(rank === 1)
     {
-        this.skills[0] = new Skill("Shield");
-        this.skills[1] = new Skill("Promote");
+        //this.skills[0] = new Skill("Promote");
+        this.skills[0] = new Skill("selfPara");
+        this.skills[1] = new Skill("UsePromote");
     }
     if(rank === 2)
     {
         /*this.skills[0] = new Skill("Shield");
         this.skills[1] = new Skill("Promote");*/
-        this.skills[0] = new Skill("PENETRATE");
+        this.skills[0] = new Skill("Promote");
         this.skills[1] = new Skill("PENETRATE");
         this.skills[2] = new Skill("PENETRATE");
     }

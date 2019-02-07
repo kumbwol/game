@@ -141,6 +141,23 @@ function Skill(name)
             break;
         }
 
+        case "UsePromote":
+        {
+            visual_pattern =
+                [
+                    /*[DEF,NUL,NUL],
+                    [NUL,ATT,NUL],
+                    [NUL,NUL,NUL]*/
+                    [PMA,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect    = new Effect("DMG");
+            secondary_effect  = new Effect("NOTHING");
+            break;
+        }
+
         case "Loss":
         {
             visual_pattern =
@@ -237,6 +254,20 @@ function Skill(name)
             break;
         }
 
+        case "selfPara":
+        {
+            visual_pattern =
+                [
+                    [ATT,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect = new Effect("PARALYZE");
+            secondary_effect = new Effect("PARALYZE");
+            break;
+        }
+
         case "Magic chance":
         {
             primary_effect = new Effect("DMG2");
@@ -265,7 +296,7 @@ function Skill(name)
         {
             primary_effect = new Effect("DMG1");
             secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, 100);
+            chance = new Chance(RAGE, 0);
             break;
         }
 
@@ -281,7 +312,7 @@ function Skill(name)
         {
             primary_effect = new Effect("Stun");
             secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, 100);
+            chance = new Chance(LUCK, 20);
             break;
         }
 
@@ -308,6 +339,31 @@ function Skill(name)
             chance = new Chance(LUCK, 100);
             break;
         }
+
+        case "hardParalyze":
+        {
+            primary_effect = new Effect("hardParalyze");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "hardStun":
+        {
+            primary_effect = new Effect("hardStun");
+            secondary_effect = new Effect("DMG");
+            chance = new Chance(LUCK, 100);
+            break;
+        }
+
+        case "stuck":
+        {
+            primary_effect = new Effect("DMG");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(STUCK, 0);
+            break;
+        }
+
     }
 
     this.getSkillPatternHeight = getSkillPatternHeight;

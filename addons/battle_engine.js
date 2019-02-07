@@ -94,6 +94,8 @@ function BattleEngine(battle_table)
     this.finalizePromotions = finalizePromotions;
     this.getField = getField;
     this.saveSkillChances = saveSkillChances;
+    this.countParalyzedFields = countParalyzedFields;
+    this.countFields = countFields;
 
     function saveSkillChances()
     {
@@ -101,7 +103,7 @@ function BattleEngine(battle_table)
         {
             this.enemy_old_skill_chances[i] = this.enemy_skill_chances[i];
         }
-        console.log(this.enemy_old_skill_chances);
+        //console.log(this.enemy_old_skill_chances);
     }
 
     function getField(x, y)
@@ -179,7 +181,6 @@ function BattleEngine(battle_table)
 
     function promoteFields()
     {
-        //this.logTable();
         for(let i=0; i<this.battle_table.height; i++)
         {
             for(let j=0; j<this.battle_table.width; j++)
@@ -190,6 +191,8 @@ function BattleEngine(battle_table)
                 }
             }
         }
+        this.logTable();
+        //this.logTempTable();
     }
 
     function useSpecialAbility(player, id)
@@ -580,7 +583,7 @@ function BattleEngine(battle_table)
                         console.log(this.enemy_skill_plays[i]);
                     }*/
 
-                    console.log('hey');
+                    //console.log('hey');
 
                     if(turn === 0) //first turn
                     {
@@ -622,7 +625,8 @@ function BattleEngine(battle_table)
                     /*alert((1 - (enemy.hp / enemy.max_hp)) * 100);
                     alert(Math.ceil((1 - (enemy.hp / enemy.max_hp))*100));*/
 
-                    this.enemy_skill_chances[i] = Math.round((1 - (enemy.hp / enemy.max_hp))*100);
+                    this.enemy_skill_chances[i] = Math.ceil((1 - (enemy.hp / enemy.max_hp)) * 100);
+                    console.log("RAGE" + this.enemy_skill_chances[i]);
                     break;
                 }
 
@@ -631,8 +635,54 @@ function BattleEngine(battle_table)
                     this.enemy_skill_chances[i] = enemy.getSkills()[i].getSkillChance().modifier;
                     break;
                 }
+
+                case STUCK:
+                {
+                    this.logTable();
+                    this.enemy_skill_chances[i] = Math.ceil(this.countParalyzedFields() / this.countFields() * 100);
+                    console.log("!!" + this.enemy_skill_chances[i]);
+                    console.log("para" + this.countParalyzedFields());
+                    console.log("fields" + this.countFields());
+                    break;
+                }
             }
         }
+    }
+
+    function countParalyzedFields()
+    {
+        let counter = 0;
+
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].paralyzed)
+                {
+                    counter++;
+                }
+            }
+        }
+
+        return counter;
+    }
+
+    function countFields()
+    {
+        let counter = 0;
+
+        for(let i=0; i<this.battle_table.height; i++)
+        {
+            for(let j=0; j<this.battle_table.width; j++)
+            {
+                if(this.table[i][j].type !== NUL)
+                {
+                    counter++;
+                }
+            }
+        }
+
+        return counter;
     }
 
     function resetTempTable()
@@ -642,6 +692,10 @@ function BattleEngine(battle_table)
             for(let j=0; j<this.battle_table.width; j++)
             {
                 this.temp_table[i][j].type = this.table[i][j].type;
+                this.temp_table[i][j].stunned = this.table[i][j].stunned;
+                this.temp_table[i][j].paralyzed = this.table[i][j].paralyzed;
+                this.temp_table[i][j].poison_dmg = this.table[i][j].poison_dmg;
+                this.temp_table[i][j].selected = false;
             }
         }
     }
@@ -954,6 +1008,8 @@ function BattleEngine(battle_table)
     function deleteField(x, y)
     {
         this.table[y][x].type = NUL;
+        this.table[y][x].paralyzed = false;
+        this.table[y][x].stunned = false;
     }
 
     function selectField(y, x, player)
@@ -1237,7 +1293,7 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                /*if(this.table[i][j].promoted)
+                /*if(this.table[i][j].paralyzed)
                 {
                     row_string += "1" + " ";
                 }
@@ -1263,15 +1319,15 @@ function BattleEngine(battle_table)
         {
             for(let j=0; j<this.battle_table.width; j++)
             {
-                if(this.temp_table[i][j].promoted)
+                /*if(this.temp_table[i][j].paralyzed)
                 {
                     row_string += "1" + " ";
                 }
                 else
                 {
                     row_string += "0" + " ";
-                }
-                //row_string += this.temp_table[i][j].type + " ";
+                }*/
+                row_string += this.temp_table[i][j].type + " ";
                 //row_string += this.temp_table[i][j].poison_dmg + " ";
             }
             console.log(row_string);

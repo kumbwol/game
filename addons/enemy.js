@@ -20,9 +20,9 @@ function Enemy(name)
         this.old_armor = 0;
 
         skills[0] = new Skill("Magic chance");
-        skills[1] = new Skill("Regeneration");
+        skills[1] = new Skill("Stun");
         skills[2] = new Skill("Punch");
-        skills[3] = new Skill("Regeneration");
+        skills[3] = new Skill("Stun");
 
     }
 
@@ -32,10 +32,28 @@ function Enemy(name)
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
+        this.armor = 0;
+        this.old_armor = 0;
 
         skills[0] = new Skill("Freeze");
         skills[1] = new Skill("Stun");
         skills[2] = new Skill("Poison");
+    }
+
+    if(this.name === "Para")
+    {
+        this.max_hp = 45;
+        this.hp = 45;
+        this.max_mp = 60;
+        this.mp = 60;
+        this.armor = 0;
+        this.old_armor = 0;
+
+        skills[0] = new Skill("hardParalyze");
+        skills[1] = new Skill("hardStun");
+        skills[2] = new Skill("stuck");
+        skills[3] = new Skill("Raging storm");
+        //skills[4] = new Skill("Freeze");
     }
 
     if(this.name === "Test")

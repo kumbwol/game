@@ -141,6 +141,14 @@ function Effect(name)
             break;
         }
 
+        case "hardStun":
+        {
+            effect.type = STUN;
+            effect.stun = true;
+            effect.stun_amount = 10;
+            break;
+        }
+
         case "Poison":
         {
             effect.type = POISON;
@@ -176,6 +184,14 @@ function Effect(name)
             effect.type = PARALYZE;
             effect.paralyze = true;
             effect.paralyze_amount = 5;
+            break;
+        }
+
+        case "hardParalyze":
+        {
+            effect.type = PARALYZE;
+            effect.paralyze = true;
+            effect.paralyze_amount = 20;
             break;
         }
     }

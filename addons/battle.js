@@ -22,7 +22,7 @@ function Battle(player, skill_graphics)
     let player_turn = true;
 
     let engine = new BattleEngine(battle_table);
-    let enemy  = new Enemy("Skeleton");
+    let enemy  = new Enemy("Para");
     let graphics = new BattleGraphics(battle_table);
     let skill_activation_finished = true;
     let poison_animation_finished = true;
@@ -30,8 +30,6 @@ function Battle(player, skill_graphics)
 
     graphics.createCursor();
     player.resetRanks(player.getSkills().length);
-    engine.calculateEnemySkillChances(skill, enemy);
-    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
     graphics.drawTable(battle_table);
     graphics.drawAbilityPoints(player);
     graphics.drawEndTurn();
@@ -43,6 +41,8 @@ function Battle(player, skill_graphics)
     graphics.startFillTable(engine);
     //graphics.reFillTable(engine);
     engine.refreshTable();
+    engine.calculateEnemySkillChances(skill, enemy);
+    graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
     $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function()
     {
@@ -129,8 +129,6 @@ function Battle(player, skill_graphics)
                         activateSecondarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                         {
                             engine.saveSkillChances();
-                            engine.calculateEnemySkillChances(skill, enemy);
-                            graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
 
                             graphics.updateComboNumber(engine.combo_meter);
                             dmg_heal_number_animation_finished = true;
@@ -165,12 +163,16 @@ function Battle(player, skill_graphics)
                                                 poison_animation_finished = true;
                                             });
                                         }
+                                        engine.calculateEnemySkillChances(skill, enemy);
+                                        graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
                                     });
                                 }
                                 else
                                 {
                                     skill_activation_finished = true;
                                     engine.refreshTable();
+                                    engine.calculateEnemySkillChances(skill, enemy);
+                                    graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
                                     if(engine.isPlayerPoisoned())
                                     {
                                         poison_animation_finished = false;
@@ -181,13 +183,15 @@ function Battle(player, skill_graphics)
                                     }
                                 }
 
+
+
                                 engine.table_modified = false;
 
                                 engine.resetSkillToOriginalPattern(player, player_selected_skill_id);
 
                                 player.increaseRank(player_selected_skill_id - 1, player);
                                 skill_graphics.updateSkillRanks(player);
-                                //graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
+                                graphics.drawPlayerSkillBarsOnly(player, skill_graphics);
                                 graphics.showCursor();
                             });
                         });

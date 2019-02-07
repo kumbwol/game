@@ -343,6 +343,12 @@ function SkillGraphics(player)
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).mana_cost;
                 break;
             }
+
+            case PARALYZE:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).paralyze_amount;
+                break;
+            }
         }
 
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_left_image", "#skill_0 .skill_left_part_bottom_left_number");
@@ -391,6 +397,12 @@ function SkillGraphics(player)
             case MANA_COST:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).mana_cost;
+                break;
+            }
+
+            case PARALYZE:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).paralyze_amount;
                 break;
             }
         }
@@ -791,6 +803,12 @@ function SkillGraphics(player)
                 case PENETRATE:
                 {
                     effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).penetrate;
+                    break;
+                }
+
+                case PARALYZE:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).paralyze_amount;
                     break;
                 }
 

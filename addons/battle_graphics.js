@@ -57,6 +57,8 @@ function BattleGraphics(battle_table)
     this.hideCursor = hideCursor;
     this.showCursor = showCursor;
     this.updateArmor = updateArmor;
+    this.drawPlayerSkillBarsOnly = drawPlayerSkillBarsOnly;
+    this.drawEnemySkillBarsOnly = drawEnemySkillBarsOnly;
 
     this.updateComboNumber = updateComboNumber;
 
@@ -747,12 +749,14 @@ function BattleGraphics(battle_table)
             let animation_speed = 30;
             let smoother = difference/20;
 
+            //alert("itt " + enemy_skill_chances[i]);
+            //alert("ott " + enemy_old_skill_chances[i]);
+
             let j = 0;
 
             let x = setInterval(function()
             {
                 //console.log(j);
-                j += smoother;
 
                 if(!growing)
                 {
@@ -763,11 +767,16 @@ function BattleGraphics(battle_table)
                     $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.ceil(enemy_old_skill_chances[i]+j) + "%");
                 }
 
+                j += smoother;
+
                 allignTextRight($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
                 allignToMiddleY($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
 
                 if(j>=difference)
                 {
+                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(enemy_skill_chances[i] + "%");
+                    allignTextRight($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
+                    allignToMiddleY($("#enemy_skill_" + (i+1) + " .enemy_chance_number"));
                     clearInterval(x);
                 }
             }, animation_speed);
@@ -1533,12 +1542,22 @@ function BattleGraphics(battle_table)
         $("#game_background").append('<div class="top_bar"></div>');
     }
 
-    function drawSkillBars(player, enemy, enemy_skill_chances, skill_graphics)
+    function drawPlayerSkillBarsOnly(player, skill_graphics)
     {
         $("#player_profile").remove();
-        $("#enemy_profile").remove();
         drawSkillBarPlayer(player, skill_graphics);
+    }
+
+    function drawEnemySkillBarsOnly(enemy, enemy_skill_chances, skill_graphics)
+    {
+        $("#enemy_profile").remove();
         drawSkillBarEnemy(enemy, enemy_skill_chances, skill_graphics);
+    }
+
+    function drawSkillBars(player, enemy, enemy_skill_chances, skill_graphics)
+    {
+        this.drawPlayerSkillBarsOnly(player, skill_graphics);
+        this.drawEnemySkillBarsOnly(enemy, enemy_skill_chances, skill_graphics);
     }
 
     function drawSkillBarPlayer(player, skill_graphics)
@@ -1707,6 +1726,12 @@ function BattleGraphics(battle_table)
                 case RAGE:
                 {
                     $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("RAGE");
+                    break;
+                }
+
+                case STUCK:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("STUCK");
                     break;
                 }
 

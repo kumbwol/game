@@ -30,8 +30,6 @@ function BattleGraphics(battle_table)
     this.updateEnemyMpBar = updateEnemyMpBar;
     this.updateEnemySkillChances = updateEnemySkillchances;
     this.drawChanceExplainer = drawChanceExplainer;
-    this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
-    this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
     this.drawFieldExplainer = drawFieldExplainer;
     this.drawAbilityExplainer = drawAbilityExplainer;
     this.poisonActivationAnimation = poisonActivationAnimation;
@@ -48,14 +46,10 @@ function BattleGraphics(battle_table)
     this.drawAbilitySelector = drawAbilitySelector;
     this.deleteAbilitySelector = deleteAbilitySelector;
     this.reduceManaIfAbilityUsed = reduceManaIfAbilityUsed;
-    this.changeCursor = changeCursor;
-    this.createCursor = createCursor;
     this.contrastSkills = contrastSkills;
     this.stopContrastSkills = stopContrastSkills;
     this.drawPromotedFields = drawPromotedFields;
     this.promoteAnimation = promoteAnimation;
-    this.hideCursor = hideCursor;
-    this.showCursor = showCursor;
     this.updateArmor = updateArmor;
     this.drawPlayerSkillBarsOnly = drawPlayerSkillBarsOnly;
     this.drawEnemySkillBarsOnly = drawEnemySkillBarsOnly;
@@ -196,16 +190,6 @@ function BattleGraphics(battle_table)
         $(parent).append($middle_detector);
     }
 
-    function hideCursor()
-    {
-        $("#mouse-pointer").css("visibility", "hidden");
-    }
-
-    function showCursor()
-    {
-        $("#mouse-pointer").css("visibility", "visible");
-    }
-
     function promoteAnimation(engine)
     {
         let done = $.Deferred();
@@ -308,31 +292,6 @@ function BattleGraphics(battle_table)
         $("#hole").remove();
     }
 
-    function createCursor()
-    {
-        $("#game_background").css("cursor", "none");
-        $("#game_background").append('<figure id="mouse-pointer"></figure>');
-    }
-
-    function changeCursor(player, engine)
-    {
-        if(engine.isAbilitySelected())
-        {
-            if(engine.isSpecialAbilitySelected(player))
-            {
-                $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/use_ability.png")');
-            }
-            else
-            {
-                $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/default.png")');
-            }
-        }
-        else
-        {
-            $("#mouse-pointer").css("background-image", 'url("addons/images/cursor/default.png")');
-        }
-    }
-
     function reduceManaIfAbilityUsed(engine, player)
     {
         if(engine.ability_used)
@@ -350,9 +309,8 @@ function BattleGraphics(battle_table)
         }
     }
 
-    function deleteAbilitySelector(player, engine)
+    function deleteAbilitySelector()
     {
-        changeCursor(player, engine);
         $("#ability_selector").remove();
         stopContrastSkills();
     }
@@ -629,35 +587,6 @@ function BattleGraphics(battle_table)
         return done;
     }
 
-    function paragraphMacroChanger(text)
-    {
-        text = text.replace("MOVE", '<span style="color:forestgreen; font-weight:bold">MOVE</span>');
-        text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
-        text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
-        text = text.replace("MAGIC", '<span style="color:aqua; font-weight:bold">MAGIC</span>');
-
-        return text;
-    }
-
-    function drawEnemyEffectExplainer(unit, primary, id)
-    {
-        let x = $('<div id="explain_box">');
-        if(primary)
-        {
-            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(PRIMARY).type] + '</div>');
-            x.append('<div class="explain_box_line"></div>');
-            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(PRIMARY).type]) + '</div>');
-        }
-        else
-        {
-            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(SECONDARY).type] + '</div>');
-            x.append('<div class="explain_box_line"></div>');
-            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(SECONDARY).type]) + '</div>');
-        }
-
-        return x;
-    }
-
     function drawFieldExplainer(field)
     {
         let x = $('<div id="explain_box">');
@@ -703,23 +632,12 @@ function BattleGraphics(battle_table)
         return x;
     }
 
-    function drawPlayerEffectExplainer(unit, effect_type)
-    {
-        let x = $('<div id="explain_box">');
-
-        x.append('<div class="explain_box_title">' + paragraphs.effect.titles[effect_type] + '</div>');
-        x.append('<div class="explain_box_line"></div>');
-        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[effect_type]) + '</div>');
-
-        return x;
-    }
-
     function drawChanceExplainer(enemy, id)
     {
         let x = $('<div id="explain_box">');
         x.append('<div class="explain_box_title">' + paragraphs.chance.titles[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type] + '</div>');
         x.append('<div class="explain_box_line"></div>');
-        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.chance.paragraphs[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type]) + '</div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphs.chance.paragraphs[enemy.getSkills()[(parseInt(id)-1)].getSkillChance().type] + '</div>');
 
         return x;
     }

@@ -1,4 +1,4 @@
-function Battle(player, skill_graphics)
+function Battle(player, skill_graphics, cursor)
 {
     let battle_table = {
         height: 9,
@@ -28,7 +28,6 @@ function Battle(player, skill_graphics)
     let poison_animation_finished = true;
     let dmg_heal_number_animation_finished = true;
 
-    graphics.createCursor();
     player.resetRanks(player.getSkills().length);
     graphics.drawTable(battle_table);
     graphics.drawAbilityPoints(player);
@@ -192,7 +191,7 @@ function Battle(player, skill_graphics)
                                 player.increaseRank(player_selected_skill_id - 1, player);
                                 skill_graphics.updateSkillRanks(player);
                                 graphics.drawPlayerSkillBarsOnly(player, skill_graphics);
-                                graphics.showCursor();
+                                cursor.showCursor();
                             });
                         });
                     });
@@ -210,13 +209,6 @@ function Battle(player, skill_graphics)
             console.log("armor: " + player.armor);
             //engine.logTempTable();
         }
-    });
-
-    $(window).mousemove(function(event) {
-        $('#mouse-pointer').css({
-            'top' : event.pageY + 'px',
-            'left' : event.pageX + 'px'
-        });
     });
 
     $("#game_background").on("click", "#skill_1, #skill_2, #skill_3, #skill_4, #skill_5, #skill_6", function(ev)
@@ -251,7 +243,7 @@ function Battle(player, skill_graphics)
 
                 if(player.getSkills()[player_selected_skill_id-1][0].name !== "EMPTY")
                 {
-                    graphics.hideCursor();
+                    cursor.hideCursor();
                     if(skill.moving) $("#selected_skill").remove();
                     graphics.drawSelectedSkill(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1], false);
                     engine.addSkillValue(player, parseInt(skill_id[6])-1, skill, player.rank[parseInt(skill_id[6])-1]);
@@ -280,7 +272,7 @@ function Battle(player, skill_graphics)
             if(engine.selectAbility(player, $(this).attr("class")[0]))
             {
                 graphics.drawAbilitySelector(engine, player);
-                graphics.changeCursor(player, engine);
+                cursor.changeCursor(player, engine);
                 if(engine.isSpecialAbilitySelected(player))
                 {
                     graphics.contrastSkills();
@@ -306,12 +298,13 @@ function Battle(player, skill_graphics)
 
     $("#game_background").on("contextmenu", function()
     {
-        graphics.showCursor();
+        cursor.showCursor();
         if(engine.allow_select && dmg_heal_number_animation_finished)
         {
             stopSkillSelection(skill);
             engine.deSelectAbility(player);
-            graphics.deleteAbilitySelector(player, engine);
+            cursor.changeCursor(player, engine);
+            graphics.deleteAbilitySelector();
         }
 
         return false;
@@ -390,6 +383,7 @@ function Battle(player, skill_graphics)
 
     $("#game_background").on("mousedown", ".skill_right_part_bottom, .skill_left_part_bottom_left, .skill_left_part_bottom_right", function(ev)
     {
+        console.log("ittis");
         //console.log($(this).attr("class"));
         //console.log($(this).parent().parent().attr("id"));
         //console.log($(this).parent().parent().attr("id")[6]);
@@ -405,13 +399,13 @@ function Battle(player, skill_graphics)
             {
                 if($(this).attr("class") === "skill_left_part_bottom_left")
                 {
-                    $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, true, $(this).parent().parent().attr("id")[12]));
+                    $("#game_background").append(skill_graphics.drawEnemyEffectExplainer(enemy, true, $(this).parent().parent().attr("id")[12]));
                 }
                 else if($(this).attr("class") === "skill_left_part_bottom_right")
                 {
                     if(enemy.getSkills()[(parseInt($(this).parent().parent().attr("id")[12])-1)].getSkillEffect(SECONDARY).type !== NOTHING)
                     {
-                        $("#game_background").append(graphics.drawEnemyEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
+                        $("#game_background").append(skill_graphics.drawEnemyEffectExplainer(enemy, false, $(this).parent().parent().attr("id")[12]));
                     }
                 }
                 else
@@ -456,7 +450,7 @@ function Battle(player, skill_graphics)
 
                     if(effect_type !== NOTHING)
                     {
-                        $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
+                        $("#game_background").append(skill_graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
 
                         if(mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight())
                         {
@@ -494,7 +488,7 @@ function Battle(player, skill_graphics)
 
                     if(effect_type !== NOTHING)
                     {
-                        $("#game_background").append(graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
+                        $("#game_background").append(skill_graphics.drawPlayerEffectExplainer(player, parseInt(effect_type)));
 
                         if(mouse_y < $("#game_background").outerHeight()-$("#explain_box").outerHeight())
                         {
@@ -523,7 +517,7 @@ function Battle(player, skill_graphics)
     $("#game_background").on("mouseup", function()
     {
         $("#explain_box").remove();
-        graphics.changeCursor(player, engine);
+        cursor.changeCursor(player, engine);
     });
 
     $("#game_background").on("click", "#end_turn", function()

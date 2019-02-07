@@ -9,6 +9,12 @@ function InventoryEngine(bag)
     this.deleteItem = deleteItem;
     this.swapItems = swapItems;
     this.changeSkills = changeSkills;
+    this.inInventory = inInventory;
+
+    function inInventory()
+    {
+        return $("#bag").length;
+    }
 
     function changeSkills(player)
     {

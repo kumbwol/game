@@ -43,8 +43,9 @@ function InventoryGraphics(bag)
 
     function drawSkills(player, skill_graphics, inBattle)
     {
-        skill_graphics.drawSkillsSG(player, inBattle);
         drawConnenctingLines(player);
+        skill_graphics.drawSkillsSG(player, inBattle);
+
     }
 
     function drawConnenctingLines(player)

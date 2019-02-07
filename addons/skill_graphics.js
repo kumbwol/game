@@ -5,6 +5,8 @@ function SkillGraphics(player)
     this.updateSkillRanks = updateSkillRanks;
     this.drawSkillRanks = drawSkillRanks;
     this.removeRankHighlight = removeRankHighlight;
+    this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
+    this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
 
 
     $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function()
@@ -349,6 +351,11 @@ function SkillGraphics(player)
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).paralyze_amount;
                 break;
             }
+
+            case PENETRATE:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).penetrate;
+            }
         }
 
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_left_image", "#skill_0 .skill_left_part_bottom_left_number");
@@ -404,6 +411,11 @@ function SkillGraphics(player)
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).paralyze_amount;
                 break;
+            }
+
+            case PENETRATE:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).penetrate;
             }
         }
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_right_image", "#skill_0 .skill_left_part_bottom_right_number");
@@ -955,5 +967,45 @@ function SkillGraphics(player)
         let $object = $('<td></td>');
         $object.attr('class', class_name);
         return $object;
+    }
+
+    function drawPlayerEffectExplainer(unit, effect_type)
+    {
+        let x = $('<div id="explain_box">');
+
+        x.append('<div class="explain_box_title">' + paragraphs.effect.titles[effect_type] + '</div>');
+        x.append('<div class="explain_box_line"></div>');
+        x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[effect_type]) + '</div>');
+
+        return x;
+    }
+
+    function paragraphMacroChanger(text)
+    {
+        text = text.replace("MOVE", '<span style="color:forestgreen; font-weight:bold">MOVE</span>');
+        text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
+        text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
+        text = text.replace("MAGIC", '<span style="color:aqua; font-weight:bold">MAGIC</span>');
+
+        return text;
+    }
+
+    function drawEnemyEffectExplainer(unit, primary, id)
+    {
+        let x = $('<div id="explain_box">');
+        if(primary)
+        {
+            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(PRIMARY).type] + '</div>');
+            x.append('<div class="explain_box_line"></div>');
+            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(PRIMARY).type]) + '</div>');
+        }
+        else
+        {
+            x.append('<div class="explain_box_title">' + paragraphs.effect.titles[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(SECONDARY).type] + '</div>');
+            x.append('<div class="explain_box_line"></div>');
+            x.append('<div class="explain_box_paragraph">' + paragraphMacroChanger(paragraphs.effect.paragraphs[unit.getSkills()[(parseInt(id)-1)].getSkillEffect(SECONDARY).type]) + '</div>');
+        }
+
+        return x;
     }
 }

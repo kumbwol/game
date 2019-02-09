@@ -242,6 +242,11 @@ figure#mouse-pointer {
     background-image: url("images/chance_types/develop.png");
 }
 
+.WEAKNESS
+{
+    background-image: url("images/chance_types/weakness.png");
+}
+
 .LUCK
 {
     background-image: url("images/chance_types/luck.png");

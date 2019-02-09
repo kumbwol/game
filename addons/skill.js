@@ -372,6 +372,14 @@ function Skill(name)
             break;
         }
 
+        case "weakness":
+        {
+            primary_effect = new Effect("DMG");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(WEAKNESS, 0);
+            break;
+        }
+
     }
 
     this.getSkillPatternHeight = getSkillPatternHeight;

@@ -32,12 +32,14 @@ this.paragraphs.chance.titles[SPELL] = "Spell";
 this.paragraphs.chance.titles[BALANCE] = "Balance";
 this.paragraphs.chance.titles[STUCK] = "Stuck";
 this.paragraphs.chance.titles[DEVELOP] = "Develop";
+this.paragraphs.chance.titles[WEAKNESS] = "Weakness";
 this.paragraphs.chance.paragraphs[LUCK] = "Konstans szerencse.";
 this.paragraphs.chance.paragraphs[RAGE] = "Hianyzo HP alapjan no az esely.";
 this.paragraphs.chance.paragraphs[SPELL] = "A masodlagos kepesseg manna koltsegetol fuggoen teljesulhet vagy sem.";
 this.paragraphs.chance.paragraphs[BALANCE] = "Minnel tobb ellenfel skill teljesult az elozo korben, annal kevesebb lesz az eselye. Minnel kevesebb skill teljesult, annal tobb lesz az eselye.";
 this.paragraphs.chance.paragraphs[STUCK] = "Paralyzed mezok aranya az osszes mezohoz.";
 this.paragraphs.chance.paragraphs[DEVELOP] = "Rankok osszegenek aranya az ossz rankhoz.";
+this.paragraphs.chance.paragraphs[WEAKNESS] = "Minnel tobb fajta skillt jatszik ki a jatekos annal alacsonyabb.";
 
 //     ...::: SKILL EFFECTS :::...
 this.paragraphs.effect.titles[DMG] = "Damage";

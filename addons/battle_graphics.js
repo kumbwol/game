@@ -1659,6 +1659,12 @@ function BattleGraphics(battle_table)
                     break;
                 }
 
+                case WEAKNESS:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("WEAKNESS");
+                    break;
+                }
+
                 case LUCK:
                 {
 

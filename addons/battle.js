@@ -22,13 +22,14 @@ function Battle(player, skill_graphics, cursor)
     let player_turn = true;
 
     let engine = new BattleEngine(battle_table);
-    let enemy  = new Enemy("Develop");
+    let enemy  = new Enemy("Weakness");
     let graphics = new BattleGraphics(battle_table);
     let skill_activation_finished = true;
     let poison_animation_finished = true;
     let dmg_heal_number_animation_finished = true;
 
     player.resetRanks(player.getSkills().length);
+    engine.resetPlayedSkills(player.getSkills().length);
     graphics.drawTable(battle_table);
     graphics.drawAbilityPoints(player);
     graphics.drawEndTurn();
@@ -94,7 +95,7 @@ function Battle(player, skill_graphics, cursor)
 
         if(skill.moving && player_turn)
         {
-            if(dmg_heal_number_animation_finished && poison_animation_finished && skill_activation_finished && engine.canActivateSkill(skill, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
+            if(dmg_heal_number_animation_finished && poison_animation_finished && skill_activation_finished && engine.canActivateSkill(skill, player_selected_skill_id, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
             {
                 stopSkillSelection(skill);
                 skill_activation_finished = false;
@@ -532,6 +533,7 @@ function Battle(player, skill_graphics, cursor)
             graphics.freeParalyzedFields();
             engine.clearStunnedFields();
             engine.clearParalyzedFields();
+            engine.resetPlayedSkills(player.getSkills().length);
 
             engine.refreshTable();
 

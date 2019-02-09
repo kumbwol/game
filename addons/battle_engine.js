@@ -30,6 +30,8 @@ function BattleEngine(battle_table)
     this.active_ability_id = -1;
     this.ability_used = false;
     this.combo_meter = 0;
+    this.played_skills = [];
+
 
     for(let i=0; i<this.battle_table.height; i++)
     {
@@ -96,6 +98,16 @@ function BattleEngine(battle_table)
     this.saveSkillChances = saveSkillChances;
     this.countParalyzedFields = countParalyzedFields;
     this.countFields = countFields;
+    this.resetPlayedSkills = resetPlayedSkills;
+    this.calculateWeakness = calculateWeakness;
+
+    function resetPlayedSkills(skill_amount)
+    {
+        for(let i=0; i<skill_amount; i++)
+        {
+            this.played_skills[i] = false;
+        }
+    }
 
     function saveSkillChances()
     {
@@ -665,8 +677,30 @@ function BattleEngine(battle_table)
 
                     break;
                 }
+
+                case WEAKNESS:
+                {
+                    this.enemy_skill_chances[i] = this.calculateWeakness();
+
+                    break;
+                }
             }
         }
+    }
+
+    function calculateWeakness()
+    {
+        let count_played_skills = 0;
+
+        for(let i=0; i<this.played_skills.length; i++)
+        {
+            if(this.played_skills[i] === true)
+            {
+                count_played_skills++;
+            }
+        }
+
+        return Math.ceil((1-(count_played_skills/this.played_skills.length)) * 100);
     }
 
     function countSumOFMaxRanks(player)
@@ -913,7 +947,7 @@ function BattleEngine(battle_table)
         skill.secondary_effect = player.getSkills()[skill_id][rank].getSkillEffect(SECONDARY);
     }
 
-    function canActivateSkill(skill, x, y)
+    function canActivateSkill(skill, skill_id, x, y)
     {
         //alert("beleptem");
         //this.logTable();
@@ -967,15 +1001,8 @@ function BattleEngine(battle_table)
                     }
                 }
             }
-            /*alert(this.selected_fields.y0);
-            alert(this.selected_fields.x0);
 
-            alert(this.selected_fields.y1);
-            alert(this.selected_fields.x1);*/
-            /*if(this.anyFieldSelected())
-            {
-                this.deselectField(player);
-            }*/
+            this.played_skills[skill_id - 1] = true;
 
             return true;
         }
@@ -1057,6 +1084,7 @@ function BattleEngine(battle_table)
         this.table[y][x].type = NUL;
         this.table[y][x].paralyzed = false;
         this.table[y][x].stunned = false;
+        this.table[y][x].promoted = false;
     }
 
     function selectField(y, x, player)

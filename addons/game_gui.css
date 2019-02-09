@@ -237,6 +237,10 @@ figure#mouse-pointer {
     background-image: url("images/chance_types/stuck.png");
 }
 
+.DEVELOP
+{
+    background-image: url("images/chance_types/develop.png");
+}
 
 .LUCK
 {

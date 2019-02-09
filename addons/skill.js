@@ -364,6 +364,14 @@ function Skill(name)
             break;
         }
 
+        case "develop":
+        {
+            primary_effect = new Effect("DMG");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(DEVELOP, 0);
+            break;
+        }
+
     }
 
     this.getSkillPatternHeight = getSkillPatternHeight;

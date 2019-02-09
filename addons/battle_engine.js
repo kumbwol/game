@@ -569,7 +569,7 @@ function BattleEngine(battle_table)
         }
     }
 
-    function calculateEnemySkillChances(skill, enemy)
+    function calculateEnemySkillChances(skill, enemy, player)
     {
         for(let i=0; i<enemy.getSkills().length; i++)
         {
@@ -626,7 +626,7 @@ function BattleEngine(battle_table)
                     alert(Math.ceil((1 - (enemy.hp / enemy.max_hp))*100));*/
 
                     this.enemy_skill_chances[i] = Math.ceil((1 - (enemy.hp / enemy.max_hp)) * 100);
-                    console.log("RAGE" + this.enemy_skill_chances[i]);
+                    //console.log("RAGE" + this.enemy_skill_chances[i]);
                     break;
                 }
 
@@ -638,15 +638,62 @@ function BattleEngine(battle_table)
 
                 case STUCK:
                 {
-                    this.logTable();
-                    this.enemy_skill_chances[i] = Math.ceil(this.countParalyzedFields() / this.countFields() * 100);
-                    console.log("!!" + this.enemy_skill_chances[i]);
-                    console.log("para" + this.countParalyzedFields());
-                    console.log("fields" + this.countFields());
+                    if(this.countFields() === 0)
+                    {
+                        this.enemy_skill_chances[i] = 0;
+                    }
+                    else
+                    {
+                        this.enemy_skill_chances[i] = Math.ceil(this.countParalyzedFields() / this.countFields() * 100);
+                    }
+                    //console.log("!!" + this.enemy_skill_chances[i]);
+                    //console.log("para" + this.countParalyzedFields());
+                    //console.log("fields" + this.countFields());
+                    break;
+                }
+
+                case DEVELOP:
+                {
+                    if(countSumOFMaxRanks(player) === 0)
+                    {
+                        this.enemy_skill_chances[i] = 0;
+                    }
+                    else
+                    {
+                        this.enemy_skill_chances[i] =  Math.ceil(countSumOFRanks(player) / countSumOFMaxRanks(player) * 100);
+                    }
+
                     break;
                 }
             }
         }
+    }
+
+    function countSumOFMaxRanks(player)
+    {
+        let sum = 0;
+
+        for(let i=0; i<player.items.length; i++)
+        {
+            if(player.items[i].rank !== NO_ITEM)
+            {
+                sum += player.items[i].rank;
+            }
+        }
+
+        return sum;
+    }
+
+    function countSumOFRanks(player)
+    {
+        let sum = 0;
+
+        for(let i=0; i<player.rank.length; i++)
+        {
+            sum += player.rank[i];
+        }
+
+        return sum;
     }
 
     function countParalyzedFields()

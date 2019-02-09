@@ -56,6 +56,22 @@ function Enemy(name)
         //skills[4] = new Skill("Freeze");
     }
 
+    if(this.name === "Develop")
+    {
+        this.max_hp = 45;
+        this.hp = 45;
+        this.max_mp = 60;
+        this.mp = 60;
+        this.armor = 0;
+        this.old_armor = 0;
+
+        skills[0] = new Skill("hardParalyze");
+        skills[1] = new Skill("hardStun");
+        skills[2] = new Skill("develop");
+        skills[3] = new Skill("Raging storm");
+        //skills[4] = new Skill("Freeze");
+    }
+
     if(this.name === "Test")
     {
         this.max_hp = 100;

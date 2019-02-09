@@ -1653,6 +1653,12 @@ function BattleGraphics(battle_table)
                     break;
                 }
 
+                case DEVELOP:
+                {
+                    $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("DEVELOP");
+                    break;
+                }
+
                 case LUCK:
                 {
 

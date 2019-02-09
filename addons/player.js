@@ -42,12 +42,12 @@ function Player(name)
         this.items[place] = item;
     }
 
-    this.items[C_HEAD]       = new Item(C_HEAD,       -1, EMPTY);
-    this.items[C_NECKLACE]   = new Item(C_NECKLACE,   -1, EMPTY);
-    this.items[C_TORSO]      = new Item(C_TORSO,      -1, EMPTY);
-    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  -1, EMPTY);
-    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, -1, EMPTY);
-    this.items[C_BOOTS]      = new Item(C_BOOTS,      -1, EMPTY);
+    this.items[C_HEAD]       = new Item(C_HEAD,       NO_ITEM, EMPTY);
+    this.items[C_NECKLACE]   = new Item(C_NECKLACE,   NO_ITEM, EMPTY);
+    this.items[C_TORSO]      = new Item(C_TORSO,      NO_ITEM, EMPTY);
+    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  NO_ITEM, EMPTY);
+    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, NO_ITEM, EMPTY);
+    this.items[C_BOOTS]      = new Item(C_BOOTS,      NO_ITEM, EMPTY);
 
     this.getSkills = getSkills;
     this.logItems = logItems;

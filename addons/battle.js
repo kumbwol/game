@@ -22,7 +22,7 @@ function Battle(player, skill_graphics, cursor)
     let player_turn = true;
 
     let engine = new BattleEngine(battle_table);
-    let enemy  = new Enemy("Para");
+    let enemy  = new Enemy("Develop");
     let graphics = new BattleGraphics(battle_table);
     let skill_activation_finished = true;
     let poison_animation_finished = true;
@@ -40,7 +40,7 @@ function Battle(player, skill_graphics, cursor)
     graphics.startFillTable(engine);
     //graphics.reFillTable(engine);
     engine.refreshTable();
-    engine.calculateEnemySkillChances(skill, enemy);
+    engine.calculateEnemySkillChances(skill, enemy, player);
     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
     $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function()
@@ -162,7 +162,7 @@ function Battle(player, skill_graphics, cursor)
                                                 poison_animation_finished = true;
                                             });
                                         }
-                                        engine.calculateEnemySkillChances(skill, enemy);
+                                        engine.calculateEnemySkillChances(skill, enemy, player);
                                         graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
                                     });
                                 }
@@ -170,7 +170,7 @@ function Battle(player, skill_graphics, cursor)
                                 {
                                     skill_activation_finished = true;
                                     engine.refreshTable();
-                                    engine.calculateEnemySkillChances(skill, enemy);
+                                    engine.calculateEnemySkillChances(skill, enemy, player);
                                     graphics.updateEnemySkillChances(engine.enemy_skill_chances, engine.enemy_old_skill_chances);
                                     if(engine.isPlayerPoisoned())
                                     {
@@ -652,7 +652,7 @@ function Battle(player, skill_graphics, cursor)
                                     i++;
                                     graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                                     {
-                                        engine.calculateEnemySkillChances(skill, enemy);
+                                        engine.calculateEnemySkillChances(skill, enemy, player);
                                         graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
                                         player.ap = player.max_ap;

@@ -58,5 +58,4 @@ for(let i=0; i<fonts.length; i++)
     let string = "<div class="+ "font_preloader" + i +">Font preloader</div>";
     $("#game_background").append(string);
     $("." + "font_preloader" + i).css("font-family", fonts[i]);
-    if(i === fonts.length-1) preload_finished = true;
 }

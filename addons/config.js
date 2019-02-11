@@ -1,9 +1,5 @@
 console.log("config.js loaded");
 
-//preload finished
-let preload_finished = false;
-
-
 //...::: ANIMATION SPEEDS :::...
 const SWAP_ANIMATION_SPEED = 300;
 const FREEZE_ANIMATION_LENGTH = 500;

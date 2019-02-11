@@ -45,38 +45,55 @@ $(function()
             ).done(function()
             {
                 $.getScript("addons/paragraphs.js");
-                do {
-                    //TODO: Itt kene egy downloading/loading gif vagy vmi
-                    console.log("ragadok");
-                }while(!preload_finished);
+                let x = setInterval(function(){
+                    fontSpy('myLato', { //TODO: A tobbit fontot is elleorizni kene
+                        success: function() {
 
-                $("#game_background").append('<button id="create_table">Create</button>');
-                $("#game_background").append('<button id="inventory">Inventory</button>');
-                let player = new Player("Kumbi");
-                let cursor = new Cursor();
-                cursor.createCursor();
-
-                $("#game_background").on("click", "#create_table", function()
-                {
-                    deletePage();
-                    new Battle(player, player.skill_graphics, cursor);
-                });
-
-                $("#inventory").on("click", function()
-                {
-                    deletePage();
-
-                    player.inventory.showInventory();
-                });
-
-                $(window).mousemove(function(event) {
-                    $('#mouse-pointer').css({
-                        'top' : event.pageY + 'px',
-                        'left' : event.pageX + 'px'
+                            clearInterval(x);
+                            if(!done)
+                            {
+                                start();
+                            }
+                        },
+                        failure: function() {
+                            //TODO: Itt kene egy downloading/loading gif vagy vmi
+                            console.log("ragadok");
+                        }
                     });
-                });
+                }, 20);
 
+            });
+        });
+    }
 
+    let done = false;
+
+    function start()
+    {
+        done = true;
+        $("#game_background").append('<button id="create_table">Create</button>');
+        $("#game_background").append('<button id="inventory">Inventory</button>');
+        let player = new Player("Kumbi");
+        let cursor = new Cursor();
+        cursor.createCursor();
+
+        $("#game_background").on("click", "#create_table", function()
+        {
+            deletePage();
+            new Battle(player, player.skill_graphics, cursor);
+        });
+
+        $("#inventory").on("click", function()
+        {
+            deletePage();
+
+            player.inventory.showInventory();
+        });
+
+        $(window).mousemove(function(event) {
+            $('#mouse-pointer').css({
+                'top' : event.pageY + 'px',
+                'left' : event.pageX + 'px'
             });
         });
     }

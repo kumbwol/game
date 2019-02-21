@@ -100,6 +100,19 @@ function BattleEngine(battle_table)
     this.countFields = countFields;
     this.resetPlayedSkills = resetPlayedSkills;
     this.calculateWeakness = calculateWeakness;
+    this.resetRank = resetRank;
+    this.canResetSkill = canResetSkill;
+
+    function canResetSkill(player)
+    {
+        return player.ap > 0;
+    }
+
+    function resetRank(player)
+    {
+        player.rank[player.observed_skill_id] = 0;
+        player.ap--;
+    }
 
     function resetPlayedSkills(skill_amount)
     {

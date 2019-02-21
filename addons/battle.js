@@ -74,7 +74,6 @@ function Battle(player, skill_graphics, cursor)
                         }
                         graphics.reduceManaIfAbilityUsed(engine, player);
                         graphics.refreshAbilityPoint(player);
-                        graphics.refreshEndButton(player.ap);
 
                         if(engine.isPlayerPoisoned())
                         {
@@ -286,6 +285,19 @@ function Battle(player, skill_graphics, cursor)
     {
         graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
         skill_graphics.removeRankHighlight();
+    });
+
+    $("#game_background").on("click", "#reset_rank", function()
+    {
+        if(engine.canResetSkill(player))
+        {
+            engine.resetRank(player);
+            skill_graphics.deleteSkillRanks();
+            skill_graphics.drawSkillRanks(player, true);
+            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
+            skill_graphics.removeRankHighlight();
+            graphics.refreshAbilityPoint(player);
+        }
     });
 
     $("#game_background").on("mousemove", function(ev)
@@ -523,6 +535,11 @@ function Battle(player, skill_graphics, cursor)
 
     $("#game_background").on("click", "#end_turn", function()
     {
+
+    });
+
+    $("#game_background").on("click", "#end_turn", function()
+    {
         //console.log(player_turn);
 
         if(player_turn && skill_activation_finished && poison_animation_finished && dmg_heal_number_animation_finished && !engine.isSpecialAbilitySelected(player))
@@ -662,7 +679,6 @@ function Battle(player, skill_graphics, cursor)
                                         {
                                             engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, player.rank);
                                         }
-                                        graphics.refreshEndButton(player.ap);
                                         graphics.refreshAbilityPoint(player);
                                         done.resolve();
                                     });

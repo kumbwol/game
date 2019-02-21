@@ -42,7 +42,6 @@ function BattleGraphics(battle_table)
     this.enemyActivatePrimarySkill = enemyActivatePrimarySkill;
     this.enemyActivateSecondarySkill = enemyActivateSecondarySkill;
     this.drawPlayerAbilities = drawPlayerAbilities;
-    this.refreshEndButton = refreshEndButton;
     this.drawAbilitySelector = drawAbilitySelector;
     this.deleteAbilitySelector = deleteAbilitySelector;
     this.reduceManaIfAbilityUsed = reduceManaIfAbilityUsed;
@@ -325,12 +324,6 @@ function BattleGraphics(battle_table)
                 $("#ability_" + i).append('<div id="ability_selector"></div>');
             }
         }
-    }
-
-    function refreshEndButton(ap)
-    {
-        if(ap > 0) $("#end_turn").css("background-color", end_turn_color_have_ap_left);
-        else $("#end_turn").css("background-color", end_turn_color_no_ap_left);
     }
 
     function drawPlayerAbilities(player)
@@ -1077,6 +1070,16 @@ function BattleGraphics(battle_table)
         $("#ability_point").html(player.ap);
         allignToMiddle($("#ability_point"));
         $("#ability_point").css("left", "-=1px");
+
+
+        refreshEndButton(player.ap);
+
+    }
+
+    function refreshEndButton(ap)
+    {
+        if(ap > 0) $("#end_turn").css("background-color", end_turn_color_have_ap_left);
+        else $("#end_turn").css("background-color", end_turn_color_no_ap_left);
     }
 
     function myFade(change_field_type, object, isStunned, isParalyzed, cb)

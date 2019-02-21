@@ -99,6 +99,18 @@ figure#mouse-pointer {
     background-color: firebrick;
 }
 
+#reset_rank
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    left: 0px;
+    border: solid black;
+    border-width: 0px 1px 1px 0px;
+    background-color: purple;
+}
+
 #rank_in_explain
 {
     position: absolute;

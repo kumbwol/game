@@ -7,6 +7,23 @@ function SkillGraphics(player)
     this.removeRankHighlight = removeRankHighlight;
     this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
     this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
+    this.deleteSkillRanks = deleteSkillRanks;
+
+    function deleteSkillRanks()
+    {
+        $("#skill_rank_inside_0").remove();
+        $("#skill_rank_inside_1").remove();
+        $("#skill_rank_inside_2").remove();
+        $("#skill_rank_inside_3").remove();
+        $("#skill_rank_inside_4").remove();
+        $("#skill_rank_inside_5").remove();
+        $("#skill_rank_border_0").remove();
+        $("#skill_rank_border_1").remove();
+        $("#skill_rank_border_2").remove();
+        $("#skill_rank_border_3").remove();
+        $("#skill_rank_border_4").remove();
+        $("#skill_rank_border_5").remove();
+    }
 
 
     $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function()
@@ -209,6 +226,15 @@ function SkillGraphics(player)
     {
         if(rank_id > 0) $("#rank_explainer").append('<div id="left_arrow"></div>');
         if(rank_id+1 < max_rank) $("#rank_explainer").append('<div id="right_arrow"></div>');
+    }
+
+    function createResetButtonInRankExplainer(inBattle, rank)
+    {
+        if(inBattle && rank > 0)
+        {
+            $("#rank_explainer").append('<div id="reset_rank"></div>');
+            $("#reset_rank").append('<div id="reset_button_inside">!</div>');
+        }
     }
 
     function createExitButtonInRankExplainer(inBattle)
@@ -422,6 +448,7 @@ function SkillGraphics(player)
         createArrows(skill_id, rank_id, player.getSkills()[skill_id].length);
         createRank((rank_id+1));
         createExitButtonInRankExplainer(inBattle);
+        createResetButtonInRankExplainer(inBattle, player.rank[skill_id]);
     }
 
     function createSkillRank(player, id, inBattle)

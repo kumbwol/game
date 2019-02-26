@@ -1,130 +1,205 @@
 $(function()
 {
-    start_program();
 
-    function start_program()
+    let main = new MainGame();
+    let player;
+    let cursor;
+
+    function MainGame()
     {
-        $.when
-        (
-            $.getScript("addons/battle_engine.js"),
-            $.getScript("addons/battle_graphics.js"),
-            $.getScript("addons/player.js"),
-            $.getScript("addons/enemy.js"),
-            $.getScript("addons/field.js"),
-            $.getScript("addons/field_types.js"),
-            $.getScript("addons/config.js"),
-            $.getScript("addons/skillpattern.js"),
-            $.getScript("addons/skill.js"),
-            $.getScript("addons/effect_types.js"),
-            $.getScript("addons/effect.js"),
-            $.getScript("addons/chance_types.js"),
-            $.getScript("addons/chance.js"),
-            $.getScript("addons/ability_types.js"),
-            $.getScript("addons/ability.js"),
-            $.getScript("addons/battle.js"),
-            $.getScript("addons/item_images.js"),
-            $.getScript("addons/item_types.js"),
-            $.getScript("addons/inventory_engine.js"),
-            $.getScript("addons/inventory_graphics.js"),
-            $.getScript("addons/inventory.js"),
-            $.getScript("addons/item.js"),
-            $.getScript("addons/skill_graphics.js"),
-            $.getScript("addons/skill_engine.js"),
-            $.getScript("addons/cursor.js"),
-            $.Deferred(function( deferred ){
-                $( deferred.resolve );
-            })
-        ).done(function()
+        start_program();
+
+        let x;
+
+        function start_program()
         {
             $.when
             (
-                $.getScript("addons/preloader.js"),
+                $.getScript("addons/battle_engine.js"),
+                $.getScript("addons/battle_graphics.js"),
+                $.getScript("addons/player.js"),
+                $.getScript("addons/enemy.js"),
+                $.getScript("addons/field.js"),
+                $.getScript("addons/field_types.js"),
+                $.getScript("addons/config.js"),
+                $.getScript("addons/skillpattern.js"),
+                $.getScript("addons/skill.js"),
+                $.getScript("addons/effect_types.js"),
+                $.getScript("addons/effect.js"),
+                $.getScript("addons/chance_types.js"),
+                $.getScript("addons/chance.js"),
+                $.getScript("addons/ability_types.js"),
+                $.getScript("addons/ability.js"),
+                $.getScript("addons/battle.js"),
+                $.getScript("addons/item_images.js"),
+                $.getScript("addons/item_types.js"),
+                $.getScript("addons/inventory_engine.js"),
+                $.getScript("addons/inventory_graphics.js"),
+                $.getScript("addons/inventory.js"),
+                $.getScript("addons/item.js"),
+                $.getScript("addons/skill_graphics.js"),
+                $.getScript("addons/skill_engine.js"),
+                $.getScript("addons/cursor.js"),
                 $.Deferred(function( deferred ){
                     $( deferred.resolve );
                 })
             ).done(function()
             {
-                $.getScript("addons/paragraphs.js");
-                let x = setInterval(function(){
-                    fontSpy('myLato', { //TODO: A tobbit fontot is elleorizni kene
-                        success: function() {
+                $.when
+                (
+                    $.getScript("addons/preloader.js"),
+                    $.Deferred(function( deferred ){
+                        $( deferred.resolve );
+                    })
+                ).done(function()
+                {
+                    $.getScript("addons/paragraphs.js");
+                    let x = setInterval(function(){
+                        fontSpy('myLato', { //TODO: A tobbit fontot is elleorizni kene
+                            success: function() {
 
-                            clearInterval(x);
-                            if(!done)
-                            {
-                                start();
+                                clearInterval(x);
+                                if(!done)
+                                {
+                                    player = new Player("Kumbi");
+                                    cursor = new Cursor();
+                                    cursor.createCursor();
+                                    start();
+                                }
+                            },
+                            failure: function() {
+                                //TODO: Itt kene egy downloading/loading gif vagy vmi
+                                console.log("ragadok");
                             }
-                        },
-                        failure: function() {
-                            //TODO: Itt kene egy downloading/loading gif vagy vmi
-                            console.log("ragadok");
-                        }
-                    });
-                }, 20);
+                        });
+                    }, 20);
 
+                });
             });
-        });
-    }
+        }
 
-    let done = false;
+        let done = false;
+        let enemy_lvl = 1;
 
-    function start()
-    {
-        done = true;
-        $("#game_background").append('<button id="create_table">Create</button>');
-        $("#game_background").append('<button id="inventory">Inventory</button>');
-        let player = new Player("Kumbi");
-        let cursor = new Cursor();
-        cursor.createCursor();
+        this.endGame = endGame;
 
-        $("#game_background").on("click", "#create_table", function()
+
+        function start()
         {
-            deletePage();
-            new Battle(player, player.skill_graphics, cursor);
-        });
+            done = true;
+            $("#game_background").append('<button id="create_table"></button>');
+            $("#game_background").append('<button id="inventory">Inventory</button>');
+            $("#game_background").append('<button id="loot">Loot</button>');
 
-        $("#inventory").on("click", function()
-        {
-            deletePage();
+            $("#create_table").html("Battle - " + enemy_lvl);
 
-            player.inventory.showInventory();
-        });
 
-        $(window).mousemove(function(event) {
-            $('#mouse-pointer').css({
-                'top' : event.pageY + 'px',
-                'left' : event.pageX + 'px'
+            $("#game_background").on("click", "#create_table", function()
+            {
+                deletePage();
+                x = new Battle(player, player.skill_graphics, cursor, main);
+                console.log("vege222");
             });
-        });
+
+            $("#inventory").on("click", function()
+            {
+                deletePage();
+
+                $("#game_background").on("click", "#create_table", function()
+                {
+                    deletePage();
+                    x = new Battle(player, player.skill_graphics, cursor, main);
+                    console.log("vege222");
+                });
+
+                player.inventory.showInventory();
+            });
+
+            $(window).mousemove(function(event) {
+                $('#mouse-pointer').css({
+                    'top' : event.pageY + 'px',
+                    'left' : event.pageX + 'px'
+                });
+            });
+        }
+
+        function endGame()
+        {
+            console.log("delete");
+            console.log(x);
+            x = 1;
+            console.log(x);
+
+            /*$("#game_background").remove();
+            $('body').append('<div id="game_background"></div>');*/
+            $("#game_background").unbind();
+
+            $("#items").remove();
+            $("#inventory_character").remove();
+            $("#battle_table").remove();
+            $("#ability_point_bg").remove();
+            $("#end_turn").remove();
+            $("#player_ability_container").remove();
+            $("#skill_rank_inside_0").remove();
+            $("#skill_rank_inside_1").remove();
+            $("#skill_rank_inside_2").remove();
+            $("#skill_rank_inside_3").remove();
+            $("#skill_rank_inside_4").remove();
+            $("#skill_rank_inside_5").remove();
+            $("#skill_rank_border_0").remove();
+            $("#skill_rank_border_1").remove();
+            $("#skill_rank_border_2").remove();
+            $("#skill_rank_border_3").remove();
+            $("#skill_rank_border_4").remove();
+            $("#skill_rank_border_5").remove();
+            $("#enemy_profile").remove();
+            $("#player_profile").remove();
+            $(".item").remove();
+            deletePage();
+
+            start();
+
+
+        }
+
+        function deletePage()
+        {
+            /*$("#game_background").remove();
+            $('body').append('<div id="game_background"></div>');
+            cursor.createCursor();*/
+
+            $("#game_background").unbind();
+
+
+            $(".font_preloader0").remove();
+            $(".font_preloader1").remove();
+            $(".font_preloader2").remove();
+            $("#inventory").remove();
+            $("#create_table").remove();
+            $("#loot").remove();
+            $("#change_skills").remove();
+            $("#bag").remove();
+            $("#skill_rank_inside_0").remove();
+            $("#skill_rank_inside_1").remove();
+            $("#skill_rank_inside_2").remove();
+            $("#skill_rank_inside_3").remove();
+            $("#skill_rank_inside_4").remove();
+            $("#skill_rank_inside_5").remove();
+            $("#skill_rank_border_0").remove();
+            $("#skill_rank_border_1").remove();
+            $("#skill_rank_border_2").remove();
+            $("#skill_rank_border_3").remove();
+            $("#skill_rank_border_4").remove();
+            $("#skill_rank_border_5").remove();
+            $(".line").remove();
+            $(".item").remove();
+
+
+
+        }
     }
 
-    function deletePage()
-    {
-        /*$("#game_background").remove();
-        $('body').append('<div id="game_background"></div>');*/
 
-        $(".font_preloader0").remove();
-        $(".font_preloader1").remove();
-        $(".font_preloader2").remove();
-        $("#inventory").remove();
-        $("#create_table").remove();
-        $("#change_skills").remove();
-        $("#bag").remove();
-        $("#skill_rank_inside_0").remove();
-        $("#skill_rank_inside_1").remove();
-        $("#skill_rank_inside_2").remove();
-        $("#skill_rank_inside_3").remove();
-        $("#skill_rank_inside_4").remove();
-        $("#skill_rank_inside_5").remove();
-        $("#skill_rank_border_0").remove();
-        $("#skill_rank_border_1").remove();
-        $("#skill_rank_border_2").remove();
-        $("#skill_rank_border_3").remove();
-        $("#skill_rank_border_4").remove();
-        $("#skill_rank_border_5").remove();
-        $(".line").remove();
-        $(".item").remove();
-    }
 
 
 });

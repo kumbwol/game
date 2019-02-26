@@ -74,8 +74,8 @@ function Enemy(name)
 
     if(this.name === "Weakness")
     {
-        this.max_hp = 45;
-        this.hp = 45;
+        this.max_hp = 5;
+        this.hp = 5;
         this.max_mp = 60;
         this.mp = 60;
         this.armor = 0;

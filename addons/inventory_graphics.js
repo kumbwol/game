@@ -5,6 +5,7 @@ function InventoryGraphics(bag)
     this.createBackButton = createBackButton;
     this.changeSkillsButton = changeSkillsButton;
     this.updateSkills = updateSkills;
+    this.drawConnenctingLines = drawConnenctingLines;
 
     const BAG_TO_CHARACTER       = 0;
     const CHARACTER_TO_CHARACTER = 1;
@@ -15,7 +16,7 @@ function InventoryGraphics(bag)
     {
         $("#player_profile").remove();
         $(".trapezoid_border").remove();
-
+        drawConnenctingLines(player);
         $("#game_background").append('<div id="player_profile" class="inventory_skill"></div>');
         drawSkills(player, skill_graphics, false);
         skill_graphics.drawSkillRanks(player, false);
@@ -43,9 +44,7 @@ function InventoryGraphics(bag)
 
     function drawSkills(player, skill_graphics, inBattle)
     {
-        drawConnenctingLines(player);
         skill_graphics.drawSkillsSG(player, inBattle);
-
     }
 
     function drawConnenctingLines(player)
@@ -128,8 +127,25 @@ function InventoryGraphics(bag)
                     break;
                 }
             }
-            $("#item_" + i).children().first().addClass("ui-widget-content");
-            $("#item_" + i).addClass("ui-widget-header");
+            if(player.items[i].type !== NO_ITEM)
+            {
+                addType($("#item_" + i).children().first(), player.items[i].type);
+
+
+                $("#item_" + i).children().first().draggable(
+                    {
+                        revert: "invalid",
+                        cursorAt: { top: $("#item_" + i).children().first().outerHeight()/2, left: $("#item_" + i).children().first().outerWidth()/2 },
+                    });
+
+                $("#item_" + i).children().first().addClass("using");
+            }
+            else
+            {
+                $("#item_" + i).children().first().addClass("ui-widget-content");
+                $("#item_" + i).addClass("ui-widget-header");
+            }
+
 
             $("#item_" + i).droppable(
                 {

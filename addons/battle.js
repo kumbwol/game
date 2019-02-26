@@ -1,4 +1,4 @@
-function Battle(player, skill_graphics, cursor)
+function Battle(player, skill_graphics, cursor, main)
 {
     let battle_table = {
         height: 9,
@@ -44,8 +44,11 @@ function Battle(player, skill_graphics, cursor)
     engine.calculateEnemySkillChances(skill, enemy, player);
     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
+
     $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function()
     {
+        let battle_finished = false;
+
         if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished && !engine.isSpecialAbilitySelected(player))
         {
             let y = ($(this).attr("id"))[2];
@@ -193,12 +196,21 @@ function Battle(player, skill_graphics, cursor)
                                 graphics.drawPlayerSkillBarsOnly(player, skill_graphics);
                                 cursor.showCursor();
                             });
+
+                            if(enemy.hp <= 0)
+                            {
+                                //console.log($(this));
+                                battle_finished = true;
+                                player.resetRanks();
+                                main.endGame();
+                            }
                         });
                     });
                 });
             }
         }
     });
+
 
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
@@ -527,15 +539,30 @@ function Battle(player, skill_graphics, cursor)
         }
     });
 
+    $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function()
+    {
+        if(skill.moving === false)
+        {
+            skill_graphics.drawRankExplainer(parseInt(($(this).attr("id"))[18]), player.rank[parseInt(($(this).attr("id"))[18])], player);
+        }
+    });
+
+    $("#game_background").on("click", "#left_arrow", function()
+    {
+        player.observed_rank_id--;
+        skill_graphics.drawRankExplainer(player.observed_skill_id, player.observed_rank_id, player);
+    });
+
+    $("#game_background").on("click", "#right_arrow", function()
+    {
+        player.observed_rank_id++;
+        skill_graphics.drawRankExplainer(player.observed_skill_id, player.observed_rank_id, player);
+    });
+
     $("#game_background").on("mouseup", function()
     {
         $("#explain_box").remove();
         cursor.changeCursor(player, engine);
-    });
-
-    $("#game_background").on("click", "#end_turn", function()
-    {
-
     });
 
     $("#game_background").on("click", "#end_turn", function()
@@ -756,6 +783,8 @@ function Battle(player, skill_graphics, cursor)
             if(skill.secondary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
         }
         else done.resolve();
+
+
 
         return done;
     }

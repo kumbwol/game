@@ -93,9 +93,9 @@ function Player(name)
 
     this.resetRanks = resetRanks;
 
-    function resetRanks(skill_amount)
+    function resetRanks()
     {
-        for(let i=0; i<skill_amount; i++)
+        for(let i=0; i<this.rank.length; i++)
         {
             this.rank[i] = 0;
         }

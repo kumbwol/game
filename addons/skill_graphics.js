@@ -8,6 +8,7 @@ function SkillGraphics(player)
     this.drawPlayerEffectExplainer = drawPlayerEffectExplainer;
     this.drawEnemyEffectExplainer = drawEnemyEffectExplainer;
     this.deleteSkillRanks = deleteSkillRanks;
+    this.drawRankExplainer = drawRankExplainer;
 
     function deleteSkillRanks()
     {
@@ -24,24 +25,6 @@ function SkillGraphics(player)
         $("#skill_rank_border_4").remove();
         $("#skill_rank_border_5").remove();
     }
-
-
-    $("#game_background").on("click", "#skill_rank_inside_0, #skill_rank_inside_1, #skill_rank_inside_2, #skill_rank_inside_3, #skill_rank_inside_4, #skill_rank_inside_5", function()
-    {
-        drawRankExplainer(parseInt(($(this).attr("id"))[18]), player.rank[parseInt(($(this).attr("id"))[18])], player);
-    });
-
-    $("#game_background").on("click", "#left_arrow", function()
-    {
-        player.observed_rank_id--;
-        drawRankExplainer(player.observed_skill_id, player.observed_rank_id, player);
-    });
-
-    $("#game_background").on("click", "#right_arrow", function()
-    {
-        player.observed_rank_id++;
-        drawRankExplainer(player.observed_skill_id, player.observed_rank_id, player);
-    });
 
     function drawSkillRanks(player, inBattle)
     {

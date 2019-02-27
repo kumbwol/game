@@ -408,7 +408,6 @@ function Battle(player, skill_graphics, cursor, main)
 
     $("#game_background").on("mousedown", ".skill_right_part_bottom, .skill_left_part_bottom_left, .skill_left_part_bottom_right", function(ev)
     {
-        console.log("ittis");
         //console.log($(this).attr("class"));
         //console.log($(this).parent().parent().attr("id"));
         //console.log($(this).parent().parent().attr("id")[6]);

@@ -543,7 +543,7 @@ function BattleGraphics(battle_table)
     {
         let done = $.Deferred();
 
-        engine.logTable();
+        //engine.logTable();
 
         for(let i=0; i<this.battle_table.height; i++)
         {
@@ -604,6 +604,7 @@ function BattleGraphics(battle_table)
 
     function drawAbilityExplainer(ability_type)
     {
+        console.log("itt");
         let x = $('<div id="explain_box">');
 
         x.append('<div class="explain_box_title">' + paragraphs.ability.titles[ability_type] + '</div>');
@@ -623,6 +624,16 @@ function BattleGraphics(battle_table)
         }*/
 
         return x;
+    }
+
+    function paragraphMacroChanger(text)
+    {
+        text = text.replace("MOVE", '<span style="color:forestgreen; font-weight:bold">MOVE</span>');
+        text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
+        text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
+        text = text.replace("MAGIC", '<span style="color:aqua; font-weight:bold">MAGIC</span>');
+
+        return text;
     }
 
     function drawChanceExplainer(enemy, id)

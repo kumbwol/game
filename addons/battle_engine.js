@@ -216,7 +216,7 @@ function BattleEngine(battle_table)
                 }
             }
         }
-        this.logTable();
+        //this.logTable();
         //this.logTempTable();
     }
 

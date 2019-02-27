@@ -61,7 +61,7 @@ function InventoryGraphics(bag)
 
     function drawInventory(engine, player, skill_graphics)
     {
-        engine.logInventory();
+        //engine.logInventory();
         drawBag(player, engine, skill_graphics);
         drawItems(player, engine, skill_graphics);
         drawCharacter();
@@ -201,8 +201,8 @@ function InventoryGraphics(bag)
 
                             engine.changeSkills(player);
                             updateSkills(player, skill_graphics);
-                            engine.logInventory();
-                            player.logItems();
+                            //engine.logInventory();
+                            //player.logItems();
                             changeBagsDroppables();
                         }
 
@@ -238,7 +238,7 @@ function InventoryGraphics(bag)
 
                             engine.changeSkills(player);
                             updateSkills(player, skill_graphics);
-                            player.logItems();
+                            //player.logItems();
                         }
                     }
                 });
@@ -360,7 +360,7 @@ function InventoryGraphics(bag)
                                     allignToMiddle(element);
                                     allignToMiddleY(element);
                                 }
-                                engine.logInventory();
+                                //engine.logInventory();
                             }
 
                             if(type_of_put === CHARACTER_TO_BAG)
@@ -394,8 +394,8 @@ function InventoryGraphics(bag)
 
                                 engine.changeSkills(player);
                                 updateSkills(player, skill_graphics);
-                                engine.logInventory();
-                                player.logItems();
+                                //engine.logInventory();
+                                //player.logItems();
                                 changeBagsDroppables();
                             }
                         }

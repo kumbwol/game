@@ -98,7 +98,6 @@ $(function()
             {
                 deletePage();
                 x = new Battle(player, player.skill_graphics, cursor, main);
-                console.log("vege222");
             });
 
             $("#inventory").on("click", function()
@@ -109,7 +108,6 @@ $(function()
                 {
                     deletePage();
                     x = new Battle(player, player.skill_graphics, cursor, main);
-                    console.log("vege222");
                 });
 
                 player.inventory.showInventory();
@@ -125,11 +123,6 @@ $(function()
 
         function endGame()
         {
-            console.log("delete");
-            console.log(x);
-            x = 1;
-            console.log(x);
-
             /*$("#game_background").remove();
             $('body').append('<div id="game_background"></div>');*/
             $("#game_background").unbind();
@@ -158,8 +151,6 @@ $(function()
             deletePage();
 
             start();
-
-
         }
 
         function deletePage()

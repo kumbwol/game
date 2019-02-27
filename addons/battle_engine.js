@@ -650,8 +650,7 @@ function BattleEngine(battle_table)
                     /*alert((1 - (enemy.hp / enemy.max_hp)) * 100);
                     alert(Math.ceil((1 - (enemy.hp / enemy.max_hp))*100));*/
 
-                    this.enemy_skill_chances[i] = Math.ceil((1 - (enemy.hp / enemy.max_hp)) * 100);
-                    //console.log("RAGE" + this.enemy_skill_chances[i]);
+                    this.enemy_skill_chances[i] = Math.round((1 - (enemy.hp / enemy.max_hp)) * 100);
                     break;
                 }
 
@@ -669,7 +668,7 @@ function BattleEngine(battle_table)
                     }
                     else
                     {
-                        this.enemy_skill_chances[i] = Math.ceil(this.countParalyzedFields() / this.countFields() * 100);
+                        this.enemy_skill_chances[i] = Math.round(this.countParalyzedFields() / this.countFields() * 100);
                     }
                     //console.log("!!" + this.enemy_skill_chances[i]);
                     //console.log("para" + this.countParalyzedFields());
@@ -685,7 +684,7 @@ function BattleEngine(battle_table)
                     }
                     else
                     {
-                        this.enemy_skill_chances[i] =  Math.ceil(countSumOFRanks(player) / countSumOFMaxRanks(player) * 100);
+                        this.enemy_skill_chances[i] =  Math.round(countSumOFRanks(player) / countSumOFMaxRanks(player) * 100);
                     }
 
                     break;

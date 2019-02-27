@@ -682,11 +682,11 @@ function BattleGraphics(battle_table)
 
                 if(!growing)
                 {
-                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.ceil(enemy_old_skill_chances[i]-j) + "%");
+                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.round(enemy_old_skill_chances[i]-j) + "%");
                 }
                 else
                 {
-                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.ceil(enemy_old_skill_chances[i]+j) + "%");
+                    $("#enemy_skill_" + (i+1) + " .enemy_chance_number").text(Math.round(enemy_old_skill_chances[i]+j) + "%");
                 }
 
                 j += smoother;

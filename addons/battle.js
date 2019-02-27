@@ -1,4 +1,4 @@
-function Battle(player, skill_graphics, cursor, main)
+function Battle(player, skill_graphics, cursor, main, enemy_name)
 {
     let battle_table = {
         height: 9,
@@ -22,7 +22,7 @@ function Battle(player, skill_graphics, cursor, main)
     let player_turn = true;
 
     let engine = new BattleEngine(battle_table);
-    let enemy  = new Enemy("Weakness");
+    let enemy  = new Enemy(enemy_name);
     let graphics = new BattleGraphics(battle_table);
     let skill_activation_finished = true;
     let poison_animation_finished = true;
@@ -202,7 +202,7 @@ function Battle(player, skill_graphics, cursor, main)
                                 //console.log($(this));
                                 battle_finished = true;
                                 player.resetRanks();
-                                main.endGame();
+                                main.winBattle();
                             }
                         });
                     });

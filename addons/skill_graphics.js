@@ -451,7 +451,7 @@ function SkillGraphics(player)
         if(inBattle)
         {
             $object_border.css("top", "183px");
-            $object_border.css("left", "200px");
+            $object_border.css("left", "199px");
             $object_border.css("top", "+=" + (id*($object_border.outerHeight())) + "px");
         }
         else

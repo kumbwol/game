@@ -7,6 +7,9 @@ $(function()
 
     function MainGame()
     {
+
+        this.winBattle = winBattle;
+
         start_program();
 
         let x;
@@ -81,8 +84,6 @@ $(function()
         let done = false;
         let enemy_lvl = 1;
 
-        this.endGame = endGame;
-
 
         function start()
         {
@@ -97,7 +98,7 @@ $(function()
             $("#game_background").on("click", "#create_table", function()
             {
                 deletePage();
-                x = new Battle(player, player.skill_graphics, cursor, main);
+                x = new Battle(player, player.skill_graphics, cursor, main, decideEnemy());
             });
 
             $("#inventory").on("click", function()
@@ -107,7 +108,7 @@ $(function()
                 $("#game_background").on("click", "#create_table", function()
                 {
                     deletePage();
-                    x = new Battle(player, player.skill_graphics, cursor, main);
+                    x = new Battle(player, player.skill_graphics, cursor, main, decideEnemy());
                 });
 
                 player.inventory.showInventory();
@@ -121,7 +122,7 @@ $(function()
             });
         }
 
-        function endGame()
+        function winBattle()
         {
             /*$("#game_background").remove();
             $('body').append('<div id="game_background"></div>');*/
@@ -149,6 +150,8 @@ $(function()
             $("#player_profile").remove();
             $(".item").remove();
             deletePage();
+
+            enemy_lvl++;
 
             start();
         }
@@ -184,8 +187,14 @@ $(function()
             $("#skill_rank_border_5").remove();
             $(".line").remove();
             $(".item").remove();
+        }
 
-
+        function decideEnemy()
+        {
+            //console.log()
+            if(enemy_lvl === 1) return "Skeleton";
+            if(enemy_lvl === 2) return "Develop";
+            if(enemy_lvl === 3) return "Skeleton";
 
         }
     }

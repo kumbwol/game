@@ -9,9 +9,9 @@ function Inventory(player, skill_graphics)
     let engine = new InventoryEngine(bag);
     let graphics = new InventoryGraphics(bag);
 
-    engine.addItem(0, 0, new Item(C_LEFT_HAND,  0, SWORD));
-    engine.addItem(1, 1, new Item(C_RIGHT_HAND, 1, NECKLACE));
-    engine.addItem(0, 1, new Item(C_HEAD,       2, NECKLACE));
+    engine.addItem(new Item(C_LEFT_HAND,  0, SWORD));
+    engine.addItem(new Item(C_RIGHT_HAND, 1, NECKLACE));
+    engine.addItem(new Item(C_HEAD,       2, NECKLACE));
 
     this.showInventory = showInventory;
 

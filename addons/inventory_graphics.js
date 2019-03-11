@@ -127,7 +127,9 @@ function InventoryGraphics(bag)
                     break;
                 }
             }
-            if(player.items[i].type !== NO_ITEM)
+
+
+            if(player.items[i].rank !== NO_ITEM)
             {
                 addType($("#item_" + i).children().first(), player.items[i].type);
 
@@ -139,6 +141,7 @@ function InventoryGraphics(bag)
                     });
 
                 $("#item_" + i).children().first().addClass("using");
+                $("#item_" + i).css("background-image", "none");
             }
             else
             {
@@ -181,7 +184,7 @@ function InventoryGraphics(bag)
                             {
                                 let tmp = engine.getBagItem(parent[7], parent[3]);
                                 engine.deleteItem(parent[7], parent[3]);
-                                engine.addItem(parent[7], parent[3], player.items[target[6]]);
+                                engine.addItem(player.items[target[6]], parent[7], parent[3]);
                                 player.wearItem(target[6], tmp);
 
                                 let element = $(parent).children().first().detach();
@@ -240,6 +243,8 @@ function InventoryGraphics(bag)
                             updateSkills(player, skill_graphics);
                             //player.logItems();
                         }
+
+                        addEmptyIemBackground(player.items);
                     }
                 });
         }
@@ -337,7 +342,7 @@ function InventoryGraphics(bag)
                             {
                                 if(engine.getImage(target[7], target[3]) === EMPTY)
                                 {
-                                    engine.addItem(target[7], target[3], engine.getBagItem(parent[7], parent[3]));
+                                    engine.addItem(engine.getBagItem(parent[7], parent[3]), target[7], target[3]);
                                     engine.deleteItem(parent[7], parent[3]);
 
                                     let element = $(parent).children().first().detach();
@@ -360,6 +365,7 @@ function InventoryGraphics(bag)
                                     allignToMiddle(element);
                                     allignToMiddleY(element);
                                 }
+                                changeBagsDroppables();
                                 //engine.logInventory();
                             }
 
@@ -367,7 +373,7 @@ function InventoryGraphics(bag)
                             {
                                 if(engine.getImage(target[7], target[3]) === EMPTY)
                                 {
-                                    engine.addItem(target[7], target[3], player.items[parent[6]]);
+                                    engine.addItem(player.items[parent[6]], target[7], target[3]);
                                     player.deleteItem(parent[6]);
 
                                     let element = $(parent).children().first().detach();
@@ -378,7 +384,7 @@ function InventoryGraphics(bag)
                                 else
                                 {
                                     let tmp = engine.getBagItem(target[7], target[3]);
-                                    engine.addItem(target[7], target[3], player.items[parent[6]]);
+                                    engine.addItem(player.items[parent[6]], target[7], target[3]);
                                     player.wearItem(parent[6], tmp);
 
                                     let element = $(parent).children().first().detach();
@@ -397,6 +403,7 @@ function InventoryGraphics(bag)
                                 //engine.logInventory();
                                 //player.logItems();
                                 changeBagsDroppables();
+                                addEmptyIemBackground(player.items);
                             }
                         }
                     });
@@ -409,6 +416,59 @@ function InventoryGraphics(bag)
             }
         }
         changeBagsDroppables();
+    }
+
+    function addEmptyIemBackground(items)
+    {
+        for(let i=0; i<items.length; i++)
+        {
+            if(items[i].rank !== NO_ITEM)
+            {
+                $("#item_" + i).css("background-image", "none");
+            }
+            else
+            {
+                switch (i)
+                {
+                    case C_HEAD:
+                    {
+                        $("#item_" + i).css("background-image", "url(./addons/images/inventory_gui/headBG.png)");
+                        break;
+                    }
+
+                    case C_NECKLACE:
+                    {
+                        $("#item_" + i).css("background-image", "url(./addons/images/inventory_gui/necklaceBG.png)");
+                        break;
+                    }
+
+                    case C_TORSO:
+                    {
+                        $("#item_" + i).css("background-image", "url(./addons/images/inventory_gui/torsoBG.png)");
+                        break;
+                    }
+
+                    case C_LEFT_HAND:
+                    {
+                        $("#item_" + i).css("background-image", "url(./addons/images/inventory_gui/leftHandBG.png)");
+                        break;
+                    }
+
+                    case C_RIGHT_HAND:
+                    {
+                        $("#item_" + i).css("background-image", "url(./addons/images/inventory_gui/rightHandBG.png)");
+                        break;
+                    }
+
+                    case C_BOOTS:
+                    {
+                        $("#item_" + i).css("background-image", "url(./addons/images/inventory_gui/bootsBG.png)");
+                        break;
+                    }
+                }
+            }
+
+        }
     }
 
     function addType($object, type)

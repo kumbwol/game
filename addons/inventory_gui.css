@@ -120,3 +120,63 @@
     left: 218px;
     background-color: red;
 }
+
+#item_0
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/inventory_gui/headBG.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#item_1
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/inventory_gui/necklaceBG.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#item_2
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/inventory_gui/torsoBG.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#item_3
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/inventory_gui/rightHandBG.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#item_4
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/inventory_gui/leftHandBG.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#item_5
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/inventory_gui/bootsBG.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}

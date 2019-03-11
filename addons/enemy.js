@@ -90,8 +90,8 @@ function Enemy(name)
 
     if(this.name === "Test")
     {
-        this.max_hp = 100;
-        this.hp = 50;
+        this.max_hp = 10;
+        this.hp = 10;
         this.max_mp = 60;
         this.mp = 44;
         this.armor = 0;

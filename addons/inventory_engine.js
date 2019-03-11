@@ -38,9 +38,32 @@ function InventoryEngine(bag)
         this.inventory[parseInt(y2)][parseInt(x2)] = temp;
     }
 
-    function addItem(x, y, item)
+    function addItem(item, x = -1, y = -1)
     {
-        this.inventory[parseInt(y)][parseInt(x)] = item;
+        if(x < 0 || y < 0)
+        {
+            let item_placed = false;
+            for(let i=0; i<7; i++)
+            {
+                for(let j=0; j<6; j++)
+                {
+                    if(this.getImage(j, i) === EMPTY)
+                    {
+                        this.inventory[i][j] = item;
+                        item_placed = true;
+                        break;
+                    }
+                }
+                if(item_placed)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            this.inventory[parseInt(y)][parseInt(x)] = item;
+        }
     }
 
     function deleteItem(x, y)

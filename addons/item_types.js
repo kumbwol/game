@@ -1,3 +1,4 @@
+const RANDOM_ITEM  = -2;
 const NO_ITEM      = -1;
 const C_HEAD       =  0;
 const C_NECKLACE   =  1;

@@ -14,6 +14,12 @@ function Inventory(player, skill_graphics)
     engine.addItem(new Item(C_HEAD,       2, NECKLACE));
 
     this.showInventory = showInventory;
+    this.addItem = addItem;
+
+    function addItem(item)
+    {
+        engine.addItem(item);
+    }
 
     function showInventory()
     {

@@ -244,7 +244,7 @@ function InventoryGraphics(bag)
                             //player.logItems();
                         }
 
-                        addEmptyIemBackground(player.items);
+                        addEmptyItemBackground(player.items);
                     }
                 });
         }
@@ -371,6 +371,7 @@ function InventoryGraphics(bag)
 
                             if(type_of_put === CHARACTER_TO_BAG)
                             {
+                                console.log("kumbi");
                                 if(engine.getImage(target[7], target[3]) === EMPTY)
                                 {
                                     engine.addItem(player.items[parent[6]], target[7], target[3]);
@@ -396,6 +397,12 @@ function InventoryGraphics(bag)
                                     $(parent).append(element);
                                     allignToMiddle(element);
                                     allignToMiddleY(element);
+
+                                    console.log($(parent).children().first());
+
+                                    $(parent).children().first().addClass("using");
+                                    $(parent).children().first().removeClass("ui-widget-content");
+                                    $(target).children().first().removeClass("using");
                                 }
 
                                 engine.changeSkills(player);
@@ -403,7 +410,8 @@ function InventoryGraphics(bag)
                                 //engine.logInventory();
                                 //player.logItems();
                                 changeBagsDroppables();
-                                addEmptyIemBackground(player.items);
+
+                                addEmptyItemBackground(player.items);
                             }
                         }
                     });
@@ -418,7 +426,7 @@ function InventoryGraphics(bag)
         changeBagsDroppables();
     }
 
-    function addEmptyIemBackground(items)
+    function addEmptyItemBackground(items)
     {
         for(let i=0; i<items.length; i++)
         {

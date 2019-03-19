@@ -90,7 +90,11 @@ $(function()
             done = true;
             $("#game_background").append('<button id="create_table"></button>');
             $("#game_background").append('<button id="inventory">Inventory</button>');
-            $("#game_background").append('<button id="loot">Loot</button>');
+            if(enemy_lvl > 1)
+            {
+                $("#game_background").append('<button id="loot"></button>');
+                $("#loot").html("Treasure LVL - " + (enemy_lvl - 1));
+            }
 
             $("#create_table").html("Battle - " + enemy_lvl);
 
@@ -99,6 +103,16 @@ $(function()
             {
                 deletePage();
                 x = new Battle(player, player.skill_graphics, cursor, main, decideEnemy());
+            });
+
+            $("#game_background").on("click", "#loot", function()
+            {
+                $("#loot").remove();
+                enemy_lvl = 1;
+                $("#create_table").html("Battle - " + enemy_lvl);
+                $("#game_background").append('<p id="new_item">Nezd meg az inventoryban az uj itemet!</p>');
+
+                player.inventory.addItem(new Item(C_HEAD,       2, NECKLACE));
             });
 
             $("#inventory").on("click", function()
@@ -187,6 +201,7 @@ $(function()
             $("#skill_rank_border_5").remove();
             $(".line").remove();
             $(".item").remove();
+            $("#new_item").remove();
         }
 
         function decideEnemy()

@@ -1,4 +1,4 @@
-function Item(type, rank, image)
+function Item(type = RANDOM_ITEM, rank, image)
 {
     this.type  = type;
     this.rank  = rank;

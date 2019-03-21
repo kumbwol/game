@@ -112,6 +112,14 @@
     background-image: url("images/inventory_gui/character_big.png");
 }
 
+#destroy_item_field
+{
+    background-color: seashell;
+    background-image: url("images/inventory_gui/destroy_item.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .line
 {
     position: absolute;

@@ -68,7 +68,7 @@ function Player(name)
 
     function deleteItem(i)
     {
-        this.items[i] = new Item(i, -1, EMPTY);
+        this.items[i] = new Item(parseInt(i), -1, EMPTY);
     }
 
     function getSkills()

@@ -11,6 +11,8 @@ function InventoryGraphics(bag)
     const CHARACTER_TO_CHARACTER = 1;
     const BAG_TO_BAG             = 2;
     const CHARACTER_TO_BAG       = 3;
+    const BAG_TO_DESTROY         = 4;
+    const CHARACTER_TO_DESTROY   = 5;
 
     function updateSkills(player, skill_graphics)
     {
@@ -65,7 +67,43 @@ function InventoryGraphics(bag)
         drawBag(player, engine, skill_graphics);
         drawItems(player, engine, skill_graphics);
         drawCharacter();
+        drawDestroyItem(player, engine, skill_graphics);
         //drawPlayerItems();
+    }
+
+    function drawDestroyItem(player, engine, skill_graphics)
+    {
+        $("#game_background").append(createField("destroy_item_field", 15, 9, NO_ITEM,true));
+
+        $("#destroy_item_field").droppable(
+            {
+                hoverClass: 'item_hover',
+                drop: function(event, ui)
+                {
+                    let parent = "#" + ui.draggable.parent().attr("id");
+
+                    let type_of_put = decideTypeOfPut(parent.length - 4);
+
+                    if(type_of_put === BAG_TO_DESTROY)
+                    {
+                        $(parent).removeClass();
+                        $(parent).addClass("inventory_field grey ui-widget-header ui-droppable");
+                        engine.deleteItem(parent[7], parent[3]);
+                        $(parent).children().first().remove();
+
+                    }
+                    else if(type_of_put === CHARACTER_TO_DESTROY)
+                    {
+                        $(parent).removeClass();
+                        $(parent).addClass("inventory_field grey ui-widget-header ui-droppable");
+                        player.deleteItem(parent[6]);
+                        $(parent).children().first().remove();
+                        engine.changeSkills(player);
+                        updateSkills(player, skill_graphics);
+                        addEmptyItemBackground(player.items);
+                    }
+                }
+            });
     }
 
     function drawCharacter()
@@ -262,6 +300,10 @@ function InventoryGraphics(bag)
                 return BAG_TO_BAG;
             case 5:
                 return CHARACTER_TO_BAG;
+            case 4:
+                return BAG_TO_DESTROY;
+            case 3:
+                return CHARACTER_TO_DESTROY;
         }
     }
 
@@ -371,7 +413,6 @@ function InventoryGraphics(bag)
 
                             if(type_of_put === CHARACTER_TO_BAG)
                             {
-                                console.log("kumbi");
                                 if(engine.getImage(target[7], target[3]) === EMPTY)
                                 {
                                     engine.addItem(player.items[parent[6]], target[7], target[3]);

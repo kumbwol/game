@@ -12,17 +12,17 @@ function Enemy(name)
 
     if(this.name === "Skeleton")
     {
-        this.max_hp = 100;
+        this.max_hp = 40;
         this.hp = this.max_hp;
         this.mp = 0;
-        this.max_mp = 10;
+        this.max_mp = 0;
         this.armor = 0;
         this.old_armor = 0;
 
-        skills[0] = new Skill("Magic chance");
-        skills[1] = new Skill("Stun");
-        skills[2] = new Skill("Punch");
-        skills[3] = new Skill("Stun");
+        skills[0] = new Skill("Vagas");
+        skills[1] = new Skill("Vivas");
+        skills[2] = new Skill("Feltamadas");
+        skills[3] = new Skill("Bosszu");
 
     }
 

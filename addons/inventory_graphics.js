@@ -375,7 +375,7 @@ function InventoryGraphics(bag)
 
                             if(type_of_put === BAG_TO_BAG)
                             {
-                                if(engine.getImage(target[7], target[3]) === EMPTY)
+                                if(engine.getImage(target[7], target[3]) === ITEM_EMPTY)
                                 {
                                     engine.addItem(engine.getBagItem(parent[7], parent[3]), target[7], target[3]);
                                     engine.deleteItem(parent[7], parent[3]);
@@ -406,7 +406,7 @@ function InventoryGraphics(bag)
 
                             if(type_of_put === CHARACTER_TO_BAG)
                             {
-                                if(engine.getImage(target[7], target[3]) === EMPTY)
+                                if(engine.getImage(target[7], target[3]) === ITEM_EMPTY)
                                 {
                                     engine.addItem(player.items[parent[6]], target[7], target[3]);
                                     player.deleteItem(parent[6]);
@@ -525,13 +525,13 @@ function InventoryGraphics(bag)
 
             case C_NECKLACE:
             {
-                $object.addClass(C_NECKLACE);
+                $object.addClass(S_NECKLACE);
                 break;
             }
 
             case C_TORSO:
             {
-                $object.addClass(C_TORSO);
+                $object.addClass(S_TORSO);
                 break;
             }
 
@@ -578,15 +578,33 @@ function InventoryGraphics(bag)
 
         switch(item.image)
         {
-            case SWORD:
+            case ITEM_SWORD:
             {
                 $object.append('<div class="item sword"></div>');
                 break;
             }
 
-            case NECKLACE:
+            case ITEM_NECKLACE:
             {
                 $object.append('<div class="item necklace"></div>');
+                break;
+            }
+
+            case ITEM_DAGGER:
+            {
+                $object.append('<div class="item dagger"></div>');
+                break;
+            }
+
+            case ITEM_SHIELD:
+            {
+                $object.append('<div class="item shield"></div>');
+                break;
+            }
+
+            case ITEM_ARMOR:
+            {
+                $object.append('<div class="item armor"></div>');
                 break;
             }
         }

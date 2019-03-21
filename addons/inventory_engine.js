@@ -27,7 +27,7 @@ function InventoryEngine(bag)
         this.inventory[i] = [];
         for(let j=0; j<bag.width; j++)
         {
-            this.inventory[i][j] = new Item(-1, EMPTY, 0);
+            this.inventory[i][j] = new Item(-1, ITEM_EMPTY, 0);
         }
     }
 
@@ -47,7 +47,7 @@ function InventoryEngine(bag)
             {
                 for(let j=0; j<6; j++)
                 {
-                    if(this.getImage(j, i) === EMPTY)
+                    if(this.getImage(j, i) === ITEM_EMPTY)
                     {
                         this.inventory[i][j] = item;
                         item_placed = true;
@@ -68,7 +68,7 @@ function InventoryEngine(bag)
 
     function deleteItem(x, y)
     {
-        this.inventory[parseInt(y)][parseInt(x)] = new Item(EMPTY, EMPTY, 0);
+        this.inventory[parseInt(y)][parseInt(x)] = new Item(ITEM_EMPTY, ITEM_EMPTY, 0);
     }
 
     function getImage(x, y)

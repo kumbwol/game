@@ -3,6 +3,7 @@ console.log("skill.js loaded");
 function Skill(name)
 {
     this.name = name;
+    this.nameText;
     let visual_pattern = [];
     let pattern;
     let primary_effect;
@@ -380,6 +381,118 @@ function Skill(name)
             break;
         }
 
+        /* ....::: REAL GAME ENEMY SKILLS :::.... */
+
+        case "FIRST_WEAPON":
+        {
+            /*visual_pattern =
+                [
+                    [NUL,MAN,NUL],
+                    [ATT,ATT,ATT],
+                    [NUL,MAN,NUL]
+                ];*/
+            visual_pattern =
+                [
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
+            secondary_effect = new Effect("NOTHING");
+            this.nameText = "Döfés";
+            break;
+        }
+
+        case "FIRST_SHIELD":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,NUL],
+                    [NUL,NUL,ATT],
+                    [MOV,DEF,NUL]
+                ];
+            /*visual_pattern =
+                [
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];*/
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("PLAYER_LVL0_LOW_DMG");
+            secondary_effect = new Effect("PLAYER_LVL0_LOW_ARMOR");
+            this.nameText = "Pajzslökés";
+            break;
+        }
+
+        case "FIRST_ARMOR":
+        {
+            /*visual_pattern =
+                [
+                    [MOV,DEF,NUL],
+                    [DEF,MOV,NUL],
+                    [MOV,NUL,NUL]
+                ];*/
+            visual_pattern =
+                [
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
+            this.nameText = "Védés";
+            break;
+        }
+
+        case "Vagas":
+        {
+            primary_effect = new Effect("LVL1_MEDIUM_DMG");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, mediumLuck());
+            break;
+        }
+
+        case "Vivas":
+        {
+            primary_effect = new Effect("LVL1_MEDIUM_DMG");
+            secondary_effect = new Effect("LVL1_LOW_ARMOR");
+            chance = new Chance(LUCK, mediumLuck());
+            break;
+        }
+
+        case "Feltamadas":
+        {
+            primary_effect = new Effect("LVL1_LOW_HEAL");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, highLuck());
+            break;
+        }
+
+        case "Bosszu":
+        {
+            primary_effect = new Effect("LVL1_HIGH_PENETRATE");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(RAGE, 0);
+            break;
+        }
+
+    }
+
+    function lowLuck() // 15 - 25%
+    {
+        return Math.floor((Math.random() * 3)) * 5 + 15;
+    }
+
+    function mediumLuck() // 35 - 65%
+    {
+        return Math.floor((Math.random() * 7)) * 5 + 35;
+    }
+
+    function highLuck()
+    {
+        return 100-lowLuck();
     }
 
     this.getSkillPatternHeight = getSkillPatternHeight;

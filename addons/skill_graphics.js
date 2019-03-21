@@ -714,7 +714,7 @@ function SkillGraphics(player)
         {
             $("#skill_" + (i+1) + " .skill_left_part_top").append('<div class="skill_name_string"></div>');
             let class_selector = "#skill_" + (i+1) + " .skill_name_string";
-            $(class_selector).html(player.getSkills()[i][player.rank[i]].name);
+            $(class_selector).html(player.getSkills()[i][player.rank[i]].nameText);
         }
     }
 

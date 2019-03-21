@@ -3,12 +3,12 @@ console.log("player.js loaded");
 function Player(name)
 {
     this.name = name;
-    this.hp = 50;
-    this.max_hp = 50;
-    this.mp = 10;
-    this.max_mp = 10;
-    this.ap = 2;
-    this.max_ap = 2;
+    this.hp = 100;
+    this.max_hp = 100;
+    this.mp = 20;
+    this.max_mp = 20;
+    this.ap = 3;
+    this.max_ap = 3;
     this.old_armor = 0;
     this.armor = 0;
 
@@ -42,12 +42,12 @@ function Player(name)
         this.items[place] = item;
     }
 
-    this.items[C_HEAD]       = new Item(C_HEAD,       NO_ITEM, EMPTY);
-    this.items[C_NECKLACE]   = new Item(C_NECKLACE,   NO_ITEM, EMPTY);
-    this.items[C_TORSO]      = new Item(C_TORSO,      NO_ITEM, EMPTY);
-    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  NO_ITEM, EMPTY);
-    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, NO_ITEM, EMPTY);
-    this.items[C_BOOTS]      = new Item(C_BOOTS,      NO_ITEM, EMPTY);
+    this.items[C_HEAD]       = new Item(C_HEAD,       NO_ITEM, ITEM_EMPTY);
+    this.items[C_NECKLACE]   = new Item(C_NECKLACE,   NO_ITEM, ITEM_EMPTY);
+    this.items[C_TORSO]      = new Item(C_TORSO,      FIRST_ARMOR, ITEM_ARMOR);
+    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, FIRST_SHIELD, ITEM_SHIELD);
+    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  FIRST_WEAPON, ITEM_DAGGER);
+    this.items[C_BOOTS]      = new Item(C_BOOTS,      NO_ITEM, ITEM_EMPTY);
 
     this.getSkills = getSkills;
     this.logItems = logItems;
@@ -68,7 +68,7 @@ function Player(name)
 
     function deleteItem(i)
     {
-        this.items[i] = new Item(parseInt(i), -1, EMPTY);
+        this.items[i] = new Item(parseInt(i), -1, ITEM_EMPTY);
     }
 
     function getSkills()

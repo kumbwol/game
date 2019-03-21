@@ -9,9 +9,9 @@ function Inventory(player, skill_graphics)
     let engine = new InventoryEngine(bag);
     let graphics = new InventoryGraphics(bag);
 
-    engine.addItem(new Item(C_LEFT_HAND,  0, SWORD));
-    engine.addItem(new Item(C_RIGHT_HAND, 1, NECKLACE));
-    engine.addItem(new Item(C_HEAD,       2, NECKLACE));
+    /*engine.addItem(new Item(C_LEFT_HAND,  0, ITEM_SWORD));
+    engine.addItem(new Item(C_RIGHT_HAND, 1, ITEM_NECKLACE));
+    engine.addItem(new Item(C_HEAD,       2, ITEM_NECKLACE));*/
 
     this.showInventory = showInventory;
     this.addItem = addItem;
@@ -31,12 +31,12 @@ function Inventory(player, skill_graphics)
         skill_graphics.drawSkillRanks(player, false);
         graphics.createBackButton();
 
-        $("#game_background").on("mousedown", ".sword, .necklace", function()
+        $("#game_background").on("mousedown", ".item", function()
         {
             $(this).css("z-index", 3);
         });
 
-        $("#game_background").on("mouseup", ".sword, .necklace", function()
+        $("#game_background").on("mouseup", ".item", function()
         {
             $(this).css("z-index", 1);
         });

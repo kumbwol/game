@@ -53,6 +53,21 @@
     background-image: url("images/items/necklace.png");
 }
 
+.item.dagger
+{
+    background-image: url("images/items/dagger.png");
+}
+
+.item.shield
+{
+    background-image: url("images/items/shield.png");
+}
+
+.item.armor
+{
+    background-image: url("images/items/armor.png");
+}
+
 .item_hover
 {
     z-index: 1;

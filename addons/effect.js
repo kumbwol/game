@@ -194,6 +194,76 @@ function Effect(name)
             effect.paralyze_amount = 20;
             break;
         }
+
+        /* ....::: REAL GAME ENEMY EFFECTS :::.... */
+
+        case "PLAYER_LVL0_MEDIUM_PENETRATE":
+        {
+            effect.type = PENETRATE;
+            effect.penetrate = 10;
+            effect.self = false;
+            break;
+        }
+
+        case "PLAYER_LVL0_LOW_DMG":
+        {
+            effect.type = DMG;
+            effect.dmg  = 8;
+            effect.self = false;
+            break;
+        }
+
+        case "PLAYER_LVL0_LOW_ARMOR":
+        {
+            effect.type = ARMOR;
+            effect.armor  = 4;
+            effect.self = true;
+            break;
+        }
+
+        case "PLAYER_LVL0_MEDIUM_ARMOR":
+        {
+            effect.type = ARMOR;
+            effect.armor  = 10;
+            effect.self = true;
+            break;
+        }
+
+        case "LVL1_MEDIUM_DMG":
+        {
+            effect.type = DMG;
+            effect.dmg = addRandomInterval(7, 9);
+            break;
+        }
+
+        case "LVL1_LOW_ARMOR":
+        {
+            effect.type = ARMOR;
+            effect.self = true;
+            effect.armor = addRandomInterval(3, 5);
+            break;
+        }
+
+        case "LVL1_LOW_HEAL":
+        {
+            effect.type = HEAL;
+            effect.self = true;
+            effect.heal = addRandomInterval(3, 5);
+            break;
+        }
+
+        case "LVL1_HIGH_PENETRATE":
+        {
+            effect.type = PENETRATE;
+            effect.penetrate = addRandomInterval(10, 12);
+            effect.self = false;
+            break;
+        }
+    }
+
+    function addRandomInterval(minimum, maximum)
+    {
+        return Math.floor(Math.random() * (maximum - minimum)) + minimum;
     }
 
 

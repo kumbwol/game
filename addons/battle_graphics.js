@@ -119,11 +119,17 @@ function BattleGraphics(battle_table)
 
                 if(dmg)
                 {
-                    $(selector + " .armor_number").text(Math.ceil(armor+difference-i));
+                    if(Math.ceil(armor+difference-i) >= armor)
+                    {
+                        $(selector + " .armor_number").text(Math.ceil(armor+difference-i));
+                    }
                 }
                 else
                 {
-                    $(selector + " .armor_number").text(Math.ceil(armor-difference+i));
+                    if(Math.ceil(armor-difference+i) <= armor)
+                    {
+                        $(selector + " .armor_number").text(Math.ceil(armor-difference+i));
+                    }
                 }
 
                 allignToMiddle($(selector + " .armor_number"));
@@ -2115,6 +2121,7 @@ function BattleGraphics(battle_table)
         }
         else
         {
+            $(".hp_loosing_background").remove();
             object.parent().append('<div class="hp_loosing_background"></div>');
             $(".hp_loosing_background").css("width", (parseInt(old_hp)/enemy.max_hp) * object.parent().width() - 1);
 
@@ -2137,6 +2144,7 @@ function BattleGraphics(battle_table)
             //alert(((parseInt(new_hp))/enemy.max_hp) * object.parent().width() - 1);
             if(difference > 0)
             {
+                console.log($(".hp_loosing_background").parent());
                 let smoother = difference/20;
 
                 //alert(animation_speed/(difference*smoother)*2);

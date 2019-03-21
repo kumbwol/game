@@ -101,7 +101,7 @@ $(function()
 
             $("#game_background").on("click", "#create_table", function()
             {
-                deletePage();
+                deletePage(true);
                 x = new Battle(player, player.skill_graphics, cursor, main, decideEnemy());
             });
 
@@ -117,16 +117,25 @@ $(function()
 
             $("#inventory").on("click", function()
             {
-                deletePage();
+                deletePage(false);
 
                 $("#game_background").on("click", "#create_table", function()
                 {
-                    deletePage();
+                    deletePage(true);
                     x = new Battle(player, player.skill_graphics, cursor, main, decideEnemy());
                 });
 
                 player.inventory.showInventory();
+
+                $("#back_button").on("click", function()
+                {
+                    console.log("kumbi");
+                    deletePage(true);
+                    start();
+                });
             });
+
+
 
             $(window).mousemove(function(event) {
                 $('#mouse-pointer').css({
@@ -134,6 +143,8 @@ $(function()
                     'left' : event.pageX + 'px'
                 });
             });
+
+
         }
 
         function winBattle()
@@ -163,14 +174,14 @@ $(function()
             $("#enemy_profile").remove();
             $("#player_profile").remove();
             $(".item").remove();
-            deletePage();
+            deletePage(true);
 
             enemy_lvl++;
 
             start();
         }
 
-        function deletePage()
+        function deletePage(toBattle)
         {
             /*$("#game_background").remove();
             $('body').append('<div id="game_background"></div>');
@@ -183,9 +194,9 @@ $(function()
             $(".font_preloader1").remove();
             $(".font_preloader2").remove();
             $("#inventory").remove();
-            $("#create_table").remove();
+            if(toBattle) $("#create_table").remove();
             $("#loot").remove();
-            $("#change_skills").remove();
+            $("#back_button").remove();
             $("#bag").remove();
             $("#skill_rank_inside_0").remove();
             $("#skill_rank_inside_1").remove();
@@ -203,6 +214,11 @@ $(function()
             $(".item").remove();
             $("#new_item").remove();
             $("#destroy_item_field").remove();
+            $("#inventory_character").remove();
+            $(".inventory_field").remove();
+            $(".active_skill").remove();
+            $("#items").remove();
+            $("#player_profile").remove();
         }
 
         function decideEnemy()

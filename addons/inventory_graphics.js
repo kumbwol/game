@@ -3,8 +3,6 @@ function InventoryGraphics(bag)
     this.drawInventory = drawInventory;
     this.drawSkills = drawSkills;
     this.createBackButton = createBackButton;
-    this.changeSkillsButton = changeSkillsButton;
-    this.updateSkills = updateSkills;
     this.drawConnenctingLines = drawConnenctingLines;
 
     const BAG_TO_CHARACTER       = 0;
@@ -34,14 +32,9 @@ function InventoryGraphics(bag)
         return $object;
     }
 
-    function changeSkillsButton()
-    {
-        $("#game_background").append('<button id="change_skills">Change</button>');
-    }
-
     function createBackButton()
     {
-        $("#game_background").append('<button id="create_table">Create</button>');
+        $("#game_background").append('<button id="back_button">Back</button>');
     }
 
     function drawSkills(player, skill_graphics, inBattle)

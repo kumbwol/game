@@ -30,7 +30,6 @@ function Inventory(player, skill_graphics)
         graphics.drawSkills(player, skill_graphics, false);
         skill_graphics.drawSkillRanks(player, false);
         graphics.createBackButton();
-        graphics.changeSkillsButton();
 
         $("#game_background").on("mousedown", ".sword, .necklace", function()
         {
@@ -40,12 +39,6 @@ function Inventory(player, skill_graphics)
         $("#game_background").on("mouseup", ".sword, .necklace", function()
         {
             $(this).css("z-index", 1);
-        });
-
-        $("#game_background").on("click", "#change_skills", function()
-        {
-            engine.changeSkills(player);
-            graphics.updateSkills(player, skill_graphics);
         });
 
         $("#game_background").on("click", "#exit_rank_explainer_in_inventory", function()

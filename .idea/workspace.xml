@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="28a57587-ca80-47ce-b626-d30570a8bf32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/inventory.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/inventory.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/inventory_graphics.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/inventory_graphics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/inventory_gui.css" beforeDir="false" afterPath="$PROJECT_DIR$/addons/inventory_gui.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/player.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/player.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/test.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="84" lean-forward="true" selection-start-line="6" selection-start-column="84" selection-end-line="6" selection-end-column="84" />
+            <state relative-caret-position="51">
+              <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -36,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addons/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1615">
-              <caret line="95" column="24" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="24" />
+            <state relative-caret-position="298">
+              <caret line="132" column="35" selection-start-line="132" selection-start-column="35" selection-end-line="132" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -48,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/inventory.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="44" column="62" selection-start-line="44" selection-start-column="62" selection-end-line="44" selection-end-column="62" />
+            <state relative-caret-position="264">
+              <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -57,44 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/inventory_graphics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/player.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="961">
-              <caret line="69" column="5" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/inventory_engine.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1190">
-              <caret line="70" column="57" selection-start-line="70" selection-start-column="57" selection-end-line="70" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/addons/font_gui.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="876">
-              <caret line="205" column="1" selection-start-line="205" selection-start-column="1" selection-end-line="205" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/inventory_gui.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="112" column="1" lean-forward="true" selection-start-line="112" selection-start-column="1" selection-end-line="112" selection-end-column="1" />
+            <state relative-caret-position="68">
+              <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -111,17 +75,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>inventory</find>
-      <find>.gre</find>
-      <find>item_0</find>
-      <find>using</find>
-      <find>character</find>
-      <find>console</find>
-      <find>console.log</find>
-      <find>righH</find>
-      <find>none</find>
-      <find>6</find>
-      <find>7</find>
       <find>item</find>
       <find>color_rank_3</find>
       <find>charac</find>
@@ -141,11 +94,22 @@
       <find>refr</find>
       <find>delete</find>
       <find>t</find>
+      <find>remove</find>
+      <find>change</find>
+      <find>change_sk</find>
+      <find>back_</find>
+      <find>back_butt</find>
+      <find>back_button</find>
+      <find>start</find>
+      <find>create_table</find>
+      <find>create</find>
+      <find>deletePage</find>
+      <find>changeSkillsButton</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\ejakwol\WebstormProjects\original\game\addons</dir>
-      <dir>C:\Users\JakabWolosz\WebstormProjects\game\addons</dir>
       <dir>C:\Users\JakabWolosz\WebstormProjects\game</dir>
+      <dir>C:\Users\JakabWolosz\WebstormProjects\game\addons</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -180,12 +144,12 @@
         <option value="$PROJECT_DIR$/addons/item_types.js" />
         <option value="$PROJECT_DIR$/addons/item.js" />
         <option value="$PROJECT_DIR$/addons/game_gui.css" />
-        <option value="$PROJECT_DIR$/addons/test.js" />
-        <option value="$PROJECT_DIR$/addons/inventory.js" />
         <option value="$PROJECT_DIR$/addons/player.js" />
         <option value="$PROJECT_DIR$/addons/inventory_gui.css" />
-        <option value="$PROJECT_DIR$/addons/inventory_graphics.js" />
         <option value="$PROJECT_DIR$/addons/font_gui.css" />
+        <option value="$PROJECT_DIR$/addons/inventory.js" />
+        <option value="$PROJECT_DIR$/addons/inventory_graphics.js" />
+        <option value="$PROJECT_DIR$/addons/test.js" />
       </list>
     </option>
   </component>
@@ -405,7 +369,8 @@
       <workItem from="1553089098728" duration="1311000" />
       <workItem from="1553099808138" duration="5211000" />
       <workItem from="1553157781705" duration="276000" />
-      <workItem from="1553161041352" duration="656000" />
+      <workItem from="1553161041352" duration="1019000" />
+      <workItem from="1553192047173" duration="1832000" />
     </task>
     <task id="LOCAL-00001" summary="add ability explainer&#10;fix issue when explainer goes out of screen&#10;fix effect numbers, when effect should not have number&#10;fix canActivate if promote">
       <created>1536774189829</created>
@@ -610,11 +575,25 @@
       <option name="project" value="LOCAL" />
       <updated>1553031132903</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="add destroy item in inventory">
+      <created>1553161731480</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1553161731480</updated>
+    </task>
+    <task id="LOCAL-00031" summary="delete destroy item panel if we leave inventory">
+      <created>1553162043472</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1553162043472</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="421814000" />
+    <option name="totallyTimeSpent" value="424009000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -626,7 +605,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14910433" />
@@ -654,8 +633,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add penetrate dmg GUI&#10;add penetrate dmg effect&#10;add enemy can draing and regen mana from now" />
-    <MESSAGE value="add armor for enemy&#10;add penetrate dmg skill for player" />
     <MESSAGE value="refaktor armor dmg&#10;add growing chance number for Rage&#10;fix armor dmg issue" />
     <MESSAGE value="add multiple skill usage for enemy&#10;add jquery-ui&#10;fix pattern size in rank view" />
     <MESSAGE value="add inventory basics&#10;add inventory drag and drop&#10;fix 0 division at updateMp, updateEnemyMp functions, if max_mp = 0" />
@@ -679,7 +656,9 @@
     <MESSAGE value="change ceil to round&#10;add new enemies on win" />
     <MESSAGE value="add background for items in inventory" />
     <MESSAGE value="fix character to bag item change" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix character to bag item change" />
+    <MESSAGE value="add destroy item in inventory" />
+    <MESSAGE value="delete destroy item panel if we leave inventory" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete destroy item panel if we leave inventory" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/addons/field_types.js">
@@ -893,6 +872,55 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/addons/inventory_engine.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1190">
+          <caret line="70" column="57" selection-start-line="70" selection-start-column="57" selection-end-line="70" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/font_gui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3485">
+          <caret line="205" column="1" selection-start-line="205" selection-start-column="1" selection-end-line="205" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/inventory_gui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1904">
+          <caret line="112" column="1" lean-forward="true" selection-start-line="112" selection-start-column="1" selection-end-line="112" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="841">
+          <caret line="69" column="5" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/inventory_graphics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/inventory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/addons/item.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -902,57 +930,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1615">
-          <caret line="95" column="24" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/inventory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="62" selection-start-line="44" selection-start-column="62" selection-end-line="44" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/inventory_engine.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="57" selection-start-line="70" selection-start-column="57" selection-end-line="70" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="84" lean-forward="true" selection-start-line="6" selection-start-column="84" selection-end-line="6" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/inventory_gui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="112" column="1" lean-forward="true" selection-start-line="112" selection-start-column="1" selection-end-line="112" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="961">
-          <caret line="69" column="5" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/inventory_graphics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/font_gui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="876">
-          <caret line="205" column="1" selection-start-line="205" selection-start-column="1" selection-end-line="205" selection-end-column="1" />
+        <state relative-caret-position="298">
+          <caret line="132" column="35" selection-start-line="132" selection-start-column="35" selection-end-line="132" selection-end-column="35" />
         </state>
       </provider>
     </entry>

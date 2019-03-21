@@ -202,6 +202,7 @@ $(function()
             $(".line").remove();
             $(".item").remove();
             $("#new_item").remove();
+            $("#destroy_item_field").remove();
         }
 
         function decideEnemy()

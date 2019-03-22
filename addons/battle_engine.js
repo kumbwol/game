@@ -921,12 +921,12 @@ function BattleEngine(battle_table)
             this.addPoisonDMG(effect.poison_dmg);
         }
 
-        if(effect.stun === true)
+        if(effect.stun_amount > 0)
         {
             this.stunTable(effect.stun_amount);
         }
 
-        if(effect.paralyze === true)
+        if(effect.paralyze_amount > 0)
         {
             this.paralyzeTable(effect.paralyze_amount);
         }

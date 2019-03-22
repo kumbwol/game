@@ -1560,7 +1560,7 @@ function BattleGraphics(battle_table)
 
         $("#enemy_profile").append('<div class="name" id="enemy_name"></div>');
         $("#enemy_name").append('<div class="name_string" id="enemy_name_string"></div>');
-        $("#enemy_name_string").html(enemy.name);
+        $("#enemy_name_string").html(enemy.nameText);
         allignToMiddle("#enemy_name_string");
         $("#enemy_profile").append('<div class="profile_picture" id=' + enemy.name + '></div>');
         $("#enemy_profile").append('<div class="active_skill" id="enemy_skill_1"></div>');
@@ -1603,7 +1603,7 @@ function BattleGraphics(battle_table)
         {
             $("#enemy_skill_" + (i+1) + " .skill_left_part_top").append('<div class="skill_name_string"></div>');
             let class_selector = "#enemy_skill_" + (i+1) + " .skill_name_string";
-            $(class_selector).html(enemy.getSkills()[i].name);
+            $(class_selector).html(enemy.getSkills()[i].nameText);
         }
     }
 
@@ -1687,7 +1687,6 @@ function BattleGraphics(battle_table)
 
                 case LUCK:
                 {
-
                     $("#enemy_skill_" + (i+1) + " .skill_right_part_bottom").addClass("LUCK");
                     break;
                 }
@@ -2096,6 +2095,10 @@ function BattleGraphics(battle_table)
                     }
                 }, animation_speed);
             }
+            else
+            {
+                $(".hp_loosing_background").remove();
+            }
         }
     }
 
@@ -2121,7 +2124,6 @@ function BattleGraphics(battle_table)
         }
         else
         {
-            $(".hp_loosing_background").remove();
             object.parent().append('<div class="hp_loosing_background"></div>');
             $(".hp_loosing_background").css("width", (parseInt(old_hp)/enemy.max_hp) * object.parent().width() - 1);
 
@@ -2196,6 +2198,10 @@ function BattleGraphics(battle_table)
                         }, animation_speed/2);
                     }
                 }, animation_speed);
+            }
+            else
+            {
+                $(".hp_loosing_background").remove();
             }
         }
     }

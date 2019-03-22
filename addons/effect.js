@@ -200,7 +200,7 @@ function Effect(name)
         case "PLAYER_LVL0_MEDIUM_PENETRATE":
         {
             effect.type = PENETRATE;
-            effect.penetrate = 10;
+            effect.penetrate = 8;
             effect.self = false;
             break;
         }
@@ -208,7 +208,7 @@ function Effect(name)
         case "PLAYER_LVL0_LOW_DMG":
         {
             effect.type = DMG;
-            effect.dmg  = 8;
+            effect.dmg  = 6;
             effect.self = false;
             break;
         }
@@ -224,7 +224,7 @@ function Effect(name)
         case "PLAYER_LVL0_MEDIUM_ARMOR":
         {
             effect.type = ARMOR;
-            effect.armor  = 10;
+            effect.armor  = 12;
             effect.self = true;
             break;
         }
@@ -257,6 +257,54 @@ function Effect(name)
             effect.type = PENETRATE;
             effect.penetrate = addRandomInterval(10, 12);
             effect.self = false;
+            break;
+        }
+
+        case "LVL2_MEDIUM_PARALYZE":
+        {
+            effect.type = PARALYZE;
+            effect.paralyze_amount = addRandomInterval(15, 20);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL2_LOW_DMG":
+        {
+            effect.type = DMG;
+            effect.dmg = addRandomInterval(4, 8);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL2_MEDIUM_ARMOR":
+        {
+            effect.type = ARMOR;
+            effect.armor = addRandomInterval(7,10);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL2_MEDIUM_DMG":
+        {
+            effect.type = DMG;
+            effect.dmg = addRandomInterval(10, 12);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL2_HIGH_PENETRATE":
+        {
+            effect.type = PENETRATE;
+            effect.penetrate = addRandomInterval(11, 13);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL2_LOW_STUN":
+        {
+            effect.type = STUN;
+            effect.stun_amount = addRandomInterval(4, 6);
+            effect.self = true;
             break;
         }
     }

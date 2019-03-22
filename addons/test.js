@@ -220,12 +220,13 @@ $(function()
             $("#items").remove();
             $("#player_profile").remove();
             $("#enemy_armor").remove();
+            $("#armor").remove();
         }
 
         function decideEnemy()
         {
             //console.log()
-            if(enemy_lvl === 1) return "Skeleton";
+            if(enemy_lvl === 1) return "Succubus";
             if(enemy_lvl === 2) return "Develop";
             if(enemy_lvl === 3) return "Skeleton";
 

@@ -385,18 +385,18 @@ function Skill(name)
 
         case "FIRST_WEAPON":
         {
-            /*visual_pattern =
+            visual_pattern =
                 [
                     [NUL,MAN,NUL],
                     [ATT,ATT,ATT],
                     [NUL,MAN,NUL]
-                ];*/
-            visual_pattern =
+                ];
+            /*visual_pattern =
                 [
                     [DEF,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
             secondary_effect = new Effect("NOTHING");
@@ -409,8 +409,8 @@ function Skill(name)
             visual_pattern =
                 [
                     [NUL,DEF,NUL],
-                    [NUL,NUL,ATT],
-                    [MOV,DEF,NUL]
+                    [MOV,NUL,ATT],
+                    [NUL,DEF,NUL]
                 ];
             /*visual_pattern =
                 [
@@ -427,18 +427,18 @@ function Skill(name)
 
         case "FIRST_ARMOR":
         {
-            /*visual_pattern =
+            visual_pattern =
                 [
                     [MOV,DEF,NUL],
                     [DEF,MOV,NUL],
                     [MOV,NUL,NUL]
-                ];*/
-            visual_pattern =
+                ];
+            /*visual_pattern =
                 [
                     [DEF,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
             secondary_effect = new Effect("NOTHING");
@@ -451,6 +451,7 @@ function Skill(name)
             primary_effect = new Effect("LVL1_MEDIUM_DMG");
             secondary_effect = new Effect("NOTHING");
             chance = new Chance(LUCK, mediumLuck());
+            this.nameText = "Vágás";
             break;
         }
 
@@ -459,6 +460,7 @@ function Skill(name)
             primary_effect = new Effect("LVL1_MEDIUM_DMG");
             secondary_effect = new Effect("LVL1_LOW_ARMOR");
             chance = new Chance(LUCK, mediumLuck());
+            this.nameText = "Vívás";
             break;
         }
 
@@ -467,6 +469,7 @@ function Skill(name)
             primary_effect = new Effect("LVL1_LOW_HEAL");
             secondary_effect = new Effect("NOTHING");
             chance = new Chance(LUCK, highLuck());
+            this.nameText = "Feltámadás";
             break;
         }
 
@@ -475,6 +478,52 @@ function Skill(name)
             primary_effect = new Effect("LVL1_HIGH_PENETRATE");
             secondary_effect = new Effect("NOTHING");
             chance = new Chance(RAGE, 0);
+            this.nameText = "Bosszú";
+            break;
+        }
+
+        case "Pokhalo":
+        {
+            primary_effect = new Effect("LVL2_MEDIUM_PARALYZE");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, highLuck());
+            this.nameText = "Pókháló";
+            break;
+        }
+
+        case "Csaprago":
+        {
+            primary_effect = new Effect("LVL2_MEDIUM_DMG");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, mediumLuck());
+            this.nameText = "Csáprágó";
+            break;
+        }
+
+        case "Fullank":
+        {
+            primary_effect = new Effect("LVL2_HIGH_PENETRATE");
+            secondary_effect = new Effect("LVL2_LOW_STUN");
+            chance = new Chance(STUCK, 0);
+            this.nameText = "Fullánk";
+            break;
+        }
+
+        case "Izeltlabak":
+        {
+            primary_effect = new Effect("LVL2_LOW_DMG");
+            secondary_effect = new Effect("LVL2_LOW_DMG");
+            chance = new Chance(WEAKNESS, 0);
+            this.nameText = "Ízeltábak";
+            break;
+        }
+
+        case "Kitin":
+        {
+            primary_effect = new Effect("LVL2_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(RAGE, 0);
+            this.nameText = "Kitinpáncél";
             break;
         }
 

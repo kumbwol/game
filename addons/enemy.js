@@ -7,6 +7,7 @@ function Enemy(name)
     this.max_hp;
     this.mp;
     this.max_mp;
+    this.nameText;
 
     let skills = [];
 
@@ -18,12 +19,46 @@ function Enemy(name)
         this.max_mp = 0;
         this.armor = 0;
         this.old_armor = 0;
+        this.nameText = "Csontváz";
 
         skills[0] = new Skill("Vagas");
         skills[1] = new Skill("Vivas");
         skills[2] = new Skill("Feltamadas");
         skills[3] = new Skill("Bosszu");
+    }
 
+    if(this.name === "Spider")
+    {
+        this.max_hp = 60;
+        this.hp = this.max_hp;
+        this.mp = 0;
+        this.max_mp = 0;
+        this.armor = 0;
+        this.old_armor = 0;
+        this.nameText = "Pók";
+
+        skills[0] = new Skill("Pokhalo");
+        skills[1] = new Skill("Csaprago");
+        skills[2] = new Skill("Fullank");
+        skills[3] = new Skill("Izeltlabak");
+        skills[4] = new Skill("Kitin");
+    }
+
+    if(this.name === "Succubus")
+    {
+        this.max_hp = 60;
+        this.hp = this.max_hp;
+        this.mp = 0;
+        this.max_mp = 0;
+        this.armor = 0;
+        this.old_armor = 0;
+        this.nameText = "Succubus";
+
+        skills[0] = new Skill("Pokhalo");
+        skills[1] = new Skill("Csaprago");
+        skills[2] = new Skill("Fullank");
+        skills[3] = new Skill("Izeltlabak");
+        skills[4] = new Skill("Kitin");
     }
 
     if(this.name === "Fagyaszt")

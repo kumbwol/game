@@ -54,11 +54,12 @@ function Enemy(name)
         this.old_armor = 0;
         this.nameText = "Succubus";
 
-        skills[0] = new Skill("Pokhalo");
-        skills[1] = new Skill("Csaprago");
-        skills[2] = new Skill("Fullank");
-        skills[3] = new Skill("Izeltlabak");
-        skills[4] = new Skill("Kitin");
+        skills[0] = new Skill("IzzoSzemek");
+        skills[1] = new Skill("Sikoly");
+        skills[2] = new Skill("Kobor");
+        skills[3] = new Skill("Konnyezes");
+        skills[4] = new Skill("Artatlansag");
+        skills[5] = new Skill("Csabitas");
     }
 
     if(this.name === "Fagyaszt")

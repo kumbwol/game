@@ -619,11 +619,11 @@ function BattleEngine(battle_table)
                         let successfull_skill_last_round = 0;
                         for(let j=0; j<this.enemy_skill_chances.length; j++)
                         {
-                            if(this.enemy_skill_plays[j] && j !== i) successfull_skill_last_round++;
+                            if(this.enemy_skill_plays[j]) successfull_skill_last_round++;
                         }
                         //console.log(successfull_skill_last_round);
 
-                        this.enemy_skill_chances[i] = Math.round((((this.enemy_skill_chances.length - 1) - successfull_skill_last_round) / (this.enemy_skill_chances.length - 1))*100);
+                        this.enemy_skill_chances[i] = Math.round((((this.enemy_skill_chances.length) - successfull_skill_last_round) / (this.enemy_skill_chances.length))*100);
                         console.log(this.enemy_skill_chances[i]);
                     }
                     break;

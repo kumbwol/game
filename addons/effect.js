@@ -264,7 +264,7 @@ function Effect(name)
         {
             effect.type = PARALYZE;
             effect.paralyze_amount = addRandomInterval(15, 20);
-            effect.self = false;
+            effect.self = true;
             break;
         }
 
@@ -280,7 +280,7 @@ function Effect(name)
         {
             effect.type = ARMOR;
             effect.armor = addRandomInterval(7,10);
-            effect.self = false;
+            effect.self = true;
             break;
         }
 
@@ -305,6 +305,70 @@ function Effect(name)
             effect.type = STUN;
             effect.stun_amount = addRandomInterval(4, 6);
             effect.self = true;
+            break;
+        }
+
+        case "LVL3_MEDIUM_STUN":
+        {
+            effect.type = STUN;
+            effect.stun_amount = addRandomInterval(13, 16);
+            effect.self = true;
+            break;
+        }
+
+        case "LVL3_LOW_PENETRATE":
+        {
+            effect.type = PENETRATE;
+            effect.penetrate = addRandomInterval(7, 9);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL3_LOW_PARALYZE":
+        {
+            effect.type = PARALYZE;
+            effect.paralyze_amount = addRandomInterval(9, 14);
+            effect.self = true;
+            break;
+        }
+
+        case "LVL3_HIGH_PARALYZE":
+        {
+            effect.type = PARALYZE;
+            effect.paralyze_amount = addRandomInterval(25, 30);
+            effect.self = true;
+            break;
+        }
+
+        case "LVL3_LOW_DMG":
+        {
+            effect.type = DMG;
+            effect.dmg = addRandomInterval(5, 7);
+            effect.self = false;
+            break;
+        }
+
+        case "LVL3_LOW_ARMOR":
+        {
+            effect.type = ARMOR;
+            effect.armor = addRandomInterval(6,9);
+            effect.self = true;
+            break;
+        }
+
+        case "LVL3_MEDIUM_ARMOR":
+        {
+            effect.type = ARMOR;
+            effect.armor = addRandomInterval(10,14);
+            effect.self = true;
+            break;
+        }
+
+        case "LVL3_HIGH_MANADRAIN":
+        {
+            effect.type = MANA_DRAIN;
+            effect.mana_drain = addRandomInterval(5, 7);
+            effect.self = false;
             break;
         }
     }

@@ -2301,6 +2301,10 @@ function BattleGraphics(battle_table)
                         }
                     }, animation_speed);
                 }
+                else
+                {
+                    $(".mp_loosing_background").remove();
+                }
             }
         }
     }

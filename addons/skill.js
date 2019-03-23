@@ -527,6 +527,59 @@ function Skill(name)
             break;
         }
 
+        case "IzzoSzemek":
+        {
+            primary_effect = new Effect("LVL3_MEDIUM_STUN");
+            secondary_effect = new Effect("LVL3_LOW_PENETRATE");
+            chance = new Chance(STUCK, 0);
+            this.nameText = "Izzó szemek";
+            break;
+        }
+
+        case "Sikoly":
+        {
+            primary_effect = new Effect("LVL3_HIGH_PARALYZE");
+            secondary_effect = new Effect("LVL3_LOW_DMG");
+            chance = new Chance(RAGE, 0);
+            this.nameText = "Sikoly";
+            break;
+        }
+
+        case "Kobor":
+        {
+            primary_effect = new Effect("LVL3_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(RAGE, 0);
+            this.nameText = "Kőbőr";
+            break;
+        }
+
+        case "Konnyezes":
+        {
+            primary_effect = new Effect("LVL3_LOW_DMG");
+            secondary_effect = new Effect("LVL3_LOW_PENETRATE");
+            chance = new Chance(BALANCE, 0);
+            this.nameText = "Könnyezés";
+            break;
+        }
+
+        case "Artatlansag":
+        {
+            primary_effect = new Effect("LVL3_LOW_ARMOR");
+            secondary_effect = new Effect("LVL3_LOW_PARALYZE");
+            chance = new Chance(BALANCE, 0);
+            this.nameText = "Ártatlanság";
+            break;
+        }
+
+        case "Csabitas":
+        {
+            primary_effect = new Effect("LVL3_HIGH_MANADRAIN");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(BALANCE, 0);
+            this.nameText = "Csábítás";
+            break;
+        }
     }
 
     function lowLuck() // 15 - 25%

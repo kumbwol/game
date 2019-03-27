@@ -624,7 +624,6 @@ function BattleEngine(battle_table)
                         //console.log(successfull_skill_last_round);
 
                         this.enemy_skill_chances[i] = Math.round((((this.enemy_skill_chances.length) - successfull_skill_last_round) / (this.enemy_skill_chances.length))*100);
-                        console.log(this.enemy_skill_chances[i]);
                     }
                     break;
                 }

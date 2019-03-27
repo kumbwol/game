@@ -53,9 +53,9 @@ for(let i=0; i<sounds.length; i++)
     this.$sound_object[i] = $("<audio>").attr("src", sounds[i]);
 }
 
-for(let i=0; i<fonts.length; i++)
+/*for(let i=0; i<fonts.length; i++)
 {
     let string = "<div class="+ "font_preloader" + i +">Font preloader</div>";
     $("#game_background").append(string);
     $("." + "font_preloader" + i).css("font-family", fonts[i]);
-}
+}*/

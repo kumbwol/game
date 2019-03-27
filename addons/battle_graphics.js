@@ -2146,7 +2146,6 @@ function BattleGraphics(battle_table)
             //alert(((parseInt(new_hp))/enemy.max_hp) * object.parent().width() - 1);
             if(difference > 0)
             {
-                console.log($(".hp_loosing_background").parent());
                 let smoother = difference/20;
 
                 //alert(animation_speed/(difference*smoother)*2);

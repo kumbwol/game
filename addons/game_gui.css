@@ -855,3 +855,27 @@ figure#mouse-pointer {
     z-index: 100;
     box-shadow: 0 0 0 9px rgba(0, 0, 0, 0);
 }
+
+#create_table
+{
+    font-size: 40px;
+    display: block;
+}
+
+#inventory
+{
+    font-size: 32px;
+    display: block;
+}
+
+#create_table_CP
+{
+    font-size: 28px;
+    display: block;
+}
+
+#loot
+{
+    float: right;
+    font-size: 28px;
+}

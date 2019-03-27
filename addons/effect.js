@@ -229,6 +229,17 @@ function Effect(name)
             break;
         }
 
+
+
+        // ...::: ENEMY :::...
+
+        case "LVL1_LOW_DMG":
+        {
+            effect.type = DMG;
+            effect.dmg = addRandomInterval(3, 6);
+            break;
+        }
+
         case "LVL1_MEDIUM_DMG":
         {
             effect.type = DMG;

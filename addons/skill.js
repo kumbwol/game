@@ -385,20 +385,21 @@ function Skill(name)
 
         case "FIRST_WEAPON":
         {
-            visual_pattern =
+            /*visual_pattern =
                 [
                     [NUL,MAN,NUL],
                     [ATT,ATT,ATT],
                     [NUL,MAN,NUL]
-                ];
-            /*visual_pattern =
+                ];*/
+            visual_pattern =
                 [
                     [DEF,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
+            //primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
+            primary_effect  = new Effect("promote");
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Döfés";
             break;
@@ -406,18 +407,18 @@ function Skill(name)
 
         case "FIRST_SHIELD":
         {
-            visual_pattern =
+            /*visual_pattern =
                 [
                     [NUL,DEF,NUL],
                     [MOV,NUL,ATT],
                     [NUL,DEF,NUL]
-                ];
-            /*visual_pattern =
+                ];*/
+            visual_pattern =
                 [
-                    [DEF,NUL,NUL],
+                    [PDE,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_LOW_DMG");
             secondary_effect = new Effect("PLAYER_LVL0_LOW_ARMOR");
@@ -443,6 +444,33 @@ function Skill(name)
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Védés";
+            break;
+        }
+
+        case "Csipes":
+        {
+            primary_effect = new Effect("LVL1_LOW_DMG");
+            secondary_effect = new Effect("NOTHING");
+            chance = new Chance(LUCK, highLuck());
+            this.nameText = "Csípés";
+            break;
+        }
+
+        case "Karmolas":
+        {
+            primary_effect = new Effect("LVL1_LOW_DMG");
+            secondary_effect = new Effect("LVL1_LOW_DMG");
+            chance = new Chance(LUCK, highLuck());
+            this.nameText = "Karmolás";
+            break;
+        }
+
+        case "Bujocska":
+        {
+            primary_effect = new Effect("LVL1_LOW_ARMOR");
+            secondary_effect = new Effect("LVL1_LOW_HEAL");
+            chance = new Chance(BALANCE, 0);
+            this.nameText = "Bújócska";
             break;
         }
 

@@ -47,8 +47,6 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
 
     $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function()
     {
-        let battle_finished = false;
-
         if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished && !engine.isSpecialAbilitySelected(player))
         {
             let y = ($(this).attr("id"))[2];
@@ -199,8 +197,6 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
 
                             if(enemy.hp <= 0)
                             {
-                                //console.log($(this));
-                                battle_finished = true;
                                 player.resetRanks();
                                 main.winBattle();
                             }
@@ -697,16 +693,25 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                                     i++;
                                     graphics.enemysTurn(skill, player, enemy, battle_table, engine, i).done(function()
                                     {
-                                        engine.calculateEnemySkillChances(skill, enemy, player);
-                                        graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
-
-                                        player.ap = player.max_ap;
-                                        if(skill.moving)
+                                        if(player.hp <= 0)
                                         {
-                                            engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, player.rank);
+                                            done.resolve();
+                                            player.resetRanks();
+                                            main.looseBattle();
                                         }
-                                        graphics.refreshAbilityPoint(player);
-                                        done.resolve();
+                                        else
+                                        {
+                                            engine.calculateEnemySkillChances(skill, enemy, player);
+                                            graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
+
+                                            player.ap = player.max_ap;
+                                            if(skill.moving)
+                                            {
+                                                engine.addSkillValue(player, parseInt(player_selected_skill_id)-1, skill, player.rank);
+                                            }
+                                            graphics.refreshAbilityPoint(player);
+                                            done.resolve();
+                                        }
                                     });
                                 });
                             });

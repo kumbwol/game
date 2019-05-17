@@ -7,6 +7,7 @@ $(function()
 
     let first_checkpoint_reached = false;
     let in_CP_run = false;
+    let loot_LVL = 0;
 
     function MainGame()
     {
@@ -93,6 +94,14 @@ $(function()
         function start()
         {
             done = true;
+
+            if(loot_LVL > 0)
+            {
+                $("#game_background").append('<button id="loot"></button>');
+                $("#loot").html("Treasure LVL - " + (loot_LVL));
+            }
+
+
             $("#game_background").append('<button id="create_table"></button>');
 
             if(first_checkpoint_reached)
@@ -127,12 +136,14 @@ $(function()
             {
                 $("#loot").remove();
 
-                enemy_lvl_CP = 1;
+
 
                 $("#game_background").append('<p id="new_item">Nezd meg az inventoryban az uj itemet!</p>');
 
-                player.inventory.addItem(new Item(C_HEAD,       2, ITEM_NECKLACE));
+                player.inventory.addItem(new Item(RANDOM_ITEM, enemy_lvl - 1, ITEM_RANDOM));
                 player.hp = player.max_hp;
+
+                enemy_lvl_CP = 1;
 
                 if(first_checkpoint_reached)
                 {
@@ -145,6 +156,8 @@ $(function()
                     enemy_lvl = 1;
                     $("#create_table").html("Battle - " + enemy_lvl);
                 }
+
+                loot_LVL = 0;
             });
 
             $("#inventory").on("click", function()
@@ -199,6 +212,8 @@ $(function()
             $("#player_profile").remove();
             $(".item").remove();
             deletePage(true);
+            player.ap = player.max_ap;
+            player.armor = 0;
         }
 
         function winBattle()
@@ -226,8 +241,7 @@ $(function()
             {
                 if(enemy_lvl_CP > 1)
                 {
-                    $("#game_background").append('<button id="loot"></button>');
-                    $("#loot").html("Treasure LVL - " + (enemy_lvl_CP - 1));
+                    loot_LVL = enemy_lvl_CP - 1;
                 }
                 else
                 {
@@ -238,14 +252,12 @@ $(function()
             {
                 if(enemy_lvl > 4)
                 {
-                    $("#game_background").append('<button id="loot"></button>');
-                    $("#loot").html("Treasure LVL - " + (enemy_lvl - 1));
+                    loot_LVL = enemy_lvl - 1;
                 }
             }
             else if(enemy_lvl > 1)
             {
-                $("#game_background").append('<button id="loot"></button>');
-                $("#loot").html("Treasure LVL - " + (enemy_lvl - 1));
+                loot_LVL = enemy_lvl - 1;
             }
 
             start();
@@ -271,6 +283,8 @@ $(function()
             {
                 enemy_lvl = 1;
             }
+
+            loot_LVL = 0;
 
 
             player.hp = player.max_hp;
@@ -328,16 +342,16 @@ $(function()
             //console.log()
             if(in_CP_run)
             {
-                if(enemy_lvl_CP === 1) return "Fagyaszt";
-                //if(enemy_lvl_CP === 1) return "Pixi";
+                //if(enemy_lvl_CP === 1) return "Fagyaszt";
+                if(enemy_lvl_CP === 1) return "Pixi";
                 if(enemy_lvl_CP === 2) return "Skeleton";
                 if(enemy_lvl_CP === 3) return "Spider";
                 if(enemy_lvl_CP === 4) return "Succubus";
             }
             else
             {
-                if(enemy_lvl_CP === 1) return "Fagyaszt";
-                //if(enemy_lvl === 1) return "Pixi";
+                //if(enemy_lvl_CP === 1) return "Fagyaszt";
+                if(enemy_lvl === 1) return "Pixi";
                 if(enemy_lvl === 2) return "Skeleton";
                 if(enemy_lvl === 3) return "Spider";
                 if(enemy_lvl === 4) return "Succubus";

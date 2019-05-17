@@ -578,15 +578,15 @@ function InventoryGraphics(bag)
 
         switch(item.image)
         {
-            case ITEM_SWORD:
+            case ITEM_SWORD_LVL_1:
             {
-                $object.append('<div class="item sword"></div>');
+                $object.append('<div class="item sword_lvl_1"></div>');
                 break;
             }
 
-            case ITEM_NECKLACE:
+            case ITEM_NECKLACE_LVL_1:
             {
-                $object.append('<div class="item necklace"></div>');
+                $object.append('<div class="item necklace_lvl_1"></div>');
                 break;
             }
 
@@ -605,6 +605,30 @@ function InventoryGraphics(bag)
             case ITEM_ARMOR:
             {
                 $object.append('<div class="item armor"></div>');
+                break;
+            }
+
+            case ITEM_SHIELD_LVL_1:
+            {
+                $object.append('<div class="item shield_lvl_1"></div>');
+                break;
+            }
+
+            case ITEM_ARMOR_LVL_1:
+            {
+                $object.append('<div class="item armor_lvl_1"></div>');
+                break;
+            }
+
+            case ITEM_HELM_LVL_1:
+            {
+                $object.append('<div class="item helm_lvl_1"></div>');
+                break;
+            }
+
+            case ITEM_BOOTS_LVL_1:
+            {
+                $object.append('<div class="item boots_lvl_1"></div>');
                 break;
             }
         }

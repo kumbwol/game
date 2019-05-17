@@ -43,29 +43,49 @@
     height: 51px;
 }
 
-.item.sword
+.item.sword_lvl_1
 {
-    background-image: url("images/items/sword.png");
+    background-image: url("images/items/lvl_1/sword.png");
 }
 
-.item.necklace
+.item.necklace_lvl_1
 {
-    background-image: url("images/items/necklace.png");
+    background-image: url("images/items/lvl_1/necklace.png");
 }
 
 .item.dagger
 {
-    background-image: url("images/items/dagger.png");
+    background-image: url("images/items/starting_items/dagger.png");
+}
+
+.item.helm_lvl_1
+{
+    background-image: url("images/items/lvl_1/helm.png");
 }
 
 .item.shield
 {
-    background-image: url("images/items/shield.png");
+    background-image: url("images/items/starting_items/shield.png");
 }
 
 .item.armor
 {
-    background-image: url("images/items/armor.png");
+    background-image: url("images/items/starting_items/armor.png");
+}
+
+.item.armor_lvl_1
+{
+    background-image: url("images/items/lvl_1/armor.png");
+}
+
+.item.boots_lvl_1
+{
+    background-image: url("images/items/lvl_1/boots.png");
+}
+
+.item.shield_lvl_1
+{
+    background-image: url("images/items/lvl_1/shield.png");
 }
 
 .item_hover

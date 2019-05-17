@@ -21,34 +21,93 @@ function Item(type = RANDOM_ITEM, rank, image)
         this.rank = 0;
     }
     else if(rank === -1) this.skills[0] = new Skill("EMPTY");
-    else if(rank === 0)
+    else if(type === RANDOM_ITEM)
     {
-        this.skills[0] = new Skill("Promote");
-    }
-    else if(rank === 1)
-    {
-        //this.skills[0] = new Skill("Promote");
-        this.skills[0] = new Skill("selfPara");
-        this.skills[1] = new Skill("UsePromote");
-    }
-    else if(rank === 2)
-    {
-        /*this.skills[0] = new Skill("Shield");
-        this.skills[1] = new Skill("Promote");*/
-        if(Math.floor(Math.random() * 2))
-        {
-            this.skills[0] = new Skill("Promote");
-            this.skills[1] = new Skill("PENETRATE");
-            this.skills[2] = new Skill("PENETRATE");
-        }
-        else
-        {
-            this.skills[0] = new Skill("PENETRATE");
-            this.skills[1] = new Skill("PENETRATE");
-            this.skills[2] = new Skill("PENETRATE");
-        }
+        this.type = decideRandomItemType();
+        this.rank = rank - 1;
 
+        switch (this.type)
+        {
+            case C_HEAD:
+            {
+                if(this.rank === 0)
+                {
+                    this.image = ITEM_HELM_LVL_1;
+                }
+                break;
+            }
+
+            case C_NECKLACE:
+            {
+                if(this.rank === 0)
+                {
+                    this.image = ITEM_NECKLACE_LVL_1;
+                }
+                break;
+            }
+
+            case C_TORSO:
+            {
+                if(this.rank === 0)
+                {
+                    this.image = ITEM_ARMOR_LVL_1;
+                }
+                break;
+            }
+
+            case C_RIGHT_HAND:
+            {
+                if(this.rank === 0)
+                {
+                    this.image = ITEM_SWORD_LVL_1;
+                }
+                break;
+            }
+
+            case C_LEFT_HAND:
+            {
+                if(this.rank === 0)
+                {
+                    this.image = ITEM_SHIELD_LVL_1;
+                }
+                break;
+            }
+
+            case C_BOOTS:
+            {
+                if(this.rank === 0)
+                {
+                    this.image = ITEM_BOOTS_LVL_1;
+                }
+                break;
+            }
+        }
+        /*console.log("random");
+        if(rank === 1)
+        {
+            this.rank = rank - 1;
+            this.type = C_TORSO;
+            console.log("itt");
+            this.image = ITEM_ARMOR;
+            this.skills[0] = new Skill("Promote");
+        }*/
     }
+
+    function decideRandomItemType()
+    {
+        let random = Math.floor(Math.random() * 6);
+        console.log(random);
+        switch (random)
+        {
+            case 0: return C_HEAD;
+            case 1: return C_NECKLACE;
+            case 2: return C_TORSO;
+            case 3: return C_LEFT_HAND;
+            case 4: return C_RIGHT_HAND;
+            case 5: return C_BOOTS;
+        }
+    }
+
 
     /*for(let i=0; i<=rank; i++)
     {

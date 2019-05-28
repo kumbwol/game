@@ -393,13 +393,13 @@ function Skill(name)
                 ];*/
             visual_pattern =
                 [
-                    [DEF,NUL,NUL],
+                    [SJO,SJO,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
-            //primary_effect  = new Effect("promote");
+            //primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
+            primary_effect  = new Effect("promote");
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Döfés";
             break;
@@ -407,18 +407,18 @@ function Skill(name)
 
         case "FIRST_SHIELD":
         {
-            visual_pattern =
+            /*visual_pattern =
                 [
                     [NUL,DEF,NUL],
                     [MOV,NUL,ATT],
                     [NUL,DEF,NUL]
-                ];
-            /*visual_pattern =
+                ];*/
+            visual_pattern =
                 [
-                    [PDE,NUL,NUL],
+                    [DEF,NUL,DEF],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_LOW_DMG");
             secondary_effect = new Effect("PLAYER_LVL0_LOW_ARMOR");
@@ -428,18 +428,18 @@ function Skill(name)
 
         case "FIRST_ARMOR":
         {
-            visual_pattern =
+            /*visual_pattern =
                 [
                     [MOV,DEF,NUL],
                     [DEF,MOV,NUL],
                     [MOV,NUL,NUL]
-                ];
-            /*visual_pattern =
+                ];*/
+            visual_pattern =
                 [
-                    [DEF,NUL,NUL],
+                    [NUL,JOK,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
             secondary_effect = new Effect("NOTHING");
@@ -532,7 +532,7 @@ function Skill(name)
         {
             primary_effect = new Effect("LVL2_HIGH_PENETRATE");
             secondary_effect = new Effect("LVL2_LOW_STUN");
-            chance = new Chance(STUCK, 0);
+            chance = new Chance(LUCK, 100);
             this.nameText = "Fullánk";
             break;
         }

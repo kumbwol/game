@@ -742,7 +742,7 @@ figure#mouse-pointer {
     opacity: 0.5;
 }
 
-.attack, .mana, .defense, .move, .poison
+.attack, .mana, .defense, .move, .poison, .stunned_joker
 {
     padding: 0px;
     border: 1px solid black;
@@ -753,7 +753,7 @@ figure#mouse-pointer {
     border-radius: 50%;
 }
 
-.promoted_mana, .promoted_attack, .promoted_defense, .promoted_move
+.promoted_mana, .promoted_attack, .promoted_defense, .promoted_move, .joker, .promoted_joker
 {
     padding: 0px;
     border: 2px solid white;
@@ -804,6 +804,27 @@ figure#mouse-pointer {
 {
     background-color: bisque;
     background-image: url("images/field_types/promoted_defense.png");
+}
+
+#selected_skill div.joker,
+#battle_table div.joker
+{
+    background-color: #b224ff;
+    background-image: url("images/field_types/joker.png");
+}
+
+#selected_skill div.promoted_joker,
+#battle_table div.promoted_joker
+{
+    background-color: #b224ff;
+    background-image: url("images/field_types/promoted_joker.png");
+}
+
+#selected_skill div.stunned_joker,
+#battle_table div.stunned_joker
+{
+    background-color: #2f2f2f;
+    background-image: url("images/field_types/promoted_joker.png");
 }
 
 #selected_skill div.move,

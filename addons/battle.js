@@ -45,7 +45,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
 
-    $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move", function()
+    $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move, .joker, .promoted_joker", function()
     {
         if(player.ap > 0 && player_turn && poison_animation_finished && skill_activation_finished && !engine.isSpecialAbilitySelected(player))
         {

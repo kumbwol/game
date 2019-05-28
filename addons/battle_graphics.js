@@ -231,6 +231,12 @@ function BattleGraphics(battle_table)
                             $("#y_" + i + "_x_" + j).addClass("promoted_move");
                             break;
                         }
+
+                        case JOK:
+                        {
+                            $("#y_" + i + "_x_" + j).addClass("promoted_joker");
+                            break;
+                        }
                     }
                 }
 
@@ -1991,6 +1997,24 @@ function BattleGraphics(battle_table)
             case PRO:
             {
                 $object.attr('class', "promoted_field");
+                break;
+            }
+
+            case JOK:
+            {
+                $object.attr('class', "joker");
+                break;
+            }
+
+            case SJO:
+            {
+                $object.attr('class', "stunned_joker");
+                break;
+            }
+
+            case PJO:
+            {
+                $object.attr('class', "promoted_joker");
                 break;
             }
         }

@@ -700,6 +700,24 @@ function SkillGraphics(player)
                                 $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-image", "repeating-linear-gradient(45deg, forestgreen, forestgreen 3px, #ffffff 3px, #ffffff 6px)");
                                 break;
                             }
+
+                            case JOK:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "#b224ff");
+                                break;
+                            }
+
+                            case PJO:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "#2f2f2f");
+                                break;
+                            }
+
+                            case SJO:
+                            {
+                                $(row_selector + " ."+"skill_pattern_column" + k + j).css("background-color", "#2f2f2f");
+                                break;
+                            }
                         }
                     }
                 }

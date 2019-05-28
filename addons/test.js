@@ -342,8 +342,8 @@ $(function()
             //console.log()
             if(in_CP_run)
             {
-                //if(enemy_lvl_CP === 1) return "Fagyaszt";
-                if(enemy_lvl_CP === 1) return "Pixi";
+                if(enemy_lvl_CP === 1) return "Fagyaszt";
+                //if(enemy_lvl_CP === 1) return "Pixi";
                 if(enemy_lvl_CP === 2) return "Skeleton";
                 if(enemy_lvl_CP === 3) return "Spider";
                 if(enemy_lvl_CP === 4) return "Succubus";
@@ -351,7 +351,7 @@ $(function()
             else
             {
                 //if(enemy_lvl_CP === 1) return "Fagyaszt";
-                if(enemy_lvl === 1) return "Pixi";
+                if(enemy_lvl === 1) return "Spider";
                 if(enemy_lvl === 2) return "Skeleton";
                 if(enemy_lvl === 3) return "Spider";
                 if(enemy_lvl === 4) return "Succubus";

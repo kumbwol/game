@@ -309,6 +309,15 @@ function Skill(name)
             break;
         }
 
+        case "sacrifice":
+        {
+            primary_effect = new Effect("SACRIFICE");
+            secondary_effect = new Effect("SACRIFICE");
+            chance = new Chance(LUCK, 100);
+            this.nameText = "Pókháló";
+            break;
+        }
+
         case "Stun":
         {
             primary_effect = new Effect("Stun");
@@ -393,13 +402,13 @@ function Skill(name)
                 ];*/
             visual_pattern =
                 [
-                    [SJO,SJO,NUL],
+                    [DEF,DEF,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             //primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
-            primary_effect  = new Effect("promote");
+            primary_effect  = new Effect("armor");
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Döfés";
             break;
@@ -441,8 +450,8 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
-            secondary_effect = new Effect("NOTHING");
+            primary_effect  = new Effect("NOTHING");
+            secondary_effect = new Effect("SACRIFICE");
             this.nameText = "Védés";
             break;
         }

@@ -717,9 +717,17 @@ function BattleGraphics(battle_table)
         }
     }
 
-    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, mana_cost, armor, penetrate, player_on_turn)
+    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, mana_cost, armor, penetrate, sacrifice, player_on_turn)
     {
         let done = $.Deferred();
+
+        if(sacrifice > 0)
+        {
+            dmg = sacrifice;
+            player_on_turn = !player_on_turn;
+        }
+
+        console.log(dmg);
 
         if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0 || penetrate > 0 || mana_cost > 0)
         {
@@ -903,7 +911,7 @@ function BattleGraphics(battle_table)
                     complete: function(){
                         $("#cut").remove();*/
 
-                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, false).done(function()
+                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, skill.primary_effect.sacrifice, false).done(function()
                 {
                     done.resolve();
                 });
@@ -911,7 +919,12 @@ function BattleGraphics(battle_table)
                 if(skill.primary_effect.dmg > 0)
                 {
                     updateArmor(player.armor, player.old_armor, true);
-                    updateHpBar($("#player_hp"), player, false);
+                    updateHpBar($("#player_hp"), player);
+                }
+                if(skill.primary_effect.sacrifice > 0)
+                {
+                    updateArmor(enemy.armor, enemy.old_armor, false);
+                    updateEnemyHpBar($("#enemy_hp"), enemy);
                 }
                 if(skill.primary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy, false);
                 if(skill.primary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
@@ -966,7 +979,7 @@ function BattleGraphics(battle_table)
                 complete: function(){
                     $("#cut").remove();*/
 
-            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, false).done(function()
+            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, skill.secondary_effect.sacrifice, false).done(function()
             {
                 done.resolve();
             });
@@ -975,6 +988,11 @@ function BattleGraphics(battle_table)
             {
                 updateArmor(player.armor, player.old_armor, true);
                 updateHpBar($("#player_hp"), player, false);
+            }
+            if(skill.secondary_effect.sacrifice > 0)
+            {
+                updateArmor(enemy.armor, enemy.old_armor, false);
+                updateEnemyHpBar($("#enemy_hp"), enemy);
             }
             if(skill.secondary_effect.heal > 0) updateEnemyHpBar($("#enemy_hp"), enemy, false);
             if(skill.secondary_effect.mana_regen > 0) updateEnemyMpBar($("#enemy_mp"), enemy, false);
@@ -1787,6 +1805,12 @@ function BattleGraphics(battle_table)
                 case PENETRATE:
                 {
                     effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).penetrate;
+                    break;
+                }
+
+                case SACRIFICE:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).sacrifice;
                     break;
                 }
 

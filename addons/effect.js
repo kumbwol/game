@@ -24,11 +24,20 @@ function Effect(name)
         combo_amount: 0,
         armor: 0,
         penetrate: 0,
+        sacrifice: 0
     };
 
 
     switch(this.name)
     {
+        case "SACRIFICE":
+        {
+            effect.type = SACRIFICE;
+            effect.sacrifice = 10;
+            effect.self = true;
+            break;
+        }
+
         case "Penetrate":
         {
             effect.type = PENETRATE;
@@ -40,7 +49,7 @@ function Effect(name)
         case "armor":
         {
             effect.type = ARMOR;
-            effect.armor = 10;
+            effect.armor = 5;
             effect.self = true;
             break;
         }

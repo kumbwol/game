@@ -67,7 +67,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
 
                         if(engine.ability_used)
                         {
-                            graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                            graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, 0, 0, 0, 0, !player_turn).done(function()
                             {
                                 dmg_heal_number_animation_finished = true;
                                 graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
@@ -200,6 +200,11 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                                 player.resetRanks();
                                 main.winBattle();
                             }
+                            else if(player.hp <= 0)
+                            {
+                                player.resetRanks();
+                                main.looseBattle();
+                            }
                         });
                     });
                 });
@@ -232,7 +237,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                 if(engine.useSpecialAbility(player, parseInt($(this).attr("id")[6])))
                 {
                     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
-                    graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, !player_turn).done(function()
+                    graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, 0, 0, 0, 0,  !player_turn).done(function()
                     {
                         dmg_heal_number_animation_finished = true;
                     });
@@ -591,7 +596,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                 {
                     dmg_heal_number_animation_finished = false;
 
-                    graphics.animateDamageNumbers(poison_dmg, 0, 0, false).done(function()
+                    graphics.animateDamageNumbers(poison_dmg, 0, 0, 0, 0, 0, 0, 0, !player_turn).done(function()
                     {
                         dmg_heal_number_animation_finished = true;
                     });
@@ -699,6 +704,12 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                                             player.resetRanks();
                                             main.looseBattle();
                                         }
+                                        else if(enemy.hp <= 0)
+                                        {
+                                            done.resolve();
+                                            player.resetRanks();
+                                            main.winBattle();
+                                        }
                                         else
                                         {
                                             engine.calculateEnemySkillChances(skill, enemy, player);
@@ -740,9 +751,9 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
         let done = $.Deferred();
         engine.activateSkill(skill.primary_effect, player, enemy, player_turn);
 
-        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.mana_cost > 0 || skill.primary_effect.armor > 0 || skill.primary_effect.penetrate > 0)
+        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.mana_cost > 0 || skill.primary_effect.armor > 0 || skill.primary_effect.penetrate > 0 || skill.primary_effect.sacrifice > 0)
         {
-            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, skill.primary_effect.sacrifice, player_turn).done(function()
             {
                 done.resolve();
             });
@@ -750,6 +761,11 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
             {
                 graphics.updateArmor(enemy.armor, enemy.old_armor, false);
                 graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            }
+            if(skill.primary_effect.sacrifice > 0)
+            {
+                graphics.updateArmor(player.armor, player.old_armor, true);
+                graphics.updateHpBar($("#player_hp"), player);
             }
             if(skill.primary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.primary_effect.mana_regen > 0) graphics.updateMpBar($("#player_mp"), player, false);
@@ -768,9 +784,9 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
         let done = $.Deferred();
         engine.activateSkill(skill.secondary_effect, player, enemy, player_turn);
 
-        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor > 0 || skill.secondary_effect.penetrate > 0)
+        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor > 0 || skill.secondary_effect.penetrate > 0 || skill.secondary_effect.sacrifice > 0)
         {
-            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, skill.secondary_effect.sacrifice, player_turn).done(function()
             {
                 done.resolve();
             });
@@ -778,6 +794,11 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
             {
                 graphics.updateArmor(enemy.armor, enemy.old_armor, false);
                 graphics.updateEnemyHpBar($("#enemy_hp"), enemy);
+            }
+            if(skill.secondary_effect.sacrifice > 0)
+            {
+                graphics.updateArmor(player.armor, player.old_armor, true);
+                graphics.updateHpBar($("#player_hp"), player);
             }
             if(skill.secondary_effect.heal > 0) graphics.updateHpBar($("#player_hp"), player, false);
             if(skill.secondary_effect.mana_regen > 0)  graphics.updateMpBar($("#player_mp"), player, false);

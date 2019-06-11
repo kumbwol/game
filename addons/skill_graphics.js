@@ -390,6 +390,12 @@ function SkillGraphics(player)
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).armor;
                 break;
             }
+
+            case SACRIFICE:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).sacrifice;
+                break;
+            }
         }
 
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_left_image", "#skill_0 .skill_left_part_bottom_left_number");
@@ -456,6 +462,12 @@ function SkillGraphics(player)
             case ARMOR:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).armor;
+                break;
+            }
+
+            case SACRIFICE:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).sacrifice;
                 break;
             }
         }
@@ -884,6 +896,12 @@ function SkillGraphics(player)
                     break;
                 }
 
+                case SACRIFICE:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).sacrifice;
+                    break;
+                }
+
                 default:
                 {
                     effect_number = 0;
@@ -994,6 +1012,12 @@ function SkillGraphics(player)
             case PENETRATE:
             {
                 $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/penetrate.png")');
+                break;
+            }
+
+            case SACRIFICE:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/sacrifice.png")');
                 break;
             }
         }

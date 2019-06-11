@@ -843,6 +843,29 @@ function BattleEngine(battle_table)
             this.skill_type.dmg = true;
         }
 
+        if(effect.sacrifice > 0)
+        {
+            let sacrifice = effect.sacrifice;
+            unit.old_armor = unit.armor;
+
+            unit.armor -= sacrifice;
+
+            if(unit.armor <= 0)
+            {
+                unit.armor = 0;
+                sacrifice -= unit.old_armor;
+
+                unit.hp -= sacrifice;
+
+                if(unit.hp < 0)
+                {
+                    unit.hp = 0;
+                }
+            }
+
+            this.skill_type.dmg = true;
+        }
+
         if(effect.penetrate > 0)
         {
             unit.hp -= effect.penetrate;

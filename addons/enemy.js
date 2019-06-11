@@ -44,7 +44,7 @@ function Enemy(name)
 
     if(this.name === "Spider")
     {
-        this.max_hp = 1;
+        this.max_hp = 33;
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -52,11 +52,13 @@ function Enemy(name)
         this.old_armor = 0;
         this.nameText = "Pók";
 
-        skills[0] = new Skill("Pokhalo");
+        skills[0] = new Skill("Kitin");
+        skills[1] = new Skill("sacrifice");
+        /*skills[0] = new Skill("Pokhalo");
         skills[1] = new Skill("Csaprago");
         skills[2] = new Skill("Fullank");
         skills[3] = new Skill("Izeltlabak");
-        skills[4] = new Skill("Kitin");
+        skills[4] = new Skill("Kitin");*/
     }
 
     if(this.name === "Succubus")

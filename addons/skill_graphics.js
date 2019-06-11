@@ -143,6 +143,24 @@ function SkillGraphics(player)
                 $object.attr('class', "promoted_field");
                 break;
             }
+
+            case JOK:
+            {
+                $object.attr('class', "joker");
+                break;
+            }
+
+            case SJO:
+            {
+                $object.attr('class', "stunned_joker");
+                break;
+            }
+
+            case PJO:
+            {
+                $object.attr('class', "promoted_joker");
+                break;
+            }
         }
         return $object;
     }
@@ -303,7 +321,7 @@ function SkillGraphics(player)
         drawRankPattern(player, skill_id, rank_id);
         createSkillInExplainer();
 
-        let skill_name = player.getSkills()[skill_id][rank_id].name;
+        let skill_name = player.getSkills()[skill_id][rank_id].nameText;
         let class_selector = "#skill_0 .skill_name_string";
         $(class_selector).html(skill_name);
 
@@ -364,6 +382,13 @@ function SkillGraphics(player)
             case PENETRATE:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).penetrate;
+                break;
+            }
+
+            case ARMOR:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).armor;
+                break;
             }
         }
 
@@ -425,6 +450,13 @@ function SkillGraphics(player)
             case PENETRATE:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).penetrate;
+                break;
+            }
+
+            case ARMOR:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).armor;
+                break;
             }
         }
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_right_image", "#skill_0 .skill_left_part_bottom_right_number");

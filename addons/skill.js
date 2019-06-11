@@ -436,14 +436,56 @@ function Skill(name)
                 ];*/
             visual_pattern =
                 [
-                    [NUL,JOK,NUL],
                     [NUL,NUL,NUL],
+                    [NUL,JOK,NUL],
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Védés";
+            break;
+        }
+
+        case "FIRST_ARMOR1":
+        {
+            /*visual_pattern =
+                [
+                    [MOV,DEF,NUL],
+                    [DEF,MOV,NUL],
+                    [MOV,NUL,NUL]
+                ];*/
+            visual_pattern =
+                [
+                    [NUL,JOK,NUL],
+                    [NUL,JOK,NUL],
+                    [NUL,NUL,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
+            this.nameText = "Védés1";
+            break;
+        }
+
+        case "FIRST_ARMOR2":
+        {
+            /*visual_pattern =
+                [
+                    [MOV,DEF,NUL],
+                    [DEF,MOV,NUL],
+                    [MOV,NUL,NUL]
+                ];*/
+            visual_pattern =
+                [
+                    [NUL,JOK,NUL],
+                    [NUL,JOK,NUL],
+                    [NUL,SJO,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
+            this.nameText = "Védés2";
             break;
         }
 

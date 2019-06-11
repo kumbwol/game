@@ -985,7 +985,11 @@ function BattleEngine(battle_table)
                         {
                             return false;
                         }
-                        else if(skill.table[i][j] !== this.table[y+i][x+j].type && skill.table[i][j] !== JOK ) {
+                        else if(skill.table[i][j] === JOK)
+                        {
+
+                        }
+                        else if(skill.table[i][j] !== this.table[y+i][x+j].type && skill.table[i][j] !== NUL) {
                             if(skill.table[i][j] === ATT)
                             {
                                 if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== JOK && this.table[y+i][x+j].type !== PJO)
@@ -1259,13 +1263,13 @@ function BattleEngine(battle_table)
 
     function randomTypes()
     {
-        switch(generateRandomNumber(5))
+        switch(generateRandomNumber(4))
         {
             case 0: return MAN;
             case 1: return ATT;
             case 2: return DEF;
             case 3: return MOV;
-            case 4: return JOK;
+            //case 4: return JOK;
         }
     }
 

@@ -318,6 +318,15 @@ function Skill(name)
             break;
         }
 
+        case "blood_oath":
+        {
+            primary_effect = new Effect("BLOOD_OATH");
+            secondary_effect = new Effect("BLOOD_OATH");
+            chance = new Chance(LUCK, 100);
+            this.nameText = "Pókháló";
+            break;
+        }
+
         case "Stun":
         {
             primary_effect = new Effect("Stun");
@@ -450,8 +459,8 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("NOTHING");
-            secondary_effect = new Effect("SACRIFICE");
+            primary_effect  = new Effect("SACRIFICE");
+            secondary_effect = new Effect("BLOOD_OATH");
             this.nameText = "Védés";
             break;
         }

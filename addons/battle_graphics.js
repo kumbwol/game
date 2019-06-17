@@ -717,13 +717,19 @@ function BattleGraphics(battle_table)
         }
     }
 
-    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, mana_cost, armor, penetrate, sacrifice, player_on_turn)
+    function animateDamageNumbers(dmg, heal, mana_regen, mana_drain, mana_cost, armor, penetrate, sacrifice, blood_oath, player_on_turn)
     {
         let done = $.Deferred();
 
         if(sacrifice > 0)
         {
             dmg = sacrifice;
+            player_on_turn = !player_on_turn;
+        }
+
+        if(blood_oath > 0)
+        {
+            penetrate = blood_oath;
             player_on_turn = !player_on_turn;
         }
 
@@ -911,7 +917,7 @@ function BattleGraphics(battle_table)
                     complete: function(){
                         $("#cut").remove();*/
 
-                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, skill.primary_effect.sacrifice, false).done(function()
+                animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, skill.primary_effect.sacrifice, skill.primary_effect.blood_oath, false).done(function()
                 {
                     done.resolve();
                 });
@@ -932,6 +938,7 @@ function BattleGraphics(battle_table)
                 if(skill.primary_effect.mana_cost > 0)  updateEnemyMpBar($("#enemy_mp"), enemy, false);
                 if(skill.primary_effect.armor > 0)  updateArmor(enemy.armor, enemy.old_armor, false);
                 if(skill.primary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
+                if(skill.primary_effect.blood_oath > 0) updateEnemyHpBar($("#enemy_hp"), enemy);
                 /*     }
                  });*/
             }, 300);
@@ -979,7 +986,7 @@ function BattleGraphics(battle_table)
                 complete: function(){
                     $("#cut").remove();*/
 
-            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, skill.secondary_effect.sacrifice, false).done(function()
+            animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, skill.secondary_effect.sacrifice, skill.secondary_effect.blood_oath, false).done(function()
             {
                 done.resolve();
             });
@@ -1000,6 +1007,7 @@ function BattleGraphics(battle_table)
             if(skill.secondary_effect.mana_cost > 0)  updateEnemyMpBar($("#enemy_mp"), enemy, false);
             if(skill.secondary_effect.armor > 0)  updateArmor(enemy.armor, enemy.old_armor, false);
             if(skill.secondary_effect.penetrate > 0) updateHpBar($("#player_hp"), player, true);
+            if(skill.secondary_effect.blood_oath > 0) updateEnemyHpBar($("#enemy_hp"), enemy);
         }
 
         return done;
@@ -1811,6 +1819,12 @@ function BattleGraphics(battle_table)
                 case SACRIFICE:
                 {
                     effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).sacrifice;
+                    break;
+                }
+
+                case BLOOD_OATH:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).blood_oath;
                     break;
                 }
 

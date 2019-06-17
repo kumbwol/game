@@ -19,3 +19,4 @@ const ARMOR      = 14; // increase armor
 const PENETRATE  = 15; // penetrate dmg neglects armor
 const MANA_COST  = 16; // cost of activating effect
 const SACRIFICE  = 17; // self damage
+const BLOOD_OATH = 18; // self penetrate damage

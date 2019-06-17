@@ -57,6 +57,8 @@ this.paragraphs.effect.titles[PROMOTE] = "Promote";
 this.paragraphs.effect.titles[COMBO] = "Combo";
 this.paragraphs.effect.titles[ARMOR] = "Armor";
 this.paragraphs.effect.titles[PENETRATE] = "Penetrating damage";
+this.paragraphs.effect.titles[SACRIFICE] = "Sacrifice";
+this.paragraphs.effect.titles[BLOOD_OATH] = "Blood oath";
 
 this.paragraphs.effect.paragraphs[DMG] = "X sebzest okoz az ellenfelnek.";
 this.paragraphs.effect.paragraphs[HEAL] = "Visszatolt X eletpontot a hasznalojanak.";
@@ -74,7 +76,9 @@ this.paragraphs.effect.paragraphs[PARALYZE] = "X db. mezot elsotetit, melyeket n
 this.paragraphs.effect.paragraphs[PROMOTE] = "Az aktivizalt mezokre eso uj mezok felfejlodnek.";
 this.paragraphs.effect.paragraphs[COMBO] = "Noveli a kombo szintet, ami minnel magassab, annal erosebb effektet tartalmaz.";
 this.paragraphs.effect.paragraphs[ARMOR] = "Ad X db. vedelmet, a kovetkezo korod kezdeten elveszik.";
-this.paragraphs.effect.paragraphs[PENETRATE] = "Elvesz X eletpontot az ellenfeltol, az ellenfel armorat figyelmen kivul hagyva.";
+this.paragraphs.effect.paragraphs[PENETRATE] = "Elvesz X eletpontot az ellenfeltol, az armorat figyelmen kivul hagyva.";
+this.paragraphs.effect.paragraphs[SACRIFICE] = "X sebzest okoz a hasznalojanak.";
+this.paragraphs.effect.paragraphs[BLOOD_OATH] = "Elvesz X eletpontot a hasznalojatol, az armorat figyelmen kivul hagyva.";
 
 //     ...::: FIELD TYPES :::...
 this.paragraphs.field.titles[MAN] = "Magic";

@@ -863,7 +863,20 @@ function BattleEngine(battle_table)
                 }
             }
 
-            this.skill_type.dmg = true;
+            this.skill_type.sacrifice = true;
+        }
+
+        if(effect.blood_oath > 0)
+        {
+            let blood_oath = effect.blood_oath;
+            unit.hp -= blood_oath;
+
+            if(unit.hp < 0)
+            {
+                unit.hp = 0;
+            }
+
+            this.skill_type.blood_oath = true;
         }
 
         if(effect.penetrate > 0)

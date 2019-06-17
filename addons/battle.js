@@ -751,9 +751,9 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
         let done = $.Deferred();
         engine.activateSkill(skill.primary_effect, player, enemy, player_turn);
 
-        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.mana_cost > 0 || skill.primary_effect.armor > 0 || skill.primary_effect.penetrate > 0 || skill.primary_effect.sacrifice > 0)
+        if(skill.primary_effect.dmg > 0 || skill.primary_effect.heal > 0 || skill.primary_effect.mana_regen > 0 || skill.primary_effect.mana_drain > 0 || skill.primary_effect.mana_cost > 0 || skill.primary_effect.armor > 0 || skill.primary_effect.penetrate > 0 || skill.primary_effect.sacrifice > 0 || skill.primary_effect.blood_oath > 0)
         {
-            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, skill.primary_effect.sacrifice, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.primary_effect.dmg, skill.primary_effect.heal, skill.primary_effect.mana_regen, skill.primary_effect.mana_drain, skill.primary_effect.mana_cost, skill.primary_effect.armor, skill.primary_effect.penetrate, skill.primary_effect.sacrifice, skill.primary_effect.blood_oath, player_turn).done(function()
             {
                 done.resolve();
             });
@@ -773,6 +773,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
             if(skill.primary_effect.mana_cost > 0)  graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.primary_effect.armor > 0) graphics.updateArmor(player.armor, player.old_armor, true);
             if(skill.primary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
+            if(skill.primary_effect.blood_oath > 0) graphics.updateHpBar($("#player_hp"), player);
         }
         else done.resolve();
 
@@ -784,9 +785,9 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
         let done = $.Deferred();
         engine.activateSkill(skill.secondary_effect, player, enemy, player_turn);
 
-        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor > 0 || skill.secondary_effect.penetrate > 0 || skill.secondary_effect.sacrifice > 0)
+        if(skill.secondary_effect.dmg > 0 || skill.secondary_effect.heal > 0 || skill.secondary_effect.mana_regen > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.mana_drain > 0 || skill.secondary_effect.armor > 0 || skill.secondary_effect.penetrate > 0 || skill.secondary_effect.sacrifice > 0 || skill.secondary_effect.blood_oath > 0)
         {
-            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, skill.secondary_effect.sacrifice, player_turn).done(function()
+            graphics.animateDamageNumbers(skill.secondary_effect.dmg, skill.secondary_effect.heal, skill.secondary_effect.mana_regen, skill.secondary_effect.mana_drain, skill.secondary_effect.mana_cost, skill.secondary_effect.armor, skill.secondary_effect.penetrate, skill.secondary_effect.sacrifice, skill.secondary_effect.blood_oath, player_turn).done(function()
             {
                 done.resolve();
             });
@@ -806,6 +807,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
             if(skill.secondary_effect.mana_cost > 0) graphics.updateMpBar($("#player_mp"), player, false);
             if(skill.secondary_effect.armor > 0) graphics.updateArmor(player.armor, player.old_armor, true);
             if(skill.secondary_effect.penetrate > 0) graphics.updateEnemyHpBar($("#enemy_hp"), enemy, true);
+            if(skill.secondary_effect.blood_oath > 0) graphics.updateHpBar($("#player_hp"), player);
         }
         else done.resolve();
 

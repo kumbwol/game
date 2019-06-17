@@ -24,12 +24,21 @@ function Effect(name)
         combo_amount: 0,
         armor: 0,
         penetrate: 0,
-        sacrifice: 0
+        sacrifice: 0,
+        blood_oath: 0
     };
 
 
     switch(this.name)
     {
+        case "BLOOD_OATH":
+        {
+            effect.type = BLOOD_OATH;
+            effect.blood_oath = 10;
+            effect.self = true;
+            break;
+        }
+
         case "SACRIFICE":
         {
             effect.type = SACRIFICE;

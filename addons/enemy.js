@@ -53,7 +53,7 @@ function Enemy(name)
         this.nameText = "Pók";
 
         skills[0] = new Skill("Kitin");
-        skills[1] = new Skill("sacrifice");
+        skills[1] = new Skill("blood_oath");
         /*skills[0] = new Skill("Pokhalo");
         skills[1] = new Skill("Csaprago");
         skills[2] = new Skill("Fullank");

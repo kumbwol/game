@@ -25,7 +25,8 @@ function Effect(name)
         armor: 0,
         penetrate: 0,
         sacrifice: 0,
-        blood_oath: 0
+        blood_oath: 0,
+        form_amount: 0
     };
 
 
@@ -132,6 +133,39 @@ function Effect(name)
         {
             effect.type = SHADOWFORM;
             effect.transform = true;
+            effect.form_amount = 10;
+            break;
+        }
+
+        case "DEFENSEFORM":
+        {
+            effect.type = DEFENSEFORM;
+            effect.form_amount = 10;
+            effect.transform = true;
+            break;
+        }
+
+        case "MOVEFORM":
+        {
+            effect.type = MOVEFORM;
+            effect.form_amount = 10;
+            effect.transform = true;
+            break;
+        }
+
+        case "MAGICFORM":
+        {
+            effect.type = MAGICFORM;
+            effect.form_amount = 15;
+            effect.transform = true;
+            break;
+        }
+
+        case "JOKERFORM":
+        {
+            effect.type = JOKERFORM;
+            effect.transform = true;
+            effect.form_amount = 50;
             break;
         }
 

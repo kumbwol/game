@@ -7,12 +7,18 @@ function Item(type = RANDOM_ITEM, rank, image)
 
     if(rank === FIRST_WEAPON)
     {
-        this.skills[0] = new Skill("FIRST_WEAPON");
-        this.rank = 0;
+        //this.skills[0] = new Skill("FIRST_WEAPON");
+        this.skills[0] = new Skill("Shadowform");
+        this.skills[1] = new Skill("Magicform");
+        this.skills[2] = new Skill("Defenseform");
+        this.skills[3] = new Skill("Moveform");
+        this.skills[4] = new Skill("Jokerform");
+        this.rank = 4;
     }
     else if(rank === FIRST_SHIELD)
     {
-        this.skills[0] = new Skill("FIRST_SHIELD");
+        //this.skills[0] = new Skill("FIRST_SHIELD");
+        this.skills[0] = new Skill("Promote");
         this.rank = 0;
     }
     else if(rank === FIRST_ARMOR)

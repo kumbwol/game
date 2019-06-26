@@ -402,6 +402,36 @@ function SkillGraphics(player)
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).blood_oath;
                 break;
             }
+
+            case SHADOWFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).form_amount;
+                break;
+            }
+
+            case DEFENSEFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).form_amount;
+                break;
+            }
+
+            case MOVEFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).form_amount;
+                break;
+            }
+
+            case MAGICFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).form_amount;
+                break;
+            }
+
+            case JOKERFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).form_amount;
+                break;
+            }
         }
 
         createEffect(effect_type, effect_number, "#skill_0 .skill_left_part_bottom_left_image", "#skill_0 .skill_left_part_bottom_left_number");
@@ -480,6 +510,36 @@ function SkillGraphics(player)
             case BLOOD_OATH:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).blood_oath;
+                break;
+            }
+
+            case SHADOWFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).form_amount;
+                break;
+            }
+
+            case DEFENSEFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).form_amount;
+                break;
+            }
+
+            case MOVEFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).form_amount;
+                break;
+            }
+
+            case MAGICFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).form_amount;
+                break;
+            }
+
+            case JOKERFORM:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).form_amount;
                 break;
             }
         }
@@ -920,6 +980,36 @@ function SkillGraphics(player)
                     break;
                 }
 
+                case SHADOWFORM:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case DEFENSEFORM:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case MOVEFORM:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case MAGICFORM:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case JOKERFORM:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
                 default:
                 {
                     effect_number = 0;
@@ -1044,6 +1134,30 @@ function SkillGraphics(player)
                 $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/blood_oath.png")');
                 break;
             }
+
+            case DEFENSEFORM:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/defenseform.png")');
+                break;
+            }
+
+            case MOVEFORM:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/moveform.png")');
+                break;
+            }
+
+            case MAGICFORM:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/magicform.png")');
+                break;
+            }
+
+            case JOKERFORM:
+            {
+                $(parent_object_image).css("background-image", 'url("addons/images/skill_effects/jokerform.png")');
+                break;
+            }
         }
     }
 
@@ -1094,6 +1208,7 @@ function SkillGraphics(player)
         text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
         text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
         text = text.replace("MAGIC", '<span style="color:aqua; font-weight:bold">MAGIC</span>');
+        text = text.replace("JOKER", '<span style="color:#b224ff; font-weight:bold">JOKER</span>');
 
         return text;
     }

@@ -644,6 +644,7 @@ function BattleGraphics(battle_table)
         text = text.replace("DEFENSE", '<span style="color:bisque; font-weight:bold">DEFENSE</span>');
         text = text.replace("ATTACK", '<span style="color:crimson; font-weight:bold">ATTACK</span>');
         text = text.replace("MAGIC", '<span style="color:aqua; font-weight:bold">MAGIC</span>');
+        text = text.replace("JOKER", '<span style="color:#b224ff; font-weight:bold">JOKER</span>');
 
         return text;
     }
@@ -1143,6 +1144,60 @@ function BattleGraphics(battle_table)
             case ATT:
             {
                 changed_field_type_string = "attack" + debuffField;
+                break;
+            }
+
+            case DEF:
+            {
+                changed_field_type_string = "defense" + debuffField;
+                break;
+            }
+
+            case MOV:
+            {
+                changed_field_type_string = "move" + debuffField;
+                break;
+            }
+
+            case MAN:
+            {
+                changed_field_type_string = "mana" + debuffField;
+                break;
+            }
+
+            case JOK:
+            {
+                changed_field_type_string = "joker" + debuffField;
+                break;
+            }
+
+            case PAT:
+            {
+                changed_field_type_string = "promoted_attack" + debuffField;
+                break;
+            }
+
+            case PDE:
+            {
+                changed_field_type_string = "promoted_defense" + debuffField;
+                break;
+            }
+
+            case PMO:
+            {
+                changed_field_type_string = "promoted_move" + debuffField;
+                break;
+            }
+
+            case PMA:
+            {
+                changed_field_type_string = "promoted_mana" + debuffField;
+                break;
+            }
+
+            case PJO:
+            {
+                changed_field_type_string = "promoted_joker" + debuffField;
                 break;
             }
 
@@ -1825,6 +1880,36 @@ function BattleGraphics(battle_table)
                 case BLOOD_OATH:
                 {
                     effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).blood_oath;
+                    break;
+                }
+
+                case SHADOWFORM:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case DEFENSEFORM:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case MOVEFORM:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case MAGICFORM:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).form_amount;
+                    break;
+                }
+
+                case JOKERFORM:
+                {
+                    effect_number = enemy.getSkills()[i].getSkillEffect(prim_or_second).form_amount;
                     break;
                 }
 

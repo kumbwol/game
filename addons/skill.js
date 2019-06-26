@@ -132,9 +132,9 @@ function Skill(name)
                     /*[DEF,NUL,NUL],
                     [NUL,ATT,NUL],
                     [NUL,NUL,NUL]*/
-                    [DEF,NUL,NUL],
-                    [NUL,NUL,NUL],
-                    [NUL,NUL,NUL]
+                    [DEF,JOK,JOK],
+                    [JOK,JOK,JOK],
+                    [JOK,JOK,JOK]
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect    = new Effect("promote");
@@ -223,7 +223,7 @@ function Skill(name)
                     [MAN,MOV,MAN],
                 ];*/
                 [
-                    [MAN,NUL,NUL],
+                    [ATT,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL],
                 ];
@@ -234,6 +234,62 @@ function Skill(name)
                 ];*/
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("Transform");
+            secondary_effect = new Effect("NOTHING");
+            break;
+        }
+
+        case "Defenseform":
+        {
+            visual_pattern =
+                [
+                    [DEF,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL],
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("DEFENSEFORM");
+            secondary_effect = new Effect("NOTHING");
+            break;
+        }
+
+        case "Moveform":
+        {
+            visual_pattern =
+                [
+                    [MOV,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL],
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("MOVEFORM");
+            secondary_effect = new Effect("NOTHING");
+            break;
+        }
+
+        case "Magicform":
+        {
+            visual_pattern =
+                [
+                    [MAN,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL],
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("MAGICFORM");
+            secondary_effect = new Effect("NOTHING");
+            break;
+        }
+
+        case "Jokerform":
+        {
+            visual_pattern =
+                [
+                    [JOK,NUL,NUL],
+                    [NUL,NUL,NUL],
+                    [NUL,NUL,NUL],
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("JOKERFORM");
             secondary_effect = new Effect("NOTHING");
             break;
         }
@@ -403,21 +459,21 @@ function Skill(name)
 
         case "FIRST_WEAPON":
         {
-            /*visual_pattern =
+            visual_pattern =
                 [
                     [NUL,MAN,NUL],
                     [ATT,ATT,ATT],
                     [NUL,MAN,NUL]
-                ];*/
-            visual_pattern =
+                ];
+            /*visual_pattern =
                 [
                     [DEF,DEF,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
-            //primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
-            primary_effect  = new Effect("armor");
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
+            //primary_effect  = new Effect("armor");
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Döfés";
             break;
@@ -425,18 +481,18 @@ function Skill(name)
 
         case "FIRST_SHIELD":
         {
-            /*visual_pattern =
+            visual_pattern =
                 [
                     [NUL,DEF,NUL],
                     [MOV,NUL,ATT],
                     [NUL,DEF,NUL]
-                ];*/
-            visual_pattern =
+                ];
+            /*visual_pattern =
                 [
                     [DEF,NUL,DEF],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_LOW_DMG");
             secondary_effect = new Effect("PLAYER_LVL0_LOW_ARMOR");
@@ -446,21 +502,21 @@ function Skill(name)
 
         case "FIRST_ARMOR":
         {
-            /*visual_pattern =
+            visual_pattern =
                 [
                     [MOV,DEF,NUL],
                     [DEF,MOV,NUL],
                     [MOV,NUL,NUL]
-                ];*/
-            visual_pattern =
+                ];
+            /*visual_pattern =
                 [
                     [NUL,NUL,NUL],
                     [NUL,JOK,NUL],
                     [NUL,NUL,NUL]
-                ];
+                ];*/
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("SACRIFICE");
-            secondary_effect = new Effect("BLOOD_OATH");
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
             this.nameText = "Védés";
             break;
         }
@@ -592,7 +648,7 @@ function Skill(name)
         {
             primary_effect = new Effect("LVL2_HIGH_PENETRATE");
             secondary_effect = new Effect("LVL2_LOW_STUN");
-            chance = new Chance(LUCK, 100);
+            chance = new Chance(STUCK  , 0);
             this.nameText = "Fullánk";
             break;
         }

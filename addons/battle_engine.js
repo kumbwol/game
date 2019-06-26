@@ -1357,12 +1357,112 @@ function BattleEngine(battle_table)
                 {
                     let random_number = (generateRandomNumber(100) + 1);
 
-                    if(this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === DEF)
+                    if(random_number <= effect.form_amount)
                     {
-                        if(random_number > 25)
+                        if(this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === DEF)
                         {
-                            //console.log("att>" + random_number);
                             this.temp_table[i][j].type = ATT;
+                            this.table_modified = true;
+                        }
+                        else if(this.temp_table[i][j].type === PMO || this.temp_table[i][j].type === PDE)
+                        {
+                            this.temp_table[i][j].type = PAT;
+                            this.table_modified = true;
+                        }
+                    }
+                }
+            }
+        }
+        else if(effect.type === DEFENSEFORM)
+        {
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    let random_number = (generateRandomNumber(100) + 1);
+
+                    if(random_number <= effect.form_amount)
+                    {
+                        if(this.temp_table[i][j].type === ATT || this.temp_table[i][j].type === MAN)
+                        {
+                            this.temp_table[i][j].type = DEF;
+                            this.table_modified = true;
+                        }
+                        else if(this.temp_table[i][j].type === PAT || this.temp_table[i][j].type === PMA)
+                        {
+                            this.temp_table[i][j].type = PDE;
+                            this.table_modified = true;
+                        }
+                    }
+                }
+            }
+        }
+        else if(effect.type === MOVEFORM)
+        {
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    let random_number = (generateRandomNumber(100) + 1);
+
+                    if(random_number <= effect.form_amount)
+                    {
+                        if(this.temp_table[i][j].type === DEF || this.temp_table[i][j].type === MAN)
+                        {
+                            this.temp_table[i][j].type = MOV;
+                            this.table_modified = true;
+                        }
+                        else if(this.temp_table[i][j].type === PDE || this.temp_table[i][j].type === PMA)
+                        {
+                            this.temp_table[i][j].type = PMO;
+                            this.table_modified = true;
+                        }
+                    }
+                }
+            }
+        }
+        else if(effect.type === MAGICFORM)
+        {
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    let random_number = (generateRandomNumber(100) + 1);
+
+                    if(random_number <= effect.form_amount)
+                    {
+                        if(this.temp_table[i][j].type === ATT || this.temp_table[i][j].type === MOV)
+                        {
+                            this.temp_table[i][j].type = MAN;
+                            this.table_modified = true;
+                        }
+                        else if(this.temp_table[i][j].type === PAT || this.temp_table[i][j].type === PMO)
+                        {
+                            this.temp_table[i][j].type = PMA;
+                            this.table_modified = true;
+                        }
+                    }
+                }
+            }
+        }
+        else if(effect.type === JOKERFORM)
+        {
+            for(let i=0; i<this.battle_table.height; i++)
+            {
+                for(let j=0; j<this.battle_table.width; j++)
+                {
+                    let random_number = (generateRandomNumber(100) + 1);
+
+                    if(random_number <= effect.form_amount)
+                    {
+                        if(this.temp_table[i][j].type === ATT || this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === MAN || this.temp_table[i][j].type === DEF)
+                        {
+                            this.temp_table[i][j].type = JOK;
+                            this.table_modified = true;
+                        }
+                        else if(this.temp_table[i][j].type === PAT || this.temp_table[i][j].type === PMO || this.temp_table[i][j].type === PMA || this.temp_table[i][j].type === PDE)
+                        {
+                            this.temp_table[i][j].type = PJO;
                             this.table_modified = true;
                         }
                     }

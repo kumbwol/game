@@ -44,7 +44,7 @@ this.paragraphs.chance.paragraphs[WEAKNESS] = "Minnel tobb fajta skillt jatszik 
 //     ...::: SKILL EFFECTS :::...
 this.paragraphs.effect.titles[DMG] = "Damage";
 this.paragraphs.effect.titles[HEAL] = "Heal";
-this.paragraphs.effect.titles[SHADOWFORM] = "Shadowform";
+this.paragraphs.effect.titles[SHADOWFORM] = "Attackform";
 this.paragraphs.effect.titles[POISON] = "Poison";
 this.paragraphs.effect.titles[POISON_DMG] = "Poison damage";
 this.paragraphs.effect.titles[STUN] = "Stun";
@@ -59,12 +59,16 @@ this.paragraphs.effect.titles[ARMOR] = "Armor";
 this.paragraphs.effect.titles[PENETRATE] = "Penetrating damage";
 this.paragraphs.effect.titles[SACRIFICE] = "Sacrifice";
 this.paragraphs.effect.titles[BLOOD_OATH] = "Blood oath";
+this.paragraphs.effect.titles[DEFENSEFORM] = "Defenseform";
+this.paragraphs.effect.titles[MOVEFORM] = "Moveform";
+this.paragraphs.effect.titles[MAGICFORM] = "Magicform";
+this.paragraphs.effect.titles[JOKERFORM] = "Jokerform";
 
 this.paragraphs.effect.paragraphs[DMG] = "X sebzest okoz az ellenfelnek.";
 this.paragraphs.effect.paragraphs[HEAL] = "Visszatolt X eletpontot a hasznalojanak.";
 //this.paragraphs.effect.paragraphs[SHADOWFORM] = "A <div class='text_move'></div> es <div class='text_defence'></div> mezok 75% esellyel <div class='text_attack'></div>-a alakulnak.";
 //this.paragraphs.effect.paragraphs[SHADOWFORM] = "A <span style=\"color:forestgreen\">MOVE</span> es <span style=\"color:bisque\">DEFENSE</span> mezok 75% esellyel <span style=\"color:crimson\">ATTACK</span>-a alakulnak.";
-this.paragraphs.effect.paragraphs[SHADOWFORM] = "A MOVE es DEFENSE mezok 75% esellyel ATTACK-a alakulnak.";
+this.paragraphs.effect.paragraphs[SHADOWFORM] = "A MOVE es DEFENSE mezok X% esellyel ATTACK-a alakulnak.";
 this.paragraphs.effect.paragraphs[POISON] = "X db. mezot meregge alakit at.";
 this.paragraphs.effect.paragraphs[POISON_DMG] = "A mereg mezok a kor vegen X-et sebeznek.";
 this.paragraphs.effect.paragraphs[STUN] = "X db. mezot elsotetit, melyeket nem tudod mozgatni, sem aktivizalni.";
@@ -79,6 +83,10 @@ this.paragraphs.effect.paragraphs[ARMOR] = "Ad X db. vedelmet, a kovetkezo korod
 this.paragraphs.effect.paragraphs[PENETRATE] = "Elvesz X eletpontot az ellenfeltol, az armorat figyelmen kivul hagyva.";
 this.paragraphs.effect.paragraphs[SACRIFICE] = "X sebzest okoz a hasznalojanak.";
 this.paragraphs.effect.paragraphs[BLOOD_OATH] = "Elvesz X eletpontot a hasznalojatol, az armorat figyelmen kivul hagyva.";
+this.paragraphs.effect.paragraphs[DEFENSEFORM] = "A MAGIC es ATTACK mezok X% esellyel DEFENSE-e alakulnak.";
+this.paragraphs.effect.paragraphs[MOVEFORM] = "A DEFENSE es MAGIC mezok X% esellyel MOVE-a alakulnak.";
+this.paragraphs.effect.paragraphs[MAGICFORM] = "Az ATTACK es MOVE mezok X% esellyel MAGIC-e alakulnak.";
+this.paragraphs.effect.paragraphs[JOKERFORM] = "A mezok X% esellyel JOKER-e alakulnak.";
 
 //     ...::: FIELD TYPES :::...
 this.paragraphs.field.titles[MAN] = "Magic";

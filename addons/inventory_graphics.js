@@ -631,6 +631,150 @@ function InventoryGraphics(bag)
                 $object.append('<div class="item boots_lvl_1"></div>');
                 break;
             }
+
+            case ITEM_HELM_LIGHT_LVL_3:
+            {
+                $object.append('<div class="item helm_light_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_HELM_HEAVY_LVL_3:
+            {
+                $object.append('<div class="item helm_heavy_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_HELM_LIGHT_LVL_4:
+            {
+                $object.append('<div class="item helm_light_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_HELM_HEAVY_LVL_4:
+            {
+                $object.append('<div class="item helm_heavy_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_ARMOR_LIGHT_LVL_3:
+            {
+                $object.append('<div class="item armor_light_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_ARMOR_HEAVY_LVL_3:
+            {
+                $object.append('<div class="item armor_heavy_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_ARMOR_LIGHT_LVL_4:
+            {
+                $object.append('<div class="item armor_light_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_ARMOR_HEAVY_LVL_4:
+            {
+                $object.append('<div class="item armor_heavy_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_SHOES_LIGHT_LVL_3:
+            {
+                $object.append('<div class="item shoes_light_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_SHOES_HEAVY_LVL_3:
+            {
+                $object.append('<div class="item shoes_heavy_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_SHOES_LIGHT_LVL_4:
+            {
+                $object.append('<div class="item shoes_light_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_SHOES_HEAVY_LVL_4:
+            {
+                $object.append('<div class="item shoes_heavy_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_AXE_LVL_3:
+            {
+                $object.append('<div class="item axe_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_AXE_LVL_4:
+            {
+                $object.append('<div class="item axe_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_SWORD_LVL_3:
+            {
+                $object.append('<div class="item sword_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_SWORD_LVL_4:
+            {
+                $object.append('<div class="item sword_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_SHIELD_LVL_3:
+            {
+                $object.append('<div class="item shield_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_SHIELD_LVL_4:
+            {
+                $object.append('<div class="item shield_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_MACE_LVL_3:
+            {
+                $object.append('<div class="item mace_lvl_3"></div>');
+                break;
+            }
+
+            case ITEM_MACE_LVL_4:
+            {
+                $object.append('<div class="item mace_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_NECKLACE_OFFENSIVE_LVL_4:
+            {
+                $object.append('<div class="item necklace_offensive_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_NECKLACE_DEFENSIVE_LVL_4:
+            {
+                $object.append('<div class="item necklace_defensive_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_NECKLACE_MAGIC_LVL_4:
+            {
+                $object.append('<div class="item necklace_magic_lvl_4"></div>');
+                break;
+            }
+
+            case ITEM_NECKLACE_MOVE_LVL_4:
+            {
+                $object.append('<div class="item necklace_move_lvl_4"></div>');
+                break;
+            }
         }
 
         switch(item.rank)

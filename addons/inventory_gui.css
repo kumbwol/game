@@ -88,6 +88,126 @@
     background-image: url("images/items/lvl_1/shield.png");
 }
 
+.item.helm_light_lvl_3
+{
+    background-image: url("images/items/lvl_3/helmet/light/helmet.png");
+}
+
+.item.helm_heavy_lvl_3
+{
+    background-image: url("images/items/lvl_3/helmet/heavy/helmet.png");
+}
+
+.item.helm_light_lvl_4
+{
+    background-image: url("images/items/lvl_4/helmet/light/helmet.png");
+}
+
+.item.helm_heavy_lvl_4
+{
+    background-image: url("images/items/lvl_4/helmet/heavy/helmet.png");
+}
+
+.item.armor_light_lvl_3
+{
+    background-image: url("images/items/lvl_3/armor/light/armor.png");
+}
+
+.item.armor_heavy_lvl_3
+{
+    background-image: url("images/items/lvl_3/armor/heavy/armor.png");
+}
+
+.item.armor_light_lvl_4
+{
+    background-image: url("images/items/lvl_4/armor/light/armor.png");
+}
+
+.item.armor_heavy_lvl_4
+{
+    background-image: url("images/items/lvl_4/armor/heavy/armor.png");
+}
+
+.item.shoes_light_lvl_3
+{
+    background-image: url("images/items/lvl_3/shoes/light/shoes.png");
+}
+
+.item.shoes_heavy_lvl_3
+{
+    background-image: url("images/items/lvl_3/shoes/heavy/shoes.png");
+}
+
+.item.shoes_light_lvl_4
+{
+    background-image: url("images/items/lvl_4/shoes/light/shoes.png");
+}
+
+.item.shoes_heavy_lvl_4
+{
+    background-image: url("images/items/lvl_4/shoes/heavy/shoes.png");
+}
+
+.item.axe_lvl_3
+{
+    background-image: url("images/items/lvl_3/weapon/axe/axe.png");
+}
+
+.item.axe_lvl_4
+{
+    background-image: url("images/items/lvl_4/weapon/axe/axe.png");
+}
+
+.item.sword_lvl_3
+{
+    background-image: url("images/items/lvl_3/weapon/sword/sword.png");
+}
+
+.item.sword_lvl_4
+{
+    background-image: url("images/items/lvl_4/weapon/sword/sword.png");
+}
+
+.item.shield_lvl_3
+{
+    background-image: url("images/items/lvl_3/weapon/shield/shield.png");
+}
+
+.item.shield_lvl_4
+{
+    background-image: url("images/items/lvl_4/weapon/shield/shield.png");
+}
+
+.item.mace_lvl_3
+{
+    background-image: url("images/items/lvl_3/weapon/mace/mace.png");
+}
+
+.item.mace_lvl_4
+{
+    background-image: url("images/items/lvl_4/weapon/mace/mace.png");
+}
+
+.item.necklace_offensive_lvl_4
+{
+    background-image: url("images/items/lvl_4/amulet/offensive/necklace.png");
+}
+
+.item.necklace_defensive_lvl_4
+{
+    background-image: url("images/items/lvl_4/amulet/defensive/necklace.png");
+}
+
+.item.necklace_magic_lvl_4
+{
+    background-image: url("images/items/lvl_4/amulet/magic/necklace.png");
+}
+
+.item.necklace_move_lvl_4
+{
+    background-image: url("images/items/lvl_4/amulet/move/necklace.png");
+}
+
 .item_hover
 {
     z-index: 1;

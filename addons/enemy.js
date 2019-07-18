@@ -44,7 +44,7 @@ function Enemy(name)
 
     if(this.name === "Spider")
     {
-        this.max_hp = 70;
+        this.max_hp = 1;
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;

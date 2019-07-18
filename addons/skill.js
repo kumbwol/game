@@ -459,18 +459,18 @@ function Skill(name)
 
         case "FIRST_WEAPON":
         {
-            visual_pattern =
+            /*visual_pattern =
                 [
                     [NUL,MAN,NUL],
                     [ATT,ATT,ATT],
                     [NUL,MAN,NUL]
-                ];
-            /*visual_pattern =
+                ];*/
+            visual_pattern =
                 [
                     [DEF,DEF,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_PENETRATE");
             //primary_effect  = new Effect("armor");
@@ -555,6 +555,21 @@ function Skill(name)
                     [NUL,JOK,NUL],
                     [NUL,JOK,NUL],
                     [NUL,SJO,NUL]
+                ];
+            pattern = new SkillPattern(visual_pattern);
+            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
+            secondary_effect = new Effect("NOTHING");
+            this.nameText = "Védés2";
+            break;
+        }
+
+        case "MACE_LVL3_UTES":
+        {
+            visual_pattern =
+                [
+                    [ATT,ATT,NUL],
+                    [ATT,ATT,NUL],
+                    [NUL,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
             primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
@@ -801,5 +816,10 @@ function Skill(name)
     {
         if(id === PRIMARY) return primary_effect.getSkillEffect();
         else return secondary_effect.getSkillEffect();
+    }
+
+    function createVisualPattern(visual_pattern)
+    {
+
     }
 }

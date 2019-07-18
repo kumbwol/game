@@ -18,7 +18,7 @@ function Item(type = RANDOM_ITEM, rank, image)
     else if(rank === FIRST_SHIELD)
     {
         //this.skills[0] = new Skill("FIRST_SHIELD");
-        this.skills[0] = new Skill("Promote");
+        this.skills[0] = new Skill("FIRST_WEAPON");
         this.rank = 0;
     }
     else if(rank === FIRST_ARMOR)
@@ -32,41 +32,42 @@ function Item(type = RANDOM_ITEM, rank, image)
         this.type = decideRandomItemType();
         this.rank = rank - 1;
 
-        let item_power;
-
-        switch(this.rank)
-        {
-            case 0:
-            {
-                item_power = 800;
-                break;
-            }
-            case 1:
-            {
-                item_power = 2000;
-                break;
-            }
-            case 2:
-            {
-                item_power = 3000;
-                break;
-            }
-        }
-
         switch (this.type)
         {
             case C_HEAD:
             {
-                if(this.rank === 0)
+                let random = Math.floor(Math.random() * 2);
+
+                if(random === 0) //light
                 {
-                    this.image = ITEM_HELM_LVL_1;
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_HELM_LIGHT_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_HELM_HEAVY_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
                 }
                 break;
             }
 
             case C_NECKLACE:
             {
-                if(this.rank === 0)
+                if(this.rank === 2)
                 {
                     this.image = ITEM_NECKLACE_LVL_1;
                 }
@@ -75,41 +76,162 @@ function Item(type = RANDOM_ITEM, rank, image)
 
             case C_TORSO:
             {
-                if(this.rank === 0)
+                let random = Math.floor(Math.random() * 2);
+
+                if(random === 0) //light
                 {
-                    this.image = ITEM_ARMOR_LVL_1;
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_ARMOR_LIGHT_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_ARMOR_HEAVY_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
                 }
                 break;
             }
 
             case C_RIGHT_HAND:
             {
-                if(this.rank === 0)
+                let random = Math.floor(Math.random() * 4);
+
+                if(random === 0) //axe
                 {
-                    this.image = ITEM_SWORD_LVL_1;
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_AXE_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else if(random === 1) //sword
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_SWORD_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else if(random === 2) //shield
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_SHIELD_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else if(random === 3) //mace
+                {
+                    if(this.rank === 2)
+                    {
+                        createMace();
+                    }
                 }
                 break;
             }
 
             case C_LEFT_HAND:
             {
-                if(this.rank === 0)
+                let random = Math.floor(Math.random() * 4);
+
+                if(random === 0) //axe
                 {
-                    this.image = ITEM_SHIELD_LVL_1;
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_AXE_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else if(random === 1) //sword
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_SWORD_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else if(random === 2) //shield
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_SHIELD_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else if(random === 3) //mace
+                {
+                    if(this.rank === 2)
+                    {
+                        createMace();
+                    }
                 }
                 break;
             }
 
             case C_BOOTS:
             {
-                if(this.rank === 0)
-                {
-                    this.image = ITEM_BOOTS_LVL_1;
+                let random = Math.floor(Math.random() * 2);
 
-                    this.rank = 2;
-                    this.skills[0] = new Skill("FIRST_ARMOR");
-                    this.skills[1] = new Skill("FIRST_ARMOR1");
-                    this.skills[2] = new Skill("FIRST_ARMOR2");
+                if(random === 0) //light
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_SHOES_LIGHT_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
+                }
+                else
+                {
+                    if(this.rank === 2)
+                    {
+                        this.image = ITEM_SHOES_HEAVY_LVL_3;
+
+                        this.rank = 2;
+                        this.skills[0] = new Skill("FIRST_ARMOR");
+                        this.skills[1] = new Skill("FIRST_ARMOR1");
+                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                    }
                 }
                 break;
             }
@@ -124,6 +246,13 @@ function Item(type = RANDOM_ITEM, rank, image)
             this.skills[0] = new Skill("Promote");
         }*/
     }
+    else if(type === C_RIGHT_HAND || type === C_LEFT_HAND)
+    {
+        if(this.image === ITEM_MACE_LVL_3)
+        {
+            createMace();
+        }
+    }
 
     function decideRandomItemType()
     {
@@ -131,13 +260,84 @@ function Item(type = RANDOM_ITEM, rank, image)
         console.log(random);
         switch (random)
         {
-            /*case 0: return C_HEAD;
-            case 1: return C_NECKLACE;
+            case 0: return C_HEAD;
+            //case 1: return C_NECKLACE;
             case 2: return C_TORSO;
             case 3: return C_LEFT_HAND;
             case 4: return C_RIGHT_HAND;
-            case 5: return C_BOOTS;*/
+            case 5: return C_BOOTS;
             default: return C_BOOTS;
+        }
+    }
+
+    function createMace()
+    {
+        this.image = ITEM_MACE_LVL_3;
+        let random;
+
+        random = Math.floor(Math.random() * 5);
+        switch(random)
+        {
+            case 0:
+            {
+                this.skills[0] = new Skill("MACE_LVL3_UTES");
+                break;
+            }
+            case 1:
+            {
+                this.skills[0] = new Skill("MACE_LVL3_SUHINTAS");
+                break;
+            }
+            case 2:
+            {
+                this.skills[0] = new Skill("MACE_LVL3_POFON");
+                break;
+            }
+            default:
+            {
+                this.skills[0] = new Skill("MACE_LVL3_BIZTOSFOGAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 5);
+        switch(random)
+        {
+            case 0:
+            {
+                this.skills[1] = new Skill("MACE_LVL3_CSAPAS");
+                break;
+            }
+            case 1:
+            {
+                this.skills[1] = new Skill("MACE_LVL3_VERES");
+                break;
+            }
+            case 2:
+            {
+                this.skills[1] = new Skill("MACE_LVL3_IJESZTES");
+                break;
+            }
+            default:
+            {
+                this.skills[1] = new Skill("MACE_LVL3_FELKESZULES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                this.skills[2] = new Skill("MACE_LVL3_SZETMORZSOLAS");
+                break;
+            }
+            default:
+            {
+                this.skills[2] = new Skill("MACE_LVL3_MEREVSEG");
+                break;
+            }
         }
     }
 

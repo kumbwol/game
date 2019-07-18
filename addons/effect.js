@@ -434,6 +434,14 @@ function Effect(name)
             effect.self = false;
             break;
         }
+
+        case "LVL_1_DMG":
+        {
+            effect.type = MANA_DRAIN;
+            effect.mana_drain = addRandomInterval(5, 7);
+            effect.self = false;
+            break;
+        }
     }
 
     function addRandomInterval(minimum, maximum)

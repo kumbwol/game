@@ -140,7 +140,16 @@ $(function()
 
                 $("#game_background").append('<p id="new_item">Nezd meg az inventoryban az uj itemet!</p>');
 
-                player.inventory.addItem(new Item(RANDOM_ITEM, enemy_lvl - 1, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+                player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+
                 player.hp = player.max_hp;
 
                 enemy_lvl_CP = 1;

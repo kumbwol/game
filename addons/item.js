@@ -149,7 +149,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        createMace();
+                        createMace(this.skills);
                     }
                 }
                 break;
@@ -199,7 +199,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        createMace();
+                        createMace(this.skills);
                     }
                 }
                 break;
@@ -250,7 +250,7 @@ function Item(type = RANDOM_ITEM, rank, image)
     {
         if(this.image === ITEM_MACE_LVL_3)
         {
-            createMace();
+            createMace(this.skills);
         }
     }
 
@@ -270,57 +270,57 @@ function Item(type = RANDOM_ITEM, rank, image)
         }
     }
 
-    function createMace()
+    function createMace(skills)
     {
         this.image = ITEM_MACE_LVL_3;
         let random;
 
-        random = Math.floor(Math.random() * 5);
+        random = Math.floor(Math.random() * 4);
         switch(random)
         {
             case 0:
             {
-                this.skills[0] = new Skill("MACE_LVL3_UTES");
+                skills[0] = new Skill("MACE_LVL3_UTES");
                 break;
             }
             case 1:
             {
-                this.skills[0] = new Skill("MACE_LVL3_SUHINTAS");
+                skills[0] = new Skill("MACE_LVL3_SUHINTAS");
                 break;
             }
             case 2:
             {
-                this.skills[0] = new Skill("MACE_LVL3_POFON");
+                skills[0] = new Skill("MACE_LVL3_POFON");
                 break;
             }
             default:
             {
-                this.skills[0] = new Skill("MACE_LVL3_BIZTOSFOGAS");
+                skills[0] = new Skill("MACE_LVL3_BIZTOSFOGAS");
                 break;
             }
         }
 
-        random = Math.floor(Math.random() * 5);
+        random = Math.floor(Math.random() * 4);
         switch(random)
         {
             case 0:
             {
-                this.skills[1] = new Skill("MACE_LVL3_CSAPAS");
+                skills[1] = new Skill("MACE_LVL3_CSAPAS");
                 break;
             }
             case 1:
             {
-                this.skills[1] = new Skill("MACE_LVL3_VERES");
+                skills[1] = new Skill("MACE_LVL3_VERES");
                 break;
             }
             case 2:
             {
-                this.skills[1] = new Skill("MACE_LVL3_IJESZTES");
+                skills[1] = new Skill("MACE_LVL3_IJESZTES");
                 break;
             }
             default:
             {
-                this.skills[1] = new Skill("MACE_LVL3_FELKESZULES");
+                skills[1] = new Skill("MACE_LVL3_FELKESZULES");
                 break;
             }
         }
@@ -330,12 +330,12 @@ function Item(type = RANDOM_ITEM, rank, image)
         {
             case 0:
             {
-                this.skills[2] = new Skill("MACE_LVL3_SZETMORZSOLAS");
+                skills[2] = new Skill("MACE_LVL3_SZETMORZSOLAS");
                 break;
             }
             default:
             {
-                this.skills[2] = new Skill("MACE_LVL3_MEREVSEG");
+                skills[2] = new Skill("MACE_LVL3_MEREVSEG");
                 break;
             }
         }

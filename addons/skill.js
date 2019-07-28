@@ -571,10 +571,205 @@ function Skill(name)
                     [ATT,ATT,NUL],
                     [NUL,NUL,NUL]
                 ];
+
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
-            secondary_effect = new Effect("NOTHING");
-            this.nameText = "Védés2";
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 33);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 5, 7);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Ütés";
+            break;
+        }
+
+        case "MACE_LVL3_SUHINTAS":
+        {
+            visual_pattern =
+                [
+                    [MAN,ATT,MAN],
+                    [ATT,MAN,ATT],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 8, 10);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Suhintás";
+            break;
+        }
+
+        case "MACE_LVL3_POFON":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [MOV,MOV,ATT],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 1, 2);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Pofon";
+            break;
+        }
+
+        case "MACE_LVL3_BIZTOSFOGAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,NUL],
+                    [ATT,NUL,ATT],
+                    [NUL,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 20);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PROMOTE);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Biztos fogás";
+            break;
+        }
+
+        case "MACE_LVL3_CSAPAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,ATT,ATT],
+                    [MAN,NUL,ATT],
+                    [MAN,MAN,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(NOTHING);
+            secondary_effect = new Effect(DMG, 7, 15);
+            this.nameText = "Csapás";
+            break;
+        }
+
+        case "MACE_LVL3_VERES":
+        {
+            visual_pattern =
+                [
+                    [ATT,NUL,NUL],
+                    [ATT,NUL,ATT],
+                    [ATT,NUL,ATT]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 4, 6);
+            secondary_effect = new Effect(DMG, 3, 4);
+            this.nameText = "Verés";
+            break;
+        }
+
+        case "MACE_LVL3_IJESZTES":
+        {
+            visual_pattern =
+                [
+                    [NUL,MAN,NUL],
+                    [MOV,DEF,MAN],
+                    [NUL,MOV,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 4, 6);
+            secondary_effect = new Effect(SHADOWFORM, 10);
+            this.nameText = "Ijesztés";
+            break;
+        }
+
+        case "MACE_LVL3_FELKESZULES":
+        {
+            visual_pattern =
+                [
+                    [DEF,MAN,NUL],
+                    [MOV,ATT,NUL],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 40);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PROMOTE);
+            secondary_effect = new Effect(PARALYZE, 4, 8);
+            this.nameText = "Felkészülés";
+            break;
+        }
+
+        case "MACE_LVL3_SZETMORZSOLAS":
+        {
+            visual_pattern =
+                [
+                    [JOK,NUL,JOK],
+                    [NUL,JOK,NUL],
+                    [JOK,NUL,JOK]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(NOTHING);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Szétmorzsolás";
+            break;
+        }
+
+        case "MACE_LVL3_MEREVSEG":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [DEF,DEF,DEF],
+                    [DEF,MOV,DEF]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 16, 20);
+            secondary_effect = new Effect(STUN, 3, 4);
+            this.nameText = "Merevség";
             break;
         }
 
@@ -766,6 +961,143 @@ function Skill(name)
     this.resetOriginalPattern  = resetOriginalPattern;
     this.getSkillEffect = getSkillEffect;
     this.getSkillChance = getSkillChance;
+
+    function addJokers(pattern, width, height, chance)
+    {
+        let can_push_right = false;
+        let can_push_left  = false;
+        let can_push_up    = false;
+        let can_push_down  = false;
+
+        if(width === 2)
+        {
+            can_push_left = true;
+
+            for(let i=0; i<3; i++)
+            {
+                if(pattern[i][0] !== NUL)
+                {
+                    can_push_right = true;
+                    can_push_left = false;
+                }
+            }
+        }
+
+        if(height === 2)
+        {
+            can_push_up = true;
+
+            for(let i=0; i<3; i++)
+            {
+                if(pattern[0][i] !== NUL)
+                {
+                    can_push_down = true;
+                    can_push_up = false;
+                }
+            }
+        }
+
+        let push_left_right = Math.floor(Math.random() * 2);
+        let push_up_down    = Math.floor(Math.random() * 2);
+
+        if(can_push_right)
+        {
+            if(push_left_right === 0) pushPatternRight(pattern);
+        }
+        else if(can_push_left)
+        {
+            if(push_left_right === 0) pushPatternLeft(pattern);
+        }
+
+        if(can_push_up)
+        {
+            if(push_up_down === 0) pushPatternUp(pattern);
+        }
+        else if(can_push_down)
+        {
+            if(push_up_down === 0) pushPatternDown(pattern);
+        }
+
+        for(let i=0; i<3; i++)
+        {
+            for(let j=0; j<3; j++)
+            {
+                if(pattern[i][j] === NUL)
+                {
+                    let random = (Math.floor(Math.random() * 100)) + 1;
+
+                    if(random < chance)
+                    {
+                        pattern[i][j] = JOK;
+                    }
+                }
+            }
+        }
+    }
+
+    function pushPatternRight(pattern)
+    {
+        for(let i=0; i<3; i++)
+        {
+            for(let j=1; j>=0; j--)
+            {
+                pattern[i][j+1] = pattern[i][j];
+            }
+        }
+
+        for(let i=0; i<3; i++)
+        {
+            pattern[i][0] = NUL;
+        }
+    }
+
+    function pushPatternDown(pattern)
+    {
+        for(let i=0; i<3; i++)
+        {
+            for(let j=1; j>=0; j--)
+            {
+                pattern[j+1][i] = pattern[j][i];
+            }
+        }
+
+        for(let i=0; i<3; i++)
+        {
+            pattern[0][i] = NUL;
+        }
+    }
+
+    function pushPatternLeft(pattern)
+    {
+        for(let i=0; i<3; i++)
+        {
+            for(let j=1; j<3; j++)
+            {
+                pattern[i][j-1] = pattern[i][j];
+            }
+        }
+
+        for(let i=0; i<3; i++)
+        {
+            pattern[i][2] = NUL;
+        }
+    }
+
+    function pushPatternUp(pattern)
+    {
+        for(let i=0; i<3; i++)
+        {
+            for(let j=1; j<3; j++)
+            {
+                pattern[j-1][i] = pattern[j][i];
+            }
+        }
+
+        for(let i=0; i<3; i++)
+        {
+            pattern[2][i] = NUL;
+        }
+    }
 
     function getSkillChance()
     {

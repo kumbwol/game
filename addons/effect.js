@@ -1,8 +1,8 @@
 console.log("effect.js loaded");
 
-function Effect(name)
+function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount)
 {
-    this.name = name;
+    this.name = effect_type;
 
     let effect =
     {
@@ -29,9 +29,56 @@ function Effect(name)
         form_amount: 0
     };
 
-
     switch(this.name)
     {
+        case DMG:
+        {
+            effect.type = DMG;
+            effect.dmg = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case PROMOTE:
+        {
+            effect.type = PROMOTE;
+            effect.self = true;
+            break;
+        }
+
+        case ARMOR:
+        {
+            effect.type = ARMOR;
+            effect.armor = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case SHADOWFORM:
+        {
+            effect.type = SHADOWFORM;
+            effect.form_amount = addRandomIntervalDividableByFive(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case PARALYZE:
+        {
+            effect.type = PARALYZE;
+            effect.paralyze_amount = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case STUN:
+        {
+            effect.type = STUN;
+            effect.stun_amount = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case NOTHING:
+        {
+            effect.type = NOTHING;
+            break;
+        }
+
         case "BLOOD_OATH":
         {
             effect.type = BLOOD_OATH;
@@ -446,7 +493,12 @@ function Effect(name)
 
     function addRandomInterval(minimum, maximum)
     {
-        return Math.floor(Math.random() * (maximum - minimum)) + minimum;
+        return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+    }
+
+    function addRandomIntervalDividableByFive(minimum, maximum)
+    {
+        return Math.floor(Math.random() * (((maximum - minimum) / 5) + 1)) * 5 + minimum;
     }
 
 
@@ -456,5 +508,4 @@ function Effect(name)
     {
         return effect;
     }
-
 }

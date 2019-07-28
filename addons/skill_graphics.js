@@ -379,6 +379,12 @@ function SkillGraphics(player)
                 break;
             }
 
+            case STUN:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).stun_amount;
+                break;
+            }
+
             case PENETRATE:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(PRIMARY).penetrate;
@@ -486,6 +492,12 @@ function SkillGraphics(player)
             case PARALYZE:
             {
                 effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).paralyze_amount;
+                break;
+            }
+
+            case STUN:
+            {
+                effect_number = player.getSkills()[skill_id][rank_id].getSkillEffect(SECONDARY).stun_amount;
                 break;
             }
 
@@ -965,6 +977,12 @@ function SkillGraphics(player)
                 case PARALYZE:
                 {
                     effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).paralyze_amount;
+                    break;
+                }
+
+                case STUN:
+                {
+                    effect_number = player.getSkills()[i][player.rank[i]].getSkillEffect(prim_or_second).stun_amount;
                     break;
                 }
 

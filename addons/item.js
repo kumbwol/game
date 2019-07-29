@@ -365,42 +365,44 @@ function Item(type = RANDOM_ITEM, rank, image)
             }
         }
 
-        random = Math.floor(Math.random() * 4);
+        random = Math.floor(Math.random() * 3);
         switch(random)
         {
             case 0:
             {
-                skills[1] = new Skill("MACE_LVL3_CSAPAS");
+                skills[1] = new Skill("SWORD_LVL3_DOFES");
                 break;
             }
             case 1:
             {
-                skills[1] = new Skill("MACE_LVL3_VERES");
+                skills[1] = new Skill("SWORD_LVL3_VIVAS");
                 break;
             }
             case 2:
             {
-                skills[1] = new Skill("MACE_LVL3_IJESZTES");
-                break;
-            }
-            default:
-            {
-                skills[1] = new Skill("MACE_LVL3_FELKESZULES");
+                skills[1] = new Skill("SWORD_LVL3_HASITAS");
                 break;
             }
         }
 
-        random = Math.floor(Math.random() * 2);
+        random = Math.floor(Math.random() * 3);
         switch(random)
         {
             case 0:
             {
-                skills[2] = new Skill("MACE_LVL3_SZETMORZSOLAS");
+                skills[2] = new Skill("SWORD_LVL3_PARBAJ");
                 break;
             }
+
+			case 1:
+			{
+				skills[2] = new Skill("SWORD_LVL3_TISZTELGES");
+				break;
+			}
+
             default:
             {
-                skills[2] = new Skill("MACE_LVL3_MEREVSEG");
+                skills[2] = new Skill("SWORD_LVL3_HATRALAS");
                 break;
             }
         }

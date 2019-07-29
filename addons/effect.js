@@ -81,6 +81,14 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             break;
         }
 
+		case SACRIFICE:
+		{
+			effect.type = SACRIFICE;
+			effect.sacrifice = addRandomInterval(minimum_amount, maximum_amount);
+			effect.self = true;
+			break;
+		}
+
         case NOTHING:
         {
             effect.type = NOTHING;

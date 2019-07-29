@@ -125,12 +125,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_SWORD_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createSword(this.skills);
                     }
                 }
                 else if(random === 2) //shield
@@ -175,12 +170,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_SWORD_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createSword(this.skills)
                     }
                 }
                 else if(random === 2) //shield
@@ -252,6 +242,10 @@ function Item(type = RANDOM_ITEM, rank, image)
         {
             createMace(this.skills);
         }
+        else if(this.image === ITEM_SWORD_LVL_3)
+        {
+            createSword(this.skills);
+        }
     }
 
     function decideRandomItemType()
@@ -296,6 +290,77 @@ function Item(type = RANDOM_ITEM, rank, image)
             default:
             {
                 skills[0] = new Skill("MACE_LVL3_BIZTOSFOGAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 4);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("MACE_LVL3_CSAPAS");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("MACE_LVL3_VERES");
+                break;
+            }
+            case 2:
+            {
+                skills[1] = new Skill("MACE_LVL3_IJESZTES");
+                break;
+            }
+            default:
+            {
+                skills[1] = new Skill("MACE_LVL3_FELKESZULES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("MACE_LVL3_SZETMORZSOLAS");
+                break;
+            }
+            default:
+            {
+                skills[2] = new Skill("MACE_LVL3_MEREVSEG");
+                break;
+            }
+        }
+    }
+
+    function createSword(skills)
+    {
+        this.image = ITEM_SWORD_LVL_3;
+        let random;
+
+        random = Math.floor(Math.random() * 4);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("SWORD_LVL3_VAGAS");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("SWORD_LVL3_SZURAS");
+                break;
+            }
+            case 2:
+            {
+                skills[0] = new Skill("SWORD_LVL3_VEDES");
+                break;
+            }
+            default:
+            {
+                skills[0] = new Skill("SWORD_LVL3_HARITAS");
                 break;
             }
         }

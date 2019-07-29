@@ -55,6 +55,7 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
         case SHADOWFORM:
         {
             effect.type = SHADOWFORM;
+            effect.transform = true;
             effect.form_amount = addRandomIntervalDividableByFive(minimum_amount, maximum_amount);
             break;
         }
@@ -70,6 +71,13 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
         {
             effect.type = STUN;
             effect.stun_amount = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case PENETRATE:
+        {
+            effect.type = PENETRATE;
+            effect.penetrate = addRandomInterval(minimum_amount, maximum_amount);
             break;
         }
 

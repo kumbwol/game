@@ -578,7 +578,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DMG, 5, 7);
+            primary_effect  = new Effect(DMG, 7, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Ütés";
             break;
@@ -599,7 +599,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DMG, 8, 10);
+            primary_effect  = new Effect(DMG, 11, 14);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Suhintás";
             break;
@@ -620,7 +620,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DMG, 1, 2);
+            primary_effect  = new Effect(DMG, 3, 4);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Pofon";
             break;
@@ -663,7 +663,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(NOTHING);
-            secondary_effect = new Effect(DMG, 7, 15);
+            secondary_effect = new Effect(DMG, 10, 18);
             this.nameText = "Csapás";
             break;
         }
@@ -683,8 +683,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DMG, 4, 6);
-            secondary_effect = new Effect(DMG, 3, 4);
+            primary_effect  = new Effect(DMG, 6, 8);
+            secondary_effect = new Effect(DMG, 4, 5);
             this.nameText = "Verés";
             break;
         }
@@ -767,9 +767,93 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 16, 20);
+            primary_effect  = new Effect(ARMOR, 18, 22);
             secondary_effect = new Effect(STUN, 3, 4);
             this.nameText = "Merevség";
+            break;
+        }
+
+        case "SWORD_LVL3_VAGAS":
+        {
+            visual_pattern =
+                [
+                    [ATT,ATT,NUL],
+                    [NUL,NUL,ATT],
+                    [NUL,NUL,ATT]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 7, 8);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Vágás";
+            break;
+        }
+
+        case "SWORD_LVL3_SZURAS":
+        {
+            visual_pattern =
+                [
+                    [MAN,NUL,MAN],
+                    [NUL,ATT,NUL],
+                    [MAN,NUL,MAN]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 5, 6);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Szúrás";
+            break;
+        }
+
+        case "SWORD_LVL3_VEDES":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [NUL,DEF,NUL],
+                    [ATT,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 3);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Védés";
+            break;
+        }
+
+        case "SWORD_LVL3_HARITAS":
+        {
+            visual_pattern =
+                [
+                    [DEF,NUL,NUL],
+                    [ATT,DEF,NUL],
+                    [NUL,ATT,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 5, 7);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Hárítás";
             break;
         }
 

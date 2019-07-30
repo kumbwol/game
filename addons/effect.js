@@ -60,6 +60,30 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             break;
         }
 
+        case DEFENSEFORM:
+        {
+            effect.type = DEFENSEFORM;
+            effect.transform = true;
+            effect.form_amount = addRandomIntervalDividableByFive(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case MOVEFORM:
+        {
+            effect.type = MOVEFORM;
+            effect.transform = true;
+            effect.form_amount = addRandomIntervalDividableByFive(minimum_amount, maximum_amount);
+            break;
+        }
+
+        case MAGICFORM:
+        {
+            effect.type = MAGICFORM;
+            effect.transform = true;
+            effect.form_amount = addRandomIntervalDividableByFive(minimum_amount, maximum_amount);
+            break;
+        }
+
         case PARALYZE:
         {
             effect.type = PARALYZE;
@@ -88,6 +112,22 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
 			effect.self = true;
 			break;
 		}
+
+        case MANA_REGEN:
+        {
+            effect.type = MANA_REGEN;
+            effect.mana_regen = addRandomInterval(minimum_amount, maximum_amount);
+            effect.self = true;
+            break;
+        }
+
+        case MANA_DRAIN:
+        {
+            effect.type = MANA_DRAIN;
+            effect.mana_drain = addRandomInterval(minimum_amount, maximum_amount);
+            effect.self = false;
+            break;
+        }
 
         case NOTHING:
         {

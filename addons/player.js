@@ -52,8 +52,8 @@ function Player(name)
     this.items[C_HEAD]       = new Item(C_HEAD,       NO_ITEM, ITEM_EMPTY);
     this.items[C_NECKLACE]   = new Item(C_NECKLACE,   NO_ITEM, ITEM_EMPTY);
     this.items[C_TORSO]      = new Item(C_TORSO,      FIRST_ARMOR, ITEM_ARMOR);
-    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, 2, ITEM_SWORD_LVL_3);
-    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  2, ITEM_SWORD_LVL_3);
+    this.items[C_RIGHT_HAND] = new Item(C_RIGHT_HAND, 2, ITEM_SHOES_LIGHT_LVL_3);
+    this.items[C_LEFT_HAND]  = new Item(C_LEFT_HAND,  2, ITEM_SHOES_LIGHT_LVL_3);
     this.items[C_BOOTS]      = new Item(C_BOOTS,      NO_ITEM, ITEM_EMPTY);
 
     this.getSkills = getSkills;

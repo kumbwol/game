@@ -42,24 +42,14 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_HELM_LIGHT_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createHelmLight(this.skills);
                     }
                 }
                 else
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_HELM_HEAVY_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createHelmHeavy(this.skills);
                     }
                 }
                 break;
@@ -82,24 +72,14 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_ARMOR_LIGHT_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createArmorLight(this.skills);
                     }
                 }
                 else
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_ARMOR_HEAVY_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createArmorHeavy(this.skills);
                     }
                 }
                 break;
@@ -203,24 +183,14 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_SHOES_LIGHT_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createShoesLight(this.skills);
                     }
                 }
                 else
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_SHOES_HEAVY_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createShoesHeavy(this.skills);
                     }
                 }
                 break;
@@ -246,6 +216,30 @@ function Item(type = RANDOM_ITEM, rank, image)
         {
             createSword(this.skills);
         }
+        else if(this.image === ITEM_HELM_LIGHT_LVL_3)
+        {
+            createHelmLight(this.skills);
+        }
+        else if(this.image === ITEM_HELM_HEAVY_LVL_3)
+        {
+            createHelmHeavy(this.skills);
+        }
+        else if(this.image === ITEM_ARMOR_LIGHT_LVL_3)
+        {
+            createArmorLight(this.skills);
+        }
+        else if(this.image === ITEM_ARMOR_HEAVY_LVL_3)
+        {
+            createArmorHeavy(this.skills);
+        }
+        else if(this.image === ITEM_SHOES_LIGHT_LVL_3)
+        {
+            createShoesLight(this.skills);
+        }
+        else if(this.image === ITEM_SHOES_HEAVY_LVL_3)
+        {
+            createShoesHeavy(this.skills);
+        }
     }
 
     function decideRandomItemType()
@@ -264,9 +258,323 @@ function Item(type = RANDOM_ITEM, rank, image)
         }
     }
 
+    function createShoesLight(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("SHOES_LIGHT_LVL3_TAVOLSAGTARTAS");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("SHOES_LIGHT_LVL3_VANDOR");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("SHOES_LIGHT_LVL3_REGENERALAS");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("SHOES_LIGHT_LVL3_PIHENES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 3);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("SHOES_LIGHT_LVL3_FURGESEG");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("SHOES_LIGHT_LVL3_UGRAS");
+                break;
+            }
+            case 2:
+            {
+                skills[2] = new Skill("SHOES_LIGHT_LVL3_OSONAS");
+                break;
+            }
+        }
+    }
+
+    function createShoesHeavy(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("SHOES_HEAVY_LVL3_TAVOLSAGTARTAS");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("SHOES_HEAVY_LVL3_VANDOR");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("SHOES_HEAVY_LVL3_PIHENES");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("SHOES_HEAVY_LVL3_GANCS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("SHOES_HEAVY_LVL3_STABILITAS");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("SHOES_HEAVY_LVL3_DINAMIKA");
+                break;
+            }
+        }
+    }
+
+    function createArmorLight(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("ARMOR_LIGHT_LVL3_VEDES");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("ARMOR_LIGHT_LVL3_KITERES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("ARMOR_LIGHT_LVL3_PIHENES");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("ARMOR_LIGHT_LVL3_REGENERALAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 3);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("ARMOR_LIGHT_LVL3_FURGESEG");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("ARMOR_LIGHT_LVL3_BUKFENC");
+                break;
+            }
+            default:
+            {
+                skills[2] = new Skill("ARMOR_LIGHT_LVL3_TOMPITAS");
+                break;
+            }
+        }
+    }
+
+    function createArmorHeavy(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("ARMOR_HEAVY_LVL3_VEDES");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("ARMOR_HEAVY_LVL3_KITERES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("ARMOR_HEAVY_LVL3_BLOKKOLAS");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("ARMOR_HEAVY_LVL3_MEREVSEG");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("ARMOR_HEAVY_LVL3_KEMENYVERT");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("ARMOR_HEAVY_LVL3_LOBBANEKONYSAG");
+                break;
+            }
+        }
+    }
+
+    function createHelmLight(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("HELM_LIGHT_LVL3_VEDES");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("HELM_LIGHT_LVL3_KITERES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("HELM_LIGHT_LVL3_KONCENTRACIO");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("HELM_LIGHT_LVL3_MORMOLAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 3);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("HELM_LIGHT_LVL3_ENERGIAVAMPIR");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("HELM_LIGHT_LVL3_MERENGES");
+                break;
+            }
+            default:
+            {
+                skills[2] = new Skill("HELM_LIGHT_LVL3_FOKUSZ");
+                break;
+            }
+        }
+    }
+
+    function createHelmHeavy(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("HELM_HEAVY_LVL3_VEDES");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("HELM_HEAVY_LVL3_KITERES");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("HELM_HEAVY_LVL3_MORMOLAS");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("HELM_HEAVY_LVL3_BLOKKOLAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("HELM_HEAVY_LVL3_TEKINTELY");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("HELM_HEAVY_LVL3_HARCIKIALTAS");
+                break;
+            }
+        }
+    }
+
     function createMace(skills)
     {
-        this.image = ITEM_MACE_LVL_3;
         let random;
 
         random = Math.floor(Math.random() * 4);
@@ -337,7 +645,6 @@ function Item(type = RANDOM_ITEM, rank, image)
 
     function createSword(skills)
     {
-        this.image = ITEM_SWORD_LVL_3;
         let random;
 
         random = Math.floor(Math.random() * 4);

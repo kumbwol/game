@@ -93,12 +93,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_AXE_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createAxe(this.skills);
                     }
                 }
                 else if(random === 1) //sword
@@ -112,12 +107,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_SHIELD_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createSword(this.skills)
                     }
                 }
                 else if(random === 3) //mace
@@ -138,12 +128,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_AXE_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createAxe(this.skills);
                     }
                 }
                 else if(random === 1) //sword
@@ -157,12 +142,7 @@ function Item(type = RANDOM_ITEM, rank, image)
                 {
                     if(this.rank === 2)
                     {
-                        this.image = ITEM_SHIELD_LVL_3;
-
-                        this.rank = 2;
-                        this.skills[0] = new Skill("FIRST_ARMOR");
-                        this.skills[1] = new Skill("FIRST_ARMOR1");
-                        this.skills[2] = new Skill("FIRST_ARMOR2");
+                        createShield(this.skills);
                     }
                 }
                 else if(random === 3) //mace
@@ -240,6 +220,18 @@ function Item(type = RANDOM_ITEM, rank, image)
         {
             createShoesHeavy(this.skills);
         }
+        else if(this.image === ITEM_AXE_LVL_3)
+        {
+            createAxe(this.skills);
+        }
+        else if(this.image === ITEM_SHIELD_LVL_3)
+        {
+            createShield(this.skills);
+        }
+        else if(this.image === ITEM_NECKLACE_OFFENSIVE_LVL_4)
+        {
+            createNecklaceOffensive(this.skills);
+        }
     }
 
     function decideRandomItemType()
@@ -255,6 +247,211 @@ function Item(type = RANDOM_ITEM, rank, image)
             case 4: return C_RIGHT_HAND;
             case 5: return C_BOOTS;
             default: return C_BOOTS;
+        }
+    }
+
+    function createNecklaceOffensive(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 1);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("NECKLACE_OFFENSIVE_LVL3_BALVANY");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 3);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("NECKLACE_OFFENSIVE_LVL3_TEKINTELY");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("NECKLACE_OFFENSIVE_LVL3_FEGYELEM");
+                break;
+            }
+            case 2:
+            {
+                skills[1] = new Skill("NECKLACE_OFFENSIVE_LVL3_SAMANIZMUS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("NECKLACE_OFFENSIVE_LVL3_MORAL");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("NECKLACE_OFFENSIVE_LVL3_LOBBANEKONYSAG");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 2);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[3] = new Skill("NECKLACE_OFFENSIVE_LVL3_ORJONGES");
+                break;
+            }
+            case 1:
+            {
+                skills[3] = new Skill("NECKLACE_OFFENSIVE_LVL3_IMA");
+                break;
+            }
+        }
+    }
+
+    function createShield(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 4);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("SHIELD_LVL3_VEDES");
+                break;
+            }
+            case 1:
+            {
+                skills[0] = new Skill("SHIELD_LVL3_PAJZSLOKES");
+                break;
+            }
+            case 2:
+            {
+                skills[0] = new Skill("SHIELD_LVL3_HARITAS");
+                break;
+            }
+            case 3:
+            {
+                skills[0] = new Skill("SHIELD_LVL3_BIZTOSFOGAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 3);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("SHIELD_LVL3_BLOKKOLAS");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("SHIELD_LVL3_REGENERALAS");
+                break;
+            }
+            case 2:
+            {
+                skills[1] = new Skill("SHIELD_LVL3_ENERGIAPAJZS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 3);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("SHIELD_LVL3_TOMPITAS");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("SHIELD_LVL3_MEREVSEG");
+                break;
+            }
+            case 2:
+            {
+                skills[2] = new Skill("SHIELD_LVL3_BECSULET");
+                break;
+            }
+        }
+    }
+
+    function createAxe(skills)
+    {
+        let random;
+
+        random = Math.floor(Math.random() * 1);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[0] = new Skill("AXE_LVL3_VAGAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 4);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[1] = new Skill("AXE_LVL3_HASITAS");
+                break;
+            }
+            case 1:
+            {
+                skills[1] = new Skill("AXE_LVL3_IJESZTES");
+                break;
+            }
+            case 2:
+            {
+                skills[1] = new Skill("AXE_LVL3_BOROTVAEL");
+                break;
+            }
+            case 3:
+            {
+                skills[1] = new Skill("AXE_LVL3_HASOGATAS");
+                break;
+            }
+        }
+
+        random = Math.floor(Math.random() * 5);
+        switch(random)
+        {
+            case 0:
+            {
+                skills[2] = new Skill("AXE_LVL3_AGRESSZIO");
+                break;
+            }
+            case 1:
+            {
+                skills[2] = new Skill("AXE_LVL3_SZEMETSZEMERT");
+                break;
+            }
+            case 2:
+            {
+                skills[2] = new Skill("AXE_LVL3_SZABADITAS");
+                break;
+            }
+            case 3:
+            {
+                skills[2] = new Skill("AXE_LVL3_SZETTEPES");
+                break;
+            }
+            case 4:
+            {
+                skills[2] = new Skill("AXE_LVL3_APRITAS");
+                break;
+            }
         }
     }
 

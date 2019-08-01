@@ -1802,6 +1802,594 @@ function Skill(name)
             break;
         }
 
+        case "AXE_LVL3_VAGAS":
+        {
+            visual_pattern =
+                [
+                    [ATT,ATT,NUL],
+                    [NUL,NUL,ATT],
+                    [NUL,NUL,ATT]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 7, 8);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Vágás";
+            break;
+        }
+
+        case "AXE_LVL3_HASITAS":
+        {
+            visual_pattern =
+                [
+                    [MAN,NUL,MAN],
+                    [NUL,ATT,NUL],
+                    [MAN,NUL,MAN]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 6, 8);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Hasítás";
+            break;
+        }
+
+        case "AXE_LVL3_IJESZTES":
+        {
+            visual_pattern =
+                [
+                    [NUL,MAN,NUL],
+                    [MOV,DEF,MAN],
+                    [NUL,MOV,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 4, 6);
+            secondary_effect = new Effect(SHADOWFORM, 15);
+            this.nameText = "Ijesztés";
+            break;
+        }
+
+        case "AXE_LVL3_BOROTVAEL":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [ATT,ATT,ATT],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 4, 5);
+            secondary_effect = new Effect(SACRIFICE, 4, 6);
+            this.nameText = "Borotvaél";
+            break;
+        }
+
+        case "AXE_LVL3_HASOGATAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,ATT,ATT],
+                    [ATT,ATT,ATT],
+                    [ATT,ATT,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 50);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 10, 13);
+            secondary_effect = new Effect(PARALYZE, 4, 7);
+            this.nameText = "Hasogatás";
+            break;
+        }
+
+        case "AXE_LVL3_AGRESSZIO":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [MOV,MAN,NUL],
+                    [MAN,MOV,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(SHADOWFORM, 25, 30);
+            secondary_effect = new Effect(SACRIFICE, 5, 7);
+            this.nameText = "Agresszió";
+            break;
+        }
+
+        case "AXE_LVL3_SZEMETSZEMERT":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [ATT,MAN,ATT],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 8, 9);
+            secondary_effect = new Effect(BLOOD_OATH, 2, 2);
+            this.nameText = "Szemet szemért";
+            break;
+        }
+
+        case "AXE_LVL3_SZABADITAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [NUL,SJO,NUL],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 20);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(NOTHING);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Szabadítás";
+            break;
+        }
+
+        case "AXE_LVL3_SZETTEPES":
+        {
+            visual_pattern =
+                [
+                    [ATT,NUL,ATT],
+                    [ATT,NUL,ATT],
+                    [ATT,NUL,ATT]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 11, 13);
+            secondary_effect = new Effect(STUCK, 2, 3);
+            this.nameText = "Széttépés";
+            break;
+        }
+
+        case "AXE_LVL3_APRITAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,JOK,NUL],
+                    [JOK,NUL,JOK],
+                    [NUL,JOK,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(NOTHING);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Aprítás";
+            break;
+        }
+
+        case "SHIELD_LVL3_VEDES":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,NUL],
+                    [NUL,DEF,NUL],
+                    [NUL,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 33);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 4, 5);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Védés";
+            break;
+        }
+
+        case "SHIELD_LVL3_PAJZSLOKES":
+        {
+            visual_pattern =
+                [
+                    [DEF,NUL,NUL],
+                    [DEF,ATT,ATT],
+                    [DEF,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 4, 5);
+            secondary_effect = new Effect(DMG, 4, 5);
+            this.nameText = "Pajzslökés";
+            break;
+        }
+
+        case "SHIELD_LVL3_HARITAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,ATT],
+                    [DEF,DEF,NUL],
+                    [NUL,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 6, 8);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Hárítás";
+            break;
+        }
+
+        case "SHIELD_LVL3_BIZTOSFOGAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,NUL],
+                    [ATT,DEF,NUL],
+                    [MOV,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 25);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PROMOTE);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Biztosfogás";
+            break;
+        }
+
+        case "SHIELD_LVL3_BLOKKOLAS":
+        {
+            visual_pattern =
+                [
+                    [DEF,DEF,NUL],
+                    [DEF,DEF,NUL],
+                    [NUL,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 5, 6);
+            secondary_effect = new Effect(ARMOR, 5, 6);
+            this.nameText = "Blokkolás";
+            break;
+        }
+
+        case "SHIELD_LVL3_REGENERALAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,NUL],
+                    [DEF,MAN,DEF],
+                    [NUL,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(MANA_REGEN, 5, 6);
+            secondary_effect = new Effect(PARALYZE, 2);
+            this.nameText = "Regenerálás";
+            break;
+        }
+
+        case "SHIELD_LVL3_ENERGIAPAJZS":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,MAN],
+                    [NUL,NUL,MAN],
+                    [NUL,DEF,MAN]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(MANA_REGEN, 6, 8);
+            secondary_effect = new Effect(MAGICFORM, 20);
+            this.nameText = "Energiapajzs";
+            break;
+        }
+
+        case "SHIELD_LVL3_TOMPITAS":
+        {
+            visual_pattern =
+                [
+                    [NUL,DEF,NUL],
+                    [MOV,ATT,DEF],
+                    [NUL,MOV,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 12, 13);
+            secondary_effect = new Effect(PARALYZE, 3, 4);
+            this.nameText = "Tompítás";
+            break;
+        }
+
+        case "SHIELD_LVL3_MEREVSEG":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,DEF],
+                    [MAN,DEF,MAN],
+                    [DEF,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 15, 16);
+            secondary_effect = new Effect(STUN, 3);
+            this.nameText = "Merevség";
+            break;
+        }
+
+        case "SHIELD_LVL3_BECSULET":
+        {
+            visual_pattern =
+                [
+                    [NUL,NUL,NUL],
+                    [NUL,JOK,NUL],
+                    [NUL,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 40);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PROMOTE);
+            secondary_effect = new Effect(SACRIFICE, 4, 5);
+            this.nameText = "Becsület";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_BALVANY":
+        {
+            visual_pattern =
+                [
+                    [NUL,ATT,NUL],
+                    [MAN,JOK,MOV],
+                    [NUL,DEF,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(ARMOR, 7, 8);
+            secondary_effect = new Effect(STUN, 3, 4);
+            this.nameText = "Bálvány";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_TEKINTELY":
+        {
+            visual_pattern =
+                [
+                    [MAN,ATT,NUL],
+                    [NUL,MOV,NUL],
+                    [NUL,ATT,MAN]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 50);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 8, 9);
+            secondary_effect = new Effect(PROMOTE);
+            this.nameText = "Tekintély";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_FEGYELEM":
+        {
+            visual_pattern =
+                [
+                    [NUL,MOV,ATT],
+                    [NUL,MOV,ATT],
+                    [NUL,MOV,ATT]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 6, 8);
+            secondary_effect = new Effect(ARMOR, 6, 8);
+            this.nameText = "Fegyelem";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_SAMANIZMUS":
+        {
+            visual_pattern =
+                [
+                    [MAN,NUL,MAN],
+                    [NUL,ATT,NUL],
+                    [NUL,ATT,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 8, 10);
+            secondary_effect = new Effect(SACRIFICE, 3);
+            this.nameText = "Sámánizmus";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_MORAL":
+        {
+            visual_pattern =
+                [
+                    [ATT,ATT,MAN],
+                    [MOV,NUL,MAN],
+                    [MOV,NUL,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 100);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(PENETRATE, 6, 7);
+            secondary_effect = new Effect(PROMOTE);
+            this.nameText = "Morál";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_LOBBANEKONYSAG":
+        {
+            visual_pattern =
+                [
+                    [DEF,NUL,ATT],
+                    [NUL,DEF,NUL],
+                    [DEF,NUL,ATT]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 25);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(DMG, 10, 10);
+            secondary_effect = new Effect(SACRIFICE, 2, 3);
+            this.nameText = "Lobbanékonyság";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_ORJONGES":
+        {
+            visual_pattern =
+                [
+                    [MOV,NUL,MOV],
+                    [NUL,NUL,NUL],
+                    [NUL,MOV,NUL]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(SHADOWFORM, 75);
+            secondary_effect = new Effect(BLOOD_OATH, 2);
+            this.nameText = "Őrjöngés";
+            break;
+        }
+
+        case "NECKLACE_OFFENSIVE_LVL3_IMA":
+        {
+            visual_pattern =
+                [
+                    [MAN,MAN,MAN],
+                    [MAN,DEF,MAN],
+                    [MAN,MAN,MAN]
+                ];
+
+            pattern = new SkillPattern(visual_pattern);
+
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 0);
+
+            pattern = new SkillPattern(visual_pattern);
+
+            primary_effect  = new Effect(JOKERFORM, 20);
+            secondary_effect = new Effect(NOTHING);
+            this.nameText = "Ima";
+            break;
+        }
+
         case "Csipes":
         {
             primary_effect = new Effect("LVL1_LOW_DMG");

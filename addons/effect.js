@@ -84,6 +84,14 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             break;
         }
 
+        case JOKERFORM:
+        {
+            effect.type = JOKERFORM;
+            effect.transform = true;
+            effect.form_amount = addRandomIntervalDividableByFive(minimum_amount, maximum_amount);
+            break;
+        }
+
         case PARALYZE:
         {
             effect.type = PARALYZE;
@@ -126,6 +134,14 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             effect.type = MANA_DRAIN;
             effect.mana_drain = addRandomInterval(minimum_amount, maximum_amount);
             effect.self = false;
+            break;
+        }
+
+        case BLOOD_OATH:
+        {
+            effect.type = BLOOD_OATH;
+            effect.blood_oath = addRandomInterval(minimum_amount, maximum_amount);
+            effect.self = true;
             break;
         }
 

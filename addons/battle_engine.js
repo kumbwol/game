@@ -54,6 +54,7 @@ function BattleEngine(battle_table)
     this.refreshTable = refreshTable;
     this.calculateNewTable = calculateNewTable;
     this.canActivateSkill = canActivateSkill;
+    this.promotedActivition = promotedActivation;
     this.swapFields = swapFields;
     this.activateSkill = activateSkill;
     this.addSkillValue = addSkillValues;
@@ -1054,6 +1055,13 @@ function BattleEngine(battle_table)
                                     return false;
                                 }
                             }
+                            else if(skill.table[i][j] === PMO || skill.table[i][j] === PAT || skill.table[i][j] === PDE || skill.table[i][j] === PMA)
+                            {
+                                if(this.table[y+i][x+j].type !== JOK && this.table[y+i][x+j].type !== PJO)
+                                {
+                                    return false;
+                                }
+                            }
                             else
                             {
                                 return false;
@@ -1076,6 +1084,95 @@ function BattleEngine(battle_table)
                 if
             }
         }*/
+    }
+
+    function promotedActivation(skill, skill_id, x, y)
+    {
+        if((x+skill.table_width) <= this.battle_table.width && (y+skill.table_height) <= this.battle_table.height)
+        {
+            for(let i=0; i<skill.table_height; i++)
+            {
+                for(let j=0; j<skill.table_width; j++)
+                {
+                    if(this.table[y+i][x+j].type === NUL)
+                    {
+                        return false;
+                    }
+                    if(skill.table[i][j] === SJO)
+                    {
+                        if(!this.table[y+i][x+j].stunned)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if(this.table[y+i][x+j].stunned)
+                        {
+                            return false;
+                        }
+                        else if(skill.table[i][j] === JOK)
+                        {
+                            if(this.table[y+i][x+j].type === PJO)
+                            {
+
+                            }
+                            else
+                            {
+                                if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== PMO && this.table[y+i][x+j].type !== PMA && this.table[y+i][x+j].type !== PDE)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else if(skill.table[i][j] !== this.table[y+i][x+j].type && skill.table[i][j] !== NUL) {
+                            if(skill.table[i][j] === ATT)
+                            {
+                                if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== JOK && this.table[y+i][x+j].type !== PJO)
+                                {
+                                    return false;
+                                }
+                            }
+                            else if(skill.table[i][j] === MAN)
+                            {
+                                if(this.table[y+i][x+j].type !== PMA && this.table[y+i][x+j].type !== JOK && this.table[y+i][x+j].type !== PJO)
+                                {
+                                    return false;
+                                }
+                            }
+                            else if(skill.table[i][j] === DEF)
+                            {
+                                if(this.table[y+i][x+j].type !== PDE && this.table[y+i][x+j].type !== JOK && this.table[y+i][x+j].type !== PJO)
+                                {
+                                    return false;
+                                }
+                            }
+                            else if(skill.table[i][j] === MOV)
+                            {
+                                if(this.table[y+i][x+j].type !== PMO && this.table[y+i][x+j].type !== JOK && this.table[y+i][x+j].type !== PJO)
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else if(skill.table[i][j] === this.table[y+i][x+j].type)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            this.played_skills[skill_id - 1] = true;
+
+            return true;
+        }
+
+        return false;
     }
 
     function anyFieldSelected()

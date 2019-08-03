@@ -461,9 +461,9 @@ function Skill(name)
         {
             /*visual_pattern =
                 [
-                    [NUL,MAN,NUL],
-                    [ATT,ATT,ATT],
-                    [NUL,MAN,NUL]
+                    [JOK,JOK,JOK],
+                    [JOK,ATT,JOK],
+                    [JOK,JOK,JOK]
                 ];*/
             visual_pattern =
                 [
@@ -472,9 +472,9 @@ function Skill(name)
                     [MAN,NUL,NUL]
                 ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect(DMG, 6);
-            //primary_effect  = new Effect("armor");
-            secondary_effect = new Effect("NOTHING");
+            primary_effect  = new Effect(DMG, 5);
+            //primary_effect  = new Effect(PROMOTE);
+            secondary_effect = new Effect(NOTHING);
             this.nameText = "Döfés";
             break;
         }
@@ -489,12 +489,12 @@ function Skill(name)
                 ];
             /*visual_pattern =
                 [
-                    [DEF,NUL,DEF],
+                    [PDE,NUL,NUL],
                     [NUL,NUL,NUL],
                     [NUL,NUL,NUL]
                 ];*/
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect(ARMOR, 4);
+            primary_effect  = new Effect(ARMOR, 2);
             secondary_effect = new Effect(DMG, 3);
             this.nameText = "Pajzslökés";
             break;
@@ -515,7 +515,7 @@ function Skill(name)
                     [NUL,NUL,NUL]
                 ];*/
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect("PLAYER_LVL0_MEDIUM_ARMOR");
+            primary_effect  = new Effect(ARMOR, 7);
             secondary_effect = new Effect("NOTHING");
             this.nameText = "Védés";
             break;
@@ -2049,7 +2049,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(ARMOR, 4, 5);
-            secondary_effect = new Effect(DMG, 4, 5);
+            secondary_effect = new Effect(DMG, 6);
             this.nameText = "Pajzslökés";
             break;
         }
@@ -2626,7 +2626,7 @@ function Skill(name)
             visual_pattern =
                 [
                     [NUL,NUL,NUL],
-                    [NUL,MOV,NUL],
+                    [NUL,PMO,NUL],
                     [NUL,NUL,NUL]
                 ];
 
@@ -2833,26 +2833,26 @@ function Skill(name)
 
         case "Csipes":
         {
-            primary_effect = new Effect("LVL1_LOW_DMG");
-            secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, highLuck());
+            primary_effect = new Effect(DMG, 3, 4);
+            secondary_effect = new Effect(NOTHING);
+            chance = new Chance(LUCK, addRandomIntervalDividableByFive(75));
             this.nameText = "Csípés";
             break;
         }
 
         case "Karmolas":
         {
-            primary_effect = new Effect("LVL1_LOW_DMG");
-            secondary_effect = new Effect("LVL1_LOW_DMG");
-            chance = new Chance(LUCK, highLuck());
+            primary_effect = new Effect(DMG, 3);
+            secondary_effect = new Effect(DMG, 3);
+            chance = new Chance(LUCK, addRandomIntervalDividableByFive(75));
             this.nameText = "Karmolás";
             break;
         }
 
         case "Bujocska":
         {
-            primary_effect = new Effect("LVL1_LOW_ARMOR");
-            secondary_effect = new Effect("LVL1_LOW_HEAL");
+            primary_effect = new Effect(ARMOR, 3, 4);
+            secondary_effect = new Effect(HEAL, 2, 3);
             chance = new Chance(BALANCE, 0);
             this.nameText = "Bújócska";
             break;
@@ -3007,6 +3007,11 @@ function Skill(name)
     function highLuck()
     {
         return 100-lowLuck();
+    }
+
+    function addRandomIntervalDividableByFive(minimum, maximum)
+    {
+        return Math.floor(Math.random() * (((maximum - minimum) / 5) + 1)) * 5 + minimum;
     }
 
     this.getSkillPatternHeight = getSkillPatternHeight;

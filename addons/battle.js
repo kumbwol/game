@@ -97,6 +97,19 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
         {
             if(dmg_heal_number_animation_finished && poison_animation_finished && skill_activation_finished && engine.canActivateSkill(skill, player_selected_skill_id, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
             {
+                if(engine.promotedActivition(skill, player_selected_skill_id, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
+                {
+                    skill.primary_effect.dmg *= 2;
+                    skill.primary_effect.heal *= 2;
+                    skill.primary_effect.mana_regen *= 2;
+                    skill.primary_effect.mana_drain *= 2;
+                    skill.primary_effect.mana_cost *= 2;
+                    skill.primary_effect.armor *= 2;
+                    skill.primary_effect.penetrate *= 2;
+                    skill.primary_effect.sacrifice *= 2;
+                    skill.primary_effect.blood_oath *= 2;
+                    //console.log(skill.primary_effect);
+                }
                 stopSkillSelection(skill);
                 skill_activation_finished = false;
                 for(let i=0; i<skill.table_height; i++)

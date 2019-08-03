@@ -22,7 +22,7 @@ function Ability(type)
 
         case ROTATE_LEFT:
         {
-            this.mana_cost = 3;
+            this.mana_cost = 6;
             break;
         }
 
@@ -34,13 +34,13 @@ function Ability(type)
 
         case MIRROR_HORIZONTALLY:
         {
-            this.mana_cost = 8;
+            this.mana_cost = 6;
             break;
         }
 
         case MIRROR_VERTICALLY:
         {
-            this.mana_cost = 8;
+            this.mana_cost = 6;
             break;
         }
 

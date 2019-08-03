@@ -38,6 +38,14 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             break;
         }
 
+        case HEAL:
+        {
+            effect.type = HEAL;
+            effect.self = true;
+            effect.heal = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
         case PROMOTE:
         {
             effect.type = PROMOTE;

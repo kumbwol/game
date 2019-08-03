@@ -734,8 +734,6 @@ function BattleGraphics(battle_table)
             player_on_turn = !player_on_turn;
         }
 
-        console.log(dmg);
-
         if(dmg > 0 || heal > 0 || mana_regen > 0 || mana_drain > 0 || armor > 0 || penetrate > 0 || mana_cost > 0)
         {
             let object;

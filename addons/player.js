@@ -5,8 +5,8 @@ function Player(name)
     this.name = name;
     this.hp = 80;
     this.max_hp = 80;
-    this.mp = 20;
-    this.max_mp = 20;
+    this.mp = 12;
+    this.max_mp = 24;
     this.ap = 3;
     this.max_ap = 3;
     this.old_armor = 0;
@@ -25,12 +25,12 @@ function Player(name)
 
     this.abilities = [];
 
-    this.abilities[0] = new Ability(DEFENSE_TO_ATTACK);
-    this.abilities[1] = new Ability(DIAGONAL_MOVE);
-    this.abilities[2] = new Ability(ROTATE_LEFT);
-    this.abilities[3] = new Ability(MIRROR_HORIZONTALLY);
-    this.abilities[4] = new Ability(MIRROR_VERTICALLY);
-    this.abilities[5] = new Ability(MAGIC_TO_MOVE);
+    this.abilities[0] = new Ability(ROTATE_LEFT);
+    this.abilities[1] = new Ability(MIRROR_HORIZONTALLY);
+    this.abilities[2] = new Ability(MIRROR_VERTICALLY);
+    this.abilities[3] = new Ability(NO_ABILITY);
+    this.abilities[4] = new Ability(NO_ABILITY);
+    this.abilities[5] = new Ability(NO_ABILITY);
 
     let skills = [];
 

@@ -48,6 +48,7 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
         case ARMOR:
         {
             effect.type = ARMOR;
+            effect.self = true;
             effect.armor = addRandomInterval(minimum_amount, maximum_amount);
             break;
         }

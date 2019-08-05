@@ -668,7 +668,7 @@ function BattleEngine(battle_table)
                     }
                     else
                     {
-                        this.enemy_skill_chances[i] = Math.round(this.countParalyzedFields() / this.countFields() * 100);
+                        this.enemy_skill_chances[i] = Math.max(100, Math.round((2 * this.countParalyzedFields()) / this.countFields() * 100));
                     }
                     //console.log("!!" + this.enemy_skill_chances[i]);
                     //console.log("para" + this.countParalyzedFields());
@@ -1119,10 +1119,10 @@ function BattleEngine(battle_table)
                             }
                             else
                             {
-                                if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== PMO && this.table[y+i][x+j].type !== PMA && this.table[y+i][x+j].type !== PDE)
+                                /*if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== PMO && this.table[y+i][x+j].type !== PMA && this.table[y+i][x+j].type !== PDE)
                                 {
                                     return false;
-                                }
+                                }*/
                             }
                         }
                         else if(skill.table[i][j] !== this.table[y+i][x+j].type && skill.table[i][j] !== NUL) {

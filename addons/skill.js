@@ -637,12 +637,12 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 20);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 80);
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(PROMOTE);
-            secondary_effect = new Effect(NOTHING);
+            primary_effect  = new Effect(DMG, 3, 4);
+            secondary_effect = new Effect(PROMOTE);
             this.nameText = "Biztos fogás";
             break;
         }
@@ -704,8 +704,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 4, 6);
-            secondary_effect = new Effect(SHADOWFORM, 10);
+            primary_effect  = new Effect(ARMOR, 7, 9);
+            secondary_effect = new Effect(SHADOWFORM, 25);
             this.nameText = "Ijesztés";
             break;
         }
@@ -721,7 +721,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 40);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 100);
 
             pattern = new SkillPattern(visual_pattern);
 
@@ -767,7 +767,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 18, 22);
+            primary_effect  = new Effect(ARMOR, 28, 30);
             secondary_effect = new Effect(STUN, 3, 4);
             this.nameText = "Merevség";
             break;
@@ -830,7 +830,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 3);
+            primary_effect  = new Effect(ARMOR, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Védés";
             break;
@@ -851,8 +851,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 7);
-            secondary_effect = new Effect(NOTHING);
+            primary_effect  = new Effect(ARMOR, 9, 10);
+            secondary_effect = new Effect(DMG, 2, 3);
             this.nameText = "Hárítás";
             break;
         }
@@ -894,7 +894,7 @@ function Skill(name)
 			pattern = new SkillPattern(visual_pattern);
 
 			primary_effect  = new Effect(DMG, 6, 8);
-			secondary_effect = new Effect(ARMOR, 6, 8);
+			secondary_effect = new Effect(ARMOR, 10, 11);
 			this.nameText = "Vívás";
 			break;
 		}
@@ -977,8 +977,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(SACRIFICE, 6, 8);
-            secondary_effect = new Effect(ARMOR, 12, 14);
+            primary_effect  = new Effect(SACRIFICE, 7, 9);
+            secondary_effect = new Effect(ARMOR, 19, 20);
             this.nameText = "Hátrálás";
             break;
         }
@@ -998,7 +998,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 3, 4);
+            primary_effect  = new Effect(ARMOR, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Védés";
             break;
@@ -1019,7 +1019,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 3, 9);
+            primary_effect  = new Effect(ARMOR, 8, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Kitérés";
             break;
@@ -1036,7 +1036,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 33);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 100);
 
             pattern = new SkillPattern(visual_pattern);
 
@@ -1061,7 +1061,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 3, 4);
+            primary_effect  = new Effect(MANA_REGEN, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Mormolás";
             break;
@@ -1124,8 +1124,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 13, 15);
-            secondary_effect = new Effect(ARMOR, 8, 10);
+            primary_effect  = new Effect(MANA_REGEN, 15, 17);
+            secondary_effect = new Effect(ARMOR, 12, 15);
             this.nameText = "Fókusz";
             break;
         }
@@ -1145,7 +1145,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 6);
+            primary_effect  = new Effect(ARMOR, 8, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Védés";
             break;
@@ -1166,7 +1166,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 6);
+            primary_effect  = new Effect(ARMOR, 8, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Kitérés";
             break;
@@ -1187,7 +1187,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 3, 4);
+            primary_effect  = new Effect(MANA_REGEN, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Mormolás";
             break;
@@ -1208,8 +1208,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 4, 5);
-            secondary_effect = new Effect(ARMOR, 4, 5);
+            primary_effect  = new Effect(ARMOR, 6, 8);
+            secondary_effect = new Effect(ARMOR, 6, 8);
             this.nameText = "Blokkolás";
             break;
         }
@@ -1225,11 +1225,11 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 50);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 75);
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 10, 12);
+            primary_effect  = new Effect(ARMOR, 15, 18);
             secondary_effect = new Effect(PROMOTE);
             this.nameText = "Tekintély";
             break;
@@ -1246,7 +1246,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 50);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 75);
 
             pattern = new SkillPattern(visual_pattern);
 
@@ -1271,7 +1271,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 3, 4);
+            primary_effect  = new Effect(ARMOR, 5, 7);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Védés";
             break;
@@ -1292,7 +1292,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 6);
+            primary_effect  = new Effect(ARMOR, 8, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Kitérés";
             break;
@@ -1334,7 +1334,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 10, 12);
+            primary_effect  = new Effect(MANA_REGEN, 15, 16);
             secondary_effect = new Effect(PARALYZE, 2, 3);
             this.nameText = "Regenerálás";
             break;
@@ -1355,7 +1355,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 12, 14);
+            primary_effect  = new Effect(ARMOR, 16, 19);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Fürgeség";
             break;
@@ -1397,7 +1397,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 12, 13);
+            primary_effect  = new Effect(ARMOR, 16, 19);
             secondary_effect = new Effect(PARALYZE, 3, 4);
             this.nameText = "Tompítás";
             break;
@@ -1418,7 +1418,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 6);
+            primary_effect  = new Effect(ARMOR, 8, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Védés";
             break;
@@ -1439,7 +1439,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 6);
+            primary_effect  = new Effect(ARMOR, 8, 9);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Kitérés";
             break;
@@ -1460,8 +1460,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 4, 5);
-            secondary_effect = new Effect(ARMOR, 4, 5);
+            primary_effect  = new Effect(ARMOR, 6, 7);
+            secondary_effect = new Effect(ARMOR, 6, 7);
             this.nameText = "Blokkolás";
             break;
         }
@@ -1481,7 +1481,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 7, 9);
+            primary_effect  = new Effect(ARMOR, 11, 12);
             secondary_effect = new Effect(STUN, 2, 3);
             this.nameText = "Merevség";
             break;
@@ -1502,7 +1502,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 18, 22);
+            primary_effect  = new Effect(ARMOR, 29, 32);
             secondary_effect = new Effect(STUN, 1, 2);
             this.nameText = "Kemény vért";
             break;
@@ -1554,8 +1554,8 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [NUL,NUL,MOV],
-                    [NUL,MOV,MOV],
+                    [NUL,NUL,NUL],
+                    [MOV,MOV,NUL],
                     [MOV,MOV,NUL]
                 ];
 
@@ -1565,7 +1565,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MOVEFORM, 20);
+            primary_effect  = new Effect(MOVEFORM, 30);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Vándor";
             break;
@@ -1586,7 +1586,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 5, 6);
+            primary_effect  = new Effect(MANA_REGEN, 6, 7);
             secondary_effect = new Effect(STUN, 2, 3);
             this.nameText = "Pihenés";
             break;
@@ -1607,7 +1607,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 10, 12);
+            primary_effect  = new Effect(MANA_REGEN, 15, 16);
             secondary_effect = new Effect(PARALYZE, 2, 3);
             this.nameText = "Regenerálás";
             break;
@@ -1628,7 +1628,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 12, 14);
+            primary_effect  = new Effect(ARMOR, 18, 20);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Fürgeség";
             break;
@@ -1671,7 +1671,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(MAGICFORM, 30, 35);
-            secondary_effect = new Effect(SACRIFICE, 5, 6);
+            secondary_effect = new Effect(DMG, 4, 5);
             this.nameText = "Osonás";
             break;
         }
@@ -1680,7 +1680,7 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [DEF,ATT,NUL],
+                    [NUL,ATT,NUL],
                     [NUL,DEF,ATT],
                     [NUL,NUL,DEF]
                 ];
@@ -1691,7 +1691,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DEFENSEFORM, 20);
+            primary_effect  = new Effect(DEFENSEFORM, 30);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Távolságtartás";
             break;
@@ -1733,7 +1733,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 5, 6);
+            primary_effect  = new Effect(MANA_REGEN, 6, 7);
             secondary_effect = new Effect(STUN, 2, 3);
             this.nameText = "Pihenés";
             break;
@@ -1775,7 +1775,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 13, 16);
+            primary_effect  = new Effect(ARMOR, 22, 24);
             secondary_effect = new Effect(PARALYZE, 4, 5);
             this.nameText = "Stabilitás";
             break;
@@ -1797,7 +1797,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(PROMOTE);
-            secondary_effect = new Effect(NOTHING);
+            secondary_effect = new Effect(DMG, 2, 3);
             this.nameText = "Dinamika";
             break;
         }
@@ -1859,8 +1859,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 4, 6);
-            secondary_effect = new Effect(SHADOWFORM, 15);
+            primary_effect  = new Effect(ARMOR, 7, 9);
+            secondary_effect = new Effect(SHADOWFORM, 25);
             this.nameText = "Ijesztés";
             break;
         }
@@ -1923,7 +1923,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(SHADOWFORM, 25, 30);
-            secondary_effect = new Effect(SACRIFICE, 5, 7);
+            secondary_effect = new Effect(DMG, 2, 3);
             this.nameText = "Agresszió";
             break;
         }
@@ -2027,7 +2027,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 4, 5);
+            primary_effect  = new Effect(ARMOR, 7, 8);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Védés";
             break;
@@ -2048,7 +2048,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 4, 5);
+            primary_effect  = new Effect(ARMOR, 7, 8);
             secondary_effect = new Effect(DMG, 6);
             this.nameText = "Pajzslökés";
             break;
@@ -2069,8 +2069,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 6, 8);
-            secondary_effect = new Effect(NOTHING);
+            primary_effect  = new Effect(ARMOR, 9, 12);
+            secondary_effect = new Effect(DMG, 2, 3);
             this.nameText = "Hárítás";
             break;
         }
@@ -2086,12 +2086,12 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 25);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 80);
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(PROMOTE);
-            secondary_effect = new Effect(NOTHING);
+            primary_effect  = new Effect(DMG, 3, 4);
+            secondary_effect = new Effect(PROMOTE);
             this.nameText = "Biztosfogás";
             break;
         }
@@ -2111,8 +2111,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 5, 6);
-            secondary_effect = new Effect(ARMOR, 5, 6);
+            primary_effect  = new Effect(ARMOR, 8, 9);
+            secondary_effect = new Effect(ARMOR, 8, 9);
             this.nameText = "Blokkolás";
             break;
         }
@@ -2132,7 +2132,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 5, 6);
+            primary_effect  = new Effect(MANA_REGEN, 8, 10);
             secondary_effect = new Effect(PARALYZE, 2);
             this.nameText = "Regenerálás";
             break;
@@ -2153,7 +2153,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 6, 8);
+            primary_effect  = new Effect(MANA_REGEN, 7, 8);
             secondary_effect = new Effect(MAGICFORM, 20);
             this.nameText = "Energiapajzs";
             break;
@@ -2174,7 +2174,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 12, 13);
+            primary_effect  = new Effect(ARMOR, 16, 19);
             secondary_effect = new Effect(PARALYZE, 3, 4);
             this.nameText = "Tompítás";
             break;
@@ -2195,7 +2195,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 15, 16);
+            primary_effect  = new Effect(ARMOR, 22, 24);
             secondary_effect = new Effect(STUN, 3);
             this.nameText = "Merevség";
             break;
@@ -2237,7 +2237,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 7, 8);
+            primary_effect  = new Effect(ARMOR, 10, 12);
             secondary_effect = new Effect(STUN, 3, 4);
             this.nameText = "Bálvány";
             break;
@@ -2280,7 +2280,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(DMG, 6, 8);
-            secondary_effect = new Effect(ARMOR, 6, 8);
+            secondary_effect = new Effect(ARMOR, 9, 12);
             this.nameText = "Fegyelem";
             break;
         }
@@ -2405,7 +2405,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 7, 8);
+            primary_effect  = new Effect(ARMOR, 10, 12);
             secondary_effect = new Effect(STUN, 3, 4);
             this.nameText = "Bálvány";
             break;
@@ -2426,7 +2426,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 4);
+            primary_effect  = new Effect(MANA_REGEN, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Mormolás";
             break;
@@ -2468,7 +2468,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 8, 9);
+            primary_effect  = new Effect(ARMOR, 12, 14);
             secondary_effect = new Effect(PROMOTE);
             this.nameText = "Tekintély";
             break;
@@ -2490,7 +2490,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(DMG, 6, 8);
-            secondary_effect = new Effect(ARMOR, 6, 8);
+            secondary_effect = new Effect(ARMOR, 10, 12);
             this.nameText = "Fegyelem";
             break;
         }
@@ -2510,7 +2510,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 3);
+            primary_effect  = new Effect(ARMOR, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Kitartás";
             break;
@@ -2531,7 +2531,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 12, 14);
+            primary_effect  = new Effect(ARMOR, 18, 20);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Szabadulás";
             break;
@@ -2657,7 +2657,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 4);
+            primary_effect  = new Effect(MANA_REGEN, 4, 5);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Mormolás";
             break;
@@ -2678,7 +2678,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 8, 9);
+            primary_effect  = new Effect(MANA_REGEN, 9, 11);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Alkímia";
             break;
@@ -2699,7 +2699,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 6, 7);
+            primary_effect  = new Effect(MANA_REGEN, 7, 9);
             secondary_effect = new Effect(STUN, 2);
             this.nameText = "Vízió";
             break;
@@ -2742,7 +2742,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(MAGICFORM, 30, 35);
-            secondary_effect = new Effect(SACRIFICE, 5, 6);
+            secondary_effect = new Effect(DMG, 4, 5);
             this.nameText = "Osonás";
             break;
         }
@@ -2860,35 +2860,35 @@ function Skill(name)
 
         case "Vagas":
         {
-            primary_effect = new Effect("LVL1_MEDIUM_DMG");
-            secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, mediumLuck());
+            primary_effect = new Effect(DMG, 6, 7);
+            secondary_effect = new Effect(NOTHING);
+            chance = new Chance(LUCK, addRandomIntervalDividableByFive(45, 55));
             this.nameText = "Vágás";
             break;
         }
 
         case "Vivas":
         {
-            primary_effect = new Effect("LVL1_MEDIUM_DMG");
-            secondary_effect = new Effect("LVL1_LOW_ARMOR");
-            chance = new Chance(LUCK, mediumLuck());
+            primary_effect = new Effect(ARMOR, 7, 10);
+            secondary_effect = new Effect(DMG, 6, 7);
+            chance = new Chance(LUCK, addRandomIntervalDividableByFive(45, 55));
             this.nameText = "Vívás";
             break;
         }
 
         case "Feltamadas":
         {
-            primary_effect = new Effect("LVL1_LOW_HEAL");
-            secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, highLuck());
+            primary_effect = new Effect(HEAL, 2, 3);
+            secondary_effect = new Effect(NOTHING);
+            chance = new Chance(LUCK, 55, 60);
             this.nameText = "Feltámadás";
             break;
         }
 
         case "Bosszu":
         {
-            primary_effect = new Effect("LVL1_HIGH_PENETRATE");
-            secondary_effect = new Effect("NOTHING");
+            primary_effect = new Effect(DMG, 9, 10);
+            secondary_effect = new Effect(NOTHING);
             chance = new Chance(RAGE, 0);
             this.nameText = "Bosszú";
             break;
@@ -2896,35 +2896,35 @@ function Skill(name)
 
         case "Pokhalo":
         {
-            primary_effect = new Effect("LVL2_MEDIUM_PARALYZE");
-            secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, highLuck());
+            primary_effect = new Effect(PARALYZE, 9, 10);
+            secondary_effect = new Effect(NOTHING);
+            chance = new Chance(LUCK, 80);
             this.nameText = "Pókháló";
             break;
         }
 
         case "Csaprago":
         {
-            primary_effect = new Effect("LVL2_MEDIUM_DMG");
-            secondary_effect = new Effect("NOTHING");
-            chance = new Chance(LUCK, mediumLuck());
+            primary_effect = new Effect(DMG, 7, 8);
+            secondary_effect = new Effect(NOTHING);
+            chance = new Chance(LUCK, 40);
             this.nameText = "Csáprágó";
             break;
         }
 
         case "Fullank":
         {
-            primary_effect = new Effect("LVL2_HIGH_PENETRATE");
-            secondary_effect = new Effect("LVL2_LOW_STUN");
-            chance = new Chance(STUCK  , 0);
+            primary_effect = new Effect(PENETRATE, 7, 8);
+            secondary_effect = new Effect(STUN, 7, 8);
+            chance = new Chance(STUCK, 0);
             this.nameText = "Fullánk";
             break;
         }
 
         case "Izeltlabak":
         {
-            primary_effect = new Effect("LVL2_LOW_DMG");
-            secondary_effect = new Effect("LVL2_LOW_DMG");
+            primary_effect = new Effect(DMG, 3, 4);
+            secondary_effect = new Effect(DMG, 3, 4);
             chance = new Chance(WEAKNESS, 0);
             this.nameText = "Ízeltábak";
             break;
@@ -2932,8 +2932,8 @@ function Skill(name)
 
         case "Kitin":
         {
-            primary_effect = new Effect("LVL2_MEDIUM_ARMOR");
-            secondary_effect = new Effect("NOTHING");
+            primary_effect = new Effect(ARMOR, 8);
+            secondary_effect = new Effect(NOTHING);
             chance = new Chance(RAGE, 0);
             this.nameText = "Kitinpáncél";
             break;
@@ -3009,7 +3009,7 @@ function Skill(name)
         return 100-lowLuck();
     }
 
-    function addRandomIntervalDividableByFive(minimum, maximum)
+    function addRandomIntervalDividableByFive(minimum, maximum = minimum)
     {
         return Math.floor(Math.random() * (((maximum - minimum) / 5) + 1)) * 5 + minimum;
     }

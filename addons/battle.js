@@ -684,6 +684,14 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
     function enemyTurn(graphics, engine, skill, battle_table, player, enemy, player_selected_skill_id)
     {
         let done = $.Deferred();
+
+        if(enemy.armor > 0)
+        {
+            enemy.old_armor = enemy.armor;
+            enemy.armor = Math.ceil(enemy.armor / 2);
+            graphics.updateArmor(enemy.armor, enemy.old_armor, false);
+        }
+
         graphics.disableEndTurn();
 
         engine.decideEnemySkills();
@@ -725,6 +733,12 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                                         }
                                         else
                                         {
+                                            if(player.armor > 0)
+                                            {
+                                                player.old_armor = player.armor;
+                                                player.armor = Math.ceil(player.armor / 2);
+                                                graphics.updateArmor(player.armor, player.old_armor, true);
+                                            }
                                             engine.calculateEnemySkillChances(skill, enemy, player);
                                             graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 

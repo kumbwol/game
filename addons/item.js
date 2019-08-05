@@ -196,63 +196,63 @@ function Item(type = RANDOM_ITEM, rank, image)
             this.skills[0] = new Skill("Promote");
         }*/
     }
-    else if(type === C_RIGHT_HAND || type === C_LEFT_HAND)
+    else
     {
         if(this.image === ITEM_MACE_LVL_3)
         {
-            createMace(this.skills, this.image);
+            createMace(this.skills);
         }
         else if(this.image === ITEM_SWORD_LVL_3)
         {
-            createSword(this.skills, this.image);
+            createSword(this.skills);
         }
         else if(this.image === ITEM_HELM_LIGHT_LVL_3)
         {
-            createHelmLight(this.skills, this.image);
+            createHelmLight(this.skills);
         }
         else if(this.image === ITEM_HELM_HEAVY_LVL_3)
         {
-            createHelmHeavy(this.skills, this.image);
+            createHelmHeavy(this.skills);
         }
         else if(this.image === ITEM_ARMOR_LIGHT_LVL_3)
         {
-            createArmorLight(this.skills, this.image);
+            createArmorLight(this.skills);
         }
         else if(this.image === ITEM_ARMOR_HEAVY_LVL_3)
         {
-            createArmorHeavy(this.skills, this.image);
+            createArmorHeavy(this.skills);
         }
         else if(this.image === ITEM_SHOES_LIGHT_LVL_3)
         {
-            createShoesLight(this.skills, this.image);
+            createShoesLight(this.skills);
         }
         else if(this.image === ITEM_SHOES_HEAVY_LVL_3)
         {
-            createShoesHeavy(this.skills, this.image);
+            createShoesHeavy(this.skills);
         }
         else if(this.image === ITEM_AXE_LVL_3)
         {
-            createAxe(this.skills, this.image);
+            createAxe(this.skills);
         }
         else if(this.image === ITEM_SHIELD_LVL_3)
         {
-            createShield(this.skills, this.image);
+            createShield(this.skills);
         }
         else if(this.image === ITEM_NECKLACE_OFFENSIVE_LVL_4)
         {
-            createNecklaceOffensive(this.skills, this.image);
+            createNecklaceOffensive(this.skills);
         }
         else if(this.image === ITEM_NECKLACE_DEFENSIVE_LVL_4)
         {
-            createNecklaceDefensive(this.skills, this.image);
+            createNecklaceDefensive(this.skills);
         }
         else if(this.image === ITEM_NECKLACE_MOVE_LVL_4)
         {
-            createNecklaceMove(this.skills, this.image);
+            createNecklaceMove(this.skills);
         }
         else if(this.image === ITEM_NECKLACE_MAGIC_LVL_4)
         {
-            createNecklaceMagic(this.skills, this.image);
+            createNecklaceMagic(this.skills);
         }
     }
 

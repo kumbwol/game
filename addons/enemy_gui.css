@@ -18,6 +18,11 @@
     background-image: url("images/enemy/succubus.png");
 }
 
+#Snake
+{
+    background-image: url("images/enemy/snake.png");
+}
+
 #Test
 {
     background-image: url("images/enemy/test.png");

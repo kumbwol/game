@@ -756,8 +756,8 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [NUL,NUL,NUL],
-                    [DEF,DEF,DEF],
+                    [NUL,DEF,NUL],
+                    [NUL,DEF,NUL],
                     [DEF,MOV,DEF]
                 ];
 
@@ -767,8 +767,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 28, 30);
-            secondary_effect = new Effect(STUN, 3, 4);
+            primary_effect  = new Effect(ARMOR, 19, 21);
+            secondary_effect = new Effect(STUN, 4, 5);
             this.nameText = "Merevség";
             break;
         }
@@ -977,8 +977,8 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(SACRIFICE, 7, 9);
-            secondary_effect = new Effect(ARMOR, 19, 20);
+            primary_effect  = new Effect(SACRIFICE, 5, 6);
+            secondary_effect = new Effect(ARMOR, 12, 14);
             this.nameText = "Hátrálás";
             break;
         }
@@ -1092,9 +1092,9 @@ function Skill(name)
         {
             visual_pattern =
                 [
+                    [NUL,MAN,NUL],
                     [MAN,NUL,MAN],
-                    [NUL,NUL,NUL],
-                    [MAN,NUL,MAN]
+                    [NUL,MAN,NUL]
                 ];
 
             pattern = new SkillPattern(visual_pattern);
@@ -1103,7 +1103,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(MANA_REGEN, 7, 9);
+            primary_effect  = new Effect(MANA_REGEN, 10, 11);
             secondary_effect = new Effect(PARALYZE, 7, 9);
             this.nameText = "Merengés";
             break;
@@ -1225,7 +1225,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 75);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 100);
 
             pattern = new SkillPattern(visual_pattern);
 
@@ -1240,13 +1240,13 @@ function Skill(name)
             visual_pattern =
                 [
                     [MOV,MAN,ATT],
-                    [MOV,MAN,ATT],
+                    [MOV,NUL,ATT],
                     [NUL,NUL,NUL]
                 ];
 
             pattern = new SkillPattern(visual_pattern);
 
-            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 75);
+            addJokers(visual_pattern, pattern.getSkillPatternWidth(), pattern.getSkillPatternHeight(), 80);
 
             pattern = new SkillPattern(visual_pattern);
 
@@ -1397,7 +1397,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 16, 19);
+            primary_effect  = new Effect(ARMOR, 16, 17);
             secondary_effect = new Effect(PARALYZE, 3, 4);
             this.nameText = "Tompítás";
             break;
@@ -1524,7 +1524,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(DMG, 16, 17);
-            secondary_effect = new Effect(SACRIFICE, 3, 5);
+            secondary_effect = new Effect(SACRIFICE, 3, 4);
             this.nameText = "Lobbanékonyság";
             break;
         }
@@ -1775,7 +1775,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(ARMOR, 22, 24);
+            primary_effect  = new Effect(ARMOR, 19, 20);
             secondary_effect = new Effect(PARALYZE, 4, 5);
             this.nameText = "Stabilitás";
             break;
@@ -1785,9 +1785,9 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [JOK,NUL,NUL],
                     [NUL,JOK,NUL],
-                    [NUL,NUL,JOK]
+                    [NUL,JOK,NUL],
+                    [NUL,JOK,NUL]
                 ];
 
             pattern = new SkillPattern(visual_pattern);
@@ -1964,7 +1964,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DMG, 3);
+            primary_effect  = new Effect(DMG, 4);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Szabadítás";
             break;
@@ -1986,7 +1986,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(PENETRATE, 11, 13);
-            secondary_effect = new Effect(STUCK, 2, 3);
+            secondary_effect = new Effect(STUN, 2, 3);
             this.nameText = "Széttépés";
             break;
         }
@@ -2006,7 +2006,7 @@ function Skill(name)
 
             pattern = new SkillPattern(visual_pattern);
 
-            primary_effect  = new Effect(DMG, 3);
+            primary_effect  = new Effect(DMG, 2, 3);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Aprítás";
             break;
@@ -2217,7 +2217,7 @@ function Skill(name)
             pattern = new SkillPattern(visual_pattern);
 
             primary_effect  = new Effect(PROMOTE);
-            secondary_effect = new Effect(SACRIFICE, 2, 3);
+            secondary_effect = new Effect(SACRIFICE, 2);
             this.nameText = "Becsület";
             break;
         }

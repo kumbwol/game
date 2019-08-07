@@ -28,7 +28,7 @@ function Ability(type)
 
         case ROTATE_RIGHT:
         {
-            this.mana_cost = 4;
+            this.mana_cost = 6;
             break;
         }
 
@@ -46,13 +46,13 @@ function Ability(type)
 
         case MAGIC_TO_MOVE:
         {
-            this.mana_cost = 8;
+            this.mana_cost = 6;
             break;
         }
 
         case DEFENSE_TO_ATTACK:
         {
-            this.mana_cost = 8;
+            this.mana_cost = 6;
             break;
         }
     }

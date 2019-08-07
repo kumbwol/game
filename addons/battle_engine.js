@@ -668,7 +668,7 @@ function BattleEngine(battle_table)
                     }
                     else
                     {
-                        this.enemy_skill_chances[i] = Math.max(100, Math.round((2 * this.countParalyzedFields()) / this.countFields() * 100));
+                        this.enemy_skill_chances[i] = Math.min(100, Math.round((2 * this.countParalyzedFields()) / this.countFields() * 100));
                     }
                     //console.log("!!" + this.enemy_skill_chances[i]);
                     //console.log("para" + this.countParalyzedFields());

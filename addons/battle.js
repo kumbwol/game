@@ -69,6 +69,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                         {
                             graphics.animateDamageNumbers(0, 0, 0, player.abilities[engine.active_ability_id].mana_cost, 0, 0, 0, 0, !player_turn).done(function()
                             {
+                                engine.ability_used = false;
                                 dmg_heal_number_animation_finished = true;
                                 graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
                             });
@@ -97,8 +98,10 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
         {
             if(dmg_heal_number_animation_finished && poison_animation_finished && skill_activation_finished && engine.canActivateSkill(skill, player_selected_skill_id, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
             {
+                let promoted_activision = false;
                 if(engine.promotedActivition(skill, player_selected_skill_id, parseInt($(this).attr("id")[6]), parseInt($(this).attr("id")[2])))
                 {
+                    promoted_activision = true;
                     skill.primary_effect.dmg *= 2;
                     skill.primary_effect.heal *= 2;
                     skill.primary_effect.mana_regen *= 2;
@@ -108,6 +111,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                     skill.primary_effect.penetrate *= 2;
                     skill.primary_effect.sacrifice *= 2;
                     skill.primary_effect.blood_oath *= 2;
+                    skill.primary_effect.form_amount *= 2;
                     //console.log(skill.primary_effect);
                 }
                 stopSkillSelection(skill);
@@ -141,6 +145,20 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
 
                         activateSecondarySkill(engine, graphics, skill, player, enemy, player_turn).done(function()
                         {
+                            if(promoted_activision)
+                            {
+                                skill.primary_effect.dmg /= 2;
+                                skill.primary_effect.heal /= 2;
+                                skill.primary_effect.mana_regen /= 2;
+                                skill.primary_effect.mana_drain /= 2;
+                                skill.primary_effect.mana_cost /= 2;
+                                skill.primary_effect.armor /= 2;
+                                skill.primary_effect.penetrate /= 2;
+                                skill.primary_effect.sacrifice /= 2;
+                                skill.primary_effect.blood_oath /= 2;
+                                skill.primary_effect.form_amount /= 2;
+                                //console.log(skill.primary_effect);
+                            }
                             engine.saveSkillChances();
 
                             graphics.updateComboNumber(engine.combo_meter);

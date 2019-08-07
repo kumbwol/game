@@ -13,6 +13,23 @@ function Inventory(player, skill_graphics)
     engine.addItem(new Item(C_RIGHT_HAND, 1, ITEM_NECKLACE));
     engine.addItem(new Item(C_HEAD,       2, ITEM_NECKLACE));*/
 
+    /*engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));*/
+
     this.showInventory = showInventory;
     this.addItem = addItem;
 

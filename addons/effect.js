@@ -154,6 +154,14 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             break;
         }
 
+        case MANA_COST:
+        {
+            effect.self = true;
+            effect.type = MANA_COST;
+            effect.mana_cost = addRandomInterval(minimum_amount, maximum_amount);
+            break;
+        }
+
         case NOTHING:
         {
             effect.type = NOTHING;

@@ -142,68 +142,26 @@ $(function()
 
                 if(enemy_lvl - 1 === 1)
                 {
-                    if(Math.floor(Math.random() * 2) === 0)
-                    {
-                        player.inventory.addItem(new Item(C_TORSO, 2, ITEM_ARMOR_LIGHT_LVL_3));
-                    }
-                    else
-                    {
-                        player.inventory.addItem(new Item(C_TORSO, 2, ITEM_ARMOR_HEAVY_LVL_3));
-                    }
+                    player.inventory.addItem(new Item(C_TORSO, 2, ITEM_ARMOR_LIGHT_LVL_3));
+                    player.inventory.addItem(new Item(C_TORSO, 2, ITEM_ARMOR_HEAVY_LVL_3));
 
-                    switch(Math.floor(Math.random() * 4))
-                    {
-                        case 0:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_AXE_LVL_3));
-                            break;
-                        }
 
-                        case 1:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SWORD_LVL_3));
-                            break;
-                        }
+                    player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_AXE_LVL_3));
+                    player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SWORD_LVL_3));
+                    player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_MACE_LVL_3));
+                    player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SHIELD_LVL_3));
+                }
 
-                        case 2:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_MACE_LVL_3));
-                            break;
-                        }
+                if(enemy_lvl - 1 === 2)
+                {
+                    player.inventory.addItem(new Item(C_BOOTS, 2, ITEM_SHOES_LIGHT_LVL_3));
+                    player.inventory.addItem(new Item(C_BOOTS, 2, ITEM_SHOES_HEAVY_LVL_3));
+                }
 
-                        case 3:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SHIELD_LVL_3));
-                            break;
-                        }
-                    }
-
-                    switch(Math.floor(Math.random() * 4))
-                    {
-                        case 0:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_AXE_LVL_3));
-                            break;
-                        }
-
-                        case 1:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SWORD_LVL_3));
-                            break;
-                        }
-
-                        case 2:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_MACE_LVL_3));
-                            break;
-                        }
-
-                        case 3:
-                        {
-                            player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SHIELD_LVL_3));
-                            break;
-                        }
-                    }
+                if(enemy_lvl - 1 === 3)
+                {
+                    player.inventory.addItem(new Item(C_HEAD, 2, ITEM_HELM_LIGHT_LVL_3));
+                    player.inventory.addItem(new Item(C_HEAD, 2, ITEM_HELM_HEAVY_LVL_3));
                 }
                 /*player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
                 player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
@@ -302,7 +260,7 @@ $(function()
             }
             else
             {
-                if(enemy_lvl === 3)
+                if(enemy_lvl === 4)
                 {
                     winChapterOne();
                     first_checkpoint_reached = true;
@@ -427,7 +385,6 @@ $(function()
             {
                 //if(enemy_lvl_CP === 1) return "Fagyaszt";
                 if(enemy_lvl === 1) return "Pixi";
-                //if(enemy_lvl === 2) return "Spider";
                 if(enemy_lvl === 2) return "Skeleton";
                 if(enemy_lvl === 3) return "Spider";
                 if(enemy_lvl === 4) return "Succubus";

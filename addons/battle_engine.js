@@ -1018,7 +1018,7 @@ function BattleEngine(battle_table)
                     }
                     else
                     {
-                        if(this.table[y+i][x+j].stunned)
+                        if(this.table[y+i][x+j].stunned && skill.table[i][j] !== NUL)
                         {
                             return false;
                         }
@@ -1107,7 +1107,7 @@ function BattleEngine(battle_table)
                     }
                     else
                     {
-                        if(this.table[y+i][x+j].stunned)
+                        if(this.table[y+i][x+j].stunned && skill.table[i][j] !== NUL)
                         {
                             return false;
                         }

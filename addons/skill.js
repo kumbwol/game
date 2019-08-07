@@ -2948,6 +2948,15 @@ function Skill(name)
             break;
         }
 
+        case "STUN":
+        {
+            primary_effect = new Effect(STUN, 20, 30);
+            secondary_effect = new Effect(NOTHING);
+            chance = new Chance(LUCK, 100);
+            this.nameText = "Stun";
+            break;
+        }
+
         case "Sikoly":
         {
             primary_effect = new Effect(PARALYZE, 18, 20);

@@ -36,6 +36,11 @@
     background-color: green;
 }
 
+.inventory_field.blue
+{
+    background-color: #292980;
+}
+
 .item
 {
     position: absolute;

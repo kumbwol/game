@@ -107,8 +107,8 @@ $(function()
             if(first_checkpoint_reached)
             {
                 $("#game_background").append('<button id="create_table_CP"></button>');
-                $("#create_table_CP").html("(1. Fejezet) Battle - " + enemy_lvl_CP + " / 3");
-                $("#create_table").html("(2. Fejezet) Battle - " + enemy_lvl);
+                $("#create_table_CP").html("Battle - " + enemy_lvl_CP + " / 4");
+                $("#create_table").html("BOSS BATTLE");
             }
             else
             {
@@ -140,7 +140,7 @@ $(function()
 
                 $("#game_background").append('<p id="new_item">Nezd meg az inventoryban az uj itemet!</p>');
 
-                if(enemy_lvl - 1 === 1)
+                if(loot_LVL === 1)
                 {
                     player.inventory.addItem(new Item(C_TORSO, 2, ITEM_ARMOR_LIGHT_LVL_3));
                     player.inventory.addItem(new Item(C_TORSO, 2, ITEM_ARMOR_HEAVY_LVL_3));
@@ -152,16 +152,24 @@ $(function()
                     player.inventory.addItem(new Item(C_LEFT_HAND, 2, ITEM_SHIELD_LVL_3));
                 }
 
-                if(enemy_lvl - 1 === 2)
+                if(loot_LVL === 2)
                 {
                     player.inventory.addItem(new Item(C_BOOTS, 2, ITEM_SHOES_LIGHT_LVL_3));
                     player.inventory.addItem(new Item(C_BOOTS, 2, ITEM_SHOES_HEAVY_LVL_3));
                 }
 
-                if(enemy_lvl - 1 === 3)
+                if(loot_LVL === 3)
                 {
                     player.inventory.addItem(new Item(C_HEAD, 2, ITEM_HELM_LIGHT_LVL_3));
                     player.inventory.addItem(new Item(C_HEAD, 2, ITEM_HELM_HEAVY_LVL_3));
+                }
+
+                if(loot_LVL === 4)
+                {
+                    player.inventory.addItem(new Item(C_NECKLACE, 3, ITEM_NECKLACE_OFFENSIVE_LVL_4));
+                    player.inventory.addItem(new Item(C_NECKLACE, 3, ITEM_NECKLACE_DEFENSIVE_LVL_4));
+                    player.inventory.addItem(new Item(C_NECKLACE, 3, ITEM_NECKLACE_MAGIC_LVL_4));
+                    player.inventory.addItem(new Item(C_NECKLACE, 3, ITEM_NECKLACE_MOVE_LVL_4));
                 }
                 /*player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
                 player.inventory.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
@@ -179,9 +187,9 @@ $(function()
 
                 if(first_checkpoint_reached)
                 {
-                    enemy_lvl = 4;
-                    $("#create_table_CP").html("(1. Fejezet) Battle - " + enemy_lvl_CP + " / 3");
-                    $("#create_table").html("(2. Fejezet) Battle - " + enemy_lvl);
+                    enemy_lvl = 5;
+                    $("#create_table_CP").html("Battle - " + enemy_lvl_CP + " / 4");
+                    $("#create_table").html("BOSS BATTLE");
                 }
                 else
                 {
@@ -255,7 +263,7 @@ $(function()
 
             if(in_CP_run)
             {
-                if(enemy_lvl_CP === 3) enemy_lvl_CP = 1;
+                if(enemy_lvl_CP === 4) enemy_lvl_CP = 1;
                 else enemy_lvl_CP++;
             }
             else
@@ -298,8 +306,7 @@ $(function()
 
         function winChapterOne()
         {
-            $("#game_background").append('<button id="loot"></button>');
-            $("#loot").html("New Skill");
+
         }
 
         function looseBattle()
@@ -310,7 +317,7 @@ $(function()
 
             if(first_checkpoint_reached)
             {
-                enemy_lvl = 4;
+                enemy_lvl = 5;
             }
             else
             {
@@ -388,6 +395,7 @@ $(function()
                 if(enemy_lvl === 2) return "Skeleton";
                 if(enemy_lvl === 3) return "Spider";
                 if(enemy_lvl === 4) return "Succubus";
+                if(enemy_lvl === 5) return "Snake";
             }
         }
     }

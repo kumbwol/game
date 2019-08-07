@@ -38,7 +38,7 @@ this.paragraphs.chance.paragraphs[RAGE] = "Hianyzo HP alapjan no az esely.";
 this.paragraphs.chance.paragraphs[SPELL] = "A masodlagos kepesseg manna koltsegetol fuggoen teljesulhet vagy sem.";
 this.paragraphs.chance.paragraphs[BALANCE] = "Minnel tobb ellenfel skill teljesult az elozo korben, annal kevesebb lesz az eselye. Minnel kevesebb skill teljesult, annal tobb lesz az eselye.";
 this.paragraphs.chance.paragraphs[STUCK] = "Paralyzed mezok aranya az osszes mezohoz.";
-this.paragraphs.chance.paragraphs[DEVELOP] = "Rankok osszegenek aranya az ossz rankhoz.";
+this.paragraphs.chance.paragraphs[DEVELOP] = "Minnel magasabb a jatekos itemjeinek az aktualis rankja, annal nagyobb.";
 this.paragraphs.chance.paragraphs[WEAKNESS] = "Minnel tobb fajta skillt jatszik ki a jatekos annal alacsonyabb.";
 
 //     ...::: SKILL EFFECTS :::...
@@ -72,7 +72,7 @@ this.paragraphs.effect.paragraphs[SHADOWFORM] = "A MOVE es DEFENSE mezok X% esel
 this.paragraphs.effect.paragraphs[POISON] = "X db. mezot meregge alakit at.";
 this.paragraphs.effect.paragraphs[POISON_DMG] = "A mereg mezok a kor vegen X-et sebeznek.";
 this.paragraphs.effect.paragraphs[STUN] = "X db. mezot elsotetit, melyeket nem tudod mozgatni, sem aktivizalni.";
-this.paragraphs.effect.paragraphs[FREEZE] = "A kor vegeig meg fagy a tabla, ami miatt nem esnek le a mezok.";
+this.paragraphs.effect.paragraphs[FREEZE] = "A kor vegeig megfagy a tabla, ami miatt nem esnek le a mezok.";
 this.paragraphs.effect.paragraphs[MANA_REGEN] = "Visszatolt X manapontot a hasznalojanak.";
 this.paragraphs.effect.paragraphs[MANA_DRAIN] = "Elvesz X manapontot az ellenfeltol.";
 this.paragraphs.effect.paragraphs[MANA_COST] = "Elvesz X manapontot.";

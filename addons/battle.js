@@ -21,6 +21,8 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
 
     let player_turn = true;
 
+    if(enemy_name === "Snake") player.hp = player.max_hp;
+
     let engine = new BattleEngine(battle_table);
     let enemy  = new Enemy(enemy_name);
     let graphics = new BattleGraphics(battle_table);
@@ -627,7 +629,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                 {
                     dmg_heal_number_animation_finished = false;
 
-                    graphics.animateDamageNumbers(poison_dmg, 0, 0, 0, 0, 0, 0, 0, !player_turn).done(function()
+                    graphics.animateDamageNumbers(poison_dmg, 0, 0, 0, 0, 0, 0, 0, player_turn).done(function()
                     {
                         dmg_heal_number_animation_finished = true;
                     });

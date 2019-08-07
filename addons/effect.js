@@ -162,6 +162,22 @@ function Effect(effect_type, minimum_amount = 0, maximum_amount = minimum_amount
             break;
         }
 
+        case POISON:
+        {
+            effect.type = POISON;
+            effect.poison_amount = addRandomInterval(minimum_amount, maximum_amount);
+            effect.transform = true;
+            break;
+        }
+
+        case POISON_DMG:
+        {
+            effect.type = POISON_DMG;
+            effect.poison_dmg = addRandomInterval(minimum_amount, maximum_amount);
+            effect.transform = true;
+            break;
+        }
+
         case NOTHING:
         {
             effect.type = NOTHING;

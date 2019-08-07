@@ -802,6 +802,12 @@ function InventoryGraphics(bag)
                 $object.addClass("green");
                 break;
             }
+
+            case 3:
+            {
+                $object.addClass("blue");
+                break;
+            }
         }
 
         return $object;

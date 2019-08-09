@@ -505,20 +505,20 @@ function Skill(name)
 
         case "FIRST_WEAPON":
         {
-            visual_pattern =
+            /*visual_pattern =
                 [
                     [JOK,JOK,JOK],
                     [JOK,ATT,JOK],
                     [JOK,JOK,JOK]
-                ];
-            /*visual_pattern =
+                ];*/
+            visual_pattern =
                 [
                     [MAN,NUL,NUL],
                     [NUL,ATT,ATT],
                     [MAN,NUL,NUL]
-                ];*/
+                ];
             pattern = new SkillPattern(visual_pattern);
-            primary_effect  = new Effect(DMG, 25);
+            primary_effect  = new Effect(DMG, 5);
             //primary_effect  = new Effect(PROMOTE);
             secondary_effect = new Effect(NOTHING);
             this.nameText = "Döfés";

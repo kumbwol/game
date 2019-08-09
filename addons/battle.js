@@ -46,6 +46,10 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
     engine.calculateEnemySkillChances(skill, enemy, player);
     graphics.drawSkillBars(player, enemy, engine.enemy_skill_chances, skill_graphics);
 
+    console.log(enemy.armor);
+    console.log(enemy.old_armor);
+    graphics.updateArmor(enemy.armor, enemy.old_armor, false);
+
 
     $("#game_background").on("click", ".attack, .mana, .defense, .move, .poison, .promoted_mana, .promoted_attack, .promoted_defense, .promoted_move, .joker, .promoted_joker", function()
     {
@@ -618,8 +622,17 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
             {
                 let number_of_poisons = engine.countPoisons();
                 let poison_dmg = engine.activatePoisons();
+                let temp_poison_dmg = poison_dmg;
 
-                player.hp -= poison_dmg;
+                if(player.armor > 0)
+                {
+                    temp_poison_dmg = Math.max(0, poison_dmg - player.armor);
+                    player.old_armor = player.armor;
+                    player.armor = Math.max(0, player.armor - poison_dmg);
+                    graphics.updateArmor(player.armor, player.old_armor, player);
+                }
+
+                player.hp -= temp_poison_dmg;
                 if(player.hp < 0)
                 {
                     player.hp = 0;
@@ -634,7 +647,7 @@ function Battle(player, skill_graphics, cursor, main, enemy_name)
                         dmg_heal_number_animation_finished = true;
                     });
 
-                    if(poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player, false);
+                    if(temp_poison_dmg > 0) graphics.updateHpBar($("#player_hp"), player, false);
                 }
 
                 graphics.poisonActivationAnimation(engine, number_of_poisons).done(function()

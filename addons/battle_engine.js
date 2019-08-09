@@ -536,15 +536,16 @@ function BattleEngine(battle_table)
 
         let tries = 0;
 
+        console.log(stun_amount);
+
         do
         {
             let y = generateRandomNumber(this.battle_table.height);
             let x = generateRandomNumber(this.battle_table.width);
             //console.log(y + " " + x);
 
-            if(!this.table[y][x].stunned && !this.table[y][x].paralyzed)
+            if(!this.table[y][x].stunned && !this.table[y][x].paralyzed && this.table[y][x].type !== NUL)
             {
-                //stunField(x, y);
                 this.temp_table[y][x].stunned = true;
                 this.stunField(x, y);
                 stun_amount--;
@@ -567,7 +568,7 @@ function BattleEngine(battle_table)
             let x = generateRandomNumber(this.battle_table.width);
             //console.log(y + " " + x);
 
-            if(!this.table[y][x].stunned && !this.table[y][x].paralyzed)
+            if(!this.table[y][x].stunned && !this.table[y][x].paralyzed && this.table[y][x].type !== NUL)
             {
                 //stunField(x, y);
                 this.temp_table[y][x].paralyzed = true;
@@ -972,7 +973,7 @@ function BattleEngine(battle_table)
             this.freezePlayer();
         }
 
-        if(effect.type === PROMOTE)
+        if(effect.type === PROMOTE && !this.isPlayerFreezed())
         {
             this.promoteFields();
         }
@@ -1005,7 +1006,7 @@ function BattleEngine(battle_table)
             {
                 for(let j=0; j<skill.table_width; j++)
                 {
-                    if(this.table[y+i][x+j].type === NUL)
+                    if(this.table[y+i][x+j].type === NUL && skill.table[i][j] !== NUL)
                     {
                         return false;
                     }
@@ -1094,7 +1095,7 @@ function BattleEngine(battle_table)
             {
                 for(let j=0; j<skill.table_width; j++)
                 {
-                    if(this.table[y+i][x+j].type === NUL)
+                    if(this.table[y+i][x+j].type === NUL && skill.table[i][j] !== NUL)
                     {
                         return false;
                     }

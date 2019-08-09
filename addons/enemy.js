@@ -13,7 +13,7 @@ function Enemy(name)
 
     if(this.name === "Pixi")
     {
-        this.max_hp = 1; //30
+        this.max_hp = 20; //30
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -28,7 +28,7 @@ function Enemy(name)
 
     if(this.name === "Skeleton")
     {
-        this.max_hp = 1; //40
+        this.max_hp = 35; //40
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -42,9 +42,11 @@ function Enemy(name)
         skills[3] = new Skill("Bosszu");
     }
 
+    //10:40
+
     if(this.name === "Spider")
     {
-        this.max_hp = 1; // 50
+        this.max_hp = 40; // 50
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -63,7 +65,7 @@ function Enemy(name)
 
     if(this.name === "Succubus")
     {
-        this.max_hp = 1; // 50
+        this.max_hp = 50; // 50
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 24;
@@ -81,11 +83,11 @@ function Enemy(name)
 
     if(this.name === "Snake")
     {
-        this.max_hp = 60; // 50
+        this.max_hp = 150; // 50
         this.hp = this.max_hp;
         this.mp = 24;
         this.max_mp = 24;
-        this.armor = 0;
+        this.armor = 30;
         this.old_armor = 0;
         this.nameText = "Ice Snake";
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/addons/enemy.js" line="85" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="28a57587-ca80-47ce-b626-d30570a8bf32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/battle.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/battle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/effect.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/effect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/battle_engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/battle_engine.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/enemy.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/enemy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/inventory_graphics.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/inventory_graphics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/inventory_gui.css" beforeDir="false" afterPath="$PROJECT_DIR$/addons/inventory_gui.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/paragraphs.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/paragraphs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/skill.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/skill.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/addons/test.js" afterDir="false" />
     </list>
@@ -23,47 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addons/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="167" column="17" lean-forward="true" selection-start-line="167" selection-start-column="17" selection-end-line="167" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/item.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3723">
-              <caret column="9" selection-start-column="9" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/inventory_graphics.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="795" column="39" selection-start-line="795" selection-start-column="34" selection-end-line="795" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/inventory_gui.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/chance.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+            <state relative-caret-position="365">
+              <caret line="393" column="48" selection-start-line="393" selection-start-column="48" selection-end-line="393" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -71,7 +35,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1428">
+            <state relative-caret-position="-1581">
               <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
             </state>
           </provider>
@@ -80,26 +44,69 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/enemy.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="83" column="24" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/addons/skill.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="2837" column="37" lean-forward="true" selection-start-line="2837" selection-start-column="37" selection-end-line="2837" selection-end-column="37" />
+            <state relative-caret-position="663">
+              <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/paragraphs.js">
+        <entry file="file://$PROJECT_DIR$/addons/skill.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="40" column="116" selection-start-line="40" selection-start-column="116" selection-end-line="40" selection-end-column="116" />
+            <state relative-caret-position="-210">
+              <caret line="513" column="11" lean-forward="true" selection-start-line="513" selection-start-column="11" selection-end-line="513" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/battle_engine.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6">
+              <caret line="547" column="13" selection-start-line="547" selection-start-column="13" selection-end-line="547" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/field_types.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/battle.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-601">
+              <caret line="104" column="121" selection-start-line="104" selection-start-column="121" selection-end-line="104" selection-end-column="121" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/battle_graphics.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="90" column="37" selection-start-line="90" selection-start-column="25" selection-end-line="90" selection-end-column="37" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="74" lean-forward="true" selection-start-line="7" selection-start-column="74" selection-end-line="7" selection-end-column="74" />
             </state>
           </provider>
         </entry>
@@ -107,8 +114,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/effect.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="175" column="81" selection-start-line="175" selection-start-column="81" selection-end-line="175" selection-end-column="81" />
+            <state relative-caret-position="247">
+              <caret line="111" column="9" lean-forward="true" selection-start-line="111" selection-start-column="9" selection-end-line="111" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -125,26 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>oson</find>
-      <find>sta</find>
-      <find>createmac</find>
-      <find>agre</find>
-      <find>stuck</find>
-      <find>tompi</find>
-      <find>createShi</find>
-      <find>first_checkpoint_reached</find>
-      <find>25</find>
-      <find>3</find>
-      <find>create_table</find>
-      <find>decideEnemy</find>
-      <find>enemy_name</find>
-      <find>loose</find>
-      <find>1. fe</find>
-      <find>poison</find>
-      <find>meg f</find>
-      <find>develop</find>
-      <find>loot</find>
-      <find>snake</find>
       <find>free</find>
       <find>loot_LVL</find>
       <find>white</find>
@@ -155,6 +142,26 @@
       <find>moral</find>
       <find>shiel</find>
       <find>lobban</find>
+      <find>canacti</find>
+      <find>promo</find>
+      <find>case promo</find>
+      <find>dmg</find>
+      <find>freezed</find>
+      <find>stopFreeze</find>
+      <find>armor &gt; 0</find>
+      <find>enemy</find>
+      <find>armor -</find>
+      <find>updateArmor</find>
+      <find>#enemy_armor</find>
+      <find>armo</find>
+      <find>activateskill</find>
+      <find>stun</find>
+      <find>activateski</find>
+      <find>transformTable</find>
+      <find>ispl</find>
+      <find>poison</find>
+      <find>stunField</find>
+      <find>first</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\ejakwol\WebstormProjects\original\game\addons</dir>
@@ -194,17 +201,17 @@
         <option value="$PROJECT_DIR$/addons/game_gui.css" />
         <option value="$PROJECT_DIR$/addons/inventory.js" />
         <option value="$PROJECT_DIR$/addons/ability.js" />
-        <option value="$PROJECT_DIR$/addons/battle_engine.js" />
         <option value="$PROJECT_DIR$/addons/enemy_gui.css" />
         <option value="$PROJECT_DIR$/addons/player.js" />
         <option value="$PROJECT_DIR$/addons/effect.js" />
-        <option value="$PROJECT_DIR$/addons/battle.js" />
         <option value="$PROJECT_DIR$/addons/paragraphs.js" />
-        <option value="$PROJECT_DIR$/addons/enemy.js" />
         <option value="$PROJECT_DIR$/addons/inventory_graphics.js" />
-        <option value="$PROJECT_DIR$/addons/test.js" />
         <option value="$PROJECT_DIR$/addons/inventory_gui.css" />
+        <option value="$PROJECT_DIR$/addons/enemy.js" />
+        <option value="$PROJECT_DIR$/addons/battle.js" />
+        <option value="$PROJECT_DIR$/addons/battle_engine.js" />
         <option value="$PROJECT_DIR$/addons/skill.js" />
+        <option value="$PROJECT_DIR$/addons/test.js" />
       </list>
     </option>
   </component>
@@ -268,7 +275,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="C:/Git/game-398" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.jscs" value="true" />
     <property name="node.js.path.for.package.jscs" value="project" />
@@ -523,14 +530,12 @@
       <workItem from="1565156340696" duration="641000" />
       <workItem from="1565158865271" duration="89000" />
       <workItem from="1565168210196" duration="748000" />
-      <workItem from="1565200449910" duration="7919000" />
-    </task>
-    <task id="LOCAL-00009" summary="add inventory basics&#10;add inventory drag and drop&#10;fix 0 division at updateMp, updateEnemyMp functions, if max_mp = 0">
-      <created>1538932780728</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1538932780728</updated>
+      <workItem from="1565200449910" duration="8305000" />
+      <workItem from="1565247897302" duration="444000" />
+      <workItem from="1565273928382" duration="671000" />
+      <workItem from="1565292284360" duration="1415000" />
+      <workItem from="1565332868852" duration="1164000" />
+      <workItem from="1565372782312" duration="2816000" />
     </task>
     <task id="LOCAL-00010" summary="fix/refactor enemy chance updates graphics. From now it only updates after second effect activation.&#10;add SkillGraphics class, so skill can be created in battle phase and in inventory.">
       <created>1539192597858</created>
@@ -868,11 +873,18 @@
       <option name="project" value="LOCAL" />
       <updated>1565205938070</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="add boss&#10;fine tuning">
+      <created>1565212297168</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1565212297168</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="662565000" />
+    <option name="totallyTimeSpent" value="669461000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -899,7 +911,7 @@
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.3286119" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49894625" weight="0.51699716" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49894625" visible="true" weight="0.21451788" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.30119178" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50105375" side_tool="true" weight="0.12026002" />
       <window_info anchor="bottom" id="Messages" order="12" />
@@ -912,7 +924,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change inventory button to back&#10;fix some minor issues about it" />
     <MESSAGE value="GAME CREATION STARTS HERE&#10;&#10;add first dummy enemy&#10;add first items&#10;fix issue: when enemy healed, player animation played as well" />
     <MESSAGE value="add second enemy, spider" />
     <MESSAGE value="add third enemy, succubus&#10;fix balance chance&#10;fix mpUpdate, same issue as earlier with hpUpdate" />
@@ -937,7 +948,8 @@
     <MESSAGE value="fin tuning enemies and items" />
     <MESSAGE value="fin item activation when stunned" />
     <MESSAGE value="fine tuning" />
-    <option name="LAST_COMMIT_MESSAGE" value="fine tuning" />
+    <MESSAGE value="add boss&#10;fine tuning" />
+    <option name="LAST_COMMIT_MESSAGE" value="add boss&#10;fine tuning" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/addons/battle_ability_gui.css">
@@ -1032,13 +1044,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/field_types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -1081,13 +1086,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/battle_graphics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37621">
-          <caret line="2213" column="65" selection-start-line="2213" selection-start-column="61" selection-end-line="2213" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addons/game_gui.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -1116,24 +1114,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/battle_engine.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18785">
-          <caret line="1105" column="25" selection-start-line="1105" selection-start-column="25" selection-end-line="1105" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addons/enemy_gui.css">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1151,17 +1135,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/battle.js">
+    <entry file="file://$PROJECT_DIR$/addons/item.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="536">
-          <caret line="631" column="83" selection-start-line="631" selection-start-column="83" selection-end-line="631" selection-end-column="83" />
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/effect.js">
+    <entry file="file://$PROJECT_DIR$/addons/inventory_graphics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="175" column="81" selection-start-line="175" selection-start-column="81" selection-end-line="175" selection-end-column="81" />
+        <state relative-caret-position="13515">
+          <caret line="795" column="39" selection-start-line="795" selection-start-column="34" selection-end-line="795" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/inventory_gui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1174,57 +1165,85 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/paragraphs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
+        <state relative-caret-position="680">
           <caret line="40" column="116" selection-start-line="40" selection-start-column="116" selection-end-line="40" selection-end-column="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="74" lean-forward="true" selection-start-line="7" selection-start-column="74" selection-end-line="7" selection-end-column="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1428">
+        <state relative-caret-position="-1581">
           <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/battle_graphics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="90" column="37" selection-start-line="90" selection-start-column="25" selection-end-line="90" selection-end-column="37" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/effect.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="111" column="9" lean-forward="true" selection-start-line="111" selection-start-column="9" selection-end-line="111" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/battle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-601">
+          <caret line="104" column="121" selection-start-line="104" selection-start-column="121" selection-end-line="104" selection-end-column="121" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/enemy.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="83" column="24" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
+        <state relative-caret-position="663">
+          <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/item.js">
+    <entry file="file://$PROJECT_DIR$/addons/field_types.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3723">
-          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        <state relative-caret-position="102">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/inventory_graphics.js">
+    <entry file="file://$PROJECT_DIR$/addons/battle_engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="795" column="39" selection-start-line="795" selection-start-column="34" selection-end-line="795" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="167" column="17" lean-forward="true" selection-start-line="167" selection-start-column="17" selection-end-line="167" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/inventory_gui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+        <state relative-caret-position="-6">
+          <caret line="547" column="13" selection-start-line="547" selection-start-column="13" selection-end-line="547" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/skill.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="2837" column="37" lean-forward="true" selection-start-line="2837" selection-start-column="37" selection-end-line="2837" selection-end-column="37" />
+        <state relative-caret-position="-210">
+          <caret line="513" column="11" lean-forward="true" selection-start-line="513" selection-start-column="11" selection-end-line="513" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="393" column="48" selection-start-line="393" selection-start-column="48" selection-end-line="393" selection-end-column="48" />
         </state>
       </provider>
     </entry>

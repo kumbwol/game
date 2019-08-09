@@ -2587,9 +2587,9 @@ function Skill(name)
         {
             visual_pattern =
                 [
-                    [MAN,MAN,MAN],
+                    [NUL,MAN,NUL],
                     [MAN,JOK,MAN],
-                    [MAN,MAN,MAN]
+                    [NUL,MAN,NUL]
                 ];
 
             pattern = new SkillPattern(visual_pattern);

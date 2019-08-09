@@ -28,7 +28,7 @@ function Enemy(name)
 
     if(this.name === "Skeleton")
     {
-        this.max_hp = 35; //40
+        this.max_hp = 40; //40
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -46,7 +46,7 @@ function Enemy(name)
 
     if(this.name === "Spider")
     {
-        this.max_hp = 40; // 50
+        this.max_hp = 45; // 50
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -83,7 +83,7 @@ function Enemy(name)
 
     if(this.name === "Snake")
     {
-        this.max_hp = 150; // 50
+        this.max_hp = 100; // 50
         this.hp = this.max_hp;
         this.mp = 24;
         this.max_mp = 24;

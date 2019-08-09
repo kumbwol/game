@@ -28,7 +28,15 @@ function Inventory(player, skill_graphics)
     engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
     engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
     engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
-    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));*/
+    engine.addItem(new Item(RANDOM_ITEM, 3, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));
+    engine.addItem(new Item(RANDOM_ITEM, 4, ITEM_RANDOM));*/
 
     this.showInventory = showInventory;
     this.addItem = addItem;

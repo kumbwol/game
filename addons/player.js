@@ -28,8 +28,8 @@ function Player(name)
     this.abilities[0] = new Ability(ROTATE_LEFT);
     this.abilities[1] = new Ability(MIRROR_HORIZONTALLY);
     this.abilities[2] = new Ability(MIRROR_VERTICALLY);
-    this.abilities[3] = new Ability(MAGIC_TO_MOVE);
-    this.abilities[4] = new Ability(DEFENSE_TO_ATTACK);
+    this.abilities[3] = new Ability(DIAGONAL_MOVE);
+    this.abilities[4] = new Ability(KNIGHT_MOVE);
     this.abilities[5] = new Ability(ROTATE_RIGHT);
 
     let skills = [];

@@ -10,7 +10,7 @@ function Ability(type)
     {
         case KNIGHT_MOVE:
         {
-            this.mana_cost = 5;
+            this.mana_cost = 6;
             break;
         }
 

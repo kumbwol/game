@@ -1114,16 +1114,16 @@ function BattleEngine(battle_table)
                         }
                         else if(skill.table[i][j] === JOK)
                         {
-                            if(this.table[y+i][x+j].type === PJO)
+                            if(this.table[y+i][x+j].type === PJO || this.table[y+i][x+j].type === JOK)
                             {
 
                             }
                             else
                             {
-                                /*if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== PMO && this.table[y+i][x+j].type !== PMA && this.table[y+i][x+j].type !== PDE)
+                                if(this.table[y+i][x+j].type !== PAT && this.table[y+i][x+j].type !== PMO && this.table[y+i][x+j].type !== PMA && this.table[y+i][x+j].type !== PDE)
                                 {
                                     return false;
-                                }*/
+                                }
                             }
                         }
                         else if(skill.table[i][j] !== this.table[y+i][x+j].type && skill.table[i][j] !== NUL) {
@@ -1553,7 +1553,7 @@ function BattleEngine(battle_table)
 
                     if(random_number <= effect.form_amount)
                     {
-                        if(this.temp_table[i][j].type === ATT || this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === MAN || this.temp_table[i][j].type === DEF)
+                        if(this.temp_table[i][j].type === ATT || this.temp_table[i][j].type === MOV || this.temp_table[i][j].type === MAN || this.temp_table[i][j].type === DEF || this.temp_table[i][j].type === POI)
                         {
                             this.temp_table[i][j].type = JOK;
                             this.table_modified = true;

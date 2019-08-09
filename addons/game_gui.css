@@ -857,7 +857,7 @@ figure#mouse-pointer {
 #selected_skill div.paralyzeIt,
 #battle_table div.paralyzeIt
 {
-    background-color: slategray;
+    opacity: 0.4;
 }
 
 #selected_skill div.nul,

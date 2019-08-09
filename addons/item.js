@@ -25,7 +25,7 @@ function Item(type = RANDOM_ITEM, rank, image)
     else if(rank === -1) this.skills[0] = new Skill("EMPTY");
     else if(type === RANDOM_ITEM)
     {
-        this.type = decideRandomItemType();
+        this.type = decideRandomItemType(rank - 1);
         this.rank = rank - 1;
 
         switch (this.type)
@@ -55,9 +55,27 @@ function Item(type = RANDOM_ITEM, rank, image)
 
             case C_NECKLACE:
             {
-                if(this.rank === 2)
+                let random = Math.floor(Math.random() * 4);
+
+                if(random === 0)
                 {
-                    this.image = ITEM_NECKLACE_LVL_1;
+                    createNecklaceDefensive(this.skills);
+                    this.image = ITEM_NECKLACE_DEFENSIVE_LVL_4;
+                }
+                else if(random === 1)
+                {
+                    createNecklaceMagic(this.skills);
+                    this.image = ITEM_NECKLACE_MAGIC_LVL_4;
+                }
+                else if(random === 2)
+                {
+                    createNecklaceMove(this.skills);
+                    this.image = ITEM_NECKLACE_MOVE_LVL_4;
+                }
+                else if(random === 3)
+                {
+                    createNecklaceOffensive(this.skills);
+                    this.image = ITEM_NECKLACE_OFFENSIVE_LVL_4;
                 }
                 break;
             }
@@ -256,19 +274,27 @@ function Item(type = RANDOM_ITEM, rank, image)
         }
     }
 
-    function decideRandomItemType()
+    function decideRandomItemType(x)
     {
-        let random = Math.floor(Math.random() * 5);
-        console.log(random);
-        switch (random)
+        if(x === 2) // TODO: for now only necklaces can be level four, should change this later
         {
-            case 0: return C_HEAD;
-            //case 1: return C_NECKLACE;
-            case 1: return C_TORSO;
-            case 2: return C_LEFT_HAND;
-            case 3: return C_RIGHT_HAND;
-            case 4: return C_BOOTS;
+            let random = Math.floor(Math.random() * 5);
+            console.log(random);
+            switch (random)
+            {
+                case 0: return C_HEAD;
+                //case 5: return C_NECKLACE;
+                case 1: return C_TORSO;
+                case 2: return C_LEFT_HAND;
+                case 3: return C_RIGHT_HAND;
+                case 4: return C_BOOTS;
+            }
         }
+        else
+        {
+            return C_NECKLACE;
+        }
+
     }
 
     function createNecklaceMagic(skills)

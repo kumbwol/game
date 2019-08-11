@@ -10,13 +10,13 @@ function Ability(type)
     {
         case KNIGHT_MOVE:
         {
-            this.mana_cost = 6;
+            this.mana_cost = 3;
             break;
         }
 
         case DIAGONAL_MOVE:
         {
-            this.mana_cost = 6;
+            this.mana_cost = 3;
             break;
         }
 

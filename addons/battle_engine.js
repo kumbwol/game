@@ -175,6 +175,14 @@ function BattleEngine(battle_table)
                             this.table[i][j].type =  PMO;
                             break;
                         }
+
+                        case POI:
+                        {
+                            this.temp_table[i][j].type =  POI;
+                            this.table[i][j].type =  POI;
+                            this.table[i][j].promoted = false;
+                            break;
+                        }
                     }
                 }
             }

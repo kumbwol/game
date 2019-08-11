@@ -87,7 +87,7 @@ function Enemy(name)
         this.hp = this.max_hp;
         this.mp = 24;
         this.max_mp = 24;
-        this.armor = 30;
+        this.armor = 20;
         this.old_armor = 0;
         this.nameText = "Ice Snake";
 

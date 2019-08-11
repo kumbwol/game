@@ -420,7 +420,7 @@ function Skill(name)
 
         case "Reflex":
         {
-            primary_effect = new Effect(ARMOR, 7);
+            primary_effect = new Effect(ARMOR, 5);
             secondary_effect = new Effect(MANA_REGEN, 8);
             chance = new Chance(DEVELOP, 0);
             this.nameText = "Reflex";
@@ -430,8 +430,8 @@ function Skill(name)
         case "Preda":
         {
             primary_effect = new Effect(DMG, 5);
-            secondary_effect = new Effect(PARALYZE, 7);
-            chance = new Chance(LUCK, 75);
+            secondary_effect = new Effect(PARALYZE, 5);
+            chance = new Chance(LUCK, 90);
             this.nameText = "Préda";
             break;
         }

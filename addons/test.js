@@ -98,7 +98,28 @@ $(function()
             if(loot_LVL > 0)
             {
                 $("#game_background").append('<button id="loot"></button>');
-                $("#loot").html("Treasure LVL - " + (loot_LVL));
+
+                let treasure_name = "";
+
+                switch(loot_LVL)
+                {
+                    case 1:
+                        treasure_name = "2 armors, 4 weapons";
+                        break;
+
+                    case 2:
+                        treasure_name = "2 boots";
+                        break;
+
+                    case 3:
+                        treasure_name = "2 helmets";
+                        break;
+
+                    case 4:
+                        treasure_name = "4 necklaces";
+                        break;
+                }
+                $("#loot").html("Treasure: " + treasure_name);
             }
 
 

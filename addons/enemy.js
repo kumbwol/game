@@ -13,7 +13,7 @@ function Enemy(name)
 
     if(this.name === "Pixi")
     {
-        this.max_hp = 20; //30
+        this.max_hp = 20; //20
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
@@ -46,7 +46,7 @@ function Enemy(name)
 
     if(this.name === "Spider")
     {
-        this.max_hp = 45; // 50
+        this.max_hp = 45; // 45
         this.hp = this.max_hp;
         this.mp = 0;
         this.max_mp = 0;
